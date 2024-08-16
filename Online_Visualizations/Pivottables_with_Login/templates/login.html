@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Flask Login Flow</title>
+</head>
+<body>
+<form method="POST" action="/login">
+    <div>Please login to continue:</div>
+    <div><span style="color:red">{{message}}</span></div>
+    <input placeholder="Enter your username" type="text" id="uname-box" name='username'>
+    <input placeholder="Enter your password" type="password" id="pwd-box" name='password'>
+    <Button type="submit" id="login-button">Login</Button>
+</form>
+</body>
+</html>
