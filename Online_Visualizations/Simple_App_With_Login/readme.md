@@ -16,7 +16,7 @@ Heroku, an alternative site for hosting Dash apps, offers maximum monthly spendi
 
 2. Create a new project. I named mine 'pyfono' (short for 'Python for Nonprofits'--I couldn't use 'pfn' because it needed to be at least 4 characters long).
 
-3. Follow [the steps outlined here](https://cloud.google.com/run/docs/quickstarts/build-and-deploy/deploy-python-service)--but note the modifications that I made to these steps below.
+3. Follow [the steps outlined here](https://cloud.google.com/run/docs/quickstarts/build-and-deploy/deploy-python-service)--but note the modifications that I've made to these steps below.
 
 5. If you need to install the Google Cloud Command Line Interface (CLI), you can do so [on this page](https://cloud.google.com/sdk/docs/install). I deselected the 'Bundled Python' component during the installation process since (not surprisingly) I already had Python present on my computer.
 

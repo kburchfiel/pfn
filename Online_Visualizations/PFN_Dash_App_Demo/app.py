@@ -1,18 +1,22 @@
-# Source of the following code:
+# Most of the following code derived from:
 # https://community.plotly.com/t/dash-app-pages-with-flask-login-flow-using-flask/69507/37
-# Note that Nader Elshehabi's code was released under the MIT license:
+# Note that Nader Elshehabi's code (on which this code was based)
+# was released under the MIT license:
 # https://github.com/naderelshehabi/dash-flask-login
-
+# Ken Burchfiel incorporated some additional code from 
+# https://dash.plotly.com/urls and also made minor edits to the display text.
 
 """
- CREDIT: This code was originally adapted for Pages based on Nader Elshehabi's  article:
+ CREDIT: This code was originally adapted for Pages based on Nader Elshehabi's  
+ article:
    https://dev.to/naderelshehabi/securing-plotly-dash-using-flask-login-4ia2
    https://github.com/naderelshehabi/dash-flask-login
 
-   This version is updated by Dash community member @jinnyzor For more info see:
+   This version was updated by Dash community member @jinnyzor . For more info,
+   see:
    https://community.plotly.com/t/dash-app-pages-with-flask-login-flow-using-flask/69507
 
-For other Authentication options see:
+For other Authentication options, see:
   Dash Enterprise:  https://dash.plotly.com/authentication#dash-enterprise-auth
   Dash Basic Auth:  https://dash.plotly.com/authentication#basic-auth
 
@@ -25,7 +29,6 @@ from flask_login import login_user, LoginManager, UserMixin, logout_user, curren
 
 import dash
 from dash import dcc, html, Input, Output, State, ALL
-
 
 
 # Exposing the Flask Server to enable configuring it for logging in
@@ -58,7 +61,8 @@ def login(message=""):
             username = request.form['username']
             password = request.form['password']
             if VALID_USERNAME_PASSWORD.get(username) is None:
-                return """invalid username and/or password <a href='/login'>login here</a>"""
+                return """The username and/or password were \
+invalid. <a href='/login'>Please try again.</a>"""
             if VALID_USERNAME_PASSWORD.get(username) == password:
                 login_user(User(username))
                 if 'url' in session:
@@ -67,7 +71,7 @@ def login(message=""):
                         session['url'] = None
                         return redirect(url) ## redirect to target url
                 return redirect('/') ## redirect to home
-            message = "invalid username and/or password"
+            message = "The username and/or password were invalid."
     else:
         if current_user:
             if current_user.is_authenticated:
@@ -79,7 +83,8 @@ def logout():
     if current_user:
         if current_user.is_authenticated:
             logout_user()
-    return render_template('login.html', message="you have been logged out")
+    return render_template('login.html', 
+                           message="You have now been logged out.")
 
 app = dash.Dash(
     __name__, server=server, use_pages=True, suppress_callback_exceptions=True
@@ -90,9 +95,11 @@ app = dash.Dash(
 VALID_USERNAME_PASSWORD = {"test": "test", "hello": "world"}
 
 
-# Updating the Flask Server configuration with Secret Key to encrypt the user session cookie
+# Updating the Flask Server configuration with Secret Key to encrypt 
+# the user session cookie
 # server.config.update(SECRET_KEY=os.getenv("SECRET_KEY"))
 server.config.update(SECRET_KEY="definitelynotsecure")
+# Definitely don't use the above approach in a real-world applicaiton!
 
 # Login manager object will be used to login / logout users
 login_manager = LoginManager()
@@ -108,8 +115,10 @@ class User(UserMixin):
 
 @login_manager.user_loader
 def load_user(username):
-    """This function loads the user by user id. Typically this looks up the user from a user database.
-    We won't be registering or looking up users in this example, since we'll just login using LDAP server.
+    """This function loads the user by user id. Typically this looks up the 
+    user from a user database.
+    We won't be registering or looking up users in this example, 
+    since we'll just login using LDAP server.
     So we'll simply return a User object with the passed in username.
     """
     return User(username)
@@ -117,9 +126,27 @@ def load_user(username):
 
 app.layout = html.Div(
     [
-        html.A('logout', href='../logout'),
+        html.A('Log out', href='../logout'),
         html.Br(),
+        html.H3("Page index:"),
+        # The following html.Div() section came from:
+        # https://dash.plotly.com/urls
+        html.Div([
+        html.Div(
+            dcc.Link(f"{page['name']} - {page['path']}", 
+                     href=page["relative_path"])
+        ) for page in dash.page_registry.values()
+            
+    ]),
         dash.page_container,
+
+        # The following explanatory text will appear at the bottom of each page.
+        dcc.Markdown('''        
+*This site is part of [Python for Nonprofits]
+(https://github.com/kburchfiel/pfn), created by Kenneth Burchfiel and licensed under the MIT License.*
+
+*Blessed Carlo Acutis, pray for us!*
+'''),
     ]
 )
 

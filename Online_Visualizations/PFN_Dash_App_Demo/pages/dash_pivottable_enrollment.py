@@ -10,12 +10,13 @@ import dash
 from dash import html, callback, Input, Output
 import dash_pivottable
 import pandas as pd
+from data_import import df_curr_enrollment
 
 # Reading in enrollment data:
 
-df_curr_enrollment = pd.read_csv(
-    'https://raw.githubusercontent.com/kburchfiel/\
-pfn/main/Appendix/curr_enrollment.csv')
+# df_curr_enrollment = pd.read_csv(
+#     'https://raw.githubusercontent.com/kburchfiel/\
+# pfn/main/Appendix/curr_enrollment.csv')
 
 
 # Note that the 'data' entry below should take the form of a list of lists
@@ -32,19 +33,19 @@ lod_curr_enrollment = df_curr_enrollment.to_dict(
 # lod = 'list of dicts'
 
 
-dash.register_page(__name__, path = '/enrollment_pivot') # 
+dash.register_page(__name__, path = '/dash_pivottable_enrollment') # 
 
 layout = html.Div([
     dash_pivottable.PivotTable(
         id='enrollment_table',
         data=lod_curr_enrollment,
-        cols=['level_for_sorting', 'level'],
+        cols=['Level For Sorting', 'Level'],
         colOrder="key_a_to_z",
-        rows=['college'],
+        rows=['College'],
         rowOrder="key_a_to_z",
         rendererName="Grouped Column Chart",
         aggregatorName="Count",
-        vals=["student_id"],
+        vals=["Count"],
         valueFilter={}
     ),
     html.Div(
