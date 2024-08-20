@@ -70,7 +70,7 @@ And here are static copies of these maps:
 
 This section will demonstrate how to use Python to export data to a Google Sheets workbook, thus enabling others to view that data.
 
-### Online Visualizations (Not yet started)
+### Online Visualizations (Work in progress)
 
 In this section, you'll learn how to use the Dash and Plotly libraries to create interactive online dashboards.
 
