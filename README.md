@@ -70,7 +70,7 @@ And here are static copies of these maps:
 
 This section will demonstrate how to use Python to export data to a Google Sheets workbook, thus enabling others to view that data.
 
-### Online Visualizations (Work in progress)
+### [Online Visualizations](https://github.com/kburchfiel/pfn/tree/main/Online_Visualizations) (Work in progress)
 
 In this section, you'll learn how to use the Dash and Plotly libraries to create interactive online dashboards. The [PFN_Dash_App_Demo](https://github.com/kburchfiel/pfn/tree/main/Online_Visualizations/PFN_Dash_App_Demo) subfolder contains the source code for the main Dash app created within this section; that app [is hosted online here](https://pfndashappdemo-ymc7cs3r5q-uc.a.run.app/). This Dash project provides examples of both simple and more complex dashboards, including ones that make use of the powerful dash-pivottable package.
 
