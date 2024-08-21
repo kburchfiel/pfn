@@ -4,7 +4,8 @@
 # was released under the MIT license:
 # https://github.com/naderelshehabi/dash-flask-login
 # Ken Burchfiel incorporated some additional code from 
-# https://dash.plotly.com/urls and also made minor edits to the display text.
+# https://dash.plotly.com/urls and https://dash-bootstrap-components.opensource.faculty.ai/docs/quickstart/ ;
+# he also made minor edits to the display text.
 
 """
  CREDIT: This code was originally adapted for Pages based on Nader Elshehabi's  
@@ -29,6 +30,8 @@ from flask_login import login_user, LoginManager, UserMixin, logout_user, curren
 
 import dash
 from dash import dcc, html, Input, Output, State, ALL
+import dash_bootstrap_components as dbc # See
+# https://dash-bootstrap-components.opensource.faculty.ai/docs/quickstart/
 
 
 # Exposing the Flask Server to enable configuring it for logging in
@@ -87,8 +90,11 @@ def logout():
                            message="You have now been logged out.")
 
 app = dash.Dash(
-    __name__, server=server, use_pages=True, suppress_callback_exceptions=True
+    __name__, server=server, use_pages=True, 
+    suppress_callback_exceptions=True,
+    external_stylesheets=[dbc.themes.BOOTSTRAP]
 )
+# See https://dash-bootstrap-components.opensource.faculty.ai/docs/quickstart/
 
 # Keep this out of source code repository - save in a file or a database
 #  passwords should be encrypted

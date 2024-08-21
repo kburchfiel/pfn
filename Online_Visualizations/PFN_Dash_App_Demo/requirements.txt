@@ -5,3 +5,4 @@ dash
 Flask-Login
 dash-pivottable
 pandas
+dash-bootstrap-components

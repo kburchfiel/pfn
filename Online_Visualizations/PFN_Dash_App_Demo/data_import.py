@@ -3,6 +3,11 @@
 # Taking care of these imports here should make the site more efficient by
 # reducing the number of times each dataset needs to be imported.
 
+offline_import = False # Allows for source data to get read in locally,
+# which may improve performance. (This should be set to False prior to
+# deploying this app online, however.)
+
+
 import pandas as pd
 
 def improve_col_display(df):
@@ -19,19 +24,32 @@ def improve_col_display(df):
     df.rename(
         columns = {'Student Id':'Student ID'}, inplace = True)
 
-
-df_curr_enrollment = pd.read_csv(
-    'https://raw.githubusercontent.com/kburchfiel/\
+if offline_import == True: # In this case, the source data will get read in
+    # locally.
+    print("Importing source data from local .csv files.")
+    df_curr_enrollment = pd.read_csv(
+        '../../Appendix/curr_enrollment.csv')
+    df_survey_results = pd.read_csv(
+        '../../Appendix/survey_results.csv')
+else:
+    print("Downloading source data from an online source.")
+    df_curr_enrollment = pd.read_csv(
+        'https://raw.githubusercontent.com/kburchfiel/\
 pfn/main/Appendix/curr_enrollment.csv')
+    df_survey_results = pd.read_csv('https://raw.githubusercontent.com/\
+kburchfiel/pfn/main/Appendix/survey_results.csv')
+
+
 print("Imported current enrollment data.") # ALlows us to check how many
 # times this data will get imported during the web app's operation
+print("Imported survey results.")
+
+
 # Adding a 'Count' column (which will be useful for pivot tables):
 improve_col_display(df_curr_enrollment)
 df_curr_enrollment['Count'] = 1
 
-df_survey_results = pd.read_csv('https://raw.githubusercontent.com/\
-kburchfiel/pfn/main/Appendix/survey_results.csv')
-print("Imported survey results.")
+
 improve_col_display(df_survey_results)
 df_survey_results['Count'] = 1
 

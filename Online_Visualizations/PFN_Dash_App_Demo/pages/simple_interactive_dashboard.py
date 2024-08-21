@@ -6,18 +6,23 @@
 # and https://dash.plotly.com/urls 
 # and https://dash.plotly.com/minimal-app .
 
+# The Layout page within the Dash Bootstrap Components documentation
+# (available at https://dash-bootstrap-components.opensource.faculty.ai/docs/components/layout/ )
+# provide very helpful in creating this dashboard.
+
 import dash
 from dash import html, dcc, callback, Output, Input
 from data_import import df_curr_enrollment
 import plotly.express as px
+import dash_bootstrap_components as dbc
 
-dash.register_page(__name__, path='/simple_enrollment_dashboard')
+dash.register_page(__name__, path='/simple_interactive_dashboard')
 
 # Configuring the page's layout:
-layout = [
-    dcc.Markdown('''
+layout = dbc.Container([
+    dbc.Row(dbc.Col(dcc.Markdown('''
 
-    # Simple Enrollment Dashboard
+    # Simple Interactive Enrollment Dashboard
     
     This dashboard provides a relatively simple overview of NVCU enrollment. 
     There are five preset comparison options and two preset filter options,
@@ -27,26 +32,38 @@ layout = [
     Dash-Pivottable library (e.g. the 'Dash pivottable survey results' 
     dashboard), but it can still serve as a helpful introduction 
     to some of Dash's core features.
-    '''),
 
-    html.H4("Comparison Options:"),
-    dcc.Dropdown(['College', 'Level', 
+    This dashboard also applies the [Dash Bootstrap Components](
+    https://dash-bootstrap-components.opensource.faculty.ai/docs/components/layout/) library in order
+    to create a more condensed layout that accommodates a range of 
+    screen sizes.
+    
+    '''), lg = 9)),
+    dbc.Row([
+        dbc.Col(html.H5("Comparison Options:"), lg = 3),
+    dbc.Col(dcc.Dropdown(['College', 'Level', 
                   'College and Level', 'Level and College', 
                   'All Students'], 'College and Level', 
-                 id = 'simple_enrollment_index'),
-    html.H4("College Filter:"),
-    dcc.Dropdown(df_curr_enrollment['College'].unique(),
+                 id = 'simple_enrollment_index'), lg = 2)
+           ]),
+    dbc.Row([
+        dbc.Col(html.H5("College Filter:"), lg = 3),
+    dbc.Col(
+        dcc.Dropdown(df_curr_enrollment['College'].unique(),
                  df_curr_enrollment['College'].unique(),
                  multi = True,
-                id = 'college_filter'),
-    html.H4("Level Filter:"),
-    dcc.Dropdown(df_curr_enrollment['Level'].unique(),
+                id = 'college_filter'), lg = 3),
+        ]),
+    dbc.Row([
+        dbc.Col(html.H5("Level Filter:"), lg = 3),
+    dbc.Col(dcc.Dropdown(df_curr_enrollment['Level'].unique(),
                  df_curr_enrollment['Level'].unique(),
                  multi = True,
-                id = 'level_filter'),
+                id = 'level_filter'), lg = 3)
+    ]),
     # For more information about the multi-dropdown option,
     # see https://dash.plotly.com/dash-core-components/dropdown
-    dcc.Graph(id='simple_enrollment_view')]
+    dcc.Graph(id='simple_enrollment_view')])
 
 # Configuring a callback that can convert the index and filter options
 # specified by the user into a custom chart:

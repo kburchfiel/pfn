@@ -3,10 +3,11 @@
 
 import dash
 from dash import html, dcc
+import dash_bootstrap_components as dbc
 
 dash.register_page(__name__, path='/')
 
-layout = html.Div([
+layout = dbc.Container([
     dcc.Markdown(''' 
     # [Python For Nonprofits](https://github.com/kburchfiel/pfn)' \
     Main Dash App Demo \
@@ -15,9 +16,12 @@ layout = html.Div([
     interactive online visualizations. These visualizations range \
     from simple charts to more complex interactive setups.
 
-    The **/simple_enrollment_dashboard** page displays a relatively straightforward
+    The **/simple_interactive_dashboard** page displays a relatively straightforward
     interactive enrollment dashboard. This dashboard didn't take much
     code at all to write, but its functionality is rather limited.
+
+    The **/fixed_dashboard** page shows an even simpler dashboard that lacks
+    user-defined filter and comparison settings. 
     
     The dash-pivottable library makes it very easy to \
     create interactive dashboards. Examples of this library in use can \
