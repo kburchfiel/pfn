@@ -13,7 +13,7 @@ Appendix/launch_pfnv2.bat
 **-checkpoint**
 pfn_2_project_plans_and_notes.xlsx
 **.pyc
-**_OLD_**
+**_OLD**
 Mapping/test_screenshot.png
 Mapping/maps/basic_choropleth.html
 Mapping/maps/choropleth_with_tooltips.html
@@ -26,4 +26,4 @@ Output_Free_PDF_Copies
 Mapping/choropleth_map_functions_for_pdf.ipynb
 dash_notebook_test.ipynb
 Old_App_Copies/
-Graphing/pivot_and_graph_functions.ipynb
+**.jupyterlab-workspace**

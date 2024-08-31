@@ -44,7 +44,9 @@ This section will show how to create linear regressions within Python.
 
 ### [Graphing](https://github.com/kburchfiel/pfn/tree/main/Graphing) (Work in progress)
 
-Plotly is a powerful tool for creating both interactive and static charts. I've started working on the [graphing.ipynb](https://github.com/kburchfiel/pfn/blob/main/Graphing/graphing.ipynb); once it's complete, it will demonstrate how to create bar, line, and scatter plots along with treemaps (an alternative to pie charts).
+[graphing.ipynb](https://github.com/kburchfiel/pfn/blob/main/Graphing/graphing.ipynb)  currently shows how to use the Plotly library to create static and interactive bar charts. I plan to expand this script to demonstrate how to create line charts, scatter plots, and tree maps within Plotly as well. 
+
+[pivot_and_graph_functions.ipnyb](https://github.com/kburchfiel/pfn/blob/main/Graphing/pivot_and_graph_functions.ipynb) defines 'autopivot' and 'autobar' functions that can greatly reduce the amount of code needed to convert DataFrames into Plotly graphs. These functions will also get applied within the Online Visualizations section of PFN--though I haven't integrated them into that section just yet.
 
 ### [Mapping](https://github.com/kburchfiel/pfn_2/tree/main/Mapping)
 
