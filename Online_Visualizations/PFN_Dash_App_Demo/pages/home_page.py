@@ -23,6 +23,11 @@ layout = dbc.Container([
     The **/fixed_dashboard** page shows an even simpler dashboard that lacks
     user-defined filter and comparison settings. 
     
+    The **/flexible_interactive_dashboard** page allows for a wide range of 
+    comparison and color options. These options are made possible by the 
+    autopivot() and autobar() functions found within auto_pivot_and_graph.py
+    (see source code for details).
+
     The dash-pivottable library makes it very easy to \
     create interactive dashboards. Examples of this library in use can \
     be found within the **/dash_pivottable_enrollment** \
