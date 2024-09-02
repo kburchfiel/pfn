@@ -17,7 +17,7 @@ import plotly.express as px
 import dash_bootstrap_components as dbc
 from auto_pivot_and_graph import autopivot_plus_bar
 
-dash.register_page(__name__, path='/flexible_interactive_dashboard')
+dash.register_page(__name__, path='/flexible_survey_results_dashboard')
 
 # Configuring the page's layout:
 layout = dbc.Container([
@@ -25,7 +25,7 @@ layout = dbc.Container([
 
     # Flexible Interactive Survey Results Dashboard
     
-    This dashboard provides a flexible overview of NVCU Survey Results. It utilizes the autopivot() and autobar() functions found within
+    This dashboard provides a flexible overview of NVCU student survey results. It utilizes the autopivot() and autobar() functions found within
     auto_pivot_and_graph.py to allow for a wide range of display options.
     
     This dashboard also applies the [Dash Bootstrap Components](
