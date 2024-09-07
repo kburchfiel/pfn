@@ -44,8 +44,8 @@ layout = html.Div([
         rows=['College'],
         rowOrder="key_a_to_z",
         rendererName="Grouped Column Chart",
-        aggregatorName="Count",
-        vals=["Count"],
+        aggregatorName="Sum",
+        vals=["Enrollment"],
         valueFilter={}
     ),
     html.Div(

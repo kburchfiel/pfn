@@ -125,11 +125,11 @@ def display_graph(pivot_index, college_filter, level_filter):
     # enrollment chart:
     df_simple_enrollment_pivot = df_curr_enrollment_for_chart.pivot_table(
     index = index,
-    values = 'Count', aggfunc = 'sum').reset_index()
+    values = 'Enrollment', aggfunc = 'sum').reset_index()
     
     # Creating this chart:
     fig_simple_enrollment = px.bar(df_simple_enrollment_pivot, 
-       x = x, y = 'Count', color = color,
+       x = x, y = 'Enrollment', color = color,
       text_auto = '.0f', barmode = barmode,
       title = f'NVCU Enrollment by {pivot_index}')
     return fig_simple_enrollment

@@ -27,3 +27,6 @@ Mapping/choropleth_map_functions_for_pdf.ipynb
 dash_notebook_test.ipynb
 Old_App_Copies/
 **.jupyterlab-workspace**
+html_copies_for_printing/
+PDF_copies_with_output/
+test_image.html

@@ -16,17 +16,22 @@ layout = dbc.Container([
     interactive online visualizations. These visualizations range \
     from simple charts to more complex interactive setups.
 
-    The **/simple_interactive_dashboard** page displays a relatively straightforward
-    interactive enrollment dashboard. This dashboard didn't take much
-    code at all to write, but its functionality is rather limited.
+    The **/simple_interactive_dashboard** page displays a relatively \
+    straightforward interactive enrollment dashboard. This dashboard \
+    didn't require much code to write, but its functionality is rather \ 
+    limited.
 
-    The **/fixed_dashboard** page shows an even simpler dashboard that lacks
-    user-defined filter and comparison settings. 
+    The **/fixed_dashboard** page shows an even simpler dashboard that \ 
+    lacks user-defined filter and comparison settings. 
     
-    The **/flexible_interactive_dashboard** page allows for a wide range of 
+    The **/flexible_survey_results_dashboard** and \
+    **/flexible_enrollment_dashboard** pages allow for a wide range of 
     comparison and color options. These options are made possible by the 
-    autopivot() and autobar() functions found within auto_pivot_and_graph.py
-    (see source code for details).
+    autopivot() and autobar() functions found within \
+    auto_pivot_and_graph.py (see source code for details). The 
+    flexible_enrollment_dashboard also makes use of an import_layout() 
+    function in order to reduce the amount of code needed to define
+    the page's structure and menu options.
 
     The dash-pivottable library makes it very easy to \
     create interactive dashboards. Examples of this library in use can \

@@ -24,8 +24,8 @@ def improve_col_display(df):
     df.rename(
         columns = {'Student Id':'Student ID'}, inplace = True)
 
-if offline_import == True: # In this case, the source data will get read in
-    # locally.
+if offline_import == True: # In this case, the source data will get 
+    # imported from a local file.
     print("Importing source data from local .csv files.")
     df_curr_enrollment = pd.read_csv(
         '../../Appendix/curr_enrollment.csv')
@@ -45,9 +45,10 @@ print("Imported current enrollment data.") # ALlows us to check how many
 print("Imported survey results.")
 
 
-# Adding a 'Count' column (which will be useful for pivot tables):
+# Adding an 'Enrollment' column (which will be useful for pivot tables)
+# and chart titles:
 improve_col_display(df_curr_enrollment)
-df_curr_enrollment['Count'] = 1
+df_curr_enrollment['Enrollment'] = 1
 
 
 improve_col_display(df_survey_results)
@@ -55,10 +56,10 @@ df_survey_results['Count'] = 1
 
 # Merging our survey and enrollment data together in order to allow
 # survey results to be compared by college, level, etc.:
-df_survey_results_extra_data = df_survey_results.drop('Count', axis = 1).merge(
+df_survey_results_extra_data = df_survey_results.merge(
     df_curr_enrollment, on = 'Student ID', how = 'left')[
 ['Starting Year', 'Season', 'Score', 'Gender', 'Matriculation Year',
- 'College', 'Class Of', 'Level', 'Level For Sorting', 'Count']]
+ 'College', 'Class Of', 'Level', 'Level For Sorting']]
 df_survey_results_extra_data
 print("Merged enrollment and survey data together to create \
 df_survey_results_extra_data.")

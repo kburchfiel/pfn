@@ -380,8 +380,12 @@ or 'custom.'")
         driver = webdriver.Chrome(options=options) 
         # Source: https://www.selenium.dev/documentation/webdriver/browsers/chrome/
         
-        # Navigating to the map:
-        driver.get(f"{html_map_folder}/{map_filename}.html")
+        # Navigating to our map:
+        # Note: I needed to precede the local path with 'file://' as 
+        # noted by GitHub user lukeis here: 
+        # https://github.com/seleniumhq/selenium-google-code-issue-
+        # archive/issues/3997#issuecomment-192014472
+        driver.get(f"file://{html_map_folder}/{map_filename}.html")
         # Source: https://www.selenium.dev/documentation/
         time.sleep(3) # Helps ensure that the browser has enough 
         # time to download
@@ -391,7 +395,8 @@ or 'custom.'")
         # there may not be any need to call
         # time.sleep().
         # Taking our screenshot and then saving it as a PNG image:
-        driver.get_screenshot_as_file(f"{png_map_folder}/{map_filename}.png")
+        driver.get_screenshot_as_file(
+            f"{png_map_folder}/{map_filename}.png")
         # Source: 
         # https://selenium-python.readthedocs.io/api.html#selenium.webdriver.remote.webdriver.WebDriver.get_screenshot_as_file
         

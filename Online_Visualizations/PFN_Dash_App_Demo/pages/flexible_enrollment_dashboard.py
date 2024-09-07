@@ -30,7 +30,7 @@ dash.register_page(__name__, path='/flexible_enrollment_dashboard')
 # are many columns within the DataFrame, this approach can require
 # less typing than would adding in all columns to be included.)
 
-cols_to_exclude = ['Date of Birth', 'First Name', 'Last Name', 'Student ID']
+cols_to_exclude = ['Date Of Birth', 'First Name', 'Last Name', 'Student ID', 'Matriculation Number', 'Enrollment']
 comparison_list = list(set(df_curr_enrollment.columns) - set(cols_to_exclude))
 color_list = comparison_list.copy() # In this case, this list will be the same 
 # as comparison_list.
@@ -97,16 +97,19 @@ def display_graph(x_vars, color, college_filter, level_filter, gender_filter):
     ('Level',level_filter),
     ('Gender',gender_filter)
     ]
-    
     print('x_vars contents and type:',x_vars,type(x_vars))
     print('color contents and type:',color,type(color))
-    
+
+    # '' is passed to custom_aggfunc_name so that
+    # the chart title will begin with 'Enrollment'
+    # rather than 'Total Enrollment.'
     return autopivot_plus_bar(
-        df = df_curr_enrollment, y = 'Count', 
+        df = df_curr_enrollment, y = 'Enrollment', 
         aggfunc = 'sum', x_vars = x_vars, color = color,
     x_vars_to_exclude = ['Level For Sorting'], 
         overall_data_name = 'All Data',
-    weight_col = None, filter_tuple_list = filter_tuple_list)
+    weight_col = None, filter_tuple_list = filter_tuple_list,
+    custom_aggfunc_name = '')
 
         
 

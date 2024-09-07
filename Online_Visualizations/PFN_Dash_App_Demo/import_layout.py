@@ -1,3 +1,7 @@
+# import_layout() function definition
+# By Kenneth Burchfiel
+# Released under the MIT license
+
 import dash
 from dash import html, dcc, callback, Output, Input
 import dash_bootstrap_components as dbc

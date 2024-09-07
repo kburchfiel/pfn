@@ -13,11 +13,11 @@ import plotly.express as px
 
 df_enrollment_by_college_and_level = df_curr_enrollment.pivot_table(
     index = ['College', 'Level For Sorting', 'Level'],
-    values = 'Count', aggfunc = 'sum').reset_index()
+    values = 'Enrollment', aggfunc = 'sum').reset_index()
 
 # Creating a graph of this pivot table:
 fig_enrollment_by_college_and_level = px.bar(df_enrollment_by_college_and_level, 
-       x = 'College', y = 'Count', color = 'Level',
+       x = 'College', y = 'Enrollment', color = 'Level',
       barmode = 'group',
       text_auto = '.0f',
       title = 'NVCU Enrollment by College and Level')
@@ -26,19 +26,19 @@ fig_enrollment_by_college_and_level = px.bar(df_enrollment_by_college_and_level,
 # by college and by level (but not both):
 df_enrollment_by_college = df_curr_enrollment.pivot_table(
     index = ['College'],
-    values = 'Count', aggfunc = 'sum').reset_index()
+    values = 'Enrollment', aggfunc = 'sum').reset_index()
 
 fig_enrollment_by_college = px.bar(df_enrollment_by_college, 
-       x = 'College', y = 'Count', color = 'College',
+       x = 'College', y = 'Enrollment', color = 'College',
       text_auto = '.0f',
       title = 'NVCU Enrollment by College')
 
 df_enrollment_by_level = df_curr_enrollment.pivot_table(
     index = ['Level For Sorting', 'Level'],
-    values = 'Count', aggfunc = 'sum').reset_index()
+    values = 'Enrollment', aggfunc = 'sum').reset_index()
 
 fig_enrollment_by_level = px.bar(df_enrollment_by_level, 
-       x = 'Level', y = 'Count', color = 'Level',
+       x = 'Level', y = 'Enrollment', color = 'Level',
       text_auto = '.0f',
       title = 'NVCU Enrollment by Level')
 
