@@ -32,20 +32,22 @@ def import_layout(df, comparison_list, comparison_default,
     # the Dash app code:
     # This layout will include rows for comparisons and color options.
     layout = [dbc.Row([
-        dbc.Col(html.H5("Comparison Options:"), lg = 3),
+        dbc.Col(html.H5("Comparison Options:"), lg = 2),
     dbc.Col(dcc.Dropdown(
         comparison_list,
         comparison_default, multi = True,
-                 id = 'comparison_options'), lg = 2),
-        dbc.Col(html.H5("Color Option:"), lg = 3),
+                 id = 'comparison_options'), lg = 3),
+        dbc.Col(html.H5("Color Option:"), lg = 2),
     dbc.Col(dcc.Dropdown(
         color_list, color_default, 
         id = 'color_option'), lg = 2)])]
 
     # Adding filter rows for each column in filter_cols:
+    # Note that each filter will get added to the layout
+    # via an addition operation.
     for filter_col in filter_cols:
         layout += [dbc.Row([
-        dbc.Col(html.H5(f"{filter_col} Filter:"), lg = 3),
+        dbc.Col(html.H5(f"{filter_col} Filter:"), lg = 2),
         dbc.Col(
         dcc.Dropdown(df_layout[filter_col].unique(),
                  df_layout[filter_col].unique(),
@@ -53,7 +55,7 @@ def import_layout(df, comparison_list, comparison_default,
                 id = f'{filter_col}_filter'), lg = 3)
         ])]
 
-    print("Layout:",layout)
+    # print("Layout:",layout) # May be useful for debugging
 
     
     return layout

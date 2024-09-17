@@ -1,13 +1,16 @@
-# Auto Pivot and Graph functions
+# Functions for automatically generating pivot tables, graphs,
+# and go.Table objects
 # By Kenneth Burchfiel
 
 # Released under the MIT license
 
-# These functions were originally developed from the 
-# pivot_and_graph_functions.ipynb notebook wihtin the Graphing section
+# These functions were originally developed within the 
+# pivot_and_graph_functions.ipynb notebook in the Graphing section
 # of Python for Nonprofits.
 
 import plotly.express as px
+import plotly.graph_objects as go
+from dash import dash_table
 
 def autopivot(df, y, aggfunc, x_vars = [], 
                      color = None, x_vars_to_exclude = [],
@@ -297,7 +300,7 @@ def autobar(df_pivot, x_val_name, y, color, barmode, x_var_count,
     # Therefore, the following code replaces 'count' and 'sum' within
     # titles with 'Total'; other aggregate function names are left
     # in place.
-
+    
     if custom_aggfunc_name is not None:
         aggfunc_name = custom_aggfunc_name
     else:
@@ -307,7 +310,15 @@ def autobar(df_pivot, x_val_name, y, color, barmode, x_var_count,
             aggfunc_name = aggfunc
     
     if x_var_count == 0: 
-        plot_title = f"Overall {aggfunc_name.title()} {y}"
+        # The caller may have set aggfunc_name to '' in order to 
+        # exclude the aggregate function from display. In this case,
+        # aggfunc_name shouldn't be included within the plot_title
+        # definition, as doing so would add an extra space
+        # to the title.
+        if len(aggfunc_name) == 0:
+            plot_title = f"Overall {y}"    
+        else:
+            plot_title = f"Overall {aggfunc_name.title()} {y}"
     elif len(index) == 1:
         plot_title = f"{aggfunc_name.title()} {y} by {index[0]}"
     elif len(index) == 2:
@@ -316,11 +327,15 @@ by {index[0]} and {index[1]}"
     else:
         plot_title = f"{aggfunc_name.title()} {y} by {(', ').join(
             index[0:-1])}, and {index[-1]}" 
-        
-    # The following code will still work if color is set to None.
-    fig = px.bar(df_pivot, x = x_val_name, y = y, 
-           color = color, barmode = barmode,
-           text_auto = '.1f', title = plot_title)
+
+    if len(df_pivot) > 0:
+        # The following code will still work if color is set to None.
+        fig = px.bar(df_pivot, x = x_val_name, y = y, 
+               color = color, barmode = barmode,
+               text_auto = '.1f', title = plot_title)
+    else: # In this case, there's no data to plot,
+        # so an empty figure will be returned instead.
+        fig = px.bar(title=plot_title)
     if x_var_count == 0: # In this case, the x axis tick, x axis title, 
         # and legend entry will all be the same, so we can hide two 
         # of those elements.
@@ -328,15 +343,40 @@ by {index[0]} and {index[1]}"
                          xaxis_title = None)
     return fig
 
+def autotable(df_pivot):
+    '''This function converts a DataFrame into a Graph Objects-based
+    Table.'''
+
+    # For more details about go.Table objects, see:
+    # https://plotly.com/python/table/
+    # The following code was based on:
+    # https://plotly.com/python/table/#use-a-pandas-dataframe
+    table = go.Figure(data=[go.Table(
+        header=dict(values=list(df_pivot.columns),
+                    fill_color='lightgray',
+                    align='left'),
+        cells=dict(values = [df_pivot[column] 
+                for column in df_pivot.columns],
+                   fill_color='white',
+                   align='left'))
+    ])
+
+    return table
+
+
 def autopivot_plus_bar(
     df, y, aggfunc, x_vars = [], color = None, 
     x_vars_to_exclude = [], overall_data_name = 'All Data',
     weight_col = None, filter_tuple_list = [],
-    custom_aggfunc_name = None, convert_x_vars_to_strings = True):
+    custom_aggfunc_name = None, convert_x_vars_to_strings = True,
+    create_table = False):
     '''This function calls both autopivot() and autobar(), thus 
     simplifying the process of using both functions within a script. 
     See autopivot() and autobar()'s individual function definitions 
-    for more documentation on each.'''
+    for more documentation on each.
+    
+    create_table: set to True to return a table along with the bar 
+    graph.'''
         
     df_pivot, x_val_name, y, color, barmode, x_var_count, \
     index, aggfunc = autopivot(
@@ -346,13 +386,23 @@ def autopivot_plus_bar(
         overall_data_name = overall_data_name, weight_col = weight_col,
     filter_tuple_list = filter_tuple_list,
     convert_x_vars_to_strings=convert_x_vars_to_strings)
-    
+
     fig_bar = autobar(
         df_pivot = df_pivot, x_val_name = x_val_name, y = y, 
         color = color, barmode = barmode, x_var_count = x_var_count, 
         index = index, aggfunc = aggfunc, 
         custom_aggfunc_name=custom_aggfunc_name)
 
-    return fig_bar
+    if create_table == False:
+        return fig_bar
+
+    else: # In this case, a tabular view of df_pivot will get 
+        # created via autotable(), after which the function will
+        # return both fig_bar and this tabular view.
+        table = autotable(df_pivot)
+        
+        return fig_bar, table
+
+    
 
 

@@ -39,9 +39,9 @@ layout = dbc.Container([
     dbc.Col(dcc.Dropdown(
         ['Starting Year', 'Season', 'Gender', 'Matriculation Year',
        'College', 'Class Of', 'Level', 'Level For Sorting'], 
-        ['Season'], multi = True,
-                 id = 'flexible_survey_results_index'), lg = 2),
-        dbc.Col(html.H5("Color Option:"), lg = 3),
+        ['College', 'Season'], multi = True,
+                 id = 'flexible_survey_results_index'), lg = 3),
+        dbc.Col(html.H5("Color Option:"), lg = 2),
     dbc.Col(dcc.Dropdown(
         ['Starting Year', 'Season', 
          'Score', 'Gender', 'Matriculation Year',
