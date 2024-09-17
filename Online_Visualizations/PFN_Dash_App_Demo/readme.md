@@ -9,13 +9,18 @@ from simple charts to more complex interactive setups.
 The [Fixed Dashboard](https://pfndashappdemo-ymc7cs3r5q-uc.a.run.app/fixed_dashboard) page shows a very simple 
 dashboard setup that lacks user-defined filter and comparison settings. 
 
+<img src="https://raw.githubusercontent.com/kburchfiel/pfn/main/Online_Visualizations/PFN_Dash_App_Demo/page_screenshots/fixed_dashboard.png" width="300"/>
+
 The [Simple Interactive Dashboard](https://pfndashappdemo-ymc7cs3r5q-uc.a.run.app/simple_interactive_dashboard) page 
 displays a relatively straightforward interactive enrollment dashboard. 
 This dashboard didn't require much code to write, but its functionality 
 is rather limited.
 
-The [Flexible Survey Results](/flexible_survey_results_dashboard) and 
-[Flexible Enrollment](/flexible_enrollment_dashboard) dashboard pages
+<img src="https://raw.githubusercontent.com/kburchfiel/pfn/main/Online_Visualizations/PFN_Dash_App_Demo/page_screenshots/simple_interactive_enrollment_dashboard.png" width="400"/>
+
+
+The [Flexible Survey Results](https://pfndashappdemo-ymc7cs3r5q-uc.a.run.app/flexible_survey_results_dashboard) and 
+[Flexible Enrollment](https://pfndashappdemo-ymc7cs3r5q-uc.a.run.app/flexible_enrollment_dashboard) dashboard pages
 allow for a wide range of comparison and color options. These options are 
 made possible by the autopivot() and autobar() functions found within 
 [auto_pivot_and_graph.py](https://github.com/kburchfiel/pfn/blob/main/Online_Visualizations/PFN_Dash_App_Demo/auto_pivot_and_graph.py). (You may also find these functions useful for 
@@ -28,9 +33,14 @@ the page's structure and menu options. In addition, this dashboard
 applies the autotable() function in [auto_pivot_and_graph.py](https://github.com/kburchfiel/pfn/blob/main/Online_Visualizations/PFN_Dash_App_Demo/auto_pivot_and_graph.py)) to display
 a tabular view of the data featured in the graph.
 
+<img src="https://raw.githubusercontent.com/kburchfiel/pfn/main/Online_Visualizations/PFN_Dash_App_Demo/page_screenshots/flexible_enrollment_dashboard.png" width="400"/>
+
 The dash-pivottable library makes it very easy to 
 create interactive dashboards. Examples of this library in use can 
 be found within the [Dash Pivottable (Enrollment)](https://pfndashappdemo-ymc7cs3r5q-uc.a.run.app/dash_pivottable_enrollment) and [Dash Pivottable (Survey Results)](https://pfndashappdemo-ymc7cs3r5q-uc.a.run.app/dash_pivottable_survey_results) pages.
+
+<img src="https://raw.githubusercontent.com/kburchfiel/pfn/main/Online_Visualizations/PFN_Dash_App_Demo/page_screenshots/dash_pivottable_enrollment.png" width="600"/>
+
 
 ## Development notes:
 
