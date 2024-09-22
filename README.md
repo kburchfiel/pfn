@@ -1,4 +1,4 @@
-# Python for Nonprofits (Version 2)
+# Python for Nonprofits
 
 By Kenneth Burchfiel
 

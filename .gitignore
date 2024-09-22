@@ -31,3 +31,5 @@ html_copies_for_printing/
 PDF_copies_with_output/
 test_image.html
 Online_Visualizations/PFN_Dash_App_Demo/readme_nb_for_pdf_export.ipynb
+PDF_Copies/pdf_numbering_code.txt
+PDF_Copies/qpdf_merge_code.txt
