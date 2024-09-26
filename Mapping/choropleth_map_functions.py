@@ -11,15 +11,18 @@ import time
 import os
 from branca.utilities import color_brewer
 # color_brewer source code: 
-# https://github.com/python-visualization/branca/blob/main/branca/utilities.py
+# https://github.com/python-visualization/branca/blob/main/branca/
+# utilities.py
 
 from selenium import webdriver
 
 import branca.colormap as cm
-# From https://python-visualization.github.io/folium/latest/advanced_guide/colormaps.html#StepColormap
+# From https://python-visualization.github.io/folium/latest/
+# advanced_guide/colormaps.html#StepColormap
 from branca.colormap import StepColormap # From Folium's features.py
 # source code: 
-# https://github.com/python-visualization/folium/blob/main/folium/features.py
+# https://github.com/python-visualization/folium/blob/main/
+# folium/features.py
 
 
 
@@ -53,8 +56,10 @@ def cptt(
     The function also adds in boundary labels upon request.
 
     Note: Much of this function is based on the sample code found at 
-    https://python-visualization.github.io/folium/latest/user_guide/geojson/geojson_popup_and_tooltip.html
-    and https://python-visualization.github.io/folium/latest/user_guide/geojson/geojson.html .
+    https://python-visualization.github.io/folium/latest/user_guide/
+    geojson/geojson_popup_and_tooltip.html
+    and https://python-visualization.github.io/folium/latest/user_guide/
+    geojson/geojson.html .
     
     starting_lat, starting_lon, and zoom_start: the initial latitude,
     longitude, and zoom to pass to folium.Map(), respectively. For maps
@@ -62,9 +67,9 @@ def cptt(
     of 38 and a starting longitude of -95.
     
     gdf: A GeoDataFrame containing both boundary outlines and statistical
-    data to visualize. Note that, in order to reduce the size of the resulting
-    map, gdf will be condensed to include only those columns necessary
-    for creating the map and adding in tooltips.
+    data to visualize. Note that, in order to reduce the size of the 
+    resulting map, gdf will be condensed to include only those columns 
+    necessary for creating the map and adding in tooltips.
     
     data_col: the column within gdf containing data to visualize.
     
@@ -83,8 +88,8 @@ def cptt(
     bin_type: Set to 'linear' (the default argument) to create 
     equally spaced bins; 'percentile' to base choropleth colors on 
     percentiles (resulting in roughly equal numbers of results per bin);
-    or 'custom' to pass in a list of custom bins. (The custom option can be
-    particularly useful when you wish to use the same set of bins for 
+    or 'custom' to pass in a list of custom bins. (The custom option can 
+    be particularly useful when you wish to use the same set of bins for 
     multiple maps.)
 
     bin_count: The number of separate colors to show within the map. This
@@ -97,47 +102,50 @@ def cptt(
     Options can be found on https://colorbrewer2.org/ . 
     In order to reverse
     a scheme, add '_r' to the end (e.g. 'RdYlBu_r'). Source:
-    https://github.com/python-visualization/branca/blob/main/branca/utilities.py
+    https://github.com/python-visualization/branca/blob/main/branca/
+    utilities.py
 
     save_html: set to True to save this map as an HTML file.
     
-    save_screenshot: set to True in order to generate a screenshot of the map,
-    then save it as a .PNG file. In order for this screenshot to get created,
-    save_html must also be set to True.
+    save_screenshot: set to True in order to generate a screenshot of 
+    the map, then save it as a .PNG file. In order for this screenshot 
+    to get created, save_html must also be set to True.
 
     driver_window_width and driver_window_height: the default width and 
-    height, respectively, of the Selenium driver window that will be called
-    to generate a screenshot. The default settings work well for maps
-    of the contiguous United States.
+    height, respectively, of the Selenium driver window that will be 
+    called to generate a screenshot. The default settings work well 
+    for maps of the contiguous United States.
 
     map_filename: The name to use when saving the map. The script will add
     the correct extension (e.g. 'html') to this map, so leave that portion
     out of the argument.
 
     html_map_folder and png_map_folder: The folders 
-    in which to store HTML and PNG versions of maps, respectively. Note that,
-    if you're generating screenshots, html_map_folder needs to be an absolute
-    path (so that it can get interpreted correctly by the Selenium-driven
-    browser). For instance, if your html_map_folder is titled 'maps' and 
-    stored within your directory, pass os.getcwd()+'/maps' as your 
-    html_map_folder argument.
+    in which to store HTML and PNG versions of maps, respectively. 
+    Note that, if you're generating screenshots, html_map_folder needs 
+    to be an absolute path (so that it can get interpreted correctly by 
+    the Selenium-driven browser). For instance, if your html_map_folder 
+    is titled 'maps' and stored within your directory, pass 
+    os.getcwd()+'/maps' as your html_map_folder argument.
 
     geometry_col: The column in gdf that stores shape boundary data.
 
     Tiles: the tile provider to use for your map. Note that different tile 
-    services use different licenses for their tiles. If you don't want to use
-    any tiles, enter None (no quotes) as your argument for this parameter.
+    services use different licenses for their tiles. If you don't want 
+    to use any tiles, enter None (no quotes) as your argument 
+    for this parameter.
 
     choropleth_opacity: a float, ranging from 0 to 1, that determines
-    how opaque to make the colors within the choropleth map. If tiles is set
-    to None, consider setting choropleth_opacity to 1.
+    how opaque to make the colors within the choropleth map. If tiles 
+    is set to None, consider setting choropleth_opacity to 1.
 
-    add_boundary_labels: Set to True to label each boundary within the map.
+    add_boundary_labels: Set to True to label each boundary within 
+    the map.
     
-    boundary_label_lon_shift and boundary_label_lat_shift: Integers that specify
-    how far west and north to shift boundary labels so that they appear
-    more centered. (These values will get passed to the icon_anchor parameter
-    of our DivIcons.)
+    boundary_label_lon_shift and boundary_label_lat_shift: Integers that 
+    specify how far west and north to shift boundary labels so that they 
+    appear more centered. (These values will get passed to the 
+    icon_anchor parameter of the DivIcons.)
 
     boundary_label_col: The column to use as a source for boundary labels.
     You may choose to set this to be the same as data_col or boundary_name
@@ -150,12 +158,13 @@ def cptt(
     round the boundary labels. Set to 0 to round to whole numbers, to 1 to
     round to tenths, and so forth.
 
-    delete_html_file: set to True in order to delete the HTML file saved by
-    this function. (This can be useful when you are calling this function
-    only to create a screenshot of a map. Once the screenshot has been saved,
-    the original HTML file no longer needs to be retained.) Note that, if
-    save_html is set to False, the program will *not* attempt to delete
-    the HTML file, as it's likely that one doesn't exist to begin with.
+    delete_html_file: set to True in order to delete the HTML file saved 
+    by this function. (This can be useful when you are only calling this 
+    function only to create a screenshot of a map. Once the screenshot 
+    has been saved, the original HTML file no longer needs to be 
+    retained.) Note that, if save_html is set to False, the program 
+    will *not* attempt to delete the HTML file, as it's likely that one 
+    doesn't exist to begin with.
     '''
 
     
@@ -163,7 +172,8 @@ def cptt(
     # the sizes of gdf and gdf_condensed.
     
     # print(gdf.memory_usage(deep=True).sum() / 1000000)
-    # See https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.memory_usage.html
+    # See https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.
+    # memory_usage.html
 
     # Creating a condensed version of gdf that can serve as the basis for 
     # the map: (Condensing the DataFrame prevents unnecessary columns
@@ -187,8 +197,9 @@ def cptt(
 
    
     # Adding labels to each boundary:
-    # (Note: this code will work better for larger shapes, such as US states,
-    # and likely less well for smaller boundaries like counties or zip codes.)
+    # (Note: this code will work better for larger shapes, such as US 
+    # states, and likely less well for smaller boundaries like counties 
+    # or zip codes.)
     # Adding these labels prior to creating our tooltips ensures that
     # the former won't block the latter when the user is interacting with
     # the map.
@@ -206,7 +217,9 @@ def cptt(
             [coord.y, coord.x] for coord in 
          gdf_condensed['geometry'].representative_point()]
         # Documentation for representative_point(): 
-        # https://geopandas.org/en/stable/docs/reference/api/geopandas.GeoSeries.representative_point.html#geopandas.GeoSeries.representative_point
+        # https://geopandas.org/en/stable/docs/reference/api/geopandas.
+        # GeoSeries.representative_point.html#geopandas.GeoSeries.
+        # representative_point
         # x and y are attributes of Geoseries objects:
         # https://geopandas.org/en/stable/docs/reference/geoseries.html
     
@@ -214,9 +227,11 @@ def cptt(
         # Using these reference points to add the values stored
         # in boundary_label_col as boundary labels:
         for i in range(len(gdf_condensed)):
-            boundary_label = gdf_condensed.iloc[i][boundary_label_col].copy()
+            boundary_label = gdf_condensed.iloc[i][
+            boundary_label_col].copy()
             if round_boundary_labels == True:
-                boundary_label = boundary_label.round(boundary_label_round_val)
+                boundary_label = boundary_label.round(
+                    boundary_label_round_val)
             folium.Marker(location = gdf_condensed.iloc[i][
                           'boundary_label_reference_points'],
                          icon = folium.features.DivIcon(
@@ -226,12 +241,14 @@ def cptt(
                          ).add_to(m)
         # Part of the folium.Marker() call above is based on an example 
         # by StackOverflow user 'r-beginners'
-        # (who pointed out that you could pass a DivIcon to the 'icon' parameter 
+        # (who pointed out that you could pass a DivIcon to the 'icon' 
+        # parameter 
         # within a Marker in order to add text labels to shapes). 
         # Source: https://stackoverflow.com/a/72588910/13097194
         # The use of icon_anchor to adjust the labels' locations
         # comes from the DivIcon documentation at:
-        # https://python-visualization.github.io/folium/latest/reference.html#folium.features.DivIcon
+        # https://python-visualization.github.io/folium/latest/
+        # reference.html#folium.features.DivIcon
     
     
     # Creating the tooltips:
@@ -239,7 +256,8 @@ def cptt(
     tooltip_field_list = [
         boundary_name_col, data_col] + tooltip_variable_list
 
-    alias_list = [boundary_name_alias, data_col_alias] + tooltip_alias_list
+    alias_list = [boundary_name_alias, 
+                  data_col_alias] + tooltip_alias_list
 
     
     # print(tooltip_field_list, alias_list)
@@ -263,17 +281,20 @@ def cptt(
     if bin_type == 'custom': # In this case, bin_count will be overwritten
         # by the length of custom_threshold_list minus 1. (The number of
         # bins will always be one less than the number of thresholds, as 
-        # two thresholds are needed to establish the boundaries for one bin.
+        # two thresholds are needed to establish the boundaries for 
+        # one bin.
         # For instance, if you have three thresholds (0, 1, and 2),
         # two bins can be created from this list: 0-1 and 1-2.)
         bin_count = len(custom_threshold_list) - 1
     color_range = color_brewer(color_scheme, n = bin_count)
     # Based on Choropleth() definition within
-    # https://github.com/python-visualization/folium/blob/main/folium/features.py
+    # https://github.com/python-visualization/folium/blob/main/folium/
+    # features.py
     
     # To reverse the set of colors passed to color_scheme, add '_r' 
     # to the end of the string (e.g. 'RdYlBu_r'). Source: 
-    # https://github.com/python-visualization/branca/blob/main/branca/utilities.py
+    # https://github.com/python-visualization/branca/blob/main/branca
+    # /utilities.py
 
 
     # Determining which colors to apply to each result:
@@ -286,25 +307,29 @@ def cptt(
             vmin = gdf_condensed[data_col].min(),
             vmax = gdf_condensed[data_col].max())
         # Based on: 
-        # https://python-visualization.github.io/branca/colormap.html#branca.colormap.StepColormap
+        # https://python-visualization.github.io/branca/colormap.html#
+        # branca.colormap.StepColormap
 
-    else: # In this case, a different approach to creating the StepColorMap
+    else: # In this case, a different approach to creating the 
+        # StepColorMap
         # will be used that better accommodates non-equally-spaced bins.
         
-        if bin_type == 'percentile': # In this case, percentile-based bins will
+        if bin_type == 'percentile': # In this case, 
+            # percentile-based bins will
             # be used.
             bin_thresholds = list(gdf_condensed[data_col].quantile(
             np.linspace(0, 1, bin_count+1))) 
             # For np.linspace() documentation, see:
-            # https://numpy.org/doc/stable/reference/generated/numpy.linspace.html
+            # https://numpy.org/doc/stable/reference/generated/
+            # numpy.linspace.html
     
-        elif bin_type == 'custom': # This condition allows for a set of custom
-            # bins to be passed in.
+        elif bin_type == 'custom': # This condition allows for a set of 
+            # custom bins to be passed in.
             bin_thresholds = custom_threshold_list.copy()
 
         else:
-            raise ValueError("bin_type must be set to 'linear', 'percentile, \
-or 'custom.'")
+            raise ValueError("bin_type must be set to 'linear', \
+'percentile, or 'custom.'")
         
         # The following approach works for both 'percentile' and 
         # 'custom' bin_type conditions.
@@ -312,9 +337,10 @@ or 'custom.'")
             colors = color_range, 
             vmin = bin_thresholds[0], vmax = bin_thresholds[-1],
             index = bin_thresholds)
-        # Based on the self.color_scale initialization within Folium's Choropleth() 
-        # source code (available at
-        # https://github.com/python-visualization/folium/blob/main/folium/features.py )
+        # Based on the self.color_scale initialization within Folium's 
+        # Choropleth()  source code (available at
+        # https://github.com/python-visualization/folium/blob/main/
+        # folium/features.py )
 
     
     # The following code will both assign colors from StepColorMap
@@ -334,7 +360,8 @@ or 'custom.'")
         tooltip=tooltip
     ).add_to(m)
     # The Folium.GeoJSON overview at
-    # https://python-visualization.github.io/folium/latest/user_guide/geojson/geojson.html
+    # https://python-visualization.github.io/folium/latest/
+    # user_guide/geojson/geojson.html
     # contributed to this code as well.
     # Note that we need to add ["properties"] in between x and 
     # [data_col], likely because gdf_condensed
@@ -345,7 +372,8 @@ or 'custom.'")
     # Adding the color legend for the choropleth to the map:
     stepped_cm.add_to(m)
     # Based on:
-    # https://python-visualization.github.io/folium/latest/user_guide/geojson/geojson.html
+    # https://python-visualization.github.io/folium/latest/user_guide/
+    # geojson/geojson.html
 
     if save_html == True:
         m.save(f"{html_map_folder}/{map_filename}.html")
@@ -354,34 +382,45 @@ or 'custom.'")
     if save_screenshot == True:
         print("Generating screenshot.")
         options = webdriver.ChromeOptions()
-        # Source: https://www.selenium.dev/documentation/webdriver/browsers/chrome/
+        # Source: https://www.selenium.dev/documentation/webdriver/
+        # browsers/chrome/
         options.add_argument(f'--window-size={driver_window_width},\
 {driver_window_height}') # I found that this window
         # size, along with a starting zoom of 6 within our mapping code,
-        # created a relatively detailed map of the contiguous 48 US states. 
-        # If you'd like to create an even more detailed map, consider setting 
-        # your starting zoom to 7 and your window size to 6000,3375.
-        options.add_argument('--headless') # In my experience, this addition 
-        # (which prevents the Selenium-driven browser from displaying on your 
-        # computer) was necessary for allowing 4K screenshots to get saved
-        # as 3840x2160-pixel images. Without this line, the screenshots would 
-        # get rendered with a resolution of 3814x1868 pixels.
+        # created a relatively detailed map of the contiguous 48 US 
+        # states. 
+        # If you'd like to create an even more detailed map, 
+        # consider setting your starting zoom to 7 and your window size 
+        # to 6000,3375.
+        options.add_argument('--headless') # In my experience, this 
+        # addition  (which prevents the Selenium-driven browser from 
+        # displaying on your computer) was necessary for allowing 4K 
+        # screenshots to get saved
+        # as 3840x2160-pixel images. Without this line, the 
+        # screenshots would  get rendered with a resolution of 
+        # 3814x1868 pixels.
         # Source of the above two lines:  
-        # https://www.selenium.dev/documentation/webdriver/browsers/chrome/
+        # https://www.selenium.dev/documentation/webdriver/
+        # browsers/chrome/
         # and
-        # https://github.com/GoogleChrome/chrome-launcher/blob/main/docs/chrome-flags-for-tools.md
-        # I learned about the necessity of using headless mode *somewhere* on 
-        # StackOverflow. Many answers to this question regarding generating 
-        # screenshots reference it as an important step, for instance:
-        # https://stackoverflow.com/questions/41721734/take-screenshot-of-full-page-with-selenium-python-with-chromedriver/57338909
+        # https://github.com/GoogleChrome/chrome-launcher/blob/
+        # main/docs/chrome-flags-for-tools.md
+        # I learned about the necessity of using headless mode 
+        # *somewhere* on  StackOverflow. Many answers to the question
+        # linked below regarding generating screenshots reference it 
+        # as an important step, for instance.
+        # https://stackoverflow.com/questions/41721734/take-screenshot
+        # -of-full-page-with-selenium-python-with-chromedriver/57338909
 
         
         # Launching the Selenium driver:
         driver = webdriver.Chrome(options=options) 
-        # Source: https://www.selenium.dev/documentation/webdriver/browsers/chrome/
+        # Source: https://www.selenium.dev/documentation/webdriver/
+        # browsers/chrome/
         
         # Navigating to our map:
-        # Note: I needed to precede the local path with 'file://' as 
+        # Note: In order to get the following code to work within
+        # Linux, I needed to precede the local path with 'file://' as 
         # noted by GitHub user lukeis here: 
         # https://github.com/seleniumhq/selenium-google-code-issue-
         # archive/issues/3997#issuecomment-192014472
@@ -398,7 +437,8 @@ or 'custom.'")
         driver.get_screenshot_as_file(
             f"{png_map_folder}/{map_filename}.png")
         # Source: 
-        # https://selenium-python.readthedocs.io/api.html#selenium.webdriver.remote.webdriver.WebDriver.get_screenshot_as_file
+        # https://selenium-python.readthedocs.io/api.html#selenium.
+        # webdriver.remote.webdriver.WebDriver.get_screenshot_as_file
         
         # Exiting out of the webdriver:
         driver.quit()
