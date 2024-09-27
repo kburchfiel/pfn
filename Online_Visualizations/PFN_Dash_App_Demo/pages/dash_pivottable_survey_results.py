@@ -1,5 +1,5 @@
-# This code shows how to use the dash-pivottable library to easily create an
-# interactive survey results dashboard.
+# This code shows how to use the dash-pivottable library to easily create 
+# an interactive survey results dashboard.
 
 # For additional documentation, see enrollment_pivot.py.
 
@@ -12,8 +12,8 @@ import pandas as pd
 # Reading in survey data, then merging it with
 # enrollment data:
 # (The benefit of using original student-level data is that
-# our averages will automatically be weighted by student counts, thus producing
-# more accurate averages.)
+# our averages will automatically be weighted by student counts, thus 
+# producing more accurate averages.)
 
 from data_import import df_survey_results_extra_data
 

@@ -6,10 +6,6 @@
 # and https://dash.plotly.com/urls 
 # and https://dash.plotly.com/minimal-app .
 
-# The Layout page within the Dash Bootstrap Components documentation
-# (available at https://dash-bootstrap-components.opensource.faculty.ai/docs/components/layout/ )
-# provide very helpful in creating this dashboard.
-
 import dash
 from dash import html, dcc, callback, Output, Input, dash_table
 import dash_bootstrap_components as dbc
@@ -64,12 +60,6 @@ layout = dbc.Container([
     of display options. It also uses the import_layout() function 
     found in import_layout.py to define a sizeable component 
     of the page's layout.
-    
-    This dashboard also applies the [Dash Bootstrap Components](
-    https://dash-bootstrap-components.opensource.faculty.ai/docs/\
-components/layout/) library in order
-    to create a more condensed layout that accommodates a range of 
-    screen sizes.
     
     '''), lg = 9))] +
     import_layout(df = df_curr_enrollment, 

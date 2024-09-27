@@ -1,5 +1,5 @@
-# This code shows how to use the dash-pivottable library to easily create an
-# interactive enrollment dashboard.
+# This code shows how to use the dash-pivottable library to easily 
+# create an interactive enrollment dashboard.
 
 # Much of this code derives from 
 # https://github.com/plotly/dash-pivottable/blob/master/usage.py

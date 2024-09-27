@@ -6,9 +6,6 @@
 # and https://dash.plotly.com/urls 
 # and https://dash.plotly.com/minimal-app .
 
-# The Layout page within the Dash Bootstrap Components documentation
-# (available at https://dash-bootstrap-components.opensource.faculty.ai/docs/components/layout/ )
-# provide very helpful in creating this dashboard.
 
 import dash
 from dash import html, dcc, callback, Output, Input
@@ -25,13 +22,9 @@ layout = dbc.Container([
 
     # Flexible Interactive Survey Results Dashboard
     
-    This dashboard provides a flexible overview of NVCU student survey results. It utilizes the autopivot() and autobar() functions found within
+    This dashboard provides a flexible overview of NVCU student survey 
+    results. It utilizes the autopivot() and autobar() functions found within
     auto_pivot_and_graph.py to allow for a wide range of display options.
-    
-    This dashboard also applies the [Dash Bootstrap Components](
-    https://dash-bootstrap-components.opensource.faculty.ai/docs/components/layout/) library in order
-    to create a more condensed layout that accommodates a range of 
-    screen sizes.
     
     '''), lg = 9)),
     dbc.Row([
@@ -99,7 +92,3 @@ def display_graph(x_vars, color, college_filter, level_filter):
     x_vars_to_exclude = ['Level For Sorting'], 
         overall_data_name = 'All Data',
     weight_col = None, filter_tuple_list = filter_tuple_list)
-
-        
-
-

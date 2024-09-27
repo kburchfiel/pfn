@@ -5,7 +5,8 @@
 # was released under the MIT license:
 # https://github.com/naderelshehabi/dash-flask-login
 # Ken Burchfiel incorporated some additional code from 
-# https://dash.plotly.com/urls and https://dash-bootstrap-components.opensource.faculty.ai/docs/quickstart/ ;
+# https://dash.plotly.com/urls and https://dash-bootstrap-components.
+# opensource.faculty.ai/docs/quickstart/ ;
 # he also made minor edits to the display text.
 
 """
@@ -201,7 +202,8 @@ app.layout = html.Div(
 '''),
         dash.page_container,
 
-        # The following explanatory text will appear at the bottom of each page.
+        # The following explanatory text will appear at the bottom of 
+        # each page.
         dcc.Markdown('''        
 *This site is part of [Python for Nonprofits]
 (https://github.com/kburchfiel/pfn), created by Kenneth Burchfiel and 

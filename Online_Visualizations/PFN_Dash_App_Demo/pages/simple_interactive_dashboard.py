@@ -7,8 +7,10 @@
 # and https://dash.plotly.com/minimal-app .
 
 # The Layout page within the Dash Bootstrap Components documentation
-# (available at https://dash-bootstrap-components.opensource.faculty.ai/docs/components/layout/ )
-# provide very helpful in creating this dashboard.
+# (available at https://dash-bootstrap-components.opensource.faculty.ai/
+# docs/components/layout/ )
+# provide very helpful in creating this dashboard (along with a number
+# of other dashboards within this app.)
 
 import dash
 from dash import html, dcc, callback, Output, Input
@@ -24,9 +26,9 @@ layout = dbc.Container([
 
     # Simple Interactive Enrollment Dashboard
     
-    This dashboard provides a relatively simple overview of NVCU enrollment. 
-    There are five preset comparison options and two preset filter options,
-    allowing the user to create a variety of custom views.
+    This dashboard provides a relatively simple overview of NVCU 
+    enrollment. There are five preset comparison options and two preset 
+    filter options, allowing the user to create a variety of custom views.
 
     This dashboard is not as versatile or flexible as those that apply the 
     Dash-Pivottable library (e.g. the 'Dash pivottable survey results' 
@@ -34,9 +36,11 @@ layout = dbc.Container([
     to some of Dash's core features.
 
     This dashboard also applies the [Dash Bootstrap Components](
-    https://dash-bootstrap-components.opensource.faculty.ai/docs/components/layout/) library in order
+    https://dash-bootstrap-components.opensource.faculty.ai/docs/
+    components/layout/) library in order
     to create a more condensed layout that accommodates a range of 
-    screen sizes.
+    screen sizes. This library is also used in certain other dashboards 
+    within this app.
     
     '''), lg = 9)),
     dbc.Row([

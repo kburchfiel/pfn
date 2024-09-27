@@ -16,7 +16,8 @@ df_enrollment_by_college_and_level = df_curr_enrollment.pivot_table(
     values = 'Enrollment', aggfunc = 'sum').reset_index()
 
 # Creating a graph of this pivot table:
-fig_enrollment_by_college_and_level = px.bar(df_enrollment_by_college_and_level, 
+fig_enrollment_by_college_and_level = px.bar(
+    df_enrollment_by_college_and_level, 
        x = 'College', y = 'Enrollment', color = 'Level',
       barmode = 'group',
       text_auto = '.0f',
@@ -50,19 +51,17 @@ dash.register_page(__name__, path='/fixed_dashboard')
 layout = dbc.Container([
     dcc.Markdown(''' # Simple Fixed Dashboard
 
-    This dashboard contains three bar charts that display enrollment totals
-    by college and level; college; and level. Plotly's built-in tools make
-    these charts somewhat interactive; however, there aren't any additional
-    comparison or filter options provided.
-
-    For an example of a more interactive version of this dashboard, visit
-    the simple_interactive_dashboard page.
-    
+    This dashboard contains three bar charts that display enrollment 
+    totals by college and level; college; and level. Plotly's built-in 
+    tools make these charts somewhat interactive; however, no additional  
+    comparison or filter options are provided. The other dashboards
+    within this app allow for more user interaction.
     
     '''),
     dcc.Graph(figure=fig_enrollment_by_college_and_level),
     # This method of hosting a fixed graph within a Dash page (without any
-    # callbacks) came from https://dash.plotly.com/tutorial#visualizing-data .
+    # callbacks) came from https://dash.plotly.com/
+    # tutorial#visualizing-data .
     dcc.Graph(figure=fig_enrollment_by_college),
     dcc.Graph(figure=fig_enrollment_by_level),
 ])

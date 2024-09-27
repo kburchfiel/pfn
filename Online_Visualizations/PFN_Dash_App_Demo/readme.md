@@ -1,6 +1,8 @@
-## Interactive Dashboard App with Dash-Pivottable and Flask-Login Functionality
+# PFN Dash App Demo:
 
-**[Click here](https://pfndashappdemo-ymc7cs3r5q-uc.a.run.app/) to view the Google Cloud Run-hosted version of this app.** *(If no one has accessed the app recently, it will take several seconds to load, as the app is set to run on demand in order to save costs.)*
+## An interactive dashboard app with Dash-Pivottable and Flask-Login Functionality
+
+**Visit https://pfndashappdemo-ymc7cs3r5q-uc.a.run.app/ to view the Google Cloud Run-hosted version of this app.** *(If no one has accessed the app recently, it will take several seconds to load, as the app is set to run on demand in order to save costs.)*
 
 This project demonstrates how to use Dash to create 
 interactive online visualizations. These visualizations range 
@@ -40,6 +42,44 @@ create interactive dashboards. Examples of this library in use can
 be found within the [Dash Pivottable (Enrollment)](https://pfndashappdemo-ymc7cs3r5q-uc.a.run.app/dash_pivottable_enrollment) and [Dash Pivottable (Survey Results)](https://pfndashappdemo-ymc7cs3r5q-uc.a.run.app/dash_pivottable_survey_results) pages.
 
 <img src="https://raw.githubusercontent.com/kburchfiel/pfn/main/Online_Visualizations/PFN_Dash_App_Demo/page_screenshots/dash_pivottable_enrollment.png" width="600"/>
+
+## Project structure
+
+The files and folders in this app are arranged as follows: 
+
+(Folders are italicized. Note that Procfile is an 'extensionless' document rather than a folder.)
+
+*pages*
+
+--> home_page.py
+
+--> fixed_dashboard.py
+
+--> simple_interactive_dashboard.py
+
+--> flexible_survey_results_dashboard.py
+
+--> flexible_enrollment_dashboard.py
+
+--> dash_pivottable_enrollment.py
+
+--> dash_pivottable_survey_results.py
+
+*templates*
+
+--> login.html
+
+app.py
+
+auto_pivot_and_graph.py
+
+data_import.py
+
+import_layout.py
+
+Procfile
+
+requirements.txt
 
 
 ## Development notes:

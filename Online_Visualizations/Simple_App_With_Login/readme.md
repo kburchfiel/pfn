@@ -1,10 +1,39 @@
-## Barebones App With Login Functionality
+# Simple Multi-Page App With Login
+
+This barebones app was created in order to demonstrate how Dash can be integrated with flask-login. It also provides an example of a multi-page app structure. 
+
+This code may serve as a helpful starting template for your own Dash apps. For a more detailed app example that contains multiple types of visualizations and dashboard layouts, review the [PFN Dash App Demo](https://github.com/kburchfiel/pfn/tree/main/Online_Visualizations/PFN_Dash_App_Demo) section.
 
 (To view the Cloud Run-hosted version of this app, visit https://simpleappwithlogin-dsmxn3zfoq-uc.a.run.app . See below for steps on deploying your own copy of this app to Cloud Run.)
 
 The code in this folder was derived from jinnyzor's post at https://community.plotly.com/t/dash-app-pages-with-flask-login-flow-using-flask/69507/38 . Jinnyzor [wrote regarding that post](https://community.plotly.com/t/dash-app-pages-with-flask-login-flow-using-flask/69507/55): "this is free to use, no license." I am very grateful to jinnyzor (and to [Nader Elshehabi](https://github.com/naderelshehabi/dash-flask-login)) for allowing us to use their code!
 
 Some code also derives from that found in the [Dash Pages documentation](https://dash.plotly.com/urls).
+
+## Project structure
+
+The files and folders in this app are arranged as follows:
+
+(Folders are italicized. Note that Procfile is an 'extensionless' document rather than a folder.)
+
+*pages*
+
+--> page_1.py
+
+--> page_2.py
+
+--> page_3.py
+
+*templates*
+
+--> login.html
+
+app.py
+
+Procfile
+
+requirements.txt
+
 
 ## Steps for hosting this Dash app (with Flask-Login functionality) on Google Cloud Run
 
