@@ -33,3 +33,5 @@ test_image.html
 Online_Visualizations/PFN_Dash_App_Demo/readme_nb_for_pdf_export.ipynb
 PDF_Copies/pdf_numbering_code.txt
 PDF_Copies/qpdf_merge_code.txt
+Automated_Notebooks/autorun_shell_script.log
+Automated_Notebooks/.jupyter/desktop-settings.json
