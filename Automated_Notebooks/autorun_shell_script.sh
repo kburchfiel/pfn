@@ -35,6 +35,6 @@ papermill recent_weather_data.ipynb automated_output.ipynb
 
 
 # Copying this automated file to a locally-mounted Google Drive folder:
-echo "Copying output to Drive:"
+echo "Copying notebook and output folder to Drive:"
 cp automated_output.ipynb /home/kjb3/kjb3server_drive/pfn2_weather_analysis_output/automated_weather_data_output.ipynb
 cp recent_weather_output/ -r /home/kjb3/kjb3server_drive/pfn2_weather_analysis_output/
