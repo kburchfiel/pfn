@@ -1,0 +1,7 @@
+gspread
+gspread-dataframe
+dash
+plotly
+pandas
+gunicorn
+dash-bootstrap-components
