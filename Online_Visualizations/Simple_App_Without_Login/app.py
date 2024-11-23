@@ -1,5 +1,8 @@
 # Simple Dash app for displaying weather data
 
+# (See readme for more information on the code used to connect
+# to a Google Sheets workbook with recent weather data)
+
 # By Kenneth Burchfiel
 # Released under the MIT License
 
