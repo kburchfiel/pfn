@@ -1,5 +1,8 @@
 # Simple Dash app for displaying weather data
 
+# Note: the Cloud Run-hosted copy of this app can be found 
+# at https://simpleappwithoutlogin-470317599391.us-central1.run.app/ .
+
 # (See readme for more information on the code used to connect
 # to a Google Sheets workbook with recent weather data)
 

@@ -1,5 +1,7 @@
 ## Deploying a Simple Dash App Without flask-login to Cloud Run
 
+(Note: the Cloud Run-hosted version of this app can be found at https://simpleappwithoutlogin-470317599391.us-central1.run.app/ .)
+
 This folder provides sample code for a Dash app that can be deployed to Cloud Run. This code was based on the app deployment steps found in https://dash.plotly.com/deployment and https://cloud.google.com/run/docs/quickstarts/build-and-deploy/deploy-python-service . (The Plotly walkthrough shows how to deploy a Dash app to Heroku, and the Cloud Run walkthrough shows how to deploy a Flask App to Cloud Run; by taking bits from each, you can then learn how to deploy a *Dash* app to *Cloud Run.* :)
 
 ## Using a Cloud Run Secret to Retrieve Data From a Google Sheets Document
