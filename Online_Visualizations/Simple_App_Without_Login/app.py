@@ -41,11 +41,7 @@ Cloud Run secrets volume:")
 # was helpful in drafting the following line. 
 
 gc = gspread.service_account(
-filename='/home/kjb3/D1V1/Documents/!Dell64docs/npb/kbgdrive/api_and_\
-account_keys/kjb3server-public-project-service_account_key.json')
-
-# gc = gspread.service_account(
-# filename='/svcacctsecret/kjb3server_service_account')
+filename='/svcacctsecret/kjb3server_service_account')
 
 wb = gc.open_by_key('17aDJ3mg49-n0IEnDgN7ZB85pO87fiUpkZPULYDB8dmo')
 ws = wb.worksheet('KCHO')
