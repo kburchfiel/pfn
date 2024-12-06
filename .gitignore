@@ -48,3 +48,17 @@ Updating_Online_Spreadsheets/online_spreadsheet_update.sh
 Updating_Online_Spreadsheets/service_key_path.txt
 Automated_Notebooks/weather_import.py
 Online_Visualizations/local_service_account_connection.txt
+Mapping/colorbar_test.png
+Mapping/colorbar_test.svg
+Mapping/county_pop_pct_growth_2012-2022_categorical.html
+Mapping/county_pop_pct_growth_2012-2022_scalar.html
+Mapping/county_pop_pct_growth_2012-2022_smaller.html
+Mapping/county_pop_pct_growth_2012-2022.html
+Mapping/county_pop_pct_growth_2012-2022.png
+Mapping/gdf_for_map.csv
+Mapping/gdf_for_map.geojson
+Mapping/plotly_choropleth_tests_v2.ipynb
+Mapping/plotly_choropleth_tests.ipynb
+Mapping/test_plotly_map_hd.html
+Mapping/test_plotly_map.html
+Mapping/test_plotly_map.png
