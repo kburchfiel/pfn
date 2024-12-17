@@ -13,14 +13,22 @@ import numpy as np
 def update_and_save_plotly_map(
     fig, filename, static_file_folder = '', html_file_folder = '', 
     image_extension = 'png', save_html = True, save_static = True,
-    include_plotlyjs = 'cdn'):
+    include_plotlyjs = 'cdn', screenshot_label_font_size = 18,
+    screenshot_width = 1920, screenshot_height = 1080,
+    screenshot_scale = 2, screenshot_title_y = 0.95,
+    screenshot_title_font_size = 40,
+    screenshot_colorbar_thickness = 80, screenshot_colorbar_len = 0.5,
+    screenshot_colorbar_tickfont_size = 20, 
+    screenshot_colorbar_title_font_size = 30):
+    
     '''This function assists with the process of saving a Plotly map as 
-    both an HTML file and a static image. After saving an HTML version
-    of the map, it will then increase the map's width and height so as to 
-    increase its relative size; next, it will enlarge certain text
-    and colorbar values accordingly. Finally, the script will use
-    the file_path and image_extension arguments to save a static copy
-    of the map.
+    both an HTML file and a static image (if requested). 
+    After saving an HTML version of the map, it will then increase the 
+    map's width and height so as to increase its relative size; next, it 
+    will enlarge certain text and colorbar values accordingly. 
+    (These changes are performed in order to adjust for changes in the 
+    map's size when it gets converted to a screenshot.) Finally, the 
+    function will a static copy of the map.
     
     fig: the map to be saved as an image.
     
@@ -48,7 +56,29 @@ def update_and_save_plotly_map(
     For more details on these and other options, consult 
     https://plotly.com/python-api-reference/generated/
     plotly.io.write_html.html .
-    
+
+    screenshot_label_font_size: The font size in which data labels
+    should appear within the screenshot.
+
+    screenshot_width and screenshot_height: The values to pass to the
+    width and height arguments, respectively, of an update_layout()
+    call.
+
+    screenshot_scale: The scale to use when saving a static copy of the
+    map. NOTE: the actual dimensions of the map will equal 
+    screenshot_width * scale and screenshot_height * scale. You can 
+    tweak these values as needed so that your screenshot has a 
+    sufficiently high resoultion but remains readable.
+
+    screenshot_title_y and screenshot_title_font_size: Arguments for
+    tweaking the screenshot title's vertical location and font size,
+    respectively.
+  
+    screenshot_colorbar_thickness, screenshot_colorbar_len,
+    screenshot_colorbar_tickfont_size, and 
+    screenshot_colorbar_title_font_size: Arguments for modifying the
+    thickness, length, tick font size, and title font size, 
+    respectively, of the screenshot's colorbar.  
     '''
 
     if len(filename) == 0:
@@ -64,36 +94,54 @@ def update_and_save_plotly_map(
             html_file_folder += '/'
             fig.write_html(html_file_folder + filename + '.html',
                 include_plotlyjs = include_plotlyjs)
-    fig_for_chart = go.Figure(fig) # This method of creating a copy of
-    # the original figure (suggested by StackOverflow user vestland
-    # at https://stackoverflow.com/questions/58375026/how-to-make-a-copy-
-    # of-a-plotly-figure-object/58375046#58375046)
-    # ensures that the following changes won't have any effect on the
-    # original figure.
-    map_width = 1920
-    map_height = 1080
-    fig_for_chart.update_layout(
-        width = map_width, height = map_height, 
-        title_font_size = 40, title_y = 0.95)
-    fig_for_chart.update_coloraxes(
-        colorbar_thickness = 80, colorbar_len = 0.5, 
-        colorbar_tickfont_size = 20, colorbar_title_font_size = 30)
     if save_static == True:
+        fig_for_chart = go.Figure(fig) # This method of creating a copy of
+        # the original figure (suggested by StackOverflow user vestland
+        # at https://stackoverflow.com/questions/58375026/how-to-make-a-copy-
+        # of-a-plotly-figure-object/58375046#58375046)
+        # ensures that the following changes won't have any effect on the
+        # original figure.
+        
+        # Adjusting values within the HTML-based map in order to prepare
+        # it for conversion to a static image:
+        fig_for_chart.update_layout(
+            width = screenshot_width, height = screenshot_height, 
+            title_font_size = screenshot_title_font_size, 
+            title_y = screenshot_title_y)
+        fig_for_chart.update_coloraxes(
+            colorbar_thickness = screenshot_colorbar_thickness, 
+            colorbar_len = screenshot_colorbar_len, 
+            colorbar_tickfont_size = screenshot_colorbar_tickfont_size,
+            colorbar_title_font_size = screenshot_colorbar_title_font_size)
+        fig_for_chart.update_traces(
+            textfont_size=screenshot_label_font_size, 
+            selector=dict(type='scattergeo'))
+        # The above line is based on the documentation found in 
+        # https://plotly.com/python/reference/scattergeo/ .
+        
         if len(static_file_folder) > 0:
             static_file_folder += '/'
-    fig_for_chart.write_image(
-        file = static_file_folder + filename + '.' + image_extension, 
-        width = map_width, height = map_height, scale = 2)
+        fig_for_chart.write_image(
+            file = static_file_folder + filename + '.' + image_extension, 
+            width = screenshot_width, height = screenshot_height, 
+            scale = screenshot_scale)
 
 def gen_choropleth(
     original_gdf, geojson_col, data_col, extra_hover_cols = [], 
     color_continuous_scale = None, scope = None, title = None,
     basemap_visible = False, colormap_type = 'linear', 
     colorscale_tick_count = 10, tick_round_value = None,
-    custom_colorbar_title = None, save_html = True, save_static = True, 
-    static_file_folder = '',
+    custom_colorbar_title = None, add_labels = False, 
+    label_round_value = None,
+    save_html = True, save_static = True, static_file_folder = '',
     html_file_folder = '', filename = '', image_extension = 'png',
-    include_plotlyjs = 'cdn'):
+    include_plotlyjs = 'cdn', screenshot_label_font_size = 18,
+    screenshot_width = 1920, screenshot_height = 1080,
+    screenshot_scale = 2, screenshot_title_y = 0.95,
+    screenshot_title_font_size = 40, screenshot_colorbar_thickness = 80, 
+    screenshot_colorbar_len = 0.5, screenshot_colorbar_tickfont_size = 20, 
+    screenshot_colorbar_title_font_size = 30,
+    revise_state_label_points = False):
     
     '''This function converts a GeoDataFrame into a choropleth map within 
     Plotly, then saves that map (if requested by the caller) to HTML and 
@@ -155,10 +203,25 @@ def gen_choropleth(
     colorbar title by default. If colormap_type is not set to 'percentile', 
     this argument will have no effect.
 
-    save_html, save_static, html_file_folder, static_file_folder, 
-    filename, image_extension, and include_plotlyjs will get passed to 
-    their equivalent arguments within update_and_save_plotly_map(); 
-    see that function's documentation for further details.
+    add_labels: set to True to add text labels to the map.
+
+    label_round_value: The value to pass to round() when rounding labels. 
+    Set this value to 0 for integers, 1 for single 
+    decimal points, 2 for two decimal points, and so on.
+    Set to None to prevent these entries from getting rounded.
+
+    revise_state_label_points: set to True to shift the data label 
+    locations for Maryland; (so as not to overlap with DC's); 
+    Michigan (so that it appears within the 'hand' rather than the 
+    'peninsula'); and Louisana (to move it off of the Mississippi border). 
+    These operations will only work if you're creating labels
+    for US states and have 'Maryland', 'Michigan', and 'Louisiana' 
+    as index entries.
+
+    save_html and subsequent arguments will get passed to their equivalent 
+    arguments within update_and_save_plotly_map(); 
+    see that function's documentation for further details on these
+    entries.
     '''
 
     gdf = original_gdf.copy()
@@ -300,6 +363,11 @@ any conflicts.")
             colorbar_title = custom_colorbar_title
         else:
             colorbar_title = data_col
+
+    
+    # The documentation at 
+    # https://plotly.com/python/reference/layout/coloraxis/
+    # proved indispensable in drafting this code.
         
         fig.update_coloraxes(
             colorbar_tickvals = percentile_quantile_list,
@@ -312,20 +380,87 @@ any conflicts.")
     # pretty close to the topmost tick when the default setting 
     # ('top') was used.)
 
-        
+    if add_labels == True:
+        label_col = data_col+'_for_labels'
+        if label_col in gdf.columns:
+            raise ValueError(f"The name of the column that will be used \
+to store text labels ({label_col}) is already present \
+within gdf. Rename this column before calling the function to prevent \
+any conflicts.")   
+        # The function assumes that the caller wishes to plot data_col
+        # values as text labels; however, it could be revised
+        # to allow for an alternative set of labels.
+        gdf[label_col] = gdf[data_col].copy()
+        if label_round_value is not None:
+            gdf[label_col] = gdf[label_col].round(label_round_value)
     
-    # The documentation at 
-    # https://plotly.com/python/reference/layout/coloraxis/
-    # proved indispensable when drafting this code.
+        # Determining points within each region that can serve as 
+        # text label locations:
+        # (See https://geopandas.org/en/stable/docs/reference/
+        # api/geopandas.GeoSeries.representative_point.html
+        # for more infomation.)
+        for column in ['label_loc', 'label_lat', 'label_lon']:
+            if column in gdf.columns:
+                raise ValueError(f"Rename the column {column} in order \
+to prevent a conflict with gen_choropleth.")
+        gdf['label_loc'] = gdf['geometry'].representative_point()
+        # Adding the x and y coordinates stored within label_loc to
+        # standalone fields for use within Plotly's 
+        # add_scattergeo() function:
+        gdf['label_lat'] = [coord.y for coord in gdf['label_loc']]
+        gdf['label_lon'] = [coord.x for coord in gdf['label_loc']]
+
+        if revise_state_label_points == True:
+            # Shifting data labels to make them easier to locate
+            # and read:
+            # (These points were determined using Openstreetmap 
+            # coordinates as a reference.)
+            gdf.at['Maryland', 'label_lat'] = 39.4
+            gdf.at['Maryland', 'label_lon'] = -77.24
+            
+            gdf.at['Michigan', 'label_lat'] = 43.63
+            gdf.at['Michigan', 'label_lon'] = -84.97
+            
+            gdf.at['Louisiana', 'label_lat'] = 30.5
+            gdf.at['Louisiana', 'label_lon'] = -92.54
+        
+        
+
+        # This code was based mostly on
+        # https://plotly.com/python/scatter-plots-on-maps/#simple-us-airports-map .
+        fig.add_scattergeo(
+            text = gdf[label_col],
+            mode = 'text',
+            lat = gdf['label_lat'],
+            lon = gdf['label_lon'])
+
+        # Disabling hover functionality for these text labels (as they
+        # can interfere with the pre-existing labels):
+        fig.update_traces(hoverinfo = 'skip', selector = dict(
+            type='scattergeo'))
+    # This code was based on
+# https://plotly.com/python/reference/scattergeo/
 
     # Saving this map to HTML and static files 
     # (if requested by the caller):
     if (save_html == True) or (save_static == True):
         update_and_save_plotly_map(
-            fig = fig, html_file_folder=html_file_folder,
-            static_file_folder=static_file_folder, filename=filename,
-            save_html = save_html, save_static = save_static,
+            fig = fig, save_html = save_html, save_static = save_static, 
+            static_file_folder = static_file_folder,
+            html_file_folder = html_file_folder, filename = filename, 
             image_extension = image_extension, 
-            include_plotlyjs = include_plotlyjs)
+            include_plotlyjs = include_plotlyjs, 
+            screenshot_label_font_size = screenshot_label_font_size,
+            screenshot_width = screenshot_width, 
+            screenshot_height = screenshot_height,
+            screenshot_scale = screenshot_scale, 
+            screenshot_title_y = screenshot_title_y,
+            screenshot_title_font_size = screenshot_title_font_size, 
+            screenshot_colorbar_thickness = screenshot_colorbar_thickness, 
+            screenshot_colorbar_len = screenshot_colorbar_len, 
+            screenshot_colorbar_tickfont_size = \
+screenshot_colorbar_tickfont_size, 
+            screenshot_colorbar_title_font_size = \
+screenshot_colorbar_title_font_size)
     
     return fig
