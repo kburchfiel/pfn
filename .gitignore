@@ -26,6 +26,7 @@ Output_Free_PDF_Copies
 Mapping/choropleth_map_functions_for_pdf.ipynb
 dash_notebook_test.ipynb
 Old_App_Copies/
+_build/
 **.jupyterlab-workspace**
 html_copies_for_printing/
 PDF_copies_with_output/
@@ -63,3 +64,8 @@ Mapping/test_plotly_map_hd.html
 Mapping/test_plotly_map.html
 Mapping/test_plotly_map.png
 .~lock.pfn_2_project_plans_and_notes.xlsx#
+copy_book_files_into_JB_folder.ipynb
+render_commands.txt
+Appendix/helper_funcs_nb.ipynb
+Graphing/.jupyter/desktop-settings.json
+Mapping/plotly_choropleth_map_functions_nb.ipynb

@@ -427,7 +427,8 @@ to prevent a conflict with gen_choropleth.")
         
 
         # This code was based mostly on
-        # https://plotly.com/python/scatter-plots-on-maps/#simple-us-airports-map .
+        # https://plotly.com/python/scatter-plots-on-
+        # maps/#simple-us-airports-map .
         fig.add_scattergeo(
             text = gdf[label_col],
             mode = 'text',

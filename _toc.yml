@@ -1,0 +1,23 @@
+# Table of contents
+# Learn more at https://jupyterbook.org/customize/toc.html
+
+format: jb-book
+
+# The following paths refer to files within the folder:
+root: 'README'
+chapters:
+- file: 'Introduction/the_case_for_python_at_nonprofits'
+- file: 'Data_Retrieval/data_retrieval'
+- file: 'Data_Prep/data_prep'
+- file: 'Census_Data_Imports/census_data_imports_v2'
+- file: 'Descriptive_Stats/descriptive_stats'
+- file: 'Graphing/graphing'
+- file: 'Graphing/pivot_and_graph_functions'
+- file: 'Mapping/choropleth_maps'
+- file: 'Mapping/plotly_choropleth_map_functions_nb'
+- file: 'Mapping/choropleth_maps_with_folium'
+- file: 'Mapping/folium_choropleth_map_functions'
+- file: 'Automated_Notebooks/recent_weather_data'
+- file: 'Updating_Online_Spreadsheets/updating_online_spreadsheets'
+- file: 'Appendix/nvcu_db_gen'
+- file: 'Appendix/helper_funcs_nb'
