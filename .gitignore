@@ -69,3 +69,7 @@ render_commands.txt
 Appendix/helper_funcs_nb.ipynb
 Graphing/.jupyter/desktop-settings.json
 Mapping/plotly_choropleth_map_functions_nb.ipynb
+Appendix/create_print_book.ipynb
+Appendix/helper_funcs_py_nb.ipynb
+Mapping/folium_choropleth_map_functions_py_nb.ipynb
+Mapping/plotly_choropleth_map_functions_py_nb.ipynb

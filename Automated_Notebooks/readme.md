@@ -1,10 +1,10 @@
 # Sharing Automatically-Updated Notebooks
 
-(Note: to view the final product of the steps shown in part 1, enable Colaboratory within your Google Drive account (if it's not already active), then visit https://colab.research.google.com/drive/1AmcSXI5ykszbQryyQmGkDhTg_PTG3m4A . This page shows an online copy of recent_weather_data.ipynb that (as of October 2024) gets updated on an hourly basis basis. The following steps explain how I managed to automatically refresh this notebook.)
+(Note: to view the final product of the steps shown in part 1, enable Colaboratory within your Google Drive account (if it's not already active), then visit https://colab.research.google.com/drive/1AmcSXI5ykszbQryyQmGkDhTg_PTG3m4A . This page shows an online copy of recent_weather_data.ipynb that used to get updated on an hourly basis. The following steps explain how I got this notebook to refresh automatically.)
 
 Let's say that you have a Jupyter Notebook that you wish to update automatically on a regular basis as new data becomes available. Let's also say that you want to automate the process of sharing these notebooks online so that others can view them also. This notebook demonstrates a few options for doing so.
 
-**Note:** In many cases, an online Dash app (also covered within this section of Python for Nonprofits) will be a better alternative to this workflow. This is because these options, though they do technically work, have some important limitations. However, in certain cases, the steps covered within this chapter may be the right fit for your needs.
+**Note:** In many cases, an online Dash app (covered within the Online Visualizations section of Python for Nonprofits) will be a better alternative to this workflow. This is because these options, though they do technically work, have some important limitations.
 
 
 ## Instructions
@@ -15,7 +15,7 @@ You can use Google Drive, a Python library called Papermill, and (if necessary) 
 
 1. The updated notebooks can be viewed soon after they finish executing on your computer.
 
-2. You don't need to make the automated notebook public (though you can also share it with the whole world if you so choose).
+2. You don't need to make the automated notebook public (though you can still share it with the whole world if you so choose).
 
 However, there is a significant disadvantage as well: HTML-based Plotly charts, and presumably other HTML items as well, won't show up within these notebooks by default. Therefore, if you would like to display Plotly charts within these notebooks, you'll need to export them as image files and then load those images back into your notebook. (You can also display them by running the notebook on Colab, but this approach may not work for you if your script loads data from your computer.)
 

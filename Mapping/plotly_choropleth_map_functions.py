@@ -97,8 +97,8 @@ def update_and_save_plotly_map(
     if save_static == True:
         fig_for_chart = go.Figure(fig) # This method of creating a copy of
         # the original figure (suggested by StackOverflow user vestland
-        # at https://stackoverflow.com/questions/58375026/how-to-make-a-copy-
-        # of-a-plotly-figure-object/58375046#58375046)
+        # at https://stackoverflow.com/questions/58375026/how-to-make-a-
+        # copy-of-a-plotly-figure-object/58375046#58375046)
         # ensures that the following changes won't have any effect on the
         # original figure.
         

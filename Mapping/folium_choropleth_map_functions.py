@@ -1,8 +1,7 @@
-# Choropleth Map Functions
+# Folium-based choropleth map functions
 # By Kenneth Burchfiel
 # Released under the MIT License
 
-# For examples of these functions in use, visit choropleth_maps.ipynb.
 
 import folium
 import geopandas

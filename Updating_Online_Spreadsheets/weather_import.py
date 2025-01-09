@@ -164,12 +164,28 @@ _historical_hourly_data.csv', index = False)
     # from the last 3 days:
     
     df_historical_new = pd.concat([df_historical_data, df_3day_data])
+    # Storing the station code within the DataFrame:
+    df_historical_new['Station'] = station_code
     # Removing duplicate Date/Time entries:
+    
+    # Calculating the 24-digit hour corresponding to each DataFrame:
+    # (This code assumes that a 24-hour clock is being used to display
+    # times.)
+    df_historical_new['Hour'] = df_historical_new['Time'].str.split(
+        ':').str[0].astype('int')
+
+    # Keeping only one result per date and hour:
+    # (This approach will prove useful when using .rolling() to calculate
+    # rainfall totals for specific periods, as it will allow us to
+    # assume that N rows of data represent N hours. However, 
+    # at least one NWS station (KOKV) reports recent weather data
+    # every 20 minutes; only one in three of such reports will get
+    # retained after drop_duplicates() gets called. 
     df_historical_new.drop_duplicates(
-        ['Date', 'Time'], keep = 'last', inplace = True)
+        ['Date', 'Hour'], keep = 'last', inplace = True)
     # This isn't a perfect approach, as it will likely cause an 
     # hour of data to get lost when Daylight Savings Time ends.
-    
+     
     print("New length of historical data file:",
           len(df_historical_new))
 
@@ -195,7 +211,8 @@ _historical_hourly_data.csv', index = False)
     
     # Replacing NaN precipitation values with 0s:
     for column in ['1 hr', '3 hr', '6 hr']:
-        df_historical_new[column] = df_historical_new[column].fillna(0).copy()
+        df_historical_new[column] = df_historical_new[
+        column].fillna(0).copy()
     
     df_historical_new.tail()
     
@@ -216,6 +233,15 @@ _historical_hourly_data.csv', index = False)
     
     df_historical_new.sort_values(['Date', 'Time'], inplace = True)
     df_historical_new.reset_index(drop=True,inplace=True)
+
+    # Adding columns that show cumulative precipitation totals for various
+    # periods: (These all update every hour unlike the built-in
+    # NWS hourly precipitation totals. However, they're also 
+    # susceptible to errors caused by missing rows.)
+    for hourly_interval in [3, 6, 12, 24]:
+        df_historical_new[f'Rolling {hourly_interval}-Hour Precip'] = (
+            df_historical_new['1-Hour Precip'].rolling(
+                window=hourly_interval).sum())
     
     
     # read_html returns a list of tables (even though only one table is 

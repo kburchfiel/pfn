@@ -1,3 +1,5 @@
+# Autopivot 
+
 def autopivot(df, y, aggfunc, x_vars = [], 
                      color = None, x_vars_to_exclude = [],
                     overall_data_name = 'All Data',
@@ -207,3 +209,72 @@ def autopivot(df, y, aggfunc, x_vars = [],
             barmode = 'group'
     
     return df_pivot, x_val_name, y, color, barmode, x_var_count, index, aggfunc
+
+def autobar(df_pivot, x_val_name, y, 
+            color, barmode, x_var_count, index, aggfunc):
+    '''This function creates a bar graph of a pivot table (such as one
+    created within autopivot(). 
+    Note that the arguments for this function
+    correspond to the values returned by autopivot(); more information on
+    each can be found within that function.
+    '''
+    
+    # Creating a title for the chart:
+    # Suppose our y value is 'Score' and our aggregate function is 'mean.' 
+    # If our original x variable count was 0, our title can simply be 
+    # 'Overall Mean Score.' If we had just one graph variable ('College') 
+    # and no color variable, our title could be 'Mean Score by College.'
+    # If we also had a 'Level' color variable, our title
+    # could be 'Mean Score by College and Level'. Finally, if we added
+    # another x variable ('Season' to our list, our mean title could be
+    # 'Mean Score by College, Season, and Level.'
+    # The following code includes four title definitions to cover
+    # these four scenarios. (Note that 'index' is used rather than 
+    # 'x_vars' because the former variable includes both our x variables 
+    # and (if present) our color variable, and both of these should be 
+    # incorporated into the title.
+    
+    if x_var_count == 0: 
+        plot_title = f"Overall {aggfunc.title()} {y}"
+    elif len(index) == 1:
+        plot_title = f"{aggfunc.title()} {y} by {index[0]}"
+    elif len(index) == 2:
+        plot_title = f"{aggfunc.title()} {y} by {index[0]} and {index[1]}" 
+    else:
+        plot_title = f"{aggfunc.title()} {y} by {(', ').join(
+            index[0:-1])}, and {index[-1]}" 
+        
+    # The following code will still work if color is set to None.
+    fig = px.bar(df_pivot, x = x_val_name, y = y, 
+           color = color, barmode = barmode,
+           text_auto = '.1f', title = plot_title)
+    if x_var_count == 0: # In this case, the x axis tick, x axis title, 
+        # and legend entry will all be the same, so we can hide two of 
+        # those elements.
+        fig.update_layout(showlegend = False,
+                         xaxis_title = None)
+    return fig
+
+def autopivot_plus_bar(
+    df, y, aggfunc, x_vars = [], color = None, 
+    x_vars_to_exclude = [], overall_data_name = 'All Data',
+    weight_col = None):
+    '''This function calls both autopivot() and autobar(), thus 
+    simplifying the process of using both functions within a script. 
+    See autopivot() and autobar()'s individual function definitions 
+    for more documentation on each.'''
+        
+    df_pivot, x_val_name, y, color, barmode, x_var_count, \
+    index, aggfunc = autopivot(
+        df = df, y = y, aggfunc = aggfunc, 
+        x_vars = x_vars, color = color, 
+        x_vars_to_exclude = x_vars_to_exclude,
+        overall_data_name = overall_data_name, weight_col = weight_col)
+    
+    fig_bar = autobar(
+        df_pivot = df_pivot, x_val_name = x_val_name, y = y, 
+        color = color, barmode = barmode, x_var_count = x_var_count, 
+        index = index, aggfunc = aggfunc)
+
+    return fig_bar
+
