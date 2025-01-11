@@ -19,6 +19,14 @@
 # In[1]:
 
 
+import sys
+sys.path.insert(1, '../Appendix')
+from helper_funcs import config_notebook, wadi
+display_type = config_notebook(display_max_columns = 5)
+# Specifying which columns to render within the output:
+display_cols = ['Station', 'Date/Time', 'Temp', 
+                '1-Hour Precip', 'Rolling 24-Hour Precip']
+
 with open('service_key_path.txt') as file:
     service_key_path = file.read()
 
@@ -44,15 +52,14 @@ gc = gspread.service_account(filename=service_key_path)
 # # From https://docs.gspread.org/en/latest/index.html)
 
 
-# Importing additioal libraries:
+# Importing additional libraries:
 # 
-# (Note: the weather_import.py file being imported below derives from recent_weather_data.ipynb within the Automated_Notebooks section of Python for Nonprofits.)
+# (Note: the weather_import.py file imported below derives from recent_weather_data.ipynb within the Automated_Notebooks section of Python for Nonprofits.)
 
 # In[4]:
 
 
 import pandas as pd
-pd.set_option('display.max_columns', 1000)
 from weather_import import weather_import
 
 
@@ -66,13 +73,13 @@ data_folder = 'weather_data'
 
 # ### Importing weather data for Charlottesville:
 
-# In[ ]:
+# In[6]:
 
 
 print("Downloading KCHO data.")
 
 
-# In[6]:
+# In[7]:
 
 
 weather_import(
@@ -82,13 +89,13 @@ weather_import(
 
 # ### Importing weather data for Dulles International Airport:
 
-# In[ ]:
+# In[8]:
 
 
 print("Downloading KIAD data.")
 
 
-# In[7]:
+# In[9]:
 
 
 weather_import(
@@ -100,47 +107,48 @@ weather_import(
 # 
 # (This data appears to be recorded at 20-minute intervals rather than hourly ones.)
 
-# In[ ]:
+# In[10]:
 
 
 print("Downloading KOKV data.")
 
 
-# In[8]:
+# In[11]:
 
 
-weather_import(
+test_df = weather_import(
     station_code = 'KOKV',
     data_folder = data_folder)
+test_df
 
 
 # ## Reading these datasets into DataFrames:
 
-# In[9]:
+# In[12]:
 
 
 df_weather_kcho = pd.read_csv(
     data_folder+'/'+'KCHO'+'_'
     +'historical_hourly_data_updated.csv')
-df_weather_kcho.tail()
+df_weather_kcho[display_cols].tail()
 
 
-# In[10]:
+# In[13]:
 
 
 df_weather_kiad = pd.read_csv(
     data_folder+'/'+'KIAD'+'_'
     +'historical_hourly_data_updated.csv')
-df_weather_kiad.tail()
+df_weather_kiad[display_cols].tail()
 
 
-# In[11]:
+# In[14]:
 
 
 df_weather_kokv = pd.read_csv(
     data_folder+'/'+'KOKV'+'_'
     +'historical_hourly_data_updated.csv')
-df_weather_kokv.tail()
+df_weather_kokv[display_cols].tail()
 
 
 # ## Importing these DataFrames into a Google Sheets workbook:
@@ -149,7 +157,7 @@ df_weather_kokv.tail()
 # 
 # These keys are located within the center of each workbook URL. For instance, the full URL of the workbook I'll be updating is `https://docs.google.com/spreadsheets/d/17aDJ3mg49-n0IEnDgN7ZB85pO87fiUpkZPULYDB8dmo/edit?usp=sharing`, so the key--located in between the `/d/` component of that URL and the following `/`--is `17aDJ3mg49-n0IEnDgN7ZB85pO87fiUpkZPULYDB8dmo`.
 
-# In[12]:
+# In[15]:
 
 
 wb = gc.open_by_key('17aDJ3mg49-n0IEnDgN7ZB85pO87fiUpkZPULYDB8dmo')
@@ -160,43 +168,54 @@ wb
 
 # Next, I'll select the 'KCHO' worksheet within this workbook, as that's the first one I'd like to update. I'll also clear out the current contents using `ws.clear()`; that way, only the latest DataFrame contents will appear within the spreadsheet after I call `set_with_dataframe` below. (If the most recent DataFrame is smaller than the previous version, parts of the previous one would still appear unless `ws.clear()` is called.
 
-# In[13]:
+# In[16]:
 
 
-ws = wb.worksheet('KCHO') # 
+ws = wb.worksheet('KCHO')
 # https://docs.gspread.org/en/latest/user-guide.html#opening-a-spreadsheet
+
+
+# In[17]:
+
+
 ws.clear() 
 ws
 
 
-# Finally, I'll call `set_with_dataframe` to export this DataFrame in its entirety to df_weather:
+# Finally, I'll call `set_with_dataframe` to export this DataFrame to df_weather.
 
-# In[14]:
+# In[18]:
 
 
-set_with_dataframe(ws, df_weather_kcho)
+# Only the most recent 960 rows (representing 40 days' worth of data if
+# no entries were missing) will get exported to Google Sheets. This will
+# limit the time (and potentially money) needed to import this data
+# into a Dash app (https://github.com/kburchfiel/pfn/tree/
+# main/Online_Visualizations/Simple_App_Without_Login)
+# that utilizes it.
+set_with_dataframe(ws, df_weather_kcho.iloc[-960:])
 # Source: https://pypi.org/project/gspread-dataframe/
 
 
 # In order to confirm that this upload was successful, we can call `get_as_dataframe` to import the contents of the worksheet into a new DataFrame:
 
-# In[15]:
+# In[19]:
 
 
 df_weather_from_ws = get_as_dataframe(ws)
-df_weather_from_ws
+df_weather_from_ws[display_cols].tail()
 
 
 # ## Performing the same data export steps for KIAD and KOKV data:
 
-# In[16]:
+# In[20]:
 
 
 ws = wb.worksheet('KIAD')
 ws.clear() 
-set_with_dataframe(ws, df_weather_kiad)
+set_with_dataframe(ws, df_weather_kiad.iloc[-960:])
 
 ws = wb.worksheet('KOKV')
 ws.clear() 
-set_with_dataframe(ws, df_weather_kokv)
+set_with_dataframe(ws, df_weather_kokv.iloc[-960:])
 

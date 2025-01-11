@@ -1,3 +1,0 @@
-After running crontab -e in the terminal, I entered the following into my crontab editor so that my notebook would update automatically 10 minutes into each hour:
-
-10 * * * * /home/kjb3/kjb3docs/programming/py/kjb3_programs_2/pfn_2/Automated_Notebooks/autorun_shell_script.sh > /home/kjb3/kjb3docs/programming/py/kjb3_programs_2/pfn_2/Automated_Notebooks/autorun_shell_script.log 2>&1

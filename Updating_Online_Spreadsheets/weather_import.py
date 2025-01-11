@@ -28,6 +28,17 @@ def weather_import(station_code, data_folder = ''):
     # match the dates for earlier records within this dataset.
     # Importing the latest set of hourly observations from the 
     # National Weather Service:
+
+    # read_html returns a list of tables (even though only one table is 
+    # currently present on this site), so we'll use [0] to access that
+    # table.
+    # The final 3 rows are simply a repetition of the header, so I added in
+    # [:-3] to exclude them from the DataFrame.
+    # header = 2 specifies that the third row in the DataFrame should be 
+    # used as a header. (The first two rows' values are mostly duplicates
+    # of this row's data.)
+
+    
     df_3day_data = pd.read_html(
     f'https://forecast.weather.gov/data/obhistory/{station_code}.html',
     header = 2)[0][:-3]
@@ -163,15 +174,15 @@ _historical_hourly_data.csv', index = False)
     # Combining our previous historical data with our latest dataset 
     # from the last 3 days:
     
-    df_historical_new = pd.concat([df_historical_data, df_3day_data])
+    df_wx = pd.concat([df_historical_data, df_3day_data])
     # Storing the station code within the DataFrame:
-    df_historical_new['Station'] = station_code
+    df_wx['Station'] = station_code
     # Removing duplicate Date/Time entries:
     
     # Calculating the 24-digit hour corresponding to each DataFrame:
     # (This code assumes that a 24-hour clock is being used to display
     # times.)
-    df_historical_new['Hour'] = df_historical_new['Time'].str.split(
+    df_wx['Hour'] = df_wx['Time'].str.split(
         ':').str[0].astype('int')
 
     # Keeping only one result per date and hour:
@@ -181,16 +192,16 @@ _historical_hourly_data.csv', index = False)
     # at least one NWS station (KOKV) reports recent weather data
     # every 20 minutes; only one in three of such reports will get
     # retained after drop_duplicates() gets called. 
-    df_historical_new.drop_duplicates(
+    df_wx.drop_duplicates(
         ['Date', 'Hour'], keep = 'last', inplace = True)
     # This isn't a perfect approach, as it will likely cause an 
     # hour of data to get lost when Daylight Savings Time ends.
      
     print("New length of historical data file:",
-          len(df_historical_new))
+          len(df_wx))
 
-    # Saving this updated copy of df_historical_new to a .csv file:
-    df_historical_new.to_csv(
+    # Saving this updated copy of df_wx to a .csv file:
+    df_wx.to_csv(
         f'{data_folder}{post_folder_char}\
 {station_code}_historical_hourly_data.csv', index = False)
 
@@ -199,76 +210,88 @@ _historical_hourly_data.csv', index = False)
     # Removing percentages from Relative Humidity column so that these
     # values can be converted to floats:
     
-    df_historical_new['Relative Humidity'] = df_historical_new[
+    df_wx['Relative Humidity'] = df_wx[
     'Relative Humidity'].str.replace('%','')
     
     # Converting numerical data in certain columns to floats:
     
     for column in ['Air', 'Dwpt', 'altimeter (in)', 'sea level (mb)',
                    '1 hr', '3 hr', '6 hr', 'Relative Humidity']:
-        df_historical_new[column] = df_historical_new[column].astype(
+        df_wx[column] = df_wx[column].astype(
             'float')
     
     # Replacing NaN precipitation values with 0s:
     for column in ['1 hr', '3 hr', '6 hr']:
-        df_historical_new[column] = df_historical_new[
+        df_wx[column] = df_wx[
         column].fillna(0).copy()
     
-    df_historical_new.tail()
+    df_wx.tail()
     
     # Adding 'Precip' prefixes to the hourly precipitation rows; making the 
     # temperature and dew point column names more intuitive; and removing
     # time zone data from the Time field:
-    df_historical_new.rename(columns = {
+    df_wx.rename(columns = {
         '1 hr':'1-Hour Precip',
         '3 hr':'3-Hour Precip',
         '6 hr':'6-Hour Precip',
         'Air':'Temp',
         'Dwpt':'Dew Point',
+        'altimeter (in)':'Altimeter (in.)',
     original_time_col:'Time'},
          inplace = True)
     
     # Sorting the table in chronological order so that our charts will
     # be easier to interpret:
     
-    df_historical_new.sort_values(['Date', 'Time'], inplace = True)
-    df_historical_new.reset_index(drop=True,inplace=True)
+    df_wx.sort_values(['Date', 'Time'], inplace = True)
+    df_wx.reset_index(drop=True,inplace=True)
 
     # Adding columns that show cumulative precipitation totals for various
     # periods: (These all update every hour unlike the built-in
     # NWS hourly precipitation totals. However, they're also 
     # susceptible to errors caused by missing rows.)
     for hourly_interval in [3, 6, 12, 24]:
-        df_historical_new[f'Rolling {hourly_interval}-Hour Precip'] = (
-            df_historical_new['1-Hour Precip'].rolling(
+        df_wx[f'Rolling {hourly_interval}-Hour Precip'] = (
+            df_wx['1-Hour Precip'].rolling(
                 window=hourly_interval).sum())
+
+    # Adding a windspeed column:
+    # This code assumes that the 'Wind (mph)' column within the original
+    # dataset uses the following formats:
+    # 'Calm' (when no wind was reported)
+    # DIRECTION WINDSPEED (e.g. 'W 8') when wind, but no gusts, were
+    # reported
+    # DIRECTION WINDSPEED GUST_DIRECTION GUST_SPEED (e.g. 'W 28 G 40')
+    # when both wind and gusts were reported
+    # The following code uses str.split() and str[1] to retrieve the 
+    # second item within these reports, as this item should always be
+    # the windspeed (rather than the gust speed). 
     
-    
-    # read_html returns a list of tables (even though only one table is 
-    # currently present on this site), so we'll use [0] to access that
-    # table.
-    # The final 3 rows are simply a repetition of the header, so I added in
-    # [:-3] to exclude them from the DataFrame.
-    # header = 2 specifies that the third row in the DataFrame should be 
-    # used as a header. (The first two rows' values are mostly duplicates
-    # of this row's data.)
+    df_wx['Windspeed'] = df_wx['Wind (mph)'].str.split('  ').str[
+    1]
+
+    # For 'Calm' readings,
+    # str[1] will be NaN, and thus we can replace those values with 0.
+
+    df_wx['Windspeed'] = np.where(df_wx['Wind (mph)'] == 'Calm',
+                                  0, df_wx['Windspeed'])
     
     # Removing the 6-hour max and min temperature columns in order to 
     # simplify the table:
-    df_historical_new.drop(['Max.', 'Min.'], axis = 1, inplace = True)
+    df_wx.drop(['Max.', 'Min.'], axis = 1, inplace = True)
         
     # Creating a 'Date/Time' column for graphing purposes:
     
-    df_historical_new.insert(
-        2, 'Date/Time', df_historical_new['Date'].astype('str') 
-        + ' ' + df_historical_new['Time'].astype('str'))
+    df_wx.insert(
+        2, 'Date/Time', df_wx['Date'].astype('str') 
+        + ' ' + df_wx['Time'].astype('str'))
     
-    df_historical_new.tail()
+    df_wx.tail()
 
     # Saving this revised dataset to a .csv file so that it can be 
     # visualized and shared with others:
 
-    df_historical_new.to_csv(f'{data_folder}{post_folder_char}\
+    df_wx.to_csv(f'{data_folder}{post_folder_char}\
 {station_code}_historical_hourly_data_updated.csv', index = False)
 
     

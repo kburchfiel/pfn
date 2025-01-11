@@ -19,5 +19,6 @@ chapters:
 - file: 'Mapping/folium_choropleth_map_functions_py_nb'
 - file: 'Updating_Online_Spreadsheets/updating_online_spreadsheets'
 - file: 'Updating_Online_Spreadsheets/weather_import_py_nb'
+- file: 'Online Visualizations/Simple_App_Without_Login_py_nb'
 - file: 'Appendix/nvcu_db_gen'
 - file: 'Appendix/helper_funcs_py_nb'
