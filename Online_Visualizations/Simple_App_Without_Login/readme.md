@@ -1,10 +1,12 @@
-## Deploying a Simple Dash App Without flask-login to Cloud Run
+# Simple App Without Login
+
+## Readme
 
 (Note: the Cloud Run-hosted version of this app can be found at https://simpleappwithoutlogin-470317599391.us-central1.run.app/ .)
 
 This folder provides sample code for a Dash app that can be deployed to Cloud Run. This code was based on the app deployment steps found in https://dash.plotly.com/deployment and https://cloud.google.com/run/docs/quickstarts/build-and-deploy/deploy-python-service . (The Plotly walkthrough shows how to deploy a Dash app to Heroku, and the Cloud Run walkthrough shows how to deploy a Flask App to Cloud Run; by taking bits from each, you can then learn how to deploy a *Dash* app to *Cloud Run.* :)
 
-## Using a Cloud Run Secret to Retrieve Data From a Google Sheets Document
+### Using a Cloud Run Secret to Retrieve Data From a Google Sheets Document
 
 This app retrieves data from a Google Sheets file called 'Hourly VA Weather Data'; it's located at https://docs.google.com/spreadsheets/d/17aDJ3mg49-n0IEnDgN7ZB85pO87fiUpkZPULYDB8dmo/edit?usp=sharing; this file gets updated on an hourly basis by a laptop running updatintg_online_spreadsheets.py within the Updating Online Spreadsheets section of Python for Nonprofits. (Reference that section for more information about using gspread.) 
 
@@ -17,3 +19,14 @@ If you decide to access your secret through a volume, you can find the path to e
 **Note:** In my case, the service account whose credentials I uploaded into Cloud Run is the same account that my laptop is using to update the Hourly VA Weather Data workbook. (The content of my 'secret' is simply the .json file containing the account's key that I downloaded in the process of building out my Updating Online Spreadsheets code.) However, it looks like you can also simply use the service account built into your Cloud Run instance; see https://stackoverflow.com/questions/65128196/is-there-a-way-to-authenticate-gspread-with-the-default-service-account for more information. 
 
 Using your built-in Cloud Run service account should allow you to bypass the hassle of storing a service account key as a secret. However, it's still ideal to learn how to use Cloud Run secrets in case you'll ever need to connect to a SQL database within a Dash app. (You could store that database's password as a secret, which should be much more secure than storing it as plain text within your code.)
+
+### Folder structure
+
+
+readme.md [this file]
+
+app.py
+
+Procfile
+
+requirements.txt

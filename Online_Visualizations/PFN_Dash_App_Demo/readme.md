@@ -1,12 +1,10 @@
-# PFN Dash App Demo:
+# PFN Dash App Demo
 
-## An interactive dashboard app with Dash-Pivottable and Flask-Login Functionality
+## Readme
 
 **Visit https://pfndashappdemo-ymc7cs3r5q-uc.a.run.app/ to view the Google Cloud Run-hosted version of this app.** *(If no one has accessed the app recently, it will take several seconds to load, as the app is set to run on demand in order to save costs.)*
 
-This project demonstrates how to use Dash to create 
-interactive online visualizations. These visualizations range 
-from simple charts to more complex interactive setups.
+This project demonstrates how to use Dash to create interactive online visualizations. These visualizations range from simple charts to more complex interactive setups. Both the Flask-Login and Dash-Pivottable libraries are featured within this project.
 
 The [Fixed Dashboard](https://pfndashappdemo-ymc7cs3r5q-uc.a.run.app/fixed_dashboard) page shows a very simple 
 dashboard setup that lacks user-defined filter and comparison settings. 
@@ -43,31 +41,42 @@ be found within the [Dash Pivottable (Enrollment)](https://pfndashappdemo-ymc7cs
 
 <img src="https://raw.githubusercontent.com/kburchfiel/pfn/main/Online_Visualizations/PFN_Dash_App_Demo/page_screenshots/dash_pivottable_enrollment.png" width="600"/>
 
-## Project structure
+
+### Development notes:
+
+1. I made use of a standalone Jupyter notebook ([notebook_for_testing.ipynb](https://github.com/kburchfiel/pfn/blob/main/Online_Visualizations/PFN_Dash_App_Demo/notebook_for_testing.ipynb)) to test out code before integrating it into my Dash app files.
+
+1. The source data is imported from GitHub. A more realistic approach would retrieve data from an online database; however, that would cause this project to incur a monthly database hosting expense.
+
+1. The [dash-bootstrap-components](https://dash-bootstrap-components.opensource.faculty.ai/docs/components/layout/) library is used extensively within many of these dashboards. It's a great option for making your dashboards more aesthetically pleasing *and* more flexible.
+
+1. This app is hosted on Google Cloud Run, though you can also host it locally by cloning this project. See the [Simple App With Login](https://github.com/kburchfiel/pfn/tree/main/Online_Visualizations/Simple_App_With_Login) Readme for more guidance on hosting Dash apps within Cloud Run.
+
+### Project structure
 
 The files and folders in this app are arranged as follows: 
 
-(Folders are italicized. Note that Procfile is an 'extensionless' document rather than a folder.)
+(Folders have '/' suffixes. Note that Procfile is an 'extensionless' document rather than a folder.)
 
-*pages*
+pages/
 
---> home_page.py
+----home_page.py
 
---> fixed_dashboard.py
+----fixed_dashboard.py
 
---> simple_interactive_dashboard.py
+----simple_interactive_dashboard.py
 
---> flexible_survey_results_dashboard.py
+----flexible_survey_results_dashboard.py
 
---> flexible_enrollment_dashboard.py
+----flexible_enrollment_dashboard.py
 
---> dash_pivottable_enrollment.py
+----dash_pivottable_enrollment.py
 
---> dash_pivottable_survey_results.py
+----dash_pivottable_survey_results.py
 
-*templates*
+templates/
 
---> login.html
+----login.html
 
 app.py
 
@@ -79,15 +88,7 @@ import_layout.py
 
 Procfile
 
+readme.md [this file]
+
 requirements.txt
 
-
-## Development notes:
-
-1. I made use of a standalone Jupyter notebook ([notebook_for_testing.ipynb](https://github.com/kburchfiel/pfn/blob/main/Online_Visualizations/PFN_Dash_App_Demo/notebook_for_testing.ipynb)) to test out code before integrating it into my Dash app files.
-
-1. The source data is imported from GitHub. A more realistic approach would retrieve data from an online database; however, that would cause this project to incur a monthly database hosting expense.
-
-1. The [dash-bootstrap-components](https://dash-bootstrap-components.opensource.faculty.ai/docs/components/layout/) library is used extensively within many of these dashboards. It's a great option for making your dashboards more aesthetically pleasing *and* more flexible.
-
-1. This app is hosted on Google Cloud Run, though you can also host it locally by cloning this project. See the [Simple App With Login](https://github.com/kburchfiel/pfn/tree/main/Online_Visualizations/Simple_App_With_Login) Readme for more guidance on hosting Dash apps within Cloud Run.

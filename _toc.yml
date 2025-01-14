@@ -1,24 +1,50 @@
 # Table of contents
 # Learn more at https://jupyterbook.org/customize/toc.html
+# (The code at 
+# https://jupyterbook.org/en/stable/structure/toc.html also proved
+# helpful in creating this file.)
 
 format: jb-book
 
 # The following paths refer to files within the folder:
 root: 'README'
-chapters:
-- file: 'Introduction/the_case_for_python_at_nonprofits'
-- file: 'Data_Retrieval/data_retrieval'
-- file: 'Data_Prep/data_prep'
-- file: 'Census_Data_Imports/census_data_imports_v2'
-- file: 'Descriptive_Stats/descriptive_stats'
-- file: 'Graphing/graphing'
-- file: 'Graphing/pivot_and_graph_functions'
-- file: 'Mapping/choropleth_maps'
-- file: 'Mapping/plotly_choropleth_map_functions_py_nb'
-- file: 'Mapping/choropleth_maps_with_folium'
-- file: 'Mapping/folium_choropleth_map_functions_py_nb'
-- file: 'Updating_Online_Spreadsheets/updating_online_spreadsheets'
-- file: 'Updating_Online_Spreadsheets/weather_import_py_nb'
-- file: 'Online Visualizations/Simple_App_Without_Login_py_nb'
-- file: 'Appendix/nvcu_db_gen'
-- file: 'Appendix/helper_funcs_py_nb'
+parts:
+  - caption: 'Introduction'
+    chapters:
+    - file: 'Introduction/the_case_for_python_at_nonprofits'
+  - caption: 'Importing and Prepping Data'
+    chapters: 
+    - file: 'Data_Retrieval/data_retrieval'
+    - file: 'Data_Prep/data_prep'
+    - file: 'Census_Data_Imports/census_data_imports_v2'
+  - caption: 'Analyzing Data'
+    chapters:
+    - file: 'Descriptive_Stats/descriptive_stats'
+  - caption: 'Visualizing Data'
+    chapters:
+    - file: 'Graphing/graphing'
+    - file: 'Graphing/pivot_and_graph_functions'
+    - file: 'Mapping/choropleth_maps'
+      sections:
+      - file: 'Mapping/plotly_choropleth_map_functions_py_nb'
+    - file: 'Mapping/choropleth_maps_with_folium'
+      sections:
+      - file: 'Mapping/folium_choropleth_map_functions_py_nb'
+  - caption: 'Publishing Analyses Online'
+    chapters:
+    - file: 'Updating_Online_Spreadsheets/updating_online_spreadsheets'
+      sections:
+        - file: 'Updating_Online_Spreadsheets/weather_import_py_nb'
+    - file: 'Online_Visualizations/README'
+    - file: 'Online_Visualizations/Simple_App_Without_Login_py_nb'
+    - file: 'Online_Visualizations/Simple_App_With_Login_py_nb'
+    - file: 'Online_Visualizations/PFN_Dash_App_Demo_py_nb'
+  - caption: 'Appendix'
+    chapters:
+    - file: 'Appendix/nvcu_db_gen'
+    - file: 'Appendix/helper_funcs_py_nb'
+
+# Note: two spaces should be used for indentation rather than four;
+# in addition, the indentation patterns should match those found in
+# this example:
+# https://jupyterbook.org/en/stable/structure/toc.html#use-parts-to-organize-chapters

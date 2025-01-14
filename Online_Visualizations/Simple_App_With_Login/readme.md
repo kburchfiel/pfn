@@ -1,5 +1,7 @@
 # Simple Multi-Page App With Login
 
+## Readme
+
 This barebones app was created in order to demonstrate how Dash can be integrated with flask-login. It also provides an example of a multi-page app structure. 
 
 This code may serve as a helpful starting template for your own Dash apps. For a more detailed app example that contains multiple types of visualizations and dashboard layouts, review the [PFN Dash App Demo](https://github.com/kburchfiel/pfn/tree/main/Online_Visualizations/PFN_Dash_App_Demo) section.
@@ -10,32 +12,7 @@ The code in this folder was derived from jinnyzor's post at https://community.pl
 
 Some code also derives from that found in the [Dash Pages documentation](https://dash.plotly.com/urls).
 
-## Project structure
-
-The files and folders in this app are arranged as follows:
-
-(Folders are italicized. Note that Procfile is an 'extensionless' document rather than a folder.)
-
-*pages*
-
---> page_1.py
-
---> page_2.py
-
---> page_3.py
-
-*templates*
-
---> login.html
-
-app.py
-
-Procfile
-
-requirements.txt
-
-
-## Steps for hosting this Dash app (with Flask-Login functionality) on Google Cloud Run
+### Steps for hosting this Dash app (with Flask-Login functionality) on Google Cloud Run
 
 <h2 style="color:red">Warning: These steps may cause you to incur hosting charges depending on how frequently your site is visited. I recommend setting billing alerts to keep track of your spending.</h2>
 
@@ -86,4 +63,25 @@ If you receive a message like "service account 13371337-compute@developer.gservi
 
 6. After deploying a new version of your app, you may want to delete the old version (especially if it failed to run to begin with) in order to save costs. You can do so by searching for 'Artifact Registry' within the Cloud Console website; navigating to the list of containers for your site; and then keeping only the most recent container. Likewise, you may want to keep only the most recent bucket within the source/ folder in your Cloud Storage bucket. (To delete the other ones, search for 'buckets' within your Cloud Console; click on your bucket name; click on the 'source/' folder; and then delete all but the most recent bucket.)
 
+### Folder structure
+
+pages/
+
+----page_1.py
+
+----page_2.py
+
+----page_3.py
+
+templates/
+
+----login.html
+
+app.py
+
+Procfile
+
+readme.md [this file]
+
+requirements.txt
 

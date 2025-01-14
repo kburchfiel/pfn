@@ -118,7 +118,3 @@ def display_graph(x_vars, color, college_filter,
     print(table)
 
     return bar_graph, table
-
-        
-
-
