@@ -16,7 +16,9 @@ parts:
     chapters: 
     - file: 'Data_Retrieval/data_retrieval'
     - file: 'Data_Prep/data_prep'
-    - file: 'Census_Data_Imports/census_data_imports_v2'
+    - file: 'Census_Data_Imports/census_data_imports'
+      sections:
+      - file: 'Census_Data_Imports/census_import_scripts_py_nb'
   - caption: 'Analyzing Data'
     chapters:
     - file: 'Descriptive_Stats/descriptive_stats'
@@ -30,6 +32,9 @@ parts:
     - file: 'Mapping/choropleth_maps_with_folium'
       sections:
       - file: 'Mapping/folium_choropleth_map_functions_py_nb'
+  - caption: 'Regressions'
+    chapters:
+    - file: 'Regressions/regression_analyses'
   - caption: 'Publishing Analyses Online'
     chapters:
     - file: 'Updating_Online_Spreadsheets/updating_online_spreadsheets'
@@ -37,7 +42,6 @@ parts:
         - file: 'Updating_Online_Spreadsheets/weather_import_py_nb'
     - file: 'Online_Visualizations/README'
     - file: 'Online_Visualizations/Simple_App_Without_Login_py_nb'
-    - file: 'Online_Visualizations/Simple_App_With_Login_py_nb'
     - file: 'Online_Visualizations/PFN_Dash_App_Demo_py_nb'
   - caption: 'Appendix'
     chapters:
