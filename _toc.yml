@@ -11,6 +11,7 @@ root: 'README'
 parts:
   - caption: 'Introduction'
     chapters:
+    - file: 'Introduction/introduction'
     - file: 'Introduction/the_case_for_python_at_nonprofits'
   - caption: 'Importing and Prepping Data'
     chapters: 
@@ -22,6 +23,8 @@ parts:
   - caption: 'Analyzing Data'
     chapters:
     - file: 'Descriptive_Stats/descriptive_stats'
+    - file: 'Descriptive_Stats/descriptive_stats_part_2'
+
   - caption: 'Visualizing Data'
     chapters:
     - file: 'Graphing/graphing'

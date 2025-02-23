@@ -152,6 +152,6 @@ generate_image: {generate_image}")
             # Source: StackOverflow user 'zach' at
             # https://stackoverflow.com/a/11855133/13097194
         else:
-            return fig # The funciton could instead load and display the
+            return fig # The function could instead load and display the
             # .html image stored at html_file_path, but this approach is 
             # simpler and should still work fine in most cases.
