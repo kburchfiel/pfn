@@ -141,7 +141,7 @@ def gen_choropleth(
     screenshot_title_font_size = 40, screenshot_colorbar_thickness = 80, 
     screenshot_colorbar_len = 0.5, screenshot_colorbar_tickfont_size = 20, 
     screenshot_colorbar_title_font_size = 30,
-    revise_state_label_points = False):
+    revise_state_label_points = False, debug = False):
     
     '''This function converts a GeoDataFrame into a choropleth map within 
     Plotly, then saves that map (if requested by the caller) to HTML and 
@@ -222,9 +222,24 @@ def gen_choropleth(
     arguments within update_and_save_plotly_map(); 
     see that function's documentation for further details on these
     entries.
+
+    debug: set to True to return both the figure and additional variables
+    that can help with troubleshooting or extending the function; 
+    set to False to return just the figure.
     '''
 
-    gdf = original_gdf.copy()
+    # Creating a copy of the original DataFrame (so as not to modify
+    # it):
+    # This copy will also be sorted by the data column in descending 
+    # order. This step helps ensure that, when a percentile-based 
+    # colorbar is requested, the colorbar legend entries (which are 
+    # retrieved from the sort_list variable created within this function)
+    # will appear within the same order as the percentile_quantile_list
+    # values. The latter are sorted explicitly within the function,
+    # but the former are not--so sorting the DataFrame at the outset
+    # helps keep them synchronized.
+    
+    gdf = original_gdf.copy().sort_values(data_col, ascending = False)
 
     if colormap_type == 'percentile':
         # In order to accommodate percentile-based color ranges, 
@@ -241,7 +256,7 @@ def gen_choropleth(
 to store data_col percentiles ({percentile_col}) is already present \
 within gdf. Rename this column before calling the function to prevent \
 any conflicts.")   
-        
+
         gdf[percentile_col] = 100 * gdf[
         data_col].rank(pct=True, ascending=True, method='max') # See
         # https://pandas.pydata.org/pandas-docs/stable/reference/api/
@@ -309,6 +324,9 @@ any conflicts.")
         # the colorbar's tickvals property would have actual corresponding 
         # values that could be passed to colorbar_ticktext.
 
+        # This sort_values() call is necessary for the quantile
+        # ranges to line up with the score_list values that will
+        # get created shortly.
         percentile_quantiles = gdf[percentile_col].quantile(
         quantile_range, interpolation = 'lower').sort_values(
         ascending = False)
@@ -364,7 +382,6 @@ any conflicts.")
         else:
             colorbar_title = data_col
 
-    
     # The documentation at 
     # https://plotly.com/python/reference/layout/coloraxis/
     # proved indispensable in drafting this code.
@@ -424,7 +441,6 @@ to prevent a conflict with gen_choropleth.")
             gdf.at['Louisiana', 'label_lat'] = 30.5
             gdf.at['Louisiana', 'label_lon'] = -92.54
         
-        
 
         # This code was based mostly on
         # https://plotly.com/python/scatter-plots-on-
@@ -463,5 +479,8 @@ to prevent a conflict with gen_choropleth.")
 screenshot_colorbar_tickfont_size, 
             screenshot_colorbar_title_font_size = \
 screenshot_colorbar_title_font_size)
-    
-    return fig
+        
+    if debug == True:
+        return fig, percentile_quantiles, score_list, gdf
+    else:
+        return fig
