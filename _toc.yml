@@ -40,6 +40,7 @@ parts:
     - file: 'Regressions/regression_analyses'
   - caption: 'Publishing Analyses Online'
     chapters:
+    - file: 'Static_Sites/simple_static_site'
     - file: 'Updating_Online_Spreadsheets/updating_online_spreadsheets'
       sections:
         - file: 'Updating_Online_Spreadsheets/weather_import_py_nb'
