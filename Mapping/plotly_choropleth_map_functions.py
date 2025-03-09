@@ -128,20 +128,23 @@ def update_and_save_plotly_map(
 
 def gen_choropleth(
     original_gdf, geojson_col, data_col, extra_hover_cols = [], 
-    color_continuous_scale = None, scope = None, title = None,
-    basemap_visible = False, colormap_type = 'linear', 
-    colorscale_tick_count = 10, tick_round_value = None,
-    custom_colorbar_title = None, add_labels = False, 
-    label_round_value = None,
-    save_html = True, save_static = True, static_file_folder = '',
-    html_file_folder = '', filename = '', image_extension = 'png',
-    include_plotlyjs = 'cdn', screenshot_label_font_size = 18,
-    screenshot_width = 1920, screenshot_height = 1080,
-    screenshot_scale = 2, screenshot_title_y = 0.95,
-    screenshot_title_font_size = 40, screenshot_colorbar_thickness = 80, 
-    screenshot_colorbar_len = 0.5, screenshot_colorbar_tickfont_size = 20, 
-    screenshot_colorbar_title_font_size = 30,
-    revise_state_label_points = False, debug = False):
+    color_continuous_scale=None, scope=None, title=None,
+    basemap_visible=False, colormap_type='linear', 
+    colorscale_tick_count=10, tick_round_value=None,
+    custom_colorbar_title=None, add_labels=False, 
+    label_round_value=None,
+    save_html=True, save_static=True, static_file_folder='',
+    html_file_folder='', filename='', image_extension='png',
+    include_plotlyjs='cdn', screenshot_label_font_size=18,
+    screenshot_width=1920, screenshot_height=1080,
+    screenshot_scale=2, screenshot_title_y=0.95,
+    screenshot_title_font_size=40, screenshot_colorbar_thickness=80, 
+    screenshot_colorbar_len=0.5, screenshot_colorbar_tickfont_size=20, 
+    screenshot_colorbar_title_font_size=30,
+    revise_state_label_points=False, debug=False, show_tiles=False,
+    tile_source='open-street-map', zoom=4.35, 
+    starting_loc=[37.9, -96],
+    opacity=0.75, margin_list=None, colorbar_len=-1):
     
     '''This function converts a GeoDataFrame into a choropleth map within 
     Plotly, then saves that map (if requested by the caller) to HTML and 
@@ -226,6 +229,42 @@ def gen_choropleth(
     debug: set to True to return both the figure and additional variables
     that can help with troubleshooting or extending the function; 
     set to False to return just the figure.
+
+    show_tiles: Set to True to render the map using px.choropleth_map(),
+    thus allowing tiles to appear behind the map. Keep False to render
+    the map using px.choropleth() instead. Both options have their 
+    strengths and weaknesses for various use cases.
+    For more on choropleth_map(), see https://plotly.com/python-api-reference/generated/plotly.express.choropleth_map.html .
+
+    tile_source: The map tile provider to use. (Will only have an effect
+    if show_tiles is set to True.)
+
+    zoom: The starting zoom to use for a map. (Will only have an effect
+    if show_tiles is set to True.) 
+
+    starting_loc: A list of floats representing the starting latitude
+    and longitude for the map. These should be represented in decimal
+    degree format rather than degrees/minutes/seconds format. (Will only 
+    have an effect if show_tiles is set to True.)
+
+    (Note: the default zoom and starting_loc settings are tailored towards
+    HTML-resolution maps of the lower 48 US states.)
+
+    opacity: The opacity level to use for choropleth regions. It will only
+    have an effect if show_tiles is set to True.
+
+    margin_list: The right, top, left, and bottom margins to use for
+    the map, respectively. If set to None, the map's default margins
+    will be retained if show_tiles is False but set to 0 on all sides
+    if show_tiles is True.
+
+    coloraxis_colorbar_len: The length to use for colorbars. If set
+    to -1, this value will get changed within the function to 1 (if
+    show_tiles is False) or 0.8 (if show_tiles is True). (A smaller
+    colorbar can help prevent its title from getting cut off when the
+    bottom margin is removed--which will occur by default when show_tiles
+    is set to True.)
+    
     '''
 
     # Creating a copy of the original DataFrame (so as not to modify
@@ -356,17 +395,62 @@ any conflicts.")
         # event that outliers exist within the dataset.
     else:
         color = data_col
-    
-    fig = px.choropleth(gdf, 
-    geojson = gdf[geojson_col],
-    locations = gdf.index,
-    color = color,
-    hover_data = [data_col] + extra_hover_cols, 
-    color_continuous_scale = color_continuous_scale,
-    scope = scope,
-    title = title,
-    basemap_visible = basemap_visible)
+    if show_tiles == False: # px.choropleth() will be called
+        # to produce a tileless choropleth map.
+        if colorbar_len == -1:
+            colorbar_len = 1
+        fig = px.choropleth(gdf, 
+        geojson=gdf[geojson_col],
+        locations=gdf.index,
+        color=color,
+        hover_data=[data_col] + extra_hover_cols, 
+        color_continuous_scale=color_continuous_scale,
+        scope=scope,
+        title=title,
+        basemap_visible = basemap_visible)
 
+    else: # px.choropleth_map() will be called
+        # to allow a map with tiles to be produced.
+        if colorbar_len == -1:
+            colorbar_len = 0.8
+        fig = px.choropleth_map(gdf, 
+        geojson = gdf[geojson_col],
+        locations = gdf.index,
+        color = color,
+        hover_data = [data_col] + extra_hover_cols, 
+        color_continuous_scale = color_continuous_scale,
+        title = title, 
+        map_style=tile_source, zoom = zoom,
+        center = {'lat':starting_loc[0], 'lon':starting_loc[1]},
+        opacity=opacity)
+        
+    
+    if margin_list is None:
+        if show_tiles == True:
+        # Setting each margin to 0 will allow the map to take up more
+        # of the window--which can be particularly useful for tiled maps.
+        # (This code is based on a snippet from
+        # https://plotly.com/python/map-configuration/ .)
+            fig.update_layout(margin = {
+                    "r":0,"t":0,"l":0,"b":0})
+        # No changes will be made in this case if show_tiles is set to
+        # False.
+        
+    else: # Updating the margins (if requested by the user)
+        fig.update_layout(margin = {
+            "r":margin_list[0],"t":margin_list[1],
+            "l":margin_list[2],"b":margin_list[3]})
+
+    # This code will also shorten the colorbar a little so that
+    # the reduced bottom margin does not cut off our title.
+    # (This code was derived from
+    # https://plotly.com/python/reference/layout/coloraxis/ )
+    
+    fig.update_layout(coloraxis_colorbar_len = colorbar_len)
+
+        
+    
+    
     if colormap_type == 'percentile':
     # The following code updates the figure's colorbar to show the values 
     # corresponding to each percentile rather than the percentiles 
