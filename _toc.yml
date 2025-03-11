@@ -7,19 +7,20 @@
 format: jb-book
 
 # The following paths refer to files within the folder:
-root: 'README'
+root: 'Book_Specific_Materials/front_matter_for_book'
 parts:
   - caption: 'Introduction'
     chapters:
     - file: 'Introduction/introduction'
     - file: 'Introduction/the_case_for_python_at_nonprofits'
+    - file: 'Book_Specific_Materials/getting_started'
   - caption: 'Importing and Prepping Data'
     chapters: 
     - file: 'Data_Retrieval/data_retrieval'
     - file: 'Data_Prep/data_prep'
     - file: 'Census_Data_Imports/census_data_imports'
       sections:
-      - file: 'Census_Data_Imports/census_import_scripts_py_nb'
+      - file: 'Book_Specific_Materials/census_import_scripts_py_nb'
   - caption: 'Analyzing Data'
     chapters:
     - file: 'Descriptive_Stats/descriptive_stats'
@@ -31,10 +32,10 @@ parts:
     - file: 'Graphing/pivot_and_graph_functions'
     - file: 'Mapping/choropleth_maps'
       sections:
-      - file: 'Mapping/plotly_choropleth_map_functions_py_nb'
+      - file: 'Book_Specific_Materials/plotly_choropleth_map_functions_py_nb'
     - file: 'Mapping/choropleth_maps_with_folium'
       sections:
-      - file: 'Mapping/folium_choropleth_map_functions_py_nb'
+      - file: 'Book_Specific_Materials/folium_choropleth_map_functions_py_nb'
   - caption: 'Regressions'
     chapters:
     - file: 'Regressions/regression_analyses'
@@ -43,14 +44,14 @@ parts:
     - file: 'Static_Sites/simple_static_site'
     - file: 'Updating_Online_Spreadsheets/updating_online_spreadsheets'
       sections:
-        - file: 'Updating_Online_Spreadsheets/weather_import_py_nb'
+        - file: 'Book_Specific_Materials/weather_import_py_nb'
     - file: 'Online_Visualizations/README'
-    - file: 'Online_Visualizations/Simple_App_Without_Login_py_nb'
-    - file: 'Online_Visualizations/PFN_Dash_App_Demo_py_nb'
+    - file: 'Book_Specific_Materials/Simple_App_Without_Login_py_nb'
+    - file: 'Book_Specific_Materials/PFN_Dash_App_Demo_py_nb'
   - caption: 'Appendix'
     chapters:
     - file: 'Appendix/nvcu_db_gen'
-    - file: 'Appendix/helper_funcs_py_nb'
+    - file: 'Book_Specific_Materials/helper_funcs_py_nb'
 
 # Note: two spaces should be used for indentation rather than four;
 # in addition, the indentation patterns should match those found in

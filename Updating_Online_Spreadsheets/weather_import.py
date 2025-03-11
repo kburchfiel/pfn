@@ -1,4 +1,4 @@
-# Weather Import
+# Weather Data Import
 # By Kenneth Burchfiel
 # Released under the MIT license
 
