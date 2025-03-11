@@ -10,7 +10,7 @@ Finally, the best way to internalize this content is to use it as the starting p
 
 ## Initial setup
 
-I created much of PFN within [Jupyter Desktop](https://github.com/jupyterlab/jupyterlab-desktop), an open-source tool for opening and viewing Jupyter Notebooks. I recommend that you use this program for viewing PFN notebooks also, though PFN should run well within other Jupyter Notebook viewers as well. 
+I created much of PFN within Jupyter Desktop (https://github.com/jupyterlab/jupyterlab-desktop), an open-source tool for opening and viewing Jupyter Notebooks. I recommend that you use this program for viewing PFN notebooks also, though PFN should run well within other Jupyter Notebook viewers as well. 
 
 You'll of course also want to have Python set up on your computer. As noted within The Case for Python at Nonprofits, I recommend that you install and use Python (and the libraries that PFN applies) via Miniforge rather than Anaconda, as you may not be able to use the latter for free. 
 

@@ -28,7 +28,9 @@ Therefore, I wanted to create a guide that would allow others to learn how to ap
 
 I also hope to teach Python on a part-time basis one day; if that opportunity arises, I would plan to incorporate this guide into my curriculum. 
 
-Those are some of my 'practical' reasons for writing Python for Nonprofits. On a more personal note, though, I have found that I greatly enjoy learning new things, than teaching others about them. I've discovered that it's intrinsically rewarding--and fun--to demonstrate how to use Python to reformat data; create charts and graphs; and host dashboards online. Although writing educational Python materials is a strange hobby, I find it to be an immensely rewarding one--and I hope that this can be just one of many such projects that I take on in my free time.
+Those are some of my 'practical' reasons for writing Python for Nonprofits. However, I also found this project to be intrinsically rewarding--and actually *fun*. I greatly enjoy learning new things, than teaching others about them; therefore, it has been immensely enjoyable to develop the code and documentation that comprises PFN. There were many evenings in which I had trouble shutting down my computer and going to bed because I was having such a good time with PFN!
+
+I recognize that writing educational Python materials is a strange hobby, but it's one that I hope to continue for years to come. I hope that you will have as much fun reading this text--and putting its examples into practice in your own personal and professional life--as I have had writing it.
 
 ## Development notes
 
@@ -55,6 +57,10 @@ In addition, I wanted my own style--both in writing and programming terms--to ma
 Finally, I find the process of writing and debugging my own code to be *fun*. If I outsourced that process to an AI-based tool, I think I would not have enjoyed this project so much.
 
 None of this is to imply that individuals who use generative AI, whether for programming, writing, or other forms of content creation, are somehow worse at what they do or mistaken in their approach. I simply believe that avoiding the use of generative AI is the best choice *for me*.
+
+## Acknowledgments
+
+[Many acknowledgments to come!]
 
 ## Dedication
 
