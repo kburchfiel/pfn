@@ -1,9 +1,3 @@
-# Python for Nonprofits
-
-By Kenneth Burchfiel
-
-Released under the MIT License
-
 Python for Nonprofits (PFN) is a guide to applying Python in nonprofit settings. Specifically, it teaches you how to use Python to:
 
 * Import data, then clean and reformat it 
@@ -19,7 +13,7 @@ I've released PFN under the MIT license. This means that you can use this code i
 
 For a more comprehensive guide to to Python for Nonprofits, reference the Introduction section.
 
-## Sample Output
+## Sample output
 
 Python for Nonprofits will teach you how to create visuals like the following:
 
@@ -33,4 +27,4 @@ Python for Nonprofits will teach you how to create visuals like the following:
 
 (These are all static images, but you'll also learn how to create interactive HTML versions of these charts as well.)
 
-Visualizations are just one component of Python for Nonprofits, but I did want to add some images to this Readme--and maps and charts make for more interesting images than do screenshots of tables!
+Visualizations are just one component of Python for Nonprofits, but I did want to add some images to this section--and maps and charts make for more interesting images than do screenshots of tables!

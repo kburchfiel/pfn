@@ -1,6 +1,9 @@
 # Book settings
 # Learn more at https://jupyterbook.org/customize/config.html
 
+# Note: this file was based on the documentation for Jupyter Book (https://jupyterbook.org/).
+# Jupyter Book has been released under the BSD-3-Clause License.
+
 title: Python for Nonprofits
 author: Kenneth Burchfiel
 # logo: logo.png

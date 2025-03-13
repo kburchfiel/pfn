@@ -64,7 +64,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="helper_funcs.py" href="../Book_Specific_Materials/helper_funcs_py_nb.html" />
-    <link rel="prev" title="PFN Dash App Demo" href="../Book_Specific_Materials/PFN_Dash_App_Demo_py_nb.html" />
+    <link rel="prev" title="dash_pivottable_enrollment.py" href="../Book_Specific_Materials/PFN_Dash_App_Demo_py_nb.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="" />
@@ -158,7 +158,7 @@
         <ul class="nav bd-sidenav bd-sidenav__home-link">
             <li class="toctree-l1">
                 <a class="reference internal" href="../front_matter_for_book.html">
-                    Python for Nonprofits
+                    Sample output
                 </a>
             </li>
         </ul>
@@ -166,6 +166,7 @@
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../Introduction/introduction.html">An introduction to Python for Nonprofits</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Introduction/the_case_for_python_at_nonprofits.html">The Case for Using Python at Nonprofits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Book_Specific_Materials/getting_started_for_book.html">Getting Started</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Importing and Prepping Data</span></p>
 <ul class="nav bd-sidenav">
@@ -206,9 +207,29 @@
 <li class="toctree-l2"><a class="reference internal" href="../Book_Specific_Materials/weather_import_py_nb.html">weather_import.py</a></li>
 </ul>
 </details></li>
-<li class="toctree-l1"><a class="reference internal" href="../Online_Visualizations/README.html">Online Visualizations with Dash</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Book_Specific_Materials/Simple_App_Without_Login_py_nb.html">Simple App Without Login</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Book_Specific_Materials/PFN_Dash_App_Demo_py_nb.html">PFN Dash App Demo</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Online_Visualizations/Simple_App_Without_Login/readme.html">Simple Dash App Without Login</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Book_Specific_Materials/Simple_App_Without_Login_py_nb.html">app.py</a></li>
+
+
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Online_Visualizations/PFN_Dash_App_Demo/readme.html">PFN Dash App Demo</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Book_Specific_Materials/PFN_Dash_App_Demo_py_nb.html">dash_pivottable_enrollment.py</a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</ul>
+</details></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendix</span></p>
 <ul class="current nav bd-sidenav">
@@ -528,14 +549,14 @@
   <tbody>
     <tr>
       <th>0</th>
-      <td>Nicole</td>
-      <td>Myers</td>
+      <td>Mackenzie</td>
+      <td>Mcdonald</td>
       <td>F</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>Jill</td>
-      <td>Parker</td>
+      <td>Allison</td>
+      <td>West</td>
       <td>F</td>
     </tr>
     <tr>
@@ -546,14 +567,14 @@
     </tr>
     <tr>
       <th>16382</th>
-      <td>William</td>
-      <td>Shaffer</td>
+      <td>Spencer</td>
+      <td>Black</td>
       <td>M</td>
     </tr>
     <tr>
       <th>16383</th>
-      <td>John</td>
-      <td>Reyes</td>
+      <td>Matthew</td>
+      <td>Wright</td>
       <td>M</td>
     </tr>
   </tbody>
@@ -615,15 +636,15 @@
   <tbody>
     <tr>
       <th>0</th>
-      <td>Nicole</td>
-      <td>Myers</td>
+      <td>Mackenzie</td>
+      <td>Mcdonald</td>
       <td>F</td>
       <td>2020</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>Jill</td>
-      <td>Parker</td>
+      <td>Allison</td>
+      <td>West</td>
       <td>F</td>
       <td>2020</td>
     </tr>
@@ -636,15 +657,15 @@
     </tr>
     <tr>
       <th>16382</th>
-      <td>William</td>
-      <td>Shaffer</td>
+      <td>Spencer</td>
+      <td>Black</td>
       <td>M</td>
       <td>2020</td>
     </tr>
     <tr>
       <th>16383</th>
-      <td>John</td>
-      <td>Reyes</td>
+      <td>Matthew</td>
+      <td>Wright</td>
       <td>M</td>
       <td>2021</td>
     </tr>
@@ -701,16 +722,16 @@
   <tbody>
     <tr>
       <th>0</th>
-      <td>Nicole</td>
-      <td>Myers</td>
+      <td>Mackenzie</td>
+      <td>Mcdonald</td>
       <td>F</td>
       <td>2020</td>
       <td>1</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>Jill</td>
-      <td>Parker</td>
+      <td>Allison</td>
+      <td>West</td>
       <td>F</td>
       <td>2020</td>
       <td>2</td>
@@ -725,16 +746,16 @@
     </tr>
     <tr>
       <th>16382</th>
-      <td>William</td>
-      <td>Shaffer</td>
+      <td>Spencer</td>
+      <td>Black</td>
       <td>M</td>
       <td>2020</td>
       <td>3289</td>
     </tr>
     <tr>
       <th>16383</th>
-      <td>John</td>
-      <td>Reyes</td>
+      <td>Matthew</td>
+      <td>Wright</td>
       <td>M</td>
       <td>2021</td>
       <td>3653</td>
@@ -794,8 +815,8 @@
   <tbody>
     <tr>
       <th>0</th>
-      <td>Nicole</td>
-      <td>Myers</td>
+      <td>Mackenzie</td>
+      <td>Mcdonald</td>
       <td>F</td>
       <td>2020</td>
       <td>1</td>
@@ -803,8 +824,8 @@
     </tr>
     <tr>
       <th>1</th>
-      <td>Jill</td>
-      <td>Parker</td>
+      <td>Allison</td>
+      <td>West</td>
       <td>F</td>
       <td>2020</td>
       <td>2</td>
@@ -821,8 +842,8 @@
     </tr>
     <tr>
       <th>16382</th>
-      <td>Ethan</td>
-      <td>Bryan</td>
+      <td>David</td>
+      <td>Clark</td>
       <td>M</td>
       <td>2023</td>
       <td>5442</td>
@@ -830,8 +851,8 @@
     </tr>
     <tr>
       <th>16383</th>
-      <td>Anthony</td>
-      <td>Archer</td>
+      <td>Gary</td>
+      <td>Reeves</td>
       <td>M</td>
       <td>2023</td>
       <td>5443</td>
@@ -908,8 +929,8 @@
   <tbody>
     <tr>
       <th>0</th>
-      <td>Nicole</td>
-      <td>Myers</td>
+      <td>Mackenzie</td>
+      <td>Mcdonald</td>
       <td>F</td>
       <td>2020</td>
       <td>1</td>
@@ -918,8 +939,8 @@
     </tr>
     <tr>
       <th>1</th>
-      <td>Jill</td>
-      <td>Parker</td>
+      <td>Allison</td>
+      <td>West</td>
       <td>F</td>
       <td>2020</td>
       <td>2</td>
@@ -938,8 +959,8 @@
     </tr>
     <tr>
       <th>16382</th>
-      <td>Ethan</td>
-      <td>Bryan</td>
+      <td>David</td>
+      <td>Clark</td>
       <td>M</td>
       <td>2023</td>
       <td>5442</td>
@@ -948,8 +969,8 @@
     </tr>
     <tr>
       <th>16383</th>
-      <td>Anthony</td>
-      <td>Archer</td>
+      <td>Gary</td>
+      <td>Reeves</td>
       <td>M</td>
       <td>2023</td>
       <td>5443</td>
@@ -1065,8 +1086,8 @@ Now adding in college enrollments for 2023.
   <tbody>
     <tr>
       <th>0</th>
-      <td>Nicole</td>
-      <td>Myers</td>
+      <td>Mackenzie</td>
+      <td>Mcdonald</td>
       <td>F</td>
       <td>...</td>
       <td>2020-1</td>
@@ -1075,8 +1096,8 @@ Now adding in college enrollments for 2023.
     </tr>
     <tr>
       <th>1</th>
-      <td>Jill</td>
-      <td>Parker</td>
+      <td>Allison</td>
+      <td>West</td>
       <td>F</td>
       <td>...</td>
       <td>2020-2</td>
@@ -1095,8 +1116,8 @@ Now adding in college enrollments for 2023.
     </tr>
     <tr>
       <th>16382</th>
-      <td>Ethan</td>
-      <td>Bryan</td>
+      <td>David</td>
+      <td>Clark</td>
       <td>M</td>
       <td>...</td>
       <td>2023-5442</td>
@@ -1105,8 +1126,8 @@ Now adding in college enrollments for 2023.
     </tr>
     <tr>
       <th>16383</th>
-      <td>Anthony</td>
-      <td>Archer</td>
+      <td>Gary</td>
+      <td>Reeves</td>
       <td>M</td>
       <td>...</td>
       <td>2023-5443</td>
@@ -1174,8 +1195,8 @@ Now adding in college enrollments for 2023.
   <tbody>
     <tr>
       <th>0</th>
-      <td>Nicole</td>
-      <td>Myers</td>
+      <td>Mackenzie</td>
+      <td>Mcdonald</td>
       <td>F</td>
       <td>...</td>
       <td>2024</td>
@@ -1184,8 +1205,8 @@ Now adding in college enrollments for 2023.
     </tr>
     <tr>
       <th>1</th>
-      <td>Jill</td>
-      <td>Parker</td>
+      <td>Allison</td>
+      <td>West</td>
       <td>F</td>
       <td>...</td>
       <td>2024</td>
@@ -1204,8 +1225,8 @@ Now adding in college enrollments for 2023.
     </tr>
     <tr>
       <th>16382</th>
-      <td>Ethan</td>
-      <td>Bryan</td>
+      <td>David</td>
+      <td>Clark</td>
       <td>M</td>
       <td>...</td>
       <td>2027</td>
@@ -1214,8 +1235,8 @@ Now adding in college enrollments for 2023.
     </tr>
     <tr>
       <th>16383</th>
-      <td>Anthony</td>
-      <td>Archer</td>
+      <td>Gary</td>
+      <td>Reeves</td>
       <td>M</td>
       <td>...</td>
       <td>2027</td>
@@ -1283,8 +1304,8 @@ Now adding in college enrollments for 2023.
   <tbody>
     <tr>
       <th>0</th>
-      <td>Nicole</td>
-      <td>Myers</td>
+      <td>Mackenzie</td>
+      <td>Mcdonald</td>
       <td>F</td>
       <td>...</td>
       <td>2024</td>
@@ -1293,8 +1314,8 @@ Now adding in college enrollments for 2023.
     </tr>
     <tr>
       <th>1</th>
-      <td>Jill</td>
-      <td>Parker</td>
+      <td>Allison</td>
+      <td>West</td>
       <td>F</td>
       <td>...</td>
       <td>2024</td>
@@ -1313,8 +1334,8 @@ Now adding in college enrollments for 2023.
     </tr>
     <tr>
       <th>16382</th>
-      <td>Ethan</td>
-      <td>Bryan</td>
+      <td>David</td>
+      <td>Clark</td>
       <td>M</td>
       <td>...</td>
       <td>2027</td>
@@ -1323,8 +1344,8 @@ Now adding in college enrollments for 2023.
     </tr>
     <tr>
       <th>16383</th>
-      <td>Anthony</td>
-      <td>Archer</td>
+      <td>Gary</td>
+      <td>Reeves</td>
       <td>M</td>
       <td>...</td>
       <td>2027</td>
@@ -1856,18 +1877,18 @@ Now adding in college enrollments for 2023.
   <tbody>
     <tr>
       <th>0</th>
-      <td>1724</td>
+      <td>2610</td>
       <td>STL</td>
-      <td>So</td>
+      <td>Fr</td>
       <td>W</td>
-      <td>82.0%</td>
+      <td>81.0%</td>
       <td>23</td>
-      <td>22</td>
+      <td>23</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>3672</td>
-      <td>STC</td>
+      <td>3429</td>
+      <td>STB</td>
       <td>So</td>
       <td>W</td>
       <td>70.0%</td>
@@ -1886,23 +1907,23 @@ Now adding in college enrollments for 2023.
     </tr>
     <tr>
       <th>14620</th>
-      <td>314</td>
-      <td>STL</td>
+      <td>3150</td>
+      <td>STC</td>
       <td>Se</td>
       <td>W</td>
-      <td>70.0%</td>
+      <td>74.0%</td>
       <td>23</td>
       <td>20</td>
     </tr>
     <tr>
       <th>14621</th>
-      <td>5434</td>
+      <td>1922</td>
       <td>STC</td>
-      <td>Fr</td>
+      <td>Se</td>
       <td>W</td>
-      <td>75.0%</td>
+      <td>61.0%</td>
       <td>23</td>
-      <td>23</td>
+      <td>20</td>
     </tr>
   </tbody>
 </table>
@@ -2231,7 +2252,7 @@ Now adding in college enrollments for 2023.
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">PFN Dash App Demo</p>
+        <p class="prev-next-title">dash_pivottable_enrollment.py</p>
       </div>
     </a>
     <a class="right-next"

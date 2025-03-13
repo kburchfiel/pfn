@@ -64,7 +64,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="The Case for Using Python at Nonprofits" href="the_case_for_python_at_nonprofits.html" />
-    <link rel="prev" title="Python for Nonprofits" href="../front_matter_for_book.html" />
+    <link rel="prev" title="Sample output" href="../front_matter_for_book.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="" />
@@ -158,7 +158,7 @@
         <ul class="nav bd-sidenav bd-sidenav__home-link">
             <li class="toctree-l1">
                 <a class="reference internal" href="../front_matter_for_book.html">
-                    Python for Nonprofits
+                    Sample output
                 </a>
             </li>
         </ul>
@@ -166,6 +166,7 @@
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">An introduction to Python for Nonprofits</a></li>
 <li class="toctree-l1"><a class="reference internal" href="the_case_for_python_at_nonprofits.html">The Case for Using Python at Nonprofits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Book_Specific_Materials/getting_started_for_book.html">Getting Started</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Importing and Prepping Data</span></p>
 <ul class="nav bd-sidenav">
@@ -206,9 +207,29 @@
 <li class="toctree-l2"><a class="reference internal" href="../Book_Specific_Materials/weather_import_py_nb.html">weather_import.py</a></li>
 </ul>
 </details></li>
-<li class="toctree-l1"><a class="reference internal" href="../Online_Visualizations/README.html">Online Visualizations with Dash</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Book_Specific_Materials/Simple_App_Without_Login_py_nb.html">Simple App Without Login</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Book_Specific_Materials/PFN_Dash_App_Demo_py_nb.html">PFN Dash App Demo</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Online_Visualizations/Simple_App_Without_Login/readme.html">Simple Dash App Without Login</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Book_Specific_Materials/Simple_App_Without_Login_py_nb.html">app.py</a></li>
+
+
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Online_Visualizations/PFN_Dash_App_Demo/readme.html">PFN Dash App Demo</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Book_Specific_Materials/PFN_Dash_App_Demo_py_nb.html">dash_pivottable_enrollment.py</a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</ul>
+</details></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendix</span></p>
 <ul class="nav bd-sidenav">
@@ -366,6 +387,7 @@
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#my-reasons-for-eschewing-generative-ai">My reasons for eschewing Generative AI</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gratitude-and-acknowledgments">Gratitude and Acknowledgments</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dedication">Dedication</a></li>
 </ul>
             </nav>
@@ -389,7 +411,7 @@
 </section>
 <section id="my-reasons-for-writing-pfn">
 <h2>My reasons for writing PFN<a class="headerlink" href="#my-reasons-for-writing-pfn" title="Link to this heading">#</a></h2>
-<p>To explain why I wrote this text, it will help to provide some background about my own educational and career path.</p>
+<p>To explain why I wrote this text, it will help to first provide some background about my own educational and career path.</p>
 <p>I should start by saying that I do <em>not</em> have a background in mathematics or computer science. I focused mostly on writing in high school, then majored in psychology at Middlebury College. I later obtained a Master of Science in Social Work at UT Austin and worked as a mental health counselor with Catholic Charities for a few years. These experiences did not teach me about Python or computer programming, but they <em>did</em> help me build my writing and communication skills–which certainly came in handy for this project. Therefore, if you (like many nonprofit staff) do not have much in the way of a quantitative background, don’t worry–I’m very confident that you can learn and apply Python in your own work!</p>
 <p>I first began studying Python seriously as a first-year MBA student, when I enrolled in Professor Mattan Griffel’s Introduction to Programming in Python course. I was amazed with how easy Python facilitated various data analysis and visualization tasks, and I also loved how programming engaged both the creative and problem-solving portions of my brain. I then had the chance to take several other programming-related classes at CBS with Hardeep Johar, Daniel Guetta, and Jared Lander; these courses further opened my eyes to the capabilities of Python and other open-source tools.</p>
 <p>I then had the opportunity to apply Python during a summer internship at Seton Education Partners. My supervisor, David Morales, gave me lots of freedom to use Python for many analysis-related tasks. I greatly enjoyed my time at Seton, so I returned there full time after completing my MBA. At Seton, I not only applied the Python knowledge that I had picked up during my MBA, but also learned many new libraries and applications for the language.</p>
@@ -397,7 +419,8 @@
 <p>My professional experiences have taught me that Python is a very powerful tool for nonprofit work. It is a huge time saver, and it also allows for the creation of analyses and visualizations that would be difficult or impossible to perform in spreadsheet-based tools like Excel. (For a more detailed list of reasons to apply Python at your nonprofit, read ‘The Case for Python at Nonprofits’ within PFN’s Introduction section.)</p>
 <p>Therefore, I wanted to create a guide that would allow others to learn how to apply Python at their present (or future) nonprofit jobs. Much of the text focuses on applications and methods that I have used in my own work; therefore, I am confident that you’ll find each section to be useful for your own nonprofit data analysis tasks as well. (I should also clarify, though, that I did not reference or copy any code from my work in the process of writing this text.)</p>
 <p>I also hope to teach Python on a part-time basis one day; if that opportunity arises, I would plan to incorporate this guide into my curriculum.</p>
-<p>Those are some of my ‘practical’ reasons for writing Python for Nonprofits. On a more personal note, though, I have found that I greatly enjoy learning new things, than teaching others about them. I’ve discovered that it’s intrinsically rewarding–and fun–to demonstrate how to use Python to reformat data; create charts and graphs; and host dashboards online. Although writing educational Python materials is a strange hobby, I find it to be an immensely rewarding one–and I hope that this can be just one of many such projects that I take on in my free time.</p>
+<p>Those are some of my ‘practical’ reasons for writing Python for Nonprofits. However, I also found this project to be intrinsically rewarding–and actually <em>fun</em>. I greatly enjoy learning new things, than teaching others about them; therefore, it has been immensely enjoyable to develop the code and documentation that comprises PFN. There were many evenings in which I had trouble shutting down my computer and going to bed because I was having such a good time with PFN!</p>
+<p>I recognize that writing educational Python materials is a strange hobby, but it’s one that I hope to continue for years to come. I hope that you will have as much fun reading this text–and putting its examples into practice in your own personal and professional life–as I have had writing it.</p>
 </section>
 <section id="development-notes">
 <h2>Development notes<a class="headerlink" href="#development-notes" title="Link to this heading">#</a></h2>
@@ -407,6 +430,7 @@
 <section id="the-book-version-of-pfn">
 <h3>The book version of PFN<a class="headerlink" href="#the-book-version-of-pfn" title="Link to this heading">#</a></h3>
 <p>Although I knew that most people would likely access Python for Nonprofits online, it was also important to me that I make it available in print form. Although online resources offer incredible convenience and accessibility, to truly learn a subject, I find that it helps to read through a book from cover to cover. Therefore, I made use of the fantastic Jupyter Book (<a class="reference external" href="https://jupyterbook.org/en/stable/intro.html">https://jupyterbook.org/en/stable/intro.html</a>) tool to convert the .ipynb and .md files that comprise Python for Nonprofits into a single PDF. Jupyter Book took care of much of the formatting for me, allowing me to focus more on the actual content. (I plan to make this PDF available to order in printed form in the near future–though you are of course welcome to print it out yourself in the meantime.)</p>
+<p>If you’re interested in using Jupyter Book for your own articles and books, check out the documentation at <a class="reference external" href="https://jupyterbook.org/">https://jupyterbook.org/</a> . Note that the <code class="docutils literal notranslate"><span class="pre">_config.yml</span></code>, <code class="docutils literal notranslate"><span class="pre">_toc.yml</span></code>, <code class="docutils literal notranslate"><span class="pre">create_html_book.sh</span></code>, and <code class="docutils literal notranslate"><span class="pre">create_pdflatex_book.sh</span></code> files in PFN’s root folder are part of my workflow for turning PFN into a Jupyter Book project. (These files were also based on Jupyter Book’s documentation.)</p>
 </section>
 <section id="my-reasons-for-eschewing-generative-ai">
 <h3>My reasons for eschewing Generative AI<a class="headerlink" href="#my-reasons-for-eschewing-generative-ai" title="Link to this heading">#</a></h3>
@@ -418,9 +442,21 @@
 <p>None of this is to imply that individuals who use generative AI, whether for programming, writing, or other forms of content creation, are somehow worse at what they do or mistaken in their approach. I simply believe that avoiding the use of generative AI is the best choice <em>for me</em>.</p>
 </section>
 </section>
+<section id="gratitude-and-acknowledgments">
+<h2>Gratitude and Acknowledgments<a class="headerlink" href="#gratitude-and-acknowledgments" title="Link to this heading">#</a></h2>
+<p>First, I am grateful to God for giving me the opportunity to write this text and share what I’ve learned with others.</p>
+<p>I am also grateful to Kenneth, my son. The amount of joy you have brought me and my wife cannot be put into words. Although watching Python for Nonprofits grow has been fun, <em>your</em> growth has been far more exciting–and, of course, far more important! This text and code will pass away, but you are eternal. I know you’re a bit young to use a computer at the moment, but I hope you will find this project useful one day.</p>
+<p>I am grateful to my parents, Linda and Ken. You provided me with immense love growing up, and I hope I can share that same love with Kenneth (and any other children with whom God might bless us). Dad, you showed me (with <em>Biotechnology and the Federal Circuit</em>) that it’s possible to write a book while raising a young family and holding down a job. I’m honored to be able to follow in your footsteps 30 years later–and I hope that we will be able to reunite in Heaven one day.</p>
+<p>I also want to thank my professors at Columbia Business School–especially Mattan Griffel, Daniel Guetta, Hardeep Johar, and Jared Lander–for introducing me to the valuable role that Python and R can play within organizations.</p>
+<p>In addition, very special thanks to my supervisors at Seton Education Partners and the Institute for Family Studies: David Morales, Michael Carbone, Michael Toscano, and Wendy Wang. You gave me the opportunity to apply Python to real-world challenges, and I have learned a great deal in the process.</p>
+<p>This book would not have been possible without the developers of Python and the many, many libraries that it makes use of (particularly Pandas, Plotly, Folium, and Dash). Thank you for making your work accessible to the world!</p>
+<p>I also wish to thank the developers of the open-source software and tools (including, but not limited to, JupyterLab Desktop, LibreOffice, Jupyter Book, Linux, and Linux Mint) that I used to develop Python for Nonprofits.</p>
+<p>Finally, I want to thank you for reading (or at least flipping through) this book. I hope that, regardless of where you are in your Python and nonprofit career journey, it will be a helpful tool for you.</p>
+</section>
 <section id="dedication">
 <h2>Dedication<a class="headerlink" href="#dedication" title="Link to this heading">#</a></h2>
-<p>This work is dedicated to my wife, Allie Burchfiel. Allie generously allowed me to take the time I needed to put this project together, even though that meant that I was less available to help her with chores, childcare, and the many other tasks (big and small) that go into running a household. She also believed in my vision for this work–and in my dreams of sharing my (still limited) understanding of Python with others. Allie is an amazing wife and mother, and I am incredibly fortunate to spend my life with her.</p>
+<p>This work is dedicated to my wife, Allie Burchfiel. Allie generously allowed me to take the time I needed to put this project together, even though that meant that I was less available to help her with chores, childcare, and the many other tasks (big and small) that go into running a household. She also believed in my vision for this work–and in my dreams of sharing my (still growing) understanding of Python with others. Allie is an amazing wife and mother, and I am incredibly fortunate to spend my life with her.</p>
+<p>Blessed (and soon to be Saint) Carlo Acutis, pray for us!</p>
 </section>
 </section>
 
@@ -460,7 +496,7 @@
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Python for Nonprofits</p>
+        <p class="prev-next-title">Sample output</p>
       </div>
     </a>
     <a class="right-next"
@@ -496,6 +532,7 @@
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#my-reasons-for-eschewing-generative-ai">My reasons for eschewing Generative AI</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gratitude-and-acknowledgments">Gratitude and Acknowledgments</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dedication">Dedication</a></li>
 </ul>
   </nav></div>

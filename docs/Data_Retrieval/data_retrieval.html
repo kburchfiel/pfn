@@ -64,7 +64,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Data Prep" href="../Data_Prep/data_prep.html" />
-    <link rel="prev" title="The Case for Using Python at Nonprofits" href="../Introduction/the_case_for_python_at_nonprofits.html" />
+    <link rel="prev" title="Getting Started" href="../Book_Specific_Materials/getting_started_for_book.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="" />
@@ -158,7 +158,7 @@
         <ul class="nav bd-sidenav bd-sidenav__home-link">
             <li class="toctree-l1">
                 <a class="reference internal" href="../front_matter_for_book.html">
-                    Python for Nonprofits
+                    Sample output
                 </a>
             </li>
         </ul>
@@ -166,6 +166,7 @@
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../Introduction/introduction.html">An introduction to Python for Nonprofits</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Introduction/the_case_for_python_at_nonprofits.html">The Case for Using Python at Nonprofits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Book_Specific_Materials/getting_started_for_book.html">Getting Started</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Importing and Prepping Data</span></p>
 <ul class="current nav bd-sidenav">
@@ -206,9 +207,29 @@
 <li class="toctree-l2"><a class="reference internal" href="../Book_Specific_Materials/weather_import_py_nb.html">weather_import.py</a></li>
 </ul>
 </details></li>
-<li class="toctree-l1"><a class="reference internal" href="../Online_Visualizations/README.html">Online Visualizations with Dash</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Book_Specific_Materials/Simple_App_Without_Login_py_nb.html">Simple App Without Login</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Book_Specific_Materials/PFN_Dash_App_Demo_py_nb.html">PFN Dash App Demo</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Online_Visualizations/Simple_App_Without_Login/readme.html">Simple Dash App Without Login</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Book_Specific_Materials/Simple_App_Without_Login_py_nb.html">app.py</a></li>
+
+
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Online_Visualizations/PFN_Dash_App_Demo/readme.html">PFN Dash App Demo</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Book_Specific_Materials/PFN_Dash_App_Demo_py_nb.html">dash_pivottable_enrollment.py</a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</ul>
+</details></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendix</span></p>
 <ul class="nav bd-sidenav">
@@ -468,8 +489,8 @@
   <tbody>
     <tr>
       <th>0</th>
-      <td>Nicole</td>
-      <td>Myers</td>
+      <td>Mackenzie</td>
+      <td>Mcdonald</td>
       <td>F</td>
       <td>...</td>
       <td>2024</td>
@@ -478,8 +499,8 @@
     </tr>
     <tr>
       <th>1</th>
-      <td>Jill</td>
-      <td>Parker</td>
+      <td>Allison</td>
+      <td>West</td>
       <td>F</td>
       <td>...</td>
       <td>2024</td>
@@ -488,8 +509,8 @@
     </tr>
     <tr>
       <th>2</th>
-      <td>Stephanie</td>
-      <td>Brown</td>
+      <td>Dawn</td>
+      <td>Garza</td>
       <td>F</td>
       <td>...</td>
       <td>2024</td>
@@ -498,8 +519,8 @@
     </tr>
     <tr>
       <th>3</th>
-      <td>Angela</td>
-      <td>Bailey</td>
+      <td>Sharon</td>
+      <td>Garcia</td>
       <td>F</td>
       <td>...</td>
       <td>2024</td>
@@ -508,8 +529,8 @@
     </tr>
     <tr>
       <th>4</th>
-      <td>Angela</td>
-      <td>Lopez</td>
+      <td>Christine</td>
+      <td>Wong</td>
       <td>F</td>
       <td>...</td>
       <td>2024</td>
@@ -556,23 +577,23 @@
   <tbody>
     <tr>
       <th>0</th>
-      <td>Nicole\tMyers\tF\t2020\t1\t2020-1\t2002-12-16\...</td>
+      <td>Mackenzie\tMcdonald\tF\t2020\t1\t2020-1\t2002-...</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>Jill\tParker\tF\t2020\t2\t2020-2\t2002-09-26\t...</td>
+      <td>Allison\tWest\tF\t2020\t2\t2020-2\t2002-09-26\...</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>Stephanie\tBrown\tF\t2020\t3\t2020-3\t2002-05-...</td>
+      <td>Dawn\tGarza\tF\t2020\t3\t2020-3\t2002-05-18\tS...</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>Angela\tBailey\tF\t2020\t4\t2020-4\t2002-11-15...</td>
+      <td>Sharon\tGarcia\tF\t2020\t4\t2020-4\t2002-11-15...</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>Angela\tLopez\tF\t2020\t5\t2020-5\t2002-06-21\...</td>
+      <td>Christine\tWong\tF\t2020\t5\t2020-5\t2002-06-2...</td>
     </tr>
   </tbody>
 </table>
@@ -618,8 +639,8 @@
   <tbody>
     <tr>
       <th>0</th>
-      <td>Nicole</td>
-      <td>Myers</td>
+      <td>Mackenzie</td>
+      <td>Mcdonald</td>
       <td>F</td>
       <td>...</td>
       <td>2024</td>
@@ -628,8 +649,8 @@
     </tr>
     <tr>
       <th>1</th>
-      <td>Jill</td>
-      <td>Parker</td>
+      <td>Allison</td>
+      <td>West</td>
       <td>F</td>
       <td>...</td>
       <td>2024</td>
@@ -638,8 +659,8 @@
     </tr>
     <tr>
       <th>2</th>
-      <td>Stephanie</td>
-      <td>Brown</td>
+      <td>Dawn</td>
+      <td>Garza</td>
       <td>F</td>
       <td>...</td>
       <td>2024</td>
@@ -648,8 +669,8 @@
     </tr>
     <tr>
       <th>3</th>
-      <td>Angela</td>
-      <td>Bailey</td>
+      <td>Sharon</td>
+      <td>Garcia</td>
       <td>F</td>
       <td>...</td>
       <td>2024</td>
@@ -658,8 +679,8 @@
     </tr>
     <tr>
       <th>4</th>
-      <td>Angela</td>
-      <td>Lopez</td>
+      <td>Christine</td>
+      <td>Wong</td>
       <td>F</td>
       <td>...</td>
       <td>2024</td>
@@ -711,17 +732,17 @@
   <tbody>
     <tr>
       <th>0</th>
-      <td>620</td>
+      <td>1405</td>
       <td>W</td>
-      <td>69.0%</td>
+      <td>82.0%</td>
       <td>23</td>
       <td>22</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>3117</td>
+      <td>3831</td>
       <td>W</td>
-      <td>59.0%</td>
+      <td>67.0%</td>
       <td>23</td>
       <td>22</td>
     </tr>
@@ -734,24 +755,24 @@
       <td>...</td>
     </tr>
     <tr>
-      <th>962</th>
-      <td>1961</td>
+      <th>933</th>
+      <td>3229</td>
       <td>W</td>
-      <td>69.0%</td>
+      <td>83.0%</td>
       <td>23</td>
       <td>22</td>
     </tr>
     <tr>
-      <th>963</th>
-      <td>1201</td>
+      <th>934</th>
+      <td>2901</td>
       <td>W</td>
-      <td>70.0%</td>
+      <td>63.0%</td>
       <td>23</td>
       <td>22</td>
     </tr>
   </tbody>
 </table>
-<p>964 rows × 5 columns</p>
+<p>935 rows × 5 columns</p>
 </div></div></div>
 </div>
 <p>While this is a handy feature to have, if you’re dealing with a large and unchanging dataset, you may want to consider downloading it to your computer beforehand–as reading in the file from your local hard drive will likely be faster than retrieving it via your internet connection.</p>
@@ -798,8 +819,8 @@
   <tbody>
     <tr>
       <th>0</th>
-      <td>Nicole</td>
-      <td>Myers</td>
+      <td>Mackenzie</td>
+      <td>Mcdonald</td>
       <td>F</td>
       <td>...</td>
       <td>2024</td>
@@ -808,8 +829,8 @@
     </tr>
     <tr>
       <th>1</th>
-      <td>Jill</td>
-      <td>Parker</td>
+      <td>Allison</td>
+      <td>West</td>
       <td>F</td>
       <td>...</td>
       <td>2024</td>
@@ -818,8 +839,8 @@
     </tr>
     <tr>
       <th>2</th>
-      <td>Stephanie</td>
-      <td>Brown</td>
+      <td>Dawn</td>
+      <td>Garza</td>
       <td>F</td>
       <td>...</td>
       <td>2024</td>
@@ -828,8 +849,8 @@
     </tr>
     <tr>
       <th>3</th>
-      <td>Angela</td>
-      <td>Bailey</td>
+      <td>Sharon</td>
+      <td>Garcia</td>
       <td>F</td>
       <td>...</td>
       <td>2024</td>
@@ -838,8 +859,8 @@
     </tr>
     <tr>
       <th>4</th>
-      <td>Angela</td>
-      <td>Lopez</td>
+      <td>Christine</td>
+      <td>Wong</td>
       <td>F</td>
       <td>...</td>
       <td>2024</td>
@@ -912,8 +933,8 @@
   <tbody>
     <tr>
       <th>0</th>
-      <td>Nicole</td>
-      <td>Myers</td>
+      <td>Mackenzie</td>
+      <td>Mcdonald</td>
       <td>F</td>
       <td>...</td>
       <td>2024</td>
@@ -922,8 +943,8 @@
     </tr>
     <tr>
       <th>1</th>
-      <td>Jill</td>
-      <td>Parker</td>
+      <td>Allison</td>
+      <td>West</td>
       <td>F</td>
       <td>...</td>
       <td>2024</td>
@@ -932,8 +953,8 @@
     </tr>
     <tr>
       <th>2</th>
-      <td>Stephanie</td>
-      <td>Brown</td>
+      <td>Dawn</td>
+      <td>Garza</td>
       <td>F</td>
       <td>...</td>
       <td>2024</td>
@@ -942,8 +963,8 @@
     </tr>
     <tr>
       <th>3</th>
-      <td>Angela</td>
-      <td>Bailey</td>
+      <td>Sharon</td>
+      <td>Garcia</td>
       <td>F</td>
       <td>...</td>
       <td>2024</td>
@@ -952,8 +973,8 @@
     </tr>
     <tr>
       <th>4</th>
-      <td>Angela</td>
-      <td>Lopez</td>
+      <td>Christine</td>
+      <td>Wong</td>
       <td>F</td>
       <td>...</td>
       <td>2024</td>
@@ -1113,12 +1134,12 @@
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="../Introduction/the_case_for_python_at_nonprofits.html"
+       href="../Book_Specific_Materials/getting_started_for_book.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">The Case for Using Python at Nonprofits</p>
+        <p class="prev-next-title">Getting Started</p>
       </div>
     </a>
     <a class="right-next"

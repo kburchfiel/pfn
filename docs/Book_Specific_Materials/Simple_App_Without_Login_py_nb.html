@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>Simple App Without Login &#8212; Python for Nonprofits</title>
+    <title>app.py &#8212; Python for Nonprofits</title>
   
   
   
@@ -63,8 +63,8 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'Book_Specific_Materials/Simple_App_Without_Login_py_nb';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="PFN Dash App Demo" href="PFN_Dash_App_Demo_py_nb.html" />
-    <link rel="prev" title="Online Visualizations with Dash" href="../Online_Visualizations/README.html" />
+    <link rel="next" title="PFN Dash App Demo" href="../Online_Visualizations/PFN_Dash_App_Demo/readme.html" />
+    <link rel="prev" title="Simple Dash App Without Login" href="../Online_Visualizations/Simple_App_Without_Login/readme.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="" />
@@ -158,7 +158,7 @@
         <ul class="nav bd-sidenav bd-sidenav__home-link">
             <li class="toctree-l1">
                 <a class="reference internal" href="../front_matter_for_book.html">
-                    Python for Nonprofits
+                    Sample output
                 </a>
             </li>
         </ul>
@@ -166,6 +166,7 @@
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../Introduction/introduction.html">An introduction to Python for Nonprofits</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Introduction/the_case_for_python_at_nonprofits.html">The Case for Using Python at Nonprofits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting_started_for_book.html">Getting Started</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Importing and Prepping Data</span></p>
 <ul class="nav bd-sidenav">
@@ -206,9 +207,29 @@
 <li class="toctree-l2"><a class="reference internal" href="weather_import_py_nb.html">weather_import.py</a></li>
 </ul>
 </details></li>
-<li class="toctree-l1"><a class="reference internal" href="../Online_Visualizations/README.html">Online Visualizations with Dash</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Simple App Without Login</a></li>
-<li class="toctree-l1"><a class="reference internal" href="PFN_Dash_App_Demo_py_nb.html">PFN Dash App Demo</a></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../Online_Visualizations/Simple_App_Without_Login/readme.html">Simple Dash App Without Login</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">app.py</a></li>
+
+
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Online_Visualizations/PFN_Dash_App_Demo/readme.html">PFN Dash App Demo</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="PFN_Dash_App_Demo_py_nb.html">dash_pivottable_enrollment.py</a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</ul>
+</details></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendix</span></p>
 <ul class="nav bd-sidenav">
@@ -349,7 +370,7 @@
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Simple App Without Login</h1>
+    <h1>app.py</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -359,15 +380,11 @@
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#readme">Readme</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#using-a-cloud-run-secret-to-retrieve-data-from-a-google-sheets-document">Using a Cloud Run Secret to Retrieve Data From a Google Sheets Document</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#folder-structure">Folder structure</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">app.py</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#procfile">Procfile</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#requirements-txt">requirements.txt</a></li>
 </ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#app-py">app.py</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#procfile">Procfile</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#requirements-txt">requirements.txt</a></li>
-</ul>
+
             </nav>
         </div>
     </div>
@@ -378,31 +395,8 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="simple-app-without-login">
-<h1>Simple App Without Login<a class="headerlink" href="#simple-app-without-login" title="Link to this heading">#</a></h1>
-<section id="readme">
-<h2>Readme<a class="headerlink" href="#readme" title="Link to this heading">#</a></h2>
-<p>(Note: the Cloud Run-hosted version of this app can be found at <a class="reference external" href="https://simpleappwithoutlogin-470317599391.us-central1.run.app/">https://simpleappwithoutlogin-470317599391.us-central1.run.app/</a> .)</p>
-<p>This folder provides sample code for a Dash app that can be deployed to Cloud Run. This code was based on the app deployment steps found in <a class="reference external" href="https://dash.plotly.com/deployment">https://dash.plotly.com/deployment</a> and <a class="reference external" href="https://cloud.google.com/run/docs/quickstarts/build-and-deploy/deploy-python-service">https://cloud.google.com/run/docs/quickstarts/build-and-deploy/deploy-python-service</a> . (The Plotly walkthrough shows how to deploy a Dash app to Heroku, and the Cloud Run walkthrough shows how to deploy a Flask App to Cloud Run; by taking bits from each, you can then learn how to deploy a <em>Dash</em> app to <em>Cloud Run.</em> :)</p>
-<section id="using-a-cloud-run-secret-to-retrieve-data-from-a-google-sheets-document">
-<h3>Using a Cloud Run Secret to Retrieve Data From a Google Sheets Document<a class="headerlink" href="#using-a-cloud-run-secret-to-retrieve-data-from-a-google-sheets-document" title="Link to this heading">#</a></h3>
-<p>This app retrieves data from a Google Sheets file called ‘Hourly VA Weather Data’; it’s located at <a class="reference external" href="https://docs.google.com/spreadsheets/d/17aDJ3mg49-n0IEnDgN7ZB85pO87fiUpkZPULYDB8dmo/edit?usp=sharing">https://docs.google.com/spreadsheets/d/17aDJ3mg49-n0IEnDgN7ZB85pO87fiUpkZPULYDB8dmo/edit?usp=sharing</a>; this file gets updated on an hourly basis by a laptop running updatintg_online_spreadsheets.py within the Updating Online Spreadsheets section of Python for Nonprofits. (Reference that section for more information about using gspread.)</p>
-<p>In order for the app to connect to that spreadsheet, it retrieves a set of Google service account credentials (which are required for retrieving data from Google Sheets) from a secret stored within a Cloud Run volume. I referenced <a class="reference external" href="https://cloud.google.com/run/docs/configuring/services/secrets">https://cloud.google.com/run/docs/configuring/services/secrets</a> in the process of enabling this functionality. Secrets can be accessed by Cloud Run either through a path to a volume or through an environment variable; although I chose the former, the latter might actually be more straightforward to set up.</p>
-<p>In order to get this code to work, you’ll want to follow the same steps shown within the above link to add your own service account to Cloud Run. You’ll also need to make sure that your compute service account has been granted the Secret Manager Secret Accessor role. More information about that step can be found at <a class="reference external" href="https://cloud.google.com/secret-manager/docs/manage-access-to-secrets">https://cloud.google.com/secret-manager/docs/manage-access-to-secrets</a> .</p>
-<p>If you decide to access your secret through a volume, you can find the path to enter within your code by clicking on your Cloud Run service; selecting ‘Edit &amp; Deploy New Revision’; and clicking on ‘VOLUME MOUNTS’ within the Edit Container menu. The path to use within your code (in my case, ‘/svcacctsecret/kjb3server_service_account’ was listed under ‘Mount path.’</p>
-<p><strong>Note:</strong> In my case, the service account whose credentials I uploaded into Cloud Run is the same account that my laptop is using to update the Hourly VA Weather Data workbook. (The content of my ‘secret’ is simply the .json file containing the account’s key that I downloaded in the process of building out my Updating Online Spreadsheets code.) However, it looks like you can also simply use the service account built into your Cloud Run instance; see <a class="reference external" href="https://stackoverflow.com/questions/65128196/is-there-a-way-to-authenticate-gspread-with-the-default-service-account">https://stackoverflow.com/questions/65128196/is-there-a-way-to-authenticate-gspread-with-the-default-service-account</a> for more information.</p>
-<p>Using your built-in Cloud Run service account should allow you to bypass the hassle of storing a service account key as a secret. However, it’s still ideal to learn how to use Cloud Run secrets in case you’ll ever need to connect to a SQL database within a Dash app. (You could store that database’s password as a secret, which should be much more secure than storing it as plain text within your code.)</p>
-</section>
-<section id="folder-structure">
-<h3>Folder structure<a class="headerlink" href="#folder-structure" title="Link to this heading">#</a></h3>
-<p><a class="reference external" href="http://readme.md">readme.md</a> [this file]</p>
-<p><a class="reference external" href="http://app.py">app.py</a></p>
-<p>Procfile</p>
-<p>requirements.txt</p>
-</section>
-</section>
-<section id="app-py">
-<h2><a class="reference external" href="http://app.py">app.py</a><a class="headerlink" href="#app-py" title="Link to this heading">#</a></h2>
+  <section id="app-py">
+<h1><a class="reference external" href="http://app.py">app.py</a><a class="headerlink" href="#app-py" title="Link to this heading">#</a></h1>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Simple Dash app for displaying Virginia weather data</span>
 
 <span class="c1"># By Kenneth Burchfiel</span>
@@ -585,13 +579,13 @@
 </div>
 </section>
 <section id="procfile">
-<h2>Procfile<a class="headerlink" href="#procfile" title="Link to this heading">#</a></h2>
+<h1>Procfile<a class="headerlink" href="#procfile" title="Link to this heading">#</a></h1>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">web</span><span class="p">:</span> <span class="n">gunicorn</span> <span class="n">app</span><span class="p">:</span><span class="n">server</span>
 </pre></div>
 </div>
 </section>
 <section id="requirements-txt">
-<h2>requirements.txt<a class="headerlink" href="#requirements-txt" title="Link to this heading">#</a></h2>
+<h1>requirements.txt<a class="headerlink" href="#requirements-txt" title="Link to this heading">#</a></h1>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">gspread</span>
 <span class="n">gspread</span><span class="o">-</span><span class="n">dataframe</span>
 <span class="n">dash</span>
@@ -601,7 +595,6 @@
 <span class="n">dash</span><span class="o">-</span><span class="n">bootstrap</span><span class="o">-</span><span class="n">components</span>
 </pre></div>
 </div>
-</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -635,16 +628,16 @@
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="../Online_Visualizations/README.html"
+       href="../Online_Visualizations/Simple_App_Without_Login/readme.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Online Visualizations with Dash</p>
+        <p class="prev-next-title">Simple Dash App Without Login</p>
       </div>
     </a>
     <a class="right-next"
-       href="PFN_Dash_App_Demo_py_nb.html"
+       href="../Online_Visualizations/PFN_Dash_App_Demo/readme.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
@@ -669,15 +662,11 @@
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#readme">Readme</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#using-a-cloud-run-secret-to-retrieve-data-from-a-google-sheets-document">Using a Cloud Run Secret to Retrieve Data From a Google Sheets Document</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#folder-structure">Folder structure</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">app.py</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#procfile">Procfile</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#requirements-txt">requirements.txt</a></li>
 </ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#app-py">app.py</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#procfile">Procfile</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#requirements-txt">requirements.txt</a></li>
-</ul>
+
   </nav></div>
 
 </div></div>

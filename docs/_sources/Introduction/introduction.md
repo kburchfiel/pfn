@@ -12,7 +12,7 @@ Later sections of Python for Nonprofits often reference content covered in earli
 
 ## My reasons for writing PFN
 
-To explain why I wrote this text, it will help to provide some background about my own educational and career path. 
+To explain why I wrote this text, it will help to first provide some background about my own educational and career path. 
 
 I should start by saying that I do *not* have a background in mathematics or computer science. I focused mostly on writing in high school, then majored in psychology at Middlebury College. I later obtained a Master of Science in Social Work at UT Austin and worked as a mental health counselor with Catholic Charities for a few years. These experiences did not teach me about Python or computer programming, but they *did* help me build my writing and communication skills--which certainly came in handy for this project. Therefore, if you (like many nonprofit staff) do not have much in the way of a quantitative background, don't worry--I'm very confident that you can learn and apply Python in your own work!
 
@@ -28,7 +28,9 @@ Therefore, I wanted to create a guide that would allow others to learn how to ap
 
 I also hope to teach Python on a part-time basis one day; if that opportunity arises, I would plan to incorporate this guide into my curriculum. 
 
-Those are some of my 'practical' reasons for writing Python for Nonprofits. On a more personal note, though, I have found that I greatly enjoy learning new things, than teaching others about them. I've discovered that it's intrinsically rewarding--and fun--to demonstrate how to use Python to reformat data; create charts and graphs; and host dashboards online. Although writing educational Python materials is a strange hobby, I find it to be an immensely rewarding one--and I hope that this can be just one of many such projects that I take on in my free time.
+Those are some of my 'practical' reasons for writing Python for Nonprofits. However, I also found this project to be intrinsically rewarding--and actually *fun*. I greatly enjoy learning new things, than teaching others about them; therefore, it has been immensely enjoyable to develop the code and documentation that comprises PFN. There were many evenings in which I had trouble shutting down my computer and going to bed because I was having such a good time with PFN!
+
+I recognize that writing educational Python materials is a strange hobby, but it's one that I hope to continue for years to come. I hope that you will have as much fun reading this text--and putting its examples into practice in your own personal and professional life--as I have had writing it.
 
 ## Development notes
 
@@ -41,6 +43,8 @@ I switched over to Linux Mint in 2024 for most of my professional and personal w
 ### The book version of PFN
 
 Although I knew that most people would likely access Python for Nonprofits online, it was also important to me that I make it available in print form. Although online resources offer incredible convenience and accessibility, to truly learn a subject, I find that it helps to read through a book from cover to cover. Therefore, I made use of the fantastic Jupyter Book (https://jupyterbook.org/en/stable/intro.html) tool to convert the .ipynb and .md files that comprise Python for Nonprofits into a single PDF. Jupyter Book took care of much of the formatting for me, allowing me to focus more on the actual content. (I plan to make this PDF available to order in printed form in the near future--though you are of course welcome to print it out yourself in the meantime.)
+
+If you're interested in using Jupyter Book for your own articles and books, check out the documentation at https://jupyterbook.org/ . Note that the `_config.yml`, `_toc.yml`, `create_html_book.sh`, and `create_pdflatex_book.sh` files in PFN's root folder are part of my workflow for turning PFN into a Jupyter Book project. (These files were also based on Jupyter Book's documentation.)
 
 ### My reasons for eschewing Generative AI
 
@@ -56,6 +60,26 @@ Finally, I find the process of writing and debugging my own code to be *fun*. If
 
 None of this is to imply that individuals who use generative AI, whether for programming, writing, or other forms of content creation, are somehow worse at what they do or mistaken in their approach. I simply believe that avoiding the use of generative AI is the best choice *for me*.
 
+## Gratitude and Acknowledgments
+
+First, I am grateful to God for giving me the opportunity to write this text and share what I've learned with others. 
+
+I am also grateful to Kenneth, my son. The amount of joy you have brought me and my wife cannot be put into words. Although watching Python for Nonprofits grow has been fun, *your* growth has been far more exciting--and, of course, far more important! This text and code will pass away, but you are eternal. I know you're a bit young to use a computer at the moment, but I hope you will find this project useful one day.
+
+I am grateful to my parents, Linda and Ken. You provided me with immense love growing up, and I hope I can share that same love with Kenneth (and any other children with whom God might bless us). Dad, you showed me (with *Biotechnology and the Federal Circuit*) that it's possible to write a book while raising a young family and holding down a job. I'm honored to be able to follow in your footsteps 30 years later--and I hope that we will be able to reunite in Heaven one day.
+
+I also want to thank my professors at Columbia Business School--especially Mattan Griffel, Daniel Guetta, Hardeep Johar, and Jared Lander--for introducing me to the valuable role that Python and R can play within organizations.
+
+In addition, very special thanks to my supervisors at Seton Education Partners and the Institute for Family Studies: David Morales, Michael Carbone, Michael Toscano, and Wendy Wang. You gave me the opportunity to apply Python to real-world challenges, and I have learned a great deal in the process.
+
+This book would not have been possible without the developers of Python and the many, many libraries that it makes use of (particularly Pandas, Plotly, Folium, and Dash). Thank you for making your work accessible to the world!
+
+I also wish to thank the developers of the open-source software and tools (including, but not limited to, JupyterLab Desktop, LibreOffice, Jupyter Book, Linux, and Linux Mint) that I used to develop Python for Nonprofits.
+
+Finally, I want to thank you for reading (or at least flipping through) this book. I hope that, regardless of where you are in your Python and nonprofit career journey, it will be a helpful tool for you.
+
 ## Dedication
 
-This work is dedicated to my wife, Allie Burchfiel. Allie generously allowed me to take the time I needed to put this project together, even though that meant that I was less available to help her with chores, childcare, and the many other tasks (big and small) that go into running a household. She also believed in my vision for this work--and in my dreams of sharing my (still limited) understanding of Python with others. Allie is an amazing wife and mother, and I am incredibly fortunate to spend my life with her.
+This work is dedicated to my wife, Allie Burchfiel. Allie generously allowed me to take the time I needed to put this project together, even though that meant that I was less available to help her with chores, childcare, and the many other tasks (big and small) that go into running a household. She also believed in my vision for this work--and in my dreams of sharing my (still growing) understanding of Python with others. Allie is an amazing wife and mother, and I am incredibly fortunate to spend my life with her.
+
+Blessed (and soon to be Saint) Carlo Acutis, pray for us!

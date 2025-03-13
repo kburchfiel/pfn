@@ -43,6 +43,9 @@ import dash_bootstrap_components as dbc # See
 
 
 # Exposing the Flask Server to enable configuring it for logging in
+# Note that this code will be used in place of 
+# server = app.server , which we used within our Simple_App_Without_Login
+# app.
 server = Flask(__name__)
 
 @server.before_request
