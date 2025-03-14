@@ -124,4 +124,12 @@ Although most of the libraries that Python for Nonprofits uses are available wit
 1. [**NVCU Database Generator**](https://github.com/kburchfiel/pfn/blob/main/Appendix/nvcu_db_gen.ipynb)
 
 
+I had a great time putting Python for Nonprofits together, and I hope that you find that this work helps advance your own nonprofit career. Feel free to contact me at kburchfiel3@gmail.com (or post a message at https://github.com/kburchfiel/pfn/issues ) if you have any questions or notice any errors with the text.
+
+Happy coding!
+
+--Ken 
+
+![](kjb3_pfn_selfie.jpg)
+
 
