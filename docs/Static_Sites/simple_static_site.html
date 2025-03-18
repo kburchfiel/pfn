@@ -1,0 +1,627 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Creating a Simple Static Webpage &#8212; Python for Nonprofits</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Static_Sites/simple_static_site';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Updating Online Spreadsheets" href="../Updating_Online_Spreadsheets/updating_online_spreadsheets.html" />
+    <link rel="prev" title="Regression Analyses" href="../Regressions/regression_analyses.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../front_matter_for_book.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Python for Nonprofits</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../front_matter_for_book.html">
+                    Wecome to Python for Nonprofits!
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Introduction</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Introduction/introduction.html">An Introduction to Python for Nonprofits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Introduction/the_case_for_python_at_nonprofits.html">The Case for Using Python at Nonprofits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Book_Specific_Materials/getting_started_for_book.html">Getting Started</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Importing and Prepping Data</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Data_Retrieval/data_retrieval.html">Data Retrieval</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Data_Prep/data_prep.html">Data Prep</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Analyzing Data</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Descriptive_Stats/descriptive_stats.html">Descriptive Stats</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Descriptive_Stats/descriptive_stats_part_2.html">Descriptive Stats: Part 2</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Census_Data_Imports/census_data_imports.html">Census Data Imports</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Book_Specific_Materials/census_import_scripts_py_nb.html">census_import_scripts.py</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Visualizing Data</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Graphing/graphing.html">Creating Interactive and Static Charts with Plotly</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../Graphing/pivot_and_graph_functions.html">Pivot and Graph Functions</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Mapping/choropleth_maps.html">Mapping Census Data using Plotly (Work in progress)</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Book_Specific_Materials/plotly_choropleth_map_functions_py_nb.html">plotly_choropleth_map_functions.py</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Mapping/choropleth_maps_with_folium.html">Creating Choropleth Maps with Folium</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Book_Specific_Materials/folium_choropleth_map_functions_py_nb.html">folium_choropleth_map_functions.py</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Regressions</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Regressions/regression_analyses.html">Regression Analyses</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Publishing Analyses Online</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Creating a Simple Static Webpage</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Updating_Online_Spreadsheets/updating_online_spreadsheets.html">Updating Online Spreadsheets</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Book_Specific_Materials/weather_import_py_nb.html">weather_import.py</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Online_Visualizations/Simple_App_Without_Login/readme.html">Simple Dash App Without Login</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Book_Specific_Materials/Simple_App_Without_Login_py_nb.html">Source code for Simple App Without Login</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Online_Visualizations/PFN_Dash_App_Demo/readme.html">PFN Dash App Demo</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Book_Specific_Materials/PFN_Dash_App_Demo_py_nb.html">Source code for PFN Dash App Demo</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendix</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Appendix/nvcu_db_gen.html">NVCU Database Generator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Book_Specific_Materials/helper_funcs_py_nb.html">helper_funcs.py</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/Static_Sites/simple_static_site.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Creating a Simple Static Webpage</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-static-sites-with-github-pages">Creating Static Sites with GitHub Pages</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#preparing-local-copies-of-the-site-s-materials">Preparing local copies of the site’s materials</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#publishing-this-static-site-to-github">Publishing this static site to GitHub</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#more-advanced-sites">More advanced sites</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="creating-a-simple-static-webpage">
+<h1>Creating a Simple Static Webpage<a class="headerlink" href="#creating-a-simple-static-webpage" title="Link to this heading">#</a></h1>
+<p>One way to share visualizations and other content online is through a static website. The content in such websites is relatively fixed, unlike dynamic websites (such as the Dash apps we’ll create within the Online Visualizations Section of Python for Nonprofits). If you have a set of content that doesn’t need to be updated very regularly, if at all, a static site might be your best option.</p>
+<p>For instance, we created some colorful net migration and population growth maps within the Mapping section of Python for Nonprofits. To share those maps with others, we could send them directly as HTML files; the users could then open those maps within a web browser. However, a simpler approach (at least for the end user) would be to share them online as a static website. We’ll learn how to do so within this section.</p>
+<p>Note: the static website created by this notebook can be found at <a class="reference external" href="https://kburchfiel.github.io/simple_static_site/">https://kburchfiel.github.io/simple_static_site/</a>. The repository that contains this website’s contents is available at <a class="github reference external" href="https://github.com/kburchfiel/simple_static_site">kburchfiel/simple_static_site</a> .</p>
+<section id="creating-static-sites-with-github-pages">
+<h2>Creating Static Sites with GitHub Pages<a class="headerlink" href="#creating-static-sites-with-github-pages" title="Link to this heading">#</a></h2>
+<p>One method (among others) for hosting static content online for free is GitHub Pages (<a class="reference external" href="https://pages.github.com/">https://pages.github.com/</a>). The GitHub pages documentation is quite robust, so I’ll merely summarize the steps that I took. (Selecting the ‘Project site’ and ‘Start from scratch’ options will let you view the steps that most closely resembled my workflow,–though I did certain steps a bit differently.) However, my static website may serve as a helpful reference if you get stuck along the way.</p>
+<p>(I recommend reviewing the GitHub Pages terms of service at <a class="reference external" href="https://docs.github.com/en/pages/getting-started-with-github-pages/about-github-pages#prohibited-uses">https://docs.github.com/en/pages/getting-started-with-github-pages/about-github-pages#prohibited-uses</a> in order to make sure that this site is a good option for your static hosting neeeds, as certain uses are prohibited.)</p>
+<section id="preparing-local-copies-of-the-site-s-materials">
+<h3>Preparing local copies of the site’s materials<a class="headerlink" href="#preparing-local-copies-of-the-site-s-materials" title="Link to this heading">#</a></h3>
+<p>First, I created a new repository (<a class="github reference external" href="https://github.com/kburchfiel/simple_static_site">kburchfiel/simple_static_site</a>) in which I could store my maps. Next, I created a corresponding ‘simple_static_site’ folder on my computer.</p>
+<p>I then ran the following code in order to copy some (but not all) of the maps created within PFN’s mapping section into this folder. (If you wish to run this code as well, you’ll need to create this folder on your computer also, then add a ‘maps’ folder within it. It should be located within the same folder as your Python for Nonprofits folder.)</p>
+<p>For more on the <code class="docutils literal notranslate"><span class="pre">shutil.copyfile()</span></code> function used below, see <a class="reference external" href="https://docs.python.org/3/library/shutil.html">https://docs.python.org/3/library/shutil.html</a> .</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">shutil</span>
+<span class="c1"># Defining the original location of these maps--and the location</span>
+<span class="c1"># to which they&#39;ll be copied:</span>
+<span class="n">source_map_folder</span> <span class="o">=</span> <span class="s1">&#39;../Mapping/maps/&#39;</span> <span class="c1"># This folder exists within </span>
+<span class="c1"># the main Python for Nonprofits folder.</span>
+<span class="n">dest_map_folder</span> <span class="o">=</span> <span class="s1">&#39;../../simple_static_site/maps/&#39;</span> <span class="c1"># This folder</span>
+<span class="c1"># is in a separate location from Python for Nonprofits</span>
+<span class="c1"># Specifying which maps within the source folder to copy:</span>
+<span class="n">maps_to_copy</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;net_migration_rate_state_2020-2023.html&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;net_migration_rate_county_2020-2023.html&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;state_25-29_pop_pct_growth_2011-2021.html&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;state_pop_pct_growth_2011-2021.html&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;county_25-29_pop_pct_growth_2011-2021_tiled.html&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;county_pop_pct_growth_2011-2021_tiled.html&#39;</span><span class="p">]</span>
+<span class="k">for</span> <span class="n">map_for_site</span> <span class="ow">in</span> <span class="n">maps_to_copy</span><span class="p">:</span> <span class="c1"># Note that &#39;map&#39; is a Python keyword,</span>
+    <span class="c1"># so it&#39;s best not to use it as a variable name here.</span>
+    <span class="n">shutil</span><span class="o">.</span><span class="n">copyfile</span><span class="p">(</span><span class="n">source_map_folder</span> <span class="o">+</span> <span class="n">map_for_site</span><span class="p">,</span>
+                    <span class="n">dest_map_folder</span> <span class="o">+</span> <span class="n">map_for_site</span><span class="p">)</span>  
+    
+</pre></div>
+</div>
+</div>
+</div>
+<p>I could also have just copied and pasted these maps into my new folder, but this approach should save time in the long run if I happened to have lots of maps or made frequent updates to them. (Of course, if the updates were very frequent, a dynamic site could potentially be a better option than a static one.)</p>
+<p>The maps will form the main content of our static site. However, we’ll also need a landing page that can introduce the content and direct visitors to each page.</p>
+<p>The following cell shows the Markdown-formatted text that I wrote for this landing page. (You can also use HTML for this page, but Markdown is a bit simpler. If you’re not familiar with Markdown, check out Matt Cone’s handy introduction at <a class="reference external" href="https://www.markdownguide.org/basic-syntax/">https://www.markdownguide.org/basic-syntax/</a> .)</p>
+<p>Note that the links to each map are relative, thus making them compatible within various repository names. (The links to Python for Nonprofits, in contrast, are absolute. Because the maps are located within a ‘maps/’ subfolder, I needed to reference that folder when creating these relative links.)</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Selected output from the mapping section of Python for Nonprofits</span>
+
+<span class="n">By</span> <span class="n">Kenneth</span> <span class="n">Burchfiel</span>
+
+<span class="n">Released</span> <span class="n">under</span> <span class="n">the</span> <span class="n">MIT</span> <span class="n">License</span>
+
+<span class="n">This</span> <span class="n">simple</span> <span class="n">webpage</span> <span class="n">provides</span> <span class="n">links</span> <span class="n">to</span> <span class="n">six</span> <span class="n">maps</span> <span class="n">created</span> <span class="n">within</span>
+<span class="n">the</span> <span class="p">[</span><span class="n">Mapping</span><span class="p">](</span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">kburchfiel</span><span class="o">/</span><span class="n">pfn</span><span class="o">/</span><span class="n">tree</span><span class="o">/</span><span class="n">main</span><span class="o">/</span><span class="n">Mapping</span><span class="p">)</span> <span class="n">section</span>
+<span class="n">of</span> <span class="p">[</span><span class="n">Python</span> <span class="k">for</span> <span class="n">Nonprofits</span><span class="p">](</span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">kburchfiel</span><span class="o">/</span><span class="n">pfn</span><span class="p">)</span><span class="o">.</span> <span class="n">It</span> <span class="ow">is</span> <span class="n">meant</span>
+<span class="n">to</span> <span class="n">demonstrate</span> <span class="n">how</span> <span class="n">visualizations</span> <span class="n">can</span> <span class="n">be</span> <span class="n">hosted</span> <span class="n">within</span> 
+<span class="n">a</span> <span class="n">static</span> <span class="n">GitHub</span> <span class="n">Pages</span> <span class="n">website</span><span class="o">.</span>
+
+<span class="n">Python</span> <span class="k">for</span> <span class="n">Nonprofits</span><span class="p">,</span> <span class="n">like</span> <span class="n">this</span> <span class="n">repository</span><span class="p">,</span> <span class="ow">is</span> <span class="n">released</span> <span class="n">under</span> 
+<span class="n">the</span> <span class="n">MIT</span> <span class="n">License</span><span class="o">.</span>
+
+
+<span class="c1">## Population growth maps</span>
+
+<span class="n">These</span> <span class="n">maps</span> <span class="n">visualize</span> <span class="n">population</span> <span class="n">growth</span> <span class="n">rates</span> <span class="n">at</span> <span class="n">the</span> <span class="n">state</span> <span class="ow">and</span> <span class="n">county</span>
+<span class="n">level</span> <span class="o">**</span><span class="kn">from</span><span class="w"> </span><span class="mi">2011</span> <span class="n">to</span> <span class="mf">2021.</span><span class="o">**</span> <span class="n">They</span> <span class="n">were</span> <span class="n">created</span> <span class="n">using</span> <span class="n">the</span> <span class="n">Plotly</span> <span class="n">graphing</span>
+<span class="n">library</span> <span class="n">within</span> <span class="n">PFN</span><span class="s1">&#39;s choropleth_maps.ipynb notebook, available at</span>
+<span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">kburchfiel</span><span class="o">/</span><span class="n">pfn</span><span class="o">/</span><span class="n">blob</span><span class="o">/</span><span class="n">main</span><span class="o">/</span><span class="n">Mapping</span><span class="o">/</span><span class="n">choropleth_maps</span><span class="o">.</span><span class="n">ipynb</span> <span class="o">.</span>
+
+<span class="o">**</span><span class="n">Note</span><span class="p">:</span> <span class="n">Certain</span> <span class="n">maps</span> <span class="n">will</span> <span class="n">be</span> <span class="n">easier</span> <span class="n">to</span> <span class="n">view</span> <span class="n">on</span> <span class="n">a</span> <span class="n">laptop</span> <span class="ow">or</span> <span class="n">monitor</span> <span class="n">than</span>
+<span class="n">on</span> <span class="n">your</span> <span class="n">phone</span><span class="o">.**</span>
+
+
+<span class="c1">### Total population growth</span>
+
+<span class="p">[</span><span class="n">State</span><span class="o">-</span><span class="n">level</span> <span class="n">total</span> <span class="n">population</span> <span class="n">growth</span><span class="p">](</span><span class="n">maps</span><span class="o">/</span><span class="n">state_pop_pct_growth_2011</span><span class="o">-</span><span class="mf">2021.</span><span class="n">html</span><span class="p">)</span>
+
+<span class="p">[</span><span class="n">County</span><span class="o">-</span><span class="n">level</span> <span class="n">total</span> <span class="n">population</span> <span class="n">growth</span><span class="p">](</span><span class="n">maps</span><span class="o">/</span><span class="n">county_pop_pct_growth_2011</span><span class="o">-</span><span class="mi">2021</span><span class="n">_tiled</span><span class="o">.</span><span class="n">html</span><span class="p">)</span>
+
+<span class="c1">### Population growth for adults aged 25 to 29</span>
+
+<span class="p">[</span><span class="n">State</span><span class="o">-</span><span class="n">level</span> <span class="mi">25</span><span class="o">-</span><span class="mi">29</span> <span class="n">population</span> <span class="n">growth</span><span class="p">](</span><span class="n">maps</span><span class="o">/</span><span class="n">state_25</span><span class="o">-</span><span class="mi">29</span><span class="n">_pop_pct_growth_2011</span><span class="o">-</span><span class="mf">2021.</span><span class="n">html</span><span class="p">)</span>
+
+<span class="p">[</span><span class="n">County</span><span class="o">-</span><span class="n">level</span> <span class="mi">25</span><span class="o">-</span><span class="mi">29</span> <span class="n">population</span> <span class="n">growth</span><span class="p">](</span><span class="n">maps</span><span class="o">/</span><span class="n">county_25</span><span class="o">-</span><span class="mi">29</span><span class="n">_pop_pct_growth_2011</span><span class="o">-</span><span class="mi">2021</span><span class="n">_tiled</span><span class="o">.</span><span class="n">html</span><span class="p">)</span>
+
+<span class="c1">## Net domestic migration maps</span>
+
+<span class="n">These</span> <span class="n">maps</span> <span class="n">show</span> <span class="n">net</span> <span class="n">domestic</span> <span class="n">migration</span> <span class="n">rates</span> <span class="n">at</span> <span class="n">the</span> <span class="n">state</span> <span class="ow">and</span>
+<span class="n">county</span> <span class="n">level</span> <span class="o">**</span><span class="kn">from</span><span class="w"> </span><span class="mi">2020</span> <span class="n">to</span> <span class="mi">2023</span><span class="o">**.</span> <span class="n">They</span> <span class="n">are</span> <span class="n">based</span> <span class="n">on</span> <span class="n">the</span> <span class="n">Folium</span> <span class="n">mapping</span>
+<span class="n">library</span> <span class="ow">and</span> <span class="n">were</span> <span class="n">created</span> <span class="n">within</span> <span class="n">PFN</span><span class="s1">&#39;s</span>
+<span class="n">choropleth_maps_with_folium</span><span class="o">.</span><span class="n">ipynb</span> <span class="n">notebook</span><span class="p">,</span> <span class="n">available</span> <span class="n">at</span>
+<span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">kburchfiel</span><span class="o">/</span><span class="n">pfn</span><span class="o">/</span><span class="n">blob</span><span class="o">/</span><span class="n">main</span><span class="o">/</span><span class="n">Mapping</span><span class="o">/</span><span class="n">choropleth_maps_with_folium</span><span class="o">.</span><span class="n">ipynb</span> <span class="o">.</span>
+
+<span class="p">[</span><span class="n">State</span><span class="o">-</span><span class="n">level</span> <span class="n">net</span> <span class="n">migration</span><span class="p">](</span><span class="n">maps</span><span class="o">/</span><span class="n">net_migration_rate_state_2020</span><span class="o">-</span><span class="mf">2023.</span><span class="n">html</span><span class="p">)</span>
+
+<span class="p">[</span><span class="n">County</span><span class="o">-</span><span class="n">level</span> <span class="n">net</span> <span class="n">migration</span><span class="p">](</span><span class="n">maps</span><span class="o">/</span><span class="n">net_migration_rate_county_2020</span><span class="o">-</span><span class="mf">2023.</span><span class="n">html</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>I enclosed the above text within a code block so that you could see the actual markdown code being used. To see how this text will actually appear on the website, simply visit <a class="reference external" href="https://kburchfiel.github.io/simple_static_site/">https://kburchfiel.github.io/simple_static_site/</a> .</p>
+<p>I then saved this text into a new file within my simple_static_site folder called <code class="docutils literal notranslate"><span class="pre">index.md</span></code> . GitHub Pages will use this file to construct my site’s landing page.</p>
+</section>
+<section id="publishing-this-static-site-to-github">
+<h3>Publishing this static site to GitHub<a class="headerlink" href="#publishing-this-static-site-to-github" title="Link to this heading">#</a></h3>
+<p>I now have all the material I need for my site! My next step will be to export it to the GitHub repository that I created earlier. The steps for doing so via the command line are documented well on GitHub’s website, so review that documentation (available at <a class="reference external" href="https://docs.github.com/en/migrations/importing-source-code/using-the-command-line-to-import-source-code/adding-locally-hosted-code-to-github">https://docs.github.com/en/migrations/importing-source-code/using-the-command-line-to-import-source-code/adding-locally-hosted-code-to-github</a>) if you ‘git’ stuck.</p>
+<p>(You can also upload files directly to your GitHub page if you prefer. That approach should work fine for a simple static page like this one, but for more complex projects, you might want to become accustomed to using the command line for Git and GitHub operations.)</p>
+<p>After uploading the content to GitHub, I went into my repository’s Settings page; navigated to Pages; and instructed GitHub to deploy my site from the root tab of my main branch. (The GitHub Pages documentation linked to earlier provides more details.)</p>
+<p>Your site most likely will not appear right away; similarly, whenever you make updates to your online repository’s contents, it may take a little while for those updates to manifest. However, after a minute or two, the GitHub Pages tab within the Settings page informed me that “Your site is live at <a class="reference external" href="https://kburchfiel.github.io/simple_static_site/">https://kburchfiel.github.io/simple_static_site/</a> .” Great–my site is now live!</p>
+<p>As you’ll see when navigating to the above link, this site is <em>very</em> simple indeed. The landing page has essentially no colors and no images. The HTML-based map pages to which it links are colorful and interactive, but they don’t offer any built-in navigation menus; to revisit the landing page, you’ll need to use your back button.</p>
+</section>
+</section>
+<section id="more-advanced-sites">
+<h2>More advanced sites<a class="headerlink" href="#more-advanced-sites" title="Link to this heading">#</a></h2>
+<p>The method for deploying a static site that this notebook features should work fine when you just need to make static content (like maps–or HTML versions of Jupyter Notebooks) available online. However, I thought I would also list some more robust alternatives to this approach in case it doesn’t meet your own needs.</p>
+<p>First, for more complex static sites, look into Jekyll (<a class="reference external" href="https://jekyllrb.com/docs/">https://jekyllrb.com/docs/</a>), the static site generator that GitHub Pages uses. (GitHub Pages-specific Jekyll instructions can be found at <a class="reference external" href="https://docs.github.com/en/pages/setting-up-a-github-pages-site-with-jekyll">https://docs.github.com/en/pages/setting-up-a-github-pages-site-with-jekyll</a> , but you’ll likely find the Jekyll site to be helpful also.)</p>
+<p>Jupyter Book (<a class="reference external" href="https://jupyterbook.org/en/stable/intro.html">https://jupyterbook.org/en/stable/intro.html</a>) is also worth looking into. Python for Nonprofits makes use of this tool to convert its many notebooks and markdown files into a PDF file that can serve as the basis for a printed book. This tool can <em>also</em> be used to generate static webpages, so consider using it if you too have a manual or book that you’d like to host online. (For more information on this functionality, see <a class="reference external" href="https://jupyterbook.org/en/stable/web/index.html">https://jupyterbook.org/en/stable/web/index.html</a> .)</p>
+<p>As of March 2025, GitHub Pages sites also can’t be made private unless you have an Enterprise License. Therefore, if you need to limit whom can see your site, consider using Google Sites (<a class="reference external" href="https://sites.google.com/">https://sites.google.com/</a>), a free tool that allows you to share your content with only specific users (or just yourself). You can add full-screen interactive maps (and other visualizations) to Google Sites Pages via the ‘Full page embed’ option.</p>
+<p>Finally, you may determine that a purely static site doesn’t meet your needs. In that case, stay tuned for the Online Visualizations section of Python for Nonprofits, where you’ll learn how to create a dynamic site that responds to user input.</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./Static_Sites"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../Regressions/regression_analyses.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Regression Analyses</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../Updating_Online_Spreadsheets/updating_online_spreadsheets.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Updating Online Spreadsheets</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-static-sites-with-github-pages">Creating Static Sites with GitHub Pages</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#preparing-local-copies-of-the-site-s-materials">Preparing local copies of the site’s materials</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#publishing-this-static-site-to-github">Publishing this static site to GitHub</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#more-advanced-sites">More advanced sites</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Kenneth Burchfiel
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

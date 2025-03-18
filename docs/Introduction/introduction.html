@@ -1,0 +1,600 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>An Introduction to Python for Nonprofits &#8212; Python for Nonprofits</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Introduction/introduction';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="The Case for Using Python at Nonprofits" href="the_case_for_python_at_nonprofits.html" />
+    <link rel="prev" title="Wecome to Python for Nonprofits!" href="../front_matter_for_book.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../front_matter_for_book.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Python for Nonprofits</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../front_matter_for_book.html">
+                    Wecome to Python for Nonprofits!
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Introduction</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">An Introduction to Python for Nonprofits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="the_case_for_python_at_nonprofits.html">The Case for Using Python at Nonprofits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Book_Specific_Materials/getting_started_for_book.html">Getting Started</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Importing and Prepping Data</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Data_Retrieval/data_retrieval.html">Data Retrieval</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Data_Prep/data_prep.html">Data Prep</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Analyzing Data</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Descriptive_Stats/descriptive_stats.html">Descriptive Stats</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Descriptive_Stats/descriptive_stats_part_2.html">Descriptive Stats: Part 2</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Census_Data_Imports/census_data_imports.html">Census Data Imports</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Book_Specific_Materials/census_import_scripts_py_nb.html">census_import_scripts.py</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Visualizing Data</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Graphing/graphing.html">Creating Interactive and Static Charts with Plotly</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../Graphing/pivot_and_graph_functions.html">Pivot and Graph Functions</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Mapping/choropleth_maps.html">Mapping Census Data using Plotly (Work in progress)</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Book_Specific_Materials/plotly_choropleth_map_functions_py_nb.html">plotly_choropleth_map_functions.py</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Mapping/choropleth_maps_with_folium.html">Creating Choropleth Maps with Folium</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Book_Specific_Materials/folium_choropleth_map_functions_py_nb.html">folium_choropleth_map_functions.py</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Regressions</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Regressions/regression_analyses.html">Regression Analyses</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Publishing Analyses Online</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Static_Sites/simple_static_site.html">Creating a Simple Static Webpage</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Updating_Online_Spreadsheets/updating_online_spreadsheets.html">Updating Online Spreadsheets</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Book_Specific_Materials/weather_import_py_nb.html">weather_import.py</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Online_Visualizations/Simple_App_Without_Login/readme.html">Simple Dash App Without Login</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Book_Specific_Materials/Simple_App_Without_Login_py_nb.html">Source code for Simple App Without Login</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Online_Visualizations/PFN_Dash_App_Demo/readme.html">PFN Dash App Demo</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Book_Specific_Materials/PFN_Dash_App_Demo_py_nb.html">Source code for PFN Dash App Demo</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendix</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Appendix/nvcu_db_gen.html">NVCU Database Generator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Book_Specific_Materials/helper_funcs_py_nb.html">helper_funcs.py</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/Introduction/introduction.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>An Introduction to Python for Nonprofits</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overview-of-pfn-s-contents">Overview of PFN’s contents</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#my-reasons-for-writing-pfn">My reasons for writing PFN</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#development-notes">Development notes</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#why-i-released-pfn-under-the-mit-license">Why I released PFN under the MIT license</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-book-version-of-pfn">The book version of PFN</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#my-reasons-for-eschewing-generative-ai">My reasons for eschewing generative AI</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gratitude-and-acknowledgments">Gratitude and acknowledgments</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dedication">Dedication</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#footnotes">Footnotes</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="an-introduction-to-python-for-nonprofits">
+<h1>An Introduction to Python for Nonprofits<a class="headerlink" href="#an-introduction-to-python-for-nonprofits" title="Link to this heading">#</a></h1>
+<section id="overview-of-pfn-s-contents">
+<h2>Overview of PFN’s contents<a class="headerlink" href="#overview-of-pfn-s-contents" title="Link to this heading">#</a></h2>
+<p>Python for Nonprofits covers a wide range of nonprofit data analysis tasks. First, the <strong>Importing and Prepping Data</strong> section will teach you how to read data into your Python scripts, then clean and reformat them. Next, the <strong>Analyzing Data</strong> section will demonstrate how to calculate various descriptive statistics.</p>
+<p>Once you’ve calculated such statistics, you’ll often want to visualize them; therefore, this component is followed by the <strong>Visualizing Data</strong> section, which shows how to display your findings in both graph and map form.</p>
+<p>PFN then provides a brief introduction to inferential statistics via its <strong>Regressions</strong> section. (I had initially planned to place this component within the Analyzing Data section, but because it relies so heavily on visualizations, I realized that I should have it follow my data visualization code.) Finally, in the <strong>Publishing Analyses Online</strong> section, you’ll learn how to use Python to export data to Google Sheets and display it within online dashboards.</p>
+<p>Later sections of Python for Nonprofits often reference content covered in earlier sections. For instance, data cleaning and reformatting will come up in many areas of PFN, not just the data prep chapter. In addition, the Regressions and Publishing Analyses Online sections will make extensive use of the graphing tools that the Visualizing Data section introduces. Therefore, I would recommend reading through PFN’s sections in the order shown above.</p>
+</section>
+<section id="my-reasons-for-writing-pfn">
+<h2>My reasons for writing PFN<a class="headerlink" href="#my-reasons-for-writing-pfn" title="Link to this heading">#</a></h2>
+<p>To explain why I wrote this text, it might help to provide some background about my own education and career path. I should first clarify that I do <em>not</em> have a formal background in mathematics or computer science. Therefore, if you (like many nonprofit staff) have focused more on qualitative than quantitative skills in your schooling and career, don’t worry–I’m very confident that you can still learn and apply Python in your work!</p>
+<p>I focused mostly on writing in high school, then majored in psychology at Middlebury College. After working as an AmeriCorps VISTA member in Houston, I obtained a Master of Science in Social Work at UT Austin and worked as a mental health counselor with Catholic Charities of Evansville for two years.</p>
+<p>I first began studying Python seriously as a first-year MBA student at Columbia Business School, when I enrolled in Professor Mattan Griffel’s Introduction to Programming in Python course. I was amazed with how easily Python facilitated various data analysis and visualization tasks, and I also loved how programming engaged both the creative and problem-solving portions of my brain. I then had the chance to take several other programming-related classes at CBS with Daniel Guetta, Hardeep Johar, and Jared Lander; these courses further opened my eyes to the capabilities of Python and other open-source tools.</p>
+<p>I was fortunate to be able to apply Python during a summer internship at Seton Education Partners in The Bronx. My supervisor, David Morales, gave me lots of freedom to use Python for many analysis-related tasks. I greatly enjoyed my summer at Seton, so I returned there full time after completing my MBA. At Seton, I not only applied the Python knowledge that I had picked up during my MBA but also learned many new libraries and applications.</p>
+<p>My wife, son, and I then moved to Virginia in 2024 to be closer to our families. As a Research Fellow with the Institute for Family Studies, I have been applying Python (along with R, a powerful open-source statistical programming language) to analyze survey data and create visualizations.</p>
+<p>My professional experiences have taught me that Python is a very powerful tool for nonprofit work. It not only saves a great deal of time, but also allows for the creation of analyses and visualizations that would be difficult or impossible to perform in spreadsheet-based tools like Excel. (For a more detailed list of reasons to apply Python at your nonprofit, read ‘The Case for Python at Nonprofits’ within this same section.)</p>
+<p>Therefore, I wanted to create a guide that would allow others to learn how to apply Python at their present (or future) nonprofit jobs. Much of the text focuses on applications and methods that I have used in my own work, so I’m confident that you’ll find this work to be relevant to many of your own nonprofit data analysis tasks as well. (I should also clarify, though, that I did not reference or copy any code from my work in the process of writing this text.)</p>
+<p>I also hope to teach Python on a part-time basis one day; if that opportunity arises, I would plan to incorporate this guide into my curriculum.</p>
+<p>Those are some of my ‘practical’ reasons for writing Python for Nonprofits. However, I also found this project to be intrinsically rewarding–and truly <em>fun</em> as well. I greatly enjoy learning new things, than teaching others about them; therefore, it has been immensely enjoyable to develop the code and documentation for this project. There were many evenings in which I had trouble shutting down my computer and going to bed because I was having such a good time with PFN!</p>
+<p>I recognize that writing educational Python materials is a strange hobby, but it’s one that I hope to continue for years to come. I hope that you will have as much fun reading this text–and putting its examples into practice in your own personal and professional life–as I have had writing it.</p>
+</section>
+<section id="development-notes">
+<h2>Development notes<a class="headerlink" href="#development-notes" title="Link to this heading">#</a></h2>
+<p>It took me quite a while to write PFN. I was working full time during most of the writing period, and the birth of our first child also kept me and my wife (but especially my wife!) quite busy. Therefore, I generally worked on the project later in the day–and often right before going to bed. The benefit of this arrangement, though, was that the time I spent on PFN felt more like a fun break from other responsibilities than a chore in itself. I found that, as long as I had 4 or 6 hours a week to spend on this project, I could write a decent amount over the course of a year.</p>
+<p>Most PFN files were written in Jupyter Notebook (.ipynb) format, though quite a few–such as this chapter–were produced in Markdown format (.md). I also moved some Python code into standalone .py files to make them easier to incorporate into various projects. I used JupyterLab Desktop (<a class="github reference external" href="https://github.com/jupyterlab/jupyterlab-desktop">jupyterlab/jupyterlab-desktop</a>) for almost all of the writing process, though the code should also be viewable and executable within other code editors that support .ipynb files.</p>
+<p>I switched over to Linux Mint in 2024 for most of my professional and personal work; however, the code should also run fine on Windows and Mac. (Please let me know if you have any trouble with certain parts of PFN on one of those operating systems.)</p>
+<section id="why-i-released-pfn-under-the-mit-license">
+<h3>Why I released PFN under the MIT license<a class="headerlink" href="#why-i-released-pfn-under-the-mit-license" title="Link to this heading">#</a></h3>
+<p>In my own personal and professional work, I strongly prefer permissively-licensed* code (such as the MIT and Apache licenses) over both proprietary code <em>and</em> ‘copyleft’ licenses like the GPL. That’s because these licenses allow me to incorporate such code into proprietary works without then needing to use that same copyleft license for those works. I’m also not a fan of ‘noncommercial’ licenses (such as the CC BY-NC license), as the prohibition on commercial use severely limits the utility of the text or code for certain use cases. Given the many ways that I have benefit from MIT-licensed code, it seemed fitting to release PFN under it as well.</p>
+<p>I also believe that this choice will make PFN more accessible <em>and</em> practical to prospective readers. As a result of this licensing decision, you are free to copy large chunks of code from the book (such as the functions that underlie certain mapping and online visualization code) into your own commercial projects, then release those projects under a proprietary license. (You’d just need to provide attribution and reference the license; for more details, see <a class="github reference external" href="https://github.com/kburchfiel/pfn?tab=MIT-1-ov-file#readme">kburchfiel/pfn</a> ). I would love for as many people as possible to read and benefit from PFN, and a restrictive license would have made that goal harder to achieve.</p>
+<p>*(For a useful overview of permissive licenses, visit <a class="reference external" href="https://en.wikipedia.org/wiki/Permissive_software_license">https://en.wikipedia.org/wiki/Permissive_software_license</a> ).</p>
+</section>
+<section id="the-book-version-of-pfn">
+<h3>The book version of PFN<a class="headerlink" href="#the-book-version-of-pfn" title="Link to this heading">#</a></h3>
+<p>Although I imagine that most people prefer to access resources like Python for Nonprofits online, it was also important to me that I make it available in print form. Although web-based resources offer incredible convenience and accessibility, to truly learn a subject, I find that it helps to read through a book from cover to cover.</p>
+<p>Therefore, I made use of the fantastic Jupyter Book (<a class="reference external" href="https://jupyterbook.org/en/stable/intro.html">https://jupyterbook.org/en/stable/intro.html</a>) tool to convert the .ipynb and .md files that comprise Python for Nonprofits into a single PDF. Jupyter Book took care of much of the formatting for me, which thus allowed me to focus more on the actual content. It appeared that Jupyter Book couldn’t process .py files on its own, though, so I copied those scripts into standalone Jupyter Notebooks, thus allowing them to get incorporated into the book.</p>
+<p>I plan to make the PDF version of Python for Nonprofits available to order in printed form in the near future–though you are of course welcome to print it out yourself in the meantime. It is available as ‘pfn_book.pdf’ at <a class="github reference external" href="https://github.com/kburchfiel/pfn/blob/main/Print_Book/pfn_book.pdf">kburchfiel/pfn</a> . You may also want to check the folder in which it’s stored (<a class="github reference external" href="https://github.com/kburchfiel/pfn/blob/main/Print_Book">kburchfiel/pfn</a>) to see whether a newer verison has become availble.</p>
+<p>If you’re interested in using Jupyter Book for your own articles and books, check out the documentation at <a class="reference external" href="https://jupyterbook.org/">https://jupyterbook.org/</a> . Note that the <code class="docutils literal notranslate"><span class="pre">_config.yml</span></code>, <code class="docutils literal notranslate"><span class="pre">_toc.yml</span></code>, <code class="docutils literal notranslate"><span class="pre">create_html_book.sh</span></code>, and <code class="docutils literal notranslate"><span class="pre">create_pdflatex_book.sh</span></code> files in PFN’s root folder are part of my workflow for turning PFN into a Jupyter Book project. (These files were also based on Jupyter Book’s documentation.)</p>
+<p>Jupyter Book <em>also</em> allowed me to convert these files into an HTML-based book that you may find useful. (I haven’t yet gotten it to display onine correctly, but if you download PFN’s source code, you can access a local copy by going to docs/index.html . See the Getting Started section, found in the main PFN readme on GitHub or the ‘Getting Started’ chapter of the Print/PDF book, for more details.)</p>
+</section>
+<section id="my-reasons-for-eschewing-generative-ai">
+<h3>My reasons for eschewing generative AI<a class="headerlink" href="#my-reasons-for-eschewing-generative-ai" title="Link to this heading">#</a></h3>
+<p>I chose not to use generative AI tools in the process of writing Python for Nonprofits. When I needed to learn how to perform a particular task, I preferred to consult the documentation for the library that I was using; StackOverflow answers; or similar human-created resources.</p>
+<p>I had a few reasons for this approach. First, I believed that it was important for me to understand how my code was working and what it was doing. If I relied on generative AI to solve challenges for me, my own understanding of Python–and the libraries that PFN utilizes–would suffer. If Kristen Nygaard is correct that <em>‘Programming is understanding’</em> (<a class="reference external" href="https://www.stroustrup.com/3rd_pref.html">https://www.stroustrup.com/3rd_pref.html</a>), then copying and pasting Generative AI-produced code could lead to a <em>lack</em> of understanding on my part. And in the world of data analysis, this deficit in understanding could lead to all sorts of insidious errors.</p>
+<p>I also have substantial concerns about potential copyright infringement caused by generative AI. If a generative API tool provided me with code that was actually protected by a ‘copyleft’ license like the GPL, I might then need to release my entire project under the GPL rather than the more ‘permissive’ MIT license that I selected. If it instead gave me a block of code that was actually covered under a proprietary license, I might then get sued for using someone else’s work without his or her permission.</p>
+<p>In addition, I wanted my own style–both in writing and programming terms–to manifest itself within Python for Nonprofits. It would have been harder to maintain that voice if I interspersed generative AI-generated content within my own text.</p>
+<p>Finally, as noted earlier, I find the process of writing my own code to be a great deal of fun–which is a relevant consideration for a hobby project like this. If I outsourced that process to an AI-based tool, I doubt that I would have enjoyed working on PFN as much.</p>
+<p>None of this is meant to imply that individuals who use generative AI, whether for programming, writing, or other forms of content creation, are mistaken in their approach. I simply believe that avoiding the use of generative AI so far has been the best choice <em>for me</em>.</p>
+<p>I also believe that, even for those who do utilize generative AI in their development work, it’s very helpful–and, at times, crucial–to know how to write that code yourself. Although using AI might help speed up the process of writing code, there’s still a need to refine, evaluate, and correct it–and knowing what the code <em>should</em> look like will help with that process. As Isaac Lyman noted, “It’s the AI’s job to be fast, but it’s your job to be good.”*</p>
+<p>Aviation provides a useful analog here. Although commercial airline pilots heavily utilize autopilot**, it’s still essential that they know how to fly the plane on their own if needed–and that they can recognize when that autopilot might be acting up. Similarly, even if you plan to make heavy use of generative AI in your work (or are already doing so), knowing how to write the same code on your own will remain a valuable skill, as you can then better evaluate your AI tool’s suggestions. Therefore, this book–a flight manual of sorts for nonprofit data analysis–should still be a helpful resource for you.</p>
+</section>
+</section>
+<section id="gratitude-and-acknowledgments">
+<h2>Gratitude and acknowledgments<a class="headerlink" href="#gratitude-and-acknowledgments" title="Link to this heading">#</a></h2>
+<p>First, I am grateful to God for giving me the opportunity to write this text and share what I’ve learned with others. God’s infinite love is a gift that cannot be put into words, and I hope that PFN can serve as a very small offering of love back to Him.</p>
+<p>I am also grateful to Kenneth, my son, who has brought me and my wife joy, laughter, and a deeper sense of meaning and purpose for our lives. Although seeing Python for Nonprofits grow has been fun, <em>your</em> growth has been far more exciting–and, of course, far more important! This text and code will pass away, but your soul is eternal. I know you’re a bit young to use a computer at the moment, but I hope you will find this project useful one day.</p>
+<p>I’m grateful to my parents, Linda and Ken, as well. You provided me with immense love growing up, and I hope I can share that same love with Kenneth (and any other children with whom God might bless us). Dad, you showed me (with <em>Biotechnology and the Federal Circuit</em>) that it’s possible to write a book while raising a young family and holding down a job. I’m honored to be able to follow in your footsteps 30 years later–and I hope that we will be able to reunite in Heaven one day.</p>
+<p>I also want to thank my professors at Columbia Business School–especially Mattan Griffel, Daniel Guetta, Hardeep Johar, and Jared Lander–for introducing me to the valuable role that Python and R can play within organizations. In addition, I’m grateful to my supervisors at Seton Education Partners and the Institute for Family Studies: David Morales, Michael Carbone, Michael Toscano, and Wendy Wang. You gave me the opportunity to apply Python to real-world challenges, which has allowed me to extend my study of programming far beyond the classroom.</p>
+<p>This book would not have been possible without the developers of Python and the many, many libraries that it makes use of (particularly Pandas, Plotly, Folium, and Dash). Thank you for making your work accessible to the world!</p>
+<p>I also wish to thank the developers of the open-source software and tools (including, but not limited to, JupyterLab Desktop, LibreOffice, Jupyter Book, Linux, and Linux Mint) that I used to develop Python for Nonprofits.</p>
+<p>I’m also grateful to Bjarne Stroustrup, the creator of C++ . His <em>Programming: Principles and Practice Using C++</em> set a high bar for teaching programming that this book benefited from, even if my effort comes nowhere close to his work. I extend the same gratitude to Allen B. Downey, the author of <em>Think Python</em>.</p>
+<p>Finally, I want to thank you for reading (or at least flipping through) this book. I hope that, regardless of where you are in your Python and nonprofit career journey, it will be a helpful tool for you.</p>
+</section>
+<section id="dedication">
+<h2>Dedication<a class="headerlink" href="#dedication" title="Link to this heading">#</a></h2>
+<p>This work is dedicated to my wife, Allie Burchfiel. Allie generously allowed me to take the time I needed to put this project together, even though that meant that I was less available to help her with chores, childcare, and the many other tasks (big and small) that go into running a household. She also believed in my vision for this work–and in my dreams of sharing my (still growing) understanding of Python with others. Allie is an amazing wife and mother, and I am incredibly fortunate to spend my life with her.</p>
+<p>Blessed (and soon to be Saint) Carlo Acutis, pray for us!</p>
+<section id="footnotes">
+<h3>Footnotes<a class="headerlink" href="#footnotes" title="Link to this heading">#</a></h3>
+<p>*(I came across this quote within the <em>‘Developers with AI assistants need to follow the pair programming model’</em> StackOverflow blog post, which is worth reading in its entirety. You can find it at <a class="reference external" href="https://stackoverflow.blog/2024/04/03/developers-with-ai-assistants-need-to-follow-the-pair-programming-model/">https://stackoverflow.blog/2024/04/03/developers-with-ai-assistants-need-to-follow-the-pair-programming-model/</a> .)</p>
+<p>**I had the impression that pilots usually land their planes automatically, but that they still do so manually every 10th time or so in order to keep their skills fresh. However, Josh noted within a flyingbynumbers piece (<a class="reference external" href="https://flyingbynumbers.com/pilots-land-planes-manually/">https://flyingbynumbers.com/pilots-land-planes-manually/</a>) that, in fact, pilots tend to land planes <em>manually</em> even though the technology for automated landings is available. He notes that pilot-led landings are typically smoother and that doing them yourself “is just plain fun.” These rationales may apply to ‘manual’ programming also.</p>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./Introduction"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../front_matter_for_book.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Wecome to Python for Nonprofits!</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="the_case_for_python_at_nonprofits.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">The Case for Using Python at Nonprofits</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overview-of-pfn-s-contents">Overview of PFN’s contents</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#my-reasons-for-writing-pfn">My reasons for writing PFN</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#development-notes">Development notes</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#why-i-released-pfn-under-the-mit-license">Why I released PFN under the MIT license</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-book-version-of-pfn">The book version of PFN</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#my-reasons-for-eschewing-generative-ai">My reasons for eschewing generative AI</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gratitude-and-acknowledgments">Gratitude and acknowledgments</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dedication">Dedication</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#footnotes">Footnotes</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Kenneth Burchfiel
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

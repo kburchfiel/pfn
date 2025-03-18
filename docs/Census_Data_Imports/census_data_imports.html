@@ -1,0 +1,3466 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Census Data Imports &#8212; Python for Nonprofits</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Census_Data_Imports/census_data_imports';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="census_import_scripts.py" href="../Book_Specific_Materials/census_import_scripts_py_nb.html" />
+    <link rel="prev" title="Descriptive Stats: Part 2" href="../Descriptive_Stats/descriptive_stats_part_2.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../front_matter_for_book.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Python for Nonprofits</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../front_matter_for_book.html">
+                    Wecome to Python for Nonprofits!
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Introduction</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Introduction/introduction.html">An Introduction to Python for Nonprofits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Introduction/the_case_for_python_at_nonprofits.html">The Case for Using Python at Nonprofits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Book_Specific_Materials/getting_started_for_book.html">Getting Started</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Importing and Prepping Data</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Data_Retrieval/data_retrieval.html">Data Retrieval</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Data_Prep/data_prep.html">Data Prep</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Analyzing Data</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Descriptive_Stats/descriptive_stats.html">Descriptive Stats</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Descriptive_Stats/descriptive_stats_part_2.html">Descriptive Stats: Part 2</a></li>
+<li class="toctree-l1 current active has-children"><a class="current reference internal" href="#">Census Data Imports</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Book_Specific_Materials/census_import_scripts_py_nb.html">census_import_scripts.py</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Visualizing Data</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Graphing/graphing.html">Creating Interactive and Static Charts with Plotly</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../Graphing/pivot_and_graph_functions.html">Pivot and Graph Functions</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Mapping/choropleth_maps.html">Mapping Census Data using Plotly (Work in progress)</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Book_Specific_Materials/plotly_choropleth_map_functions_py_nb.html">plotly_choropleth_map_functions.py</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Mapping/choropleth_maps_with_folium.html">Creating Choropleth Maps with Folium</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Book_Specific_Materials/folium_choropleth_map_functions_py_nb.html">folium_choropleth_map_functions.py</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Regressions</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Regressions/regression_analyses.html">Regression Analyses</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Publishing Analyses Online</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Static_Sites/simple_static_site.html">Creating a Simple Static Webpage</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Updating_Online_Spreadsheets/updating_online_spreadsheets.html">Updating Online Spreadsheets</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Book_Specific_Materials/weather_import_py_nb.html">weather_import.py</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Online_Visualizations/Simple_App_Without_Login/readme.html">Simple Dash App Without Login</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Book_Specific_Materials/Simple_App_Without_Login_py_nb.html">Source code for Simple App Without Login</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Online_Visualizations/PFN_Dash_App_Demo/readme.html">PFN Dash App Demo</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Book_Specific_Materials/PFN_Dash_App_Demo_py_nb.html">Source code for PFN Dash App Demo</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendix</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Appendix/nvcu_db_gen.html">NVCU Database Generator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Book_Specific_Materials/helper_funcs_py_nb.html">helper_funcs.py</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/Census_Data_Imports/census_data_imports.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Census Data Imports</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#deciding-where-to-move-to-start-a-family">Deciding where to move to start a family</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#an-introduction-to-the-american-community-survey">An introduction to the American Community Survey</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introducing-the-census-api">Introducing the Census API</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#importing-a-census-api-key">Importing a Census API Key</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#importing-custom-census-functions">Importing custom Census functions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#retrieving-our-data">Retrieving our Data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#defining-a-census-data-retrieval-function">Defining a Census data retrieval function</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#adding-in-comparison-fields">Adding in comparison fields</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ranking-counties-by-population-growth">Ranking counties by population growth</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sorting-counties-with-at-least-100k-residents-in-2016-by-their-2016-2021-total-population-growth-rates">Sorting counties with at least 100K residents in 2016 by their 2016-2021 total population growth rates:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sorting-counties-with-at-least-one-million-residents-in-2016-by-their-2016-2021-total-population-growth-rates">Sorting counties with at least <em>one million</em> residents in 2016 by their 2016-2021 total population growth rates:</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#repeating-these-steps-in-order-to-compare-25-to-29-year-old-population-growth-rates">Repeating these steps in order to compare 25-to-29-year-old population growth rates</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#retrieving-state-level-data">Retrieving state-level data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#retrieving-additional-data-for-a-regression-analysis">Retrieving additional data for a regression analysis</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#importing-us-census-data-on-educational-attainment-and-median-earnings">Importing US Census data on educational attainment and median earnings</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mapping-each-county-and-state-to-a-geographical-region">Mapping each county and state to a geographical region</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#merging-region-information-into-our-state-level-dataset">Merging region information into our state-level dataset</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#appendix">Appendix</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-census-python-library">1: The Census Python Library</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-requests-library">2: The requests library</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="census-data-imports">
+<h1>Census Data Imports<a class="headerlink" href="#census-data-imports" title="Link to this heading">#</a></h1>
+<p>By Kenneth Burchfiel</p>
+<p>Released under the MIT License</p>
+<p>The US Census is a fantastic source of free demographic data. As this notebook will demonstrate, Python allows us to easily access large amounts of this data at once.</p>
+<p>[Note: I had initially planned to feature this script right after PFN’s Data Retrieval chapter. However, this notebook not only imports Census data, but also reformats that data and generates some descriptive statistics. Therefore, I decided it would be best to wait to cover this script until now.]</p>
+<section id="deciding-where-to-move-to-start-a-family">
+<h2>Deciding where to move to start a family<a class="headerlink" href="#deciding-where-to-move-to-start-a-family" title="Link to this heading">#</a></h2>
+<p>Let’s say that some NVCU seniors are interested in settling down and raising a family a few years after they graduate. Because they’d prefer to live in a growing region rather than a declining one, they want to know which areas have seen the highest growth rates in recent years. They’d like to see this data both for all residents within each county <em>and</em> those aged 25-29.</p>
+<p>In order to answer these questions, we’ll use the Census API to retrieve US county population growth data for a selected set of years. We’ll then use this data to calculate population growth rates across multiple periods.</p>
+</section>
+<section id="an-introduction-to-the-american-community-survey">
+<h2>An introduction to the American Community Survey<a class="headerlink" href="#an-introduction-to-the-american-community-survey" title="Link to this heading">#</a></h2>
+<p>Many Americans probably associate the US Census Bureau with its decennial Census. However, the Census Bureau also conducts the American Community Survey (<a class="reference external" href="https://www.census.gov/data/developers/data-sets/acs-5year.html">https://www.census.gov/data/developers/data-sets/acs-5year.html</a>) each year, making it a great resource for recent demographic data.</p>
+<p>This notebook will source data from the American Community Survey’s 5-year estimates, which show an average of results for the past 5 years. (For example, the 2021 ACS5 dataset shows results between 2017 and 2021). The 1-year ACS estimates (<a class="reference external" href="https://www.census.gov/data/developers/data-sets/acs-1year.html">https://www.census.gov/data/developers/data-sets/acs-1year.html</a>) offer results for a more recent timeframe; however, because the 5-year estimates are sourced from a larger pool of data, they may be more reliable (especially for smaller regions). In addition, 1-year estimates aren’t available for certain regions, such as zip codes.</p>
+<p>For the sake of brevity, I’ll often refer to the American Community Survey’s 5-year estimates as the ‘ACS5’ survey.</p>
+<p>Another great source of Census data, which allows for a much wider variety of analyses, is American Community Survey <em>microdata.</em> These microdata tables show individual respondent rows rather than pre-calculated estimates, thus allowing for all sorts of custom filters, comparisons, and statistical tests. You can download 1- and 5-year ACS microdata from the Census website (<a class="reference external" href="https://www.census.gov/data/developers/data-sets/census-microdata-api.html">https://www.census.gov/data/developers/data-sets/census-microdata-api.html</a>); however, you may also want to consider using IPUMS (<a class="reference external" href="https://usa.ipums.org/usa/">https://usa.ipums.org/usa/</a>) for microdata collection.</p>
+<p>This script will not feature microdata imports, but if you plan to use Census data withn your own work, you’ll definitely want to learn more about the benefits (and disadvantages) of microdata. The US Census guide at <a class="reference external" href="https://www.census.gov/content/dam/Census/library/publications/2021/acs/acs_pums_handbook_2021.pdf">https://www.census.gov/content/dam/Census/library/publications/2021/acs/acs_pums_handbook_2021.pdf</a> is a good place to start. One notable disadvantage of microdata files is that, for confidentiality reasons, they do not include county- or zip-level information (though IPUMS has been able to map certain microdata records to certain US counties).</p>
+</section>
+<section id="introducing-the-census-api">
+<h2>Introducing the Census API<a class="headerlink" href="#introducing-the-census-api" title="Link to this heading">#</a></h2>
+<p>In the process of working to answer the first question (regarding where to move to start a family), we’ll also explore the Census API’s capabilities and craft a Python function that will use it to efficiently retrieve data.</p>
+<p>Importing relevant libraries and setting two configuration variables:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+<span class="n">program_start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">set_option</span><span class="p">(</span><span class="s1">&#39;display.max_columns&#39;</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span> <span class="c1"># This max column setting</span>
+<span class="c1"># will prevent columns in the notebook from being hidden; however,</span>
+<span class="c1"># if render_for_pdf (defined in the Appendix&#39;s helper_funcs.py file)</span>
+<span class="c1"># is set to True, this setting will get overwritten.</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">iteration_utilities</span><span class="w"> </span><span class="kn">import</span> <span class="n">duplicates</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;../Appendix&#39;</span><span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">helper_funcs</span><span class="w"> </span><span class="kn">import</span> <span class="n">config_notebook</span><span class="p">,</span> <span class="n">render_for_pdf</span>
+<span class="n">display_type</span> <span class="o">=</span> <span class="n">config_notebook</span><span class="p">(</span><span class="n">display_max_columns</span> <span class="o">=</span> <span class="mi">4</span><span class="p">)</span> 
+
+<span class="n">acs5_year</span> <span class="o">=</span> <span class="mi">2021</span> <span class="c1"># By updating this variable when future American </span>
+<span class="c1"># Community Surveys get released, you should be able to retrieve the most</span>
+<span class="c1"># recent data possible. (If changes to the survey&#39;s format are made,</span>
+<span class="c1"># however, updates to the scripts may be necessary.)</span>
+
+<span class="c1"># Note: I had originally set acs5_year to 2022, the latest year for which</span>
+<span class="c1"># ACS5 data were available at the time. However, due to a recent change</span>
+<span class="c1"># in Connecticut&#39;s county-equivalent boundaries (see</span>
+<span class="c1"># https://www.federalregister.gov/documents/2022/06/06/2022-12063/</span>
+<span class="c1"># change-to-county-equivalents-in-the-state-of-connecticut for more</span>
+<span class="c1"># information), ACS5 population growth data between previous</span>
+<span class="c1"># years and 2022 appeared to be unavailable for that state. Therefore,</span>
+<span class="c1"># I chose to retrieve data for 2021 instead. </span>
+
+<span class="n">acs5_latest_year</span> <span class="o">=</span> <span class="mi">2023</span> <span class="c1"># This variable will be used to determine</span>
+<span class="c1"># the ACS5 year for which a datsaet containing only one year of data</span>
+<span class="c1"># will be retrieved. Since this dataset won&#39;t show historical trends</span>
+<span class="c1"># in data, we don&#39;t need to worry about changes in county definitions;</span>
+<span class="c1"># thus, we can use the most recent year for which data are available.</span>
+
+<span class="n">download_new_variable_list</span> <span class="o">=</span> <span class="kc">False</span> <span class="c1"># If set to True, a new list of </span>
+<span class="c1"># variables will be downloaded from the Census API website. If False, </span>
+<span class="c1"># this list of variables will instead be read in from a local .csv copy </span>
+<span class="c1"># (thus saving processing time).</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="importing-a-census-api-key">
+<h3>Importing a Census API Key<a class="headerlink" href="#importing-a-census-api-key" title="Link to this heading">#</a></h3>
+<p>You can obtain a free Census API key at <a class="reference external" href="https://api.census.gov/data/key_signup.html">https://api.census.gov/data/key_signup.html</a>. The following cell imports my own personal key, so you’ll need to replace this code with one that loads in your own API key.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="nb">open</span> <span class="p">(</span><span class="s1">&#39;census_api_key_path.txt&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+    <span class="n">key_path</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">key_path</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+    <span class="n">key</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The Census offers detailed API documentation that makes retrieving data from it relatively straightforward. For instance, you’ll probably find the Census Data API User Guide (<a class="reference external" href="https://www.census.gov/content/dam/Census/data/developers/api-user-guide/api-guide.pdf">https://www.census.gov/content/dam/Census/data/developers/api-user-guide/api-guide.pdf</a>) to be helpful in applying the Census API.</p>
+<p>The list of ACS5 API call examples at (<a class="reference external" href="https://api.census.gov/data/2021/acs/acs5/examples.html">https://api.census.gov/data/2021/acs/acs5/examples.html</a>) is another great resource. One of the sample URLs shown on this page for retrieving county-level data appears as follows:</p>
+<p><a class="reference external" href="https://api.census.gov/data/2021/acs/acs5?get=NAME,B01001_001E&amp;amp;for=county:*&amp;amp;key=YOUR_KEY_GOES_HERE">https://api.census.gov/data/2021/acs/acs5?get=NAME,B01001_001E&amp;for=county:*&amp;key=YOUR_KEY_GOES_HERE</a></p>
+<p>If you replace the ‘YOUR_KEY_GOES_HERE’ component of the URL with your actual key, then enter this link into your web browser, you’ll receive a very long list of counties, population values, and state and county codes. The top of the list for the 2021 ACS5 looks like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[[</span><span class="s2">&quot;NAME&quot;</span><span class="p">,</span><span class="s2">&quot;B01001_001E&quot;</span><span class="p">,</span><span class="s2">&quot;state&quot;</span><span class="p">,</span><span class="s2">&quot;county&quot;</span><span class="p">],</span>
+<span class="p">[</span><span class="s2">&quot;Autauga County, Alabama&quot;</span><span class="p">,</span><span class="s2">&quot;58239&quot;</span><span class="p">,</span><span class="s2">&quot;01&quot;</span><span class="p">,</span><span class="s2">&quot;001&quot;</span><span class="p">],</span>
+<span class="p">[</span><span class="s2">&quot;Baldwin County, Alabama&quot;</span><span class="p">,</span><span class="s2">&quot;227131&quot;</span><span class="p">,</span><span class="s2">&quot;01&quot;</span><span class="p">,</span><span class="s2">&quot;003&quot;</span><span class="p">],</span>
+<span class="p">[</span><span class="s2">&quot;Barbour County, Alabama&quot;</span><span class="p">,</span><span class="s2">&quot;25259&quot;</span><span class="p">,</span><span class="s2">&quot;01&quot;</span><span class="p">,</span><span class="s2">&quot;005&quot;</span><span class="p">],</span>
+<span class="p">[</span><span class="s2">&quot;Bibb County, Alabama&quot;</span><span class="p">,</span><span class="s2">&quot;22412&quot;</span><span class="p">,</span><span class="s2">&quot;01&quot;</span><span class="p">,</span><span class="s2">&quot;007&quot;</span><span class="p">],</span>
+<span class="p">[</span><span class="s2">&quot;Blount County, Alabama&quot;</span><span class="p">,</span><span class="s2">&quot;58884&quot;</span><span class="p">,</span><span class="s2">&quot;01&quot;</span><span class="p">,</span><span class="s2">&quot;009&quot;</span><span class="p">],</span>
+<span class="p">[</span><span class="s2">&quot;Bullock County, Alabama&quot;</span><span class="p">,</span><span class="s2">&quot;10386&quot;</span><span class="p">,</span><span class="s2">&quot;01&quot;</span><span class="p">,</span><span class="s2">&quot;011&quot;</span><span class="p">],</span>
+</pre></div>
+</div>
+<p>‘B01001_001E’ refers to the total population estimates for a given county. We can find this out by going to the 2021 ACS5’s Detailed Tables page (<a class="reference external" href="https://api.census.gov/data/2021/acs/acs5/variables.html">https://api.census.gov/data/2021/acs/acs5/variables.html</a>) and navigating to the row with a ‘Name’ value of ‘B01001_001E’. This link, which may take a little while to fully load, is available on the ACS5 API Documentation Page (<a class="reference external" href="https://www.census.gov/data/developers/data-sets/acs-5year.html">https://www.census.gov/data/developers/data-sets/acs-5year.html</a>).</p>
+<p>We can use <code class="docutils literal notranslate"><span class="pre">pd.read_json()</span></code> to easily read this same data into a DataFrame:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_results</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_json</span><span class="p">(</span>
+    <span class="sa">f</span><span class="s1">&#39;https://api.census.gov/data/</span><span class="si">{</span><span class="n">acs5_year</span><span class="si">}</span><span class="s1">/</span><span class="se">\</span>
+<span class="s1">acs/acs5?get=NAME,B01001_001E&amp;for=county:*&amp;key=</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="c1"># read_json documentation:</span>
+<span class="c1"># https://pandas.pydata.org/pandas-docs/stable/reference/api/</span>
+<span class="c1"># pandas.read_json.html</span>
+<span class="n">df_results</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>0</th>
+      <th>1</th>
+      <th>2</th>
+      <th>3</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>NAME</td>
+      <td>B01001_001E</td>
+      <td>state</td>
+      <td>county</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Autauga County, Alabama</td>
+      <td>58239</td>
+      <td>01</td>
+      <td>001</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Baldwin County, Alabama</td>
+      <td>227131</td>
+      <td>01</td>
+      <td>003</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Barbour County, Alabama</td>
+      <td>25259</td>
+      <td>01</td>
+      <td>005</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Bibb County, Alabama</td>
+      <td>22412</td>
+      <td>01</td>
+      <td>007</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>At this point, the DataFrame’s columns are [0, 1, 2, 3], whereas the columns we want to use are stored within the first row. The following code sets these row values as our column values, then deletes this row:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_results</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="n">df_results</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">df_results</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">inplace</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+
+<span class="n">df_results</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>NAME</th>
+      <th>B01001_001E</th>
+      <th>state</th>
+      <th>county</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>Autauga County, Alabama</td>
+      <td>58239</td>
+      <td>01</td>
+      <td>001</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Baldwin County, Alabama</td>
+      <td>227131</td>
+      <td>01</td>
+      <td>003</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Barbour County, Alabama</td>
+      <td>25259</td>
+      <td>01</td>
+      <td>005</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Bibb County, Alabama</td>
+      <td>22412</td>
+      <td>01</td>
+      <td>007</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>Blount County, Alabama</td>
+      <td>58884</td>
+      <td>01</td>
+      <td>009</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+</section>
+<section id="importing-custom-census-functions">
+<h2>Importing custom Census functions<a class="headerlink" href="#importing-custom-census-functions" title="Link to this heading">#</a></h2>
+<p>We’ll now import four Census data import and analysis functions. I originally defined these functions within this script; however, I chose to move them to a separate Python file (‘census_import_scripts.py’) so that they can be incorporated more easily into other data projects. I highly recommend that you read the documentation for these files as well so that you can better understand what the functions are doing (and how to modify them for your own applications if needed).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">census_import_scripts</span><span class="w"> </span><span class="kn">import</span> <span class="n">download_variable_list</span><span class="p">,</span> \
+<span class="n">create_variable_aliases</span><span class="p">,</span> <span class="n">retrieve_census_data</span><span class="p">,</span> <span class="n">create_comparison_fields</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="retrieving-our-data">
+<h2>Retrieving our Data<a class="headerlink" href="#retrieving-our-data" title="Link to this heading">#</a></h2>
+<p>In order to determine which variable codes to enter into our script, we’ll first need to review a list of all American Community Survey variables and the overall groups into which they fit. This list is available on the Census website; for instance, the copy for 2021 is available at <a class="reference external" href="https://api.census.gov/data/2021/acs/acs5/variables.html">https://api.census.gov/data/2021/acs/acs5/variables.html</a>. However, we can also use Pandas to import them into a DataFrame, as shown below.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">download_new_variable_list</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span> <span class="c1"># This process can take a little</span>
+    <span class="c1"># while, so if you already have a copy of the variable list you need,</span>
+    <span class="c1"># consider setting download_variable_list to False.</span>
+    <span class="n">download_variable_list</span><span class="p">(</span><span class="n">acs5_year</span><span class="p">,</span> <span class="s1">&#39;acs5&#39;</span><span class="p">)</span>
+
+<span class="c1"># Reading the group and variable datasets into our script:</span>
+<span class="n">df_variables</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span>
+    <span class="sa">f</span><span class="s1">&#39;Datasets/acs5_</span><span class="si">{</span><span class="n">acs5_year</span><span class="si">}</span><span class="s1">_variables.csv&#39;</span><span class="p">)</span>
+
+<span class="n">df_groups</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span>
+    <span class="sa">f</span><span class="s1">&#39;Datasets/acs5_</span><span class="si">{</span><span class="n">acs5_year</span><span class="si">}</span><span class="s1">_groups.csv&#39;</span><span class="p">)</span>
+
+<span class="c1"># The following code will show a condensed set of columns if the script</span>
+<span class="c1"># is being run for PDF output; that way, the reader can view all of the</span>
+<span class="c1"># most important columns. This step isn&#39;t necessary when the script is </span>
+<span class="c1"># being run for HTML display, as the user can simply scroll horizontally</span>
+<span class="c1"># to see all of the columns within the DataFrame. </span>
+<span class="n">df_variables</span><span class="p">[[</span><span class="s1">&#39;Name&#39;</span><span class="p">,</span> <span class="s1">&#39;Label&#39;</span><span class="p">,</span> <span class="s1">&#39;Concept&#39;</span><span class="p">,</span> <span class="s1">&#39;Group&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">head</span><span class="p">()</span> <span class="k">if</span> <span class="p">(</span>
+    <span class="n">render_for_pdf</span> <span class="o">==</span> <span class="kc">True</span><span class="p">)</span> <span class="k">else</span> <span class="n">df_variables</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Name</th>
+      <th>Label</th>
+      <th>Concept</th>
+      <th>Group</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>B01001_001E</td>
+      <td>Estimate!!Total:</td>
+      <td>SEX BY AGE</td>
+      <td>B01001</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>B01001_002E</td>
+      <td>Estimate!!Total:!!Male:</td>
+      <td>SEX BY AGE</td>
+      <td>B01001</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>B01001_003E</td>
+      <td>Estimate!!Total:!!Male:!!Under 5 years</td>
+      <td>SEX BY AGE</td>
+      <td>B01001</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>B01001_004E</td>
+      <td>Estimate!!Total:!!Male:!!5 to 9 years</td>
+      <td>SEX BY AGE</td>
+      <td>B01001</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>B01001_005E</td>
+      <td>Estimate!!Total:!!Male:!!10 to 14 years</td>
+      <td>SEX BY AGE</td>
+      <td>B01001</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>For reference, here’s a look at df_groups:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_groups</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Concept</th>
+      <th>Group</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>SEX BY AGE</td>
+      <td>B01001</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>SEX BY AGE (WHITE ALONE)</td>
+      <td>B01001A</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>1143</th>
+      <td>PUBLIC HEALTH INSURANCE BY RATIO OF INCOME TO ...</td>
+      <td>C27018</td>
+    </tr>
+    <tr>
+      <th>1144</th>
+      <td>HEALTH INSURANCE COVERAGE STATUS BY LIVING ARR...</td>
+      <td>C27021</td>
+    </tr>
+  </tbody>
+</table>
+<p>1145 rows × 2 columns</p>
+</div></div></div>
+</div>
+<p>In order to find variables of interest, I recommend first searching for keywords of interest within the group table (which is much smaller in size) in order to identify relevant group IDs. Next, you can search for those group IDs inside the variables table in order to find the exact metrics to request from the Census API.</p>
+<p>The following table stores variables for three separate groups: (1) the total population; (2) all males aged 25 to 29 years; and (3) all females aged 25 to 29 years. (The B01001 table that stores these values didn’t have an entry for all people aged 25 to 29; we’ll get around this limitation by retrieving sex-specific population totals within this age group, then adding those totals together.)</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">grad_destinations_variable_list</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;B01001_001E&#39;</span><span class="p">,</span> <span class="s1">&#39;B01001_011E&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;B01001_035E&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The demographic columns in the Census API’s output are labeled with their variable names (e.g. ‘B01001_001E’). These names are concise, but you’ll need a copy of the original variable list to interpret them. Therefore, I chose to replace these column names with a combination of the ‘Label’, ‘Concept’, and ‘Name’ entries in the original variable list. These column names are very long, but they do make the output easier to interpret (while also preserving the original names for reference).</p>
+<p>In addition, if the description corresponding to a variable name happens to change from one year to another, the use of aliases will help you identify that change. (This will help prevent you from treating two different data types that happened to use the same variable code in different years as equal. However, I would imagine that the Census wouldn’t repurpose variable codes in this way.)</p>
+<p>The following function assists with this replacement by creating a dictionary whose keys are the original field names (e.g. ‘B0101_001E’) and whose values are the replacement names (e.g. ‘Sex by Age_Estimate!!Total:_B01001_001E’).</p>
+<p>Creating our aliases:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">grad_destinations_alias_dict</span> <span class="o">=</span> <span class="n">create_variable_aliases</span><span class="p">(</span>
+    <span class="n">df_variables</span> <span class="o">=</span> <span class="n">df_variables</span><span class="p">,</span> 
+    <span class="n">variable_list</span> <span class="o">=</span> <span class="n">grad_destinations_variable_list</span><span class="p">)</span>
+<span class="n">grad_destinations_alias_dict</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;B01001_001E&#39;: &#39;SEX BY AGE_Estimate!!Total: (B01001_001E)&#39;,
+ &#39;B01001_011E&#39;: &#39;SEX BY AGE_Estimate!!Total:!!Male:!!25 to 29 years (B01001_011E)&#39;,
+ &#39;B01001_035E&#39;: &#39;SEX BY AGE_Estimate!!Total:!!Female:!!25 to 29 years (B01001_035E)&#39;}
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="defining-a-census-data-retrieval-function">
+<h2>Defining a Census data retrieval function<a class="headerlink" href="#defining-a-census-data-retrieval-function" title="Link to this heading">#</a></h2>
+<p>The following function simplifies the process of retrieving data from the Census API. It also enables the user to rename variable fields (e.g. ‘B01001_001E’) with aliases for those fields (e.g. ‘Sex by Age_Estimate!!Total: (B01001_001E)’), but this option is disabled by default. In addition, it allows more than 50 variables to be retrieved at the same time, thus making it easier to retrieve especially large datasets.</p>
+<p>[Note: currently, this function only supports data retrieval for the ACS 5-year and 1-year estimates. However, I may add in the ability to retrieve decennial Census data in the future.]</p>
+<p>(The following code allowed me to test out retrieve_census_data for a particularly long variable list.)</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># test_list = list(df_variables[&#39;Name&#39;][0:151])</span>
+
+<span class="c1"># test_alias_dict = create_variable_aliases(</span>
+<span class="c1">#     df_variables = df_variables, </span>
+<span class="c1">#     variable_list = test_list)</span>
+
+<span class="c1"># test_acs5_data = retrieve_census_data(</span>
+<span class="c1">#     survey = &#39;acs5&#39;, year = acs5_year, region = &#39;county&#39;,</span>
+<span class="c1">#     variable_list = test_list, </span>
+<span class="c1">#     rename_data_fields = True, </span>
+<span class="c1">#     field_vars_dict = test_alias_dict, key = key)</span>
+
+<span class="c1"># test_acs5_data</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Next, we’ll define a list of years for which we would like to retrieve Census data. In order to make this code easier to use in future years, I’ll define these years as an offset of acs5_year rather than hardcoding them.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">years_to_retrieve</span> <span class="o">=</span> <span class="p">[</span><span class="n">acs5_year</span> <span class="o">-</span> <span class="mi">12</span><span class="p">,</span> <span class="n">acs5_year</span> <span class="o">-</span><span class="mi">10</span><span class="p">,</span> 
+                     <span class="n">acs5_year</span> <span class="o">-</span> <span class="mi">8</span><span class="p">,</span>
+                     <span class="n">acs5_year</span> <span class="o">-</span> <span class="mi">6</span><span class="p">,</span>
+                     <span class="n">acs5_year</span> <span class="o">-</span> <span class="mi">5</span><span class="p">,</span>
+                     <span class="n">acs5_year</span><span class="p">]</span>
+<span class="c1"># American Community Survey 1-year estimates weren&#39;t available in 2020,</span>
+<span class="c1"># so you&#39;ll want to remove that year from your list if it happens to be present.</span>
+<span class="c1"># However, because I decided to use 5-year rather than 1-year estimates,</span>
+<span class="c1"># I commented out this line.</span>
+<span class="c1"># if 2020 in years_to_retrieve:</span>
+<span class="c1">#     years_to_retrieve.remove(2020)</span>
+<span class="n">years_to_retrieve</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[2009, 2011, 2013, 2015, 2016, 2021]
+</pre></div>
+</div>
+</div>
+</div>
+<p>At this point, it’s a good idea to confirm that our three variable codes (‘B01001_001E’, ‘B01001_011E’, and ‘B01001_035E’) had the same meaning for all the years whose data we’ll be retrieving. We can do so by running the following code, which retrieves these variables and their corresponding descriptions for all of the years in years_to_retrieve.</p>
+<p>(Due to the size of the variables.html page, this code can take a while to run, so I commented it out below.)</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># var_meanings_by_year_df_list = []</span>
+<span class="c1"># for year in years_to_retrieve:</span>
+<span class="c1">#     df_var_list = pd.read_html(</span>
+<span class="c1">#         f&#39;https://api.census.gov/data/{year}/acs/acs5/variables.html&#39;)[</span>
+<span class="c1">#     0][[&#39;Name&#39;, &#39;Label&#39;, &#39;Concept&#39;]].query(</span>
+<span class="c1">#         &quot;Name in @grad_destinations_variable_list&quot;)</span>
+<span class="c1">#     df_var_list.insert(0, &#39;Year&#39;, year)</span>
+<span class="c1">#     var_meanings_by_year_df_list.append(df_var_list)</span>
+<span class="c1"># df_var_meanings_by_year = pd.concat([df for df in var_meanings_by_year_df_list])</span>
+<span class="c1"># df_var_meanings_by_year.to_csv(&#39;var_meanings_by_year.csv&#39;, index = False)</span>
+<span class="c1"># df_var_meanings_by_year</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Here’s a saved .csv copy of this table that confirms that these codes had the same meaning in each of the years we’re analyzing:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;var_meanings_by_year.csv&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Year</th>
+      <th>Name</th>
+      <th>Label</th>
+      <th>Concept</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2010</td>
+      <td>B01001_001E</td>
+      <td>Estimate!!Total</td>
+      <td>SEX BY AGE</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2010</td>
+      <td>B01001_011E</td>
+      <td>Estimate!!Total!!Male!!25 to 29 years</td>
+      <td>SEX BY AGE</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>2022</td>
+      <td>B01001_011E</td>
+      <td>Estimate!!Total:!!Male:!!25 to 29 years</td>
+      <td>Sex by Age</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>2022</td>
+      <td>B01001_035E</td>
+      <td>Estimate!!Total:!!Female:!!25 to 29 years</td>
+      <td>Sex by Age</td>
+    </tr>
+  </tbody>
+</table>
+<p>18 rows × 4 columns</p>
+</div></div></div>
+</div>
+<p>We’re now ready to retrieve our population totals for the years referenced in years_to_retrieve. We’ll do so by calling retrieve_census_data() for each of these years via a for loop, then adding their respective DataFrames together using pd.concat().</p>
+<p>(Note: Only 5825 results showed up when I requested ACS1 data (as opposed to over 25,000 results for ACS5 data), so many counties were not getting incorporated within the ACS1 results. Therefore, the ACS5 should be the best survey to use for evaluating county-level growth.)</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">census_data_by_year_df_list</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">year</span> <span class="ow">in</span> <span class="n">years_to_retrieve</span><span class="p">:</span>
+    <span class="n">df_data</span> <span class="o">=</span> <span class="n">retrieve_census_data</span><span class="p">(</span>
+        <span class="n">survey</span> <span class="o">=</span> <span class="s1">&#39;acs5&#39;</span><span class="p">,</span> <span class="n">year</span> <span class="o">=</span> <span class="n">year</span><span class="p">,</span> 
+        <span class="n">region</span> <span class="o">=</span> <span class="s1">&#39;county&#39;</span><span class="p">,</span>
+        <span class="n">variable_list</span> <span class="o">=</span> <span class="n">grad_destinations_variable_list</span><span class="p">,</span> 
+        <span class="n">rename_data_fields</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">field_vars_dict</span> <span class="o">=</span> <span class="n">grad_destinations_alias_dict</span><span class="p">,</span>
+        <span class="n">key</span> <span class="o">=</span> <span class="n">key</span><span class="p">)</span>
+    <span class="n">census_data_by_year_df_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">df_data</span><span class="p">)</span>
+<span class="n">df_growth_data_by_year</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">df</span> <span class="k">for</span> <span class="n">df</span> <span class="ow">in</span> <span class="n">census_data_by_year_df_list</span><span class="p">)</span>
+<span class="c1"># Removing Puerto Rico from our list of results so as to focus only on counties</span>
+<span class="c1"># and county equivalents within the 50 US states + DC:</span>
+<span class="n">df_growth_data_by_year</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;state != &#39;72&#39;&quot;</span><span class="p">,</span> <span class="n">inplace</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+<span class="n">df_growth_data_by_year</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Year</th>
+      <th>county</th>
+      <th>...</th>
+      <th>SEX BY AGE_Estimate!!Total:!!Male:!!25 to 29 years (B01001_011E)</th>
+      <th>SEX BY AGE_Estimate!!Total:!!Female:!!25 to 29 years (B01001_035E)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>2009</td>
+      <td>091</td>
+      <td>...</td>
+      <td>634</td>
+      <td>574</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2009</td>
+      <td>093</td>
+      <td>...</td>
+      <td>531</td>
+      <td>352</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>3142</th>
+      <td>2021</td>
+      <td>043</td>
+      <td>...</td>
+      <td>175</td>
+      <td>200</td>
+    </tr>
+    <tr>
+      <th>3143</th>
+      <td>2021</td>
+      <td>045</td>
+      <td>...</td>
+      <td>146</td>
+      <td>112</td>
+    </tr>
+  </tbody>
+</table>
+<p>18856 rows × 7 columns</p>
+</div></div></div>
+</div>
+<p>The following cell adds together male and female population totals in order to calculate the total number of 25- to 29-year-olds within each county. It also simplifies the original total population column name in order to improve its readability.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_growth_data_by_year</span><span class="p">[</span><span class="s1">&#39;Total_Pop_25_to_29&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">df_growth_data_by_year</span><span class="p">[</span>
+<span class="s1">&#39;SEX BY AGE_Estimate!!Total:!!Male:!!25 to 29 years (B01001_011E)&#39;</span><span class="p">]</span> <span class="o">+</span> 
+<span class="n">df_growth_data_by_year</span><span class="p">[</span>
+<span class="s1">&#39;SEX BY AGE_Estimate!!Total:!!Female:!!25 to 29 years (B01001_035E)&#39;</span><span class="p">])</span>
+<span class="n">df_growth_data_by_year</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span>
+    <span class="n">columns</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;SEX BY AGE_Estimate!!Total: (B01001_001E)&#39;</span><span class="p">:</span><span class="s1">&#39;Total_Pop&#39;</span><span class="p">},</span> 
+<span class="n">inplace</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+<span class="n">df_growth_data_by_year</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span>
+    <span class="p">[</span><span class="s1">&#39;SEX BY AGE_Estimate!!Total:!!Male:!!25 to 29 years (B01001_011E)&#39;</span><span class="p">,</span>
+     <span class="s1">&#39;SEX BY AGE_Estimate!!Total:!!Female:!!25 to 29 years (B01001_035E)&#39;</span><span class="p">],</span>
+     <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+                             
+
+<span class="n">df_growth_data_by_year</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Year</th>
+      <th>county</th>
+      <th>...</th>
+      <th>Total_Pop</th>
+      <th>Total_Pop_25_to_29</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>2009</td>
+      <td>091</td>
+      <td>...</td>
+      <td>19695</td>
+      <td>1208</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2009</td>
+      <td>093</td>
+      <td>...</td>
+      <td>11641</td>
+      <td>883</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>3142</th>
+      <td>2021</td>
+      <td>043</td>
+      <td>...</td>
+      <td>7768</td>
+      <td>375</td>
+    </tr>
+    <tr>
+      <th>3143</th>
+      <td>2021</td>
+      <td>045</td>
+      <td>...</td>
+      <td>6891</td>
+      <td>258</td>
+    </tr>
+  </tbody>
+</table>
+<p>18856 rows × 6 columns</p>
+</div></div></div>
+</div>
+<p>The following code applies pd.pivot() to place all population totals for a given county within the same row, thus making future growth calculations easier.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_growth_data_by_year_pivot</span> <span class="o">=</span> <span class="n">df_growth_data_by_year</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span><span class="o">.</span><span class="n">pivot</span><span class="p">(</span>
+    <span class="n">columns</span> <span class="o">=</span> <span class="s1">&#39;Year&#39;</span><span class="p">,</span> <span class="n">index</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;NAME&#39;</span><span class="p">,</span> <span class="s1">&#39;county&#39;</span><span class="p">,</span> <span class="s1">&#39;state&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+<span class="c1"># The values could be named explicitly, but since pivot() will infer them</span>
+    <span class="c1"># automatically, there&#39;s no need to do so. The following code is thus</span>
+    <span class="c1"># commented out.</span>
+    <span class="c1"># values = [&#39;Total_Pop&#39;,</span>
+<span class="c1">#           &#39;Total_Pop_25_to_29&#39;]</span>
+
+<span class="n">df_growth_data_by_year_pivot</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead tr th {
+        text-align: left;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr>
+      <th></th>
+      <th>NAME</th>
+      <th>county</th>
+      <th>...</th>
+      <th colspan="2" halign="left">Total_Pop_25_to_29</th>
+    </tr>
+    <tr>
+      <th>Year</th>
+      <th></th>
+      <th></th>
+      <th>...</th>
+      <th>2016</th>
+      <th>2021</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Abbeville County, South Carolina</td>
+      <td>001</td>
+      <td>...</td>
+      <td>1226.0</td>
+      <td>1292.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Acadia Parish, Louisiana</td>
+      <td>001</td>
+      <td>...</td>
+      <td>4240.0</td>
+      <td>3705.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Accomack County, Virginia</td>
+      <td>001</td>
+      <td>...</td>
+      <td>1819.0</td>
+      <td>1907.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Ada County, Idaho</td>
+      <td>001</td>
+      <td>...</td>
+      <td>30646.0</td>
+      <td>33625.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Adair County, Iowa</td>
+      <td>001</td>
+      <td>...</td>
+      <td>362.0</td>
+      <td>411.0</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 15 columns</p>
+</div></div></div>
+</div>
+<p>We’ll now call to_flat_index() in order to group all column data within the same row:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_growth_data_by_year_pivot</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">df_growth_data_by_year_pivot</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">to_flat_index</span><span class="p">())</span>
+
+<span class="n">df_growth_data_by_year_pivot</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>(NAME, )</th>
+      <th>(county, )</th>
+      <th>...</th>
+      <th>(Total_Pop_25_to_29, 2016)</th>
+      <th>(Total_Pop_25_to_29, 2021)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Abbeville County, South Carolina</td>
+      <td>001</td>
+      <td>...</td>
+      <td>1226.0</td>
+      <td>1292.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Acadia Parish, Louisiana</td>
+      <td>001</td>
+      <td>...</td>
+      <td>4240.0</td>
+      <td>3705.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Accomack County, Virginia</td>
+      <td>001</td>
+      <td>...</td>
+      <td>1819.0</td>
+      <td>1907.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Ada County, Idaho</td>
+      <td>001</td>
+      <td>...</td>
+      <td>30646.0</td>
+      <td>33625.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Adair County, Iowa</td>
+      <td>001</td>
+      <td>...</td>
+      <td>362.0</td>
+      <td>411.0</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 15 columns</p>
+</div></div></div>
+</div>
+<p>Next, we’ll convert the tuple-based columns created by to_flat_index() to string-based ones by executing a list comprehension. This list comprehension will convert tuples that contain both a string and an integer (e.g. (‘Total_Pop’, 2011)) to a single string with an underscore separating the two elements. Tuples with an empty second entry (e.g. (‘county’, ‘’) will get replaced with just the first entry (e.g. ‘county’).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_growth_data_by_year_pivot</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">column</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;_&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">column</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">column</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="nb">int</span><span class="p">)</span> 
+    <span class="k">else</span> <span class="n">column</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">column</span> <span class="ow">in</span> <span class="n">df_growth_data_by_year_pivot</span><span class="o">.</span><span class="n">columns</span><span class="p">]</span>
+<span class="n">df_growth_data_by_year_pivot</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>NAME</th>
+      <th>county</th>
+      <th>...</th>
+      <th>Total_Pop_25_to_29_2016</th>
+      <th>Total_Pop_25_to_29_2021</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Abbeville County, South Carolina</td>
+      <td>001</td>
+      <td>...</td>
+      <td>1226.0</td>
+      <td>1292.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Acadia Parish, Louisiana</td>
+      <td>001</td>
+      <td>...</td>
+      <td>4240.0</td>
+      <td>3705.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Accomack County, Virginia</td>
+      <td>001</td>
+      <td>...</td>
+      <td>1819.0</td>
+      <td>1907.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Ada County, Idaho</td>
+      <td>001</td>
+      <td>...</td>
+      <td>30646.0</td>
+      <td>33625.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Adair County, Iowa</td>
+      <td>001</td>
+      <td>...</td>
+      <td>362.0</td>
+      <td>411.0</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 15 columns</p>
+</div></div></div>
+</div>
+</section>
+<section id="adding-in-comparison-fields">
+<h2>Adding in comparison fields<a class="headerlink" href="#adding-in-comparison-fields" title="Link to this heading">#</a></h2>
+<p>Now that we have population data for several years in a relatively easy-to-parse format, we can create comparisons between those years–along with corresponding percentile and rank information.</p>
+<p>The following code was derived from my create_enrollment_comparisons() function within  catholic_school_enrollment_trends_v4.ipynb (available at <a class="github reference external" href="https://github.com/kburchfiel/catholic_school_enrollment/blob/main/catholic_school_enrollment_trends_v4.ipynb">kburchfiel/catholic_school_enrollment</a>).</p>
+<p><code class="docutils literal notranslate"><span class="pre">create_comparison_fields</span></code> will now be called twice to create growth metrics for both total county populations and residents in the 25-29 age range.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">field_var</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;Total_Pop&#39;</span><span class="p">,</span> <span class="s1">&#39;Total_Pop_25_to_29&#39;</span><span class="p">]:</span>
+    <span class="n">create_comparison_fields</span><span class="p">(</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">df_growth_data_by_year_pivot</span><span class="p">,</span>
+        <span class="n">field_var</span> <span class="o">=</span> <span class="n">field_var</span><span class="p">,</span>
+        <span class="n">year_list</span> <span class="o">=</span> <span class="n">years_to_retrieve</span><span class="p">,</span>
+        <span class="n">field_year_separator</span><span class="o">=</span><span class="s1">&#39;_&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_growth_data_by_year_pivot</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>NAME</th>
+      <th>county</th>
+      <th>...</th>
+      <th>2016-2021 Total_Pop_25_to_29 % Change Rank</th>
+      <th>2016-2021 Total_Pop_25_to_29 % Change Percentile</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Abbeville County, South Carolina</td>
+      <td>001</td>
+      <td>...</td>
+      <td>1357.0</td>
+      <td>56.829035</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Acadia Parish, Louisiana</td>
+      <td>001</td>
+      <td>...</td>
+      <td>2812.0</td>
+      <td>10.506208</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Accomack County, Virginia</td>
+      <td>001</td>
+      <td>...</td>
+      <td>1426.0</td>
+      <td>54.632283</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Ada County, Idaho</td>
+      <td>001</td>
+      <td>...</td>
+      <td>869.0</td>
+      <td>72.365489</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Adair County, Iowa</td>
+      <td>001</td>
+      <td>...</td>
+      <td>588.0</td>
+      <td>81.311684</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 75 columns</p>
+</div></div></div>
+</div>
+</section>
+<section id="ranking-counties-by-population-growth">
+<h2>Ranking counties by population growth<a class="headerlink" href="#ranking-counties-by-population-growth" title="Link to this heading">#</a></h2>
+<p>We’l now sort this dataset to answer a few questions:</p>
+<ol class="arabic simple">
+<li><p>Which counties had the highest (and lowest) total population growth rates between 2016 and 2021? (We’ll evaluate this question for both counties with at least 100,000 residents in 2016 and those with at least one million residents).</p></li>
+<li><p>Which counties experienced the highest (and lowest) 25-to-29-year-old population growth rates?</p></li>
+</ol>
+<p>First, we’ll specify a few variables that will be used within our analyses:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">range_for_sorting</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">range_start_year</span> <span class="o">=</span> <span class="n">acs5_year</span> <span class="o">-</span> <span class="n">range_for_sorting</span> 
+
+<span class="n">total_pop_var_for_sorting</span> <span class="o">=</span> <span class="s1">&#39;Total_Pop&#39;</span>
+<span class="n">total_pop_sort_column</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">range_start_year</span><span class="si">}</span><span class="s1">-</span><span class="si">{</span><span class="n">acs5_year</span><span class="si">}</span><span class="s1"> </span><span class="se">\</span>
+<span class="si">{</span><span class="n">total_pop_var_for_sorting</span><span class="si">}</span><span class="s1"> % Change Rank&#39;</span>
+
+<span class="n">young_pop_var_for_sorting</span> <span class="o">=</span> <span class="s1">&#39;Total_Pop_25_to_29&#39;</span>
+<span class="n">young_pop_sort_column</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">range_start_year</span><span class="si">}</span><span class="s1">-</span><span class="si">{</span><span class="n">acs5_year</span><span class="si">}</span><span class="s1"> </span><span class="se">\</span>
+<span class="si">{</span><span class="n">young_pop_var_for_sorting</span><span class="si">}</span><span class="s1"> % Change Rank&#39;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">total_pop_col_root</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">range_start_year</span><span class="si">}</span><span class="s1">-</span><span class="si">{</span><span class="n">acs5_year</span><span class="si">}</span><span class="s1"> </span><span class="se">\</span>
+<span class="si">{</span><span class="n">total_pop_var_for_sorting</span><span class="si">}</span><span class="s1">&#39;</span> <span class="c1"># The &#39;root&#39; from which other column entries will </span>
+<span class="c1"># derive.</span>
+
+<span class="n">young_pop_col_root</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">range_start_year</span><span class="si">}</span><span class="s1">-</span><span class="si">{</span><span class="n">acs5_year</span><span class="si">}</span><span class="s1"> </span><span class="se">\</span>
+<span class="si">{</span><span class="n">young_pop_var_for_sorting</span><span class="si">}</span><span class="s1">&#39;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The following function will help condense the output of our analyses, thus making them more readable.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">gen_display_cols</span><span class="p">(</span><span class="n">col_root</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;This function specifies which DataFrame columns to display within a </span>
+<span class="sd">    given output. It does so by adding various suffixes to a col_root</span>
+<span class="sd">    value (e.g. &#39;2016-2021 Total_Pop&#39;.&#39;&#39;&#39;</span>
+    <span class="k">return</span> <span class="p">[</span><span class="s1">&#39;NAME&#39;</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">col_root</span><span class="si">}</span><span class="s1"> Change&#39;</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">col_root</span><span class="si">}</span><span class="s1"> % Change&#39;</span><span class="p">,</span>
+            <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">col_root</span><span class="si">}</span><span class="s1"> % Change Rank&#39;</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">col_root</span><span class="si">}</span><span class="s1"> % Change Percentile&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">total_pop_display_cols</span> <span class="o">=</span> <span class="n">gen_display_cols</span><span class="p">(</span><span class="n">total_pop_col_root</span><span class="p">)</span>
+<span class="n">young_pop_display_cols</span> <span class="o">=</span> <span class="n">gen_display_cols</span><span class="p">(</span><span class="n">young_pop_col_root</span><span class="p">)</span>
+<span class="n">total_pop_display_cols</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;NAME&#39;,
+ &#39;2016-2021 Total_Pop Change&#39;,
+ &#39;2016-2021 Total_Pop % Change&#39;,
+ &#39;2016-2021 Total_Pop % Change Rank&#39;,
+ &#39;2016-2021 Total_Pop % Change Percentile&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<section id="sorting-counties-with-at-least-100k-residents-in-2016-by-their-2016-2021-total-population-growth-rates">
+<h3>Sorting counties with at least 100K residents in 2016 by their 2016-2021 total population growth rates:<a class="headerlink" href="#sorting-counties-with-at-least-100k-residents-in-2016-by-their-2016-2021-total-population-growth-rates" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_growth_data_by_year_pivot</span><span class="o">.</span><span class="n">query</span><span class="p">(</span>
+    <span class="sa">f</span><span class="s2">&quot;Total_Pop_</span><span class="si">{</span><span class="n">range_start_year</span><span class="si">}</span><span class="s2"> &gt;= 100000&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span>
+    <span class="n">total_pop_sort_column</span><span class="p">)</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">subset</span> <span class="o">=</span> <span class="n">total_pop_sort_column</span><span class="p">)[</span>
+<span class="n">total_pop_display_cols</span><span class="p">]</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>NAME</th>
+      <th>2016-2021 Total_Pop Change</th>
+      <th>...</th>
+      <th>2016-2021 Total_Pop % Change Rank</th>
+      <th>2016-2021 Total_Pop % Change Percentile</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Hays County, Texas</td>
+      <td>48887.0</td>
+      <td>...</td>
+      <td>10.0</td>
+      <td>99.713467</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Comal County, Texas</td>
+      <td>32023.0</td>
+      <td>...</td>
+      <td>12.0</td>
+      <td>99.649793</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>589</th>
+      <td>Hinds County, Mississippi</td>
+      <td>-13824.0</td>
+      <td>...</td>
+      <td>2746.0</td>
+      <td>12.607450</td>
+    </tr>
+    <tr>
+      <th>590</th>
+      <td>Robeson County, North Carolina</td>
+      <td>-15740.0</td>
+      <td>...</td>
+      <td>3056.0</td>
+      <td>2.737982</td>
+    </tr>
+  </tbody>
+</table>
+<p>591 rows × 5 columns</p>
+</div></div></div>
+</div>
+</section>
+<section id="sorting-counties-with-at-least-one-million-residents-in-2016-by-their-2016-2021-total-population-growth-rates">
+<h3>Sorting counties with at least <em>one million</em> residents in 2016 by their 2016-2021 total population growth rates:<a class="headerlink" href="#sorting-counties-with-at-least-one-million-residents-in-2016-by-their-2016-2021-total-population-growth-rates" title="Link to this heading">#</a></h3>
+<p>Combining <code class="docutils literal notranslate"><span class="pre">concat()</span></code> with <code class="docutils literal notranslate"><span class="pre">head()</span></code> and <code class="docutils literal notranslate"><span class="pre">tail()</span></code> will allow us to display the counties with the highest and lowest growth rates within the same DataFrame.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_1m_pop_pct_changes</span> <span class="o">=</span> <span class="n">df_growth_data_by_year_pivot</span><span class="o">.</span><span class="n">query</span><span class="p">(</span>
+    <span class="sa">f</span><span class="s2">&quot;Total_Pop_</span><span class="si">{</span><span class="n">range_start_year</span><span class="si">}</span><span class="s2"> &gt;= 1000000&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span>
+    <span class="n">total_pop_sort_column</span><span class="p">)</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span>
+    <span class="n">subset</span> <span class="o">=</span> <span class="n">total_pop_sort_column</span><span class="p">)</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">df_1m_pop_pct_changes</span><span class="o">.</span><span class="n">head</span><span class="p">(),</span> <span class="n">df_1m_pop_pct_changes</span><span class="o">.</span><span class="n">tail</span><span class="p">()])[</span>
+<span class="n">total_pop_display_cols</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>NAME</th>
+      <th>2016-2021 Total_Pop Change</th>
+      <th>...</th>
+      <th>2016-2021 Total_Pop % Change Rank</th>
+      <th>2016-2021 Total_Pop % Change Percentile</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Orange County, Florida</td>
+      <td>153894.0</td>
+      <td>...</td>
+      <td>94.0</td>
+      <td>97.039160</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Travis County, Texas</td>
+      <td>119619.0</td>
+      <td>...</td>
+      <td>140.0</td>
+      <td>95.574658</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>41</th>
+      <td>St. Louis County, Missouri</td>
+      <td>1422.0</td>
+      <td>...</td>
+      <td>1543.0</td>
+      <td>50.907354</td>
+    </tr>
+    <tr>
+      <th>42</th>
+      <td>Los Angeles County, California</td>
+      <td>-37520.0</td>
+      <td>...</td>
+      <td>1687.0</td>
+      <td>46.322827</td>
+    </tr>
+  </tbody>
+</table>
+<p>10 rows × 5 columns</p>
+</div></div></div>
+</div>
+</section>
+</section>
+<section id="repeating-these-steps-in-order-to-compare-25-to-29-year-old-population-growth-rates">
+<h2>Repeating these steps in order to compare 25-to-29-year-old population growth rates<a class="headerlink" href="#repeating-these-steps-in-order-to-compare-25-to-29-year-old-population-growth-rates" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_growth_data_by_year_pivot</span><span class="o">.</span><span class="n">query</span><span class="p">(</span>
+    <span class="sa">f</span><span class="s2">&quot;Total_Pop_</span><span class="si">{</span><span class="n">range_start_year</span><span class="si">}</span><span class="s2"> &gt;= 100000&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span>
+    <span class="n">young_pop_sort_column</span><span class="p">)</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">subset</span> <span class="o">=</span> <span class="n">young_pop_sort_column</span><span class="p">)[</span>
+<span class="n">young_pop_display_cols</span><span class="p">]</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>NAME</th>
+      <th>2016-2021 Total_Pop_25_to_29 Change</th>
+      <th>...</th>
+      <th>2016-2021 Total_Pop_25_to_29 % Change Rank</th>
+      <th>2016-2021 Total_Pop_25_to_29 % Change Percentile</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Douglas County, Colorado</td>
+      <td>4368.0</td>
+      <td>...</td>
+      <td>148.0</td>
+      <td>95.319962</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Comal County, Texas</td>
+      <td>2035.0</td>
+      <td>...</td>
+      <td>150.0</td>
+      <td>95.256288</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>589</th>
+      <td>Caddo Parish, Louisiana</td>
+      <td>-2048.0</td>
+      <td>...</td>
+      <td>2765.0</td>
+      <td>12.002547</td>
+    </tr>
+    <tr>
+      <th>590</th>
+      <td>Orleans Parish, Louisiana</td>
+      <td>-6371.0</td>
+      <td>...</td>
+      <td>2898.0</td>
+      <td>7.768227</td>
+    </tr>
+  </tbody>
+</table>
+<p>591 rows × 5 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_1m_pop_pct_changes</span> <span class="o">=</span> <span class="n">df_growth_data_by_year_pivot</span><span class="o">.</span><span class="n">query</span><span class="p">(</span>
+    <span class="sa">f</span><span class="s2">&quot;Total_Pop_</span><span class="si">{</span><span class="n">range_start_year</span><span class="si">}</span><span class="s2"> &gt;= 1000000&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span>
+    <span class="n">young_pop_sort_column</span><span class="p">)</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span>
+    <span class="n">subset</span> <span class="o">=</span> <span class="n">young_pop_sort_column</span><span class="p">)</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">df_1m_pop_pct_changes</span><span class="o">.</span><span class="n">head</span><span class="p">(),</span> <span class="n">df_1m_pop_pct_changes</span><span class="o">.</span><span class="n">tail</span><span class="p">()])[</span>
+<span class="n">young_pop_display_cols</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>NAME</th>
+      <th>2016-2021 Total_Pop_25_to_29 Change</th>
+      <th>...</th>
+      <th>2016-2021 Total_Pop_25_to_29 % Change Rank</th>
+      <th>2016-2021 Total_Pop_25_to_29 % Change Percentile</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Pima County, Arizona</td>
+      <td>9395.0</td>
+      <td>...</td>
+      <td>490.0</td>
+      <td>84.431710</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Wayne County, Michigan</td>
+      <td>16073.0</td>
+      <td>...</td>
+      <td>590.0</td>
+      <td>81.248010</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>41</th>
+      <td>Montgomery County, Maryland</td>
+      <td>-4043.0</td>
+      <td>...</td>
+      <td>2521.0</td>
+      <td>19.770774</td>
+    </tr>
+    <tr>
+      <th>42</th>
+      <td>New York County, New York</td>
+      <td>-14977.0</td>
+      <td>...</td>
+      <td>2608.0</td>
+      <td>17.000955</td>
+    </tr>
+  </tbody>
+</table>
+<p>10 rows × 5 columns</p>
+</div></div></div>
+</div>
+<p>Although it’s interesting to see which counties had the very highest and lowest growth rates, these tables provide only a limited view of overall population trends. The best way to evaluate such trends is likely via a choropleth map that will allow viewers to easily compare counties and identify regional trends. (This map will be much more intuitive to interpret than a table with thousands of rows.) We’ll create these maps within the Mapping section of Python for Nonprofits.</p>
+<p>In order to allow our mapping code to access this data, we’ll first save it as a .csv file:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_growth_data_by_year_pivot</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span>
+<span class="sa">f</span><span class="s1">&#39;Datasets/grad_destinations_acs_county_data.csv&#39;</span><span class="p">,</span> 
+    <span class="n">index</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="retrieving-state-level-data">
+<h2>Retrieving state-level data<a class="headerlink" href="#retrieving-state-level-data" title="Link to this heading">#</a></h2>
+<p>Although county-level population growth provides a fascinating look at within-state trends, the broader view that state-level data provides will also prove useful. Therefore, we’ll now repurpose the functions, variable, and code created earlier to create a state-level equivalent of df_growth_data_by_year.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">census_data_by_year_df_list</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">year</span> <span class="ow">in</span> <span class="n">years_to_retrieve</span><span class="p">:</span>
+    <span class="n">df_data</span> <span class="o">=</span> <span class="n">retrieve_census_data</span><span class="p">(</span>
+        <span class="n">survey</span> <span class="o">=</span> <span class="s1">&#39;acs5&#39;</span><span class="p">,</span> <span class="n">year</span> <span class="o">=</span> <span class="n">year</span><span class="p">,</span> 
+        <span class="n">region</span> <span class="o">=</span> <span class="s1">&#39;state&#39;</span><span class="p">,</span>
+        <span class="n">variable_list</span> <span class="o">=</span> <span class="n">grad_destinations_variable_list</span><span class="p">,</span> 
+        <span class="n">rename_data_fields</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">field_vars_dict</span> <span class="o">=</span> <span class="n">grad_destinations_alias_dict</span><span class="p">,</span>
+        <span class="n">key</span> <span class="o">=</span> <span class="n">key</span><span class="p">)</span>
+    <span class="n">census_data_by_year_df_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">df_data</span><span class="p">)</span>
+<span class="n">df_state_growth_data_by_year</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">df</span> <span class="k">for</span> <span class="n">df</span> <span class="ow">in</span> <span class="n">census_data_by_year_df_list</span><span class="p">)</span>
+<span class="n">df_state_growth_data_by_year</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;state != &#39;72&#39;&quot;</span><span class="p">,</span> <span class="n">inplace</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+<span class="n">df_state_growth_data_by_year</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Year</th>
+      <th>NAME</th>
+      <th>...</th>
+      <th>SEX BY AGE_Estimate!!Total:!!Male:!!25 to 29 years (B01001_011E)</th>
+      <th>SEX BY AGE_Estimate!!Total:!!Female:!!25 to 29 years (B01001_035E)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>2009</td>
+      <td>Alabama</td>
+      <td>...</td>
+      <td>155174</td>
+      <td>157476</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2009</td>
+      <td>Alaska</td>
+      <td>...</td>
+      <td>28543</td>
+      <td>24663</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>50</th>
+      <td>2021</td>
+      <td>Wisconsin</td>
+      <td>...</td>
+      <td>189562</td>
+      <td>180360</td>
+    </tr>
+    <tr>
+      <th>51</th>
+      <td>2021</td>
+      <td>Wyoming</td>
+      <td>...</td>
+      <td>19511</td>
+      <td>17813</td>
+    </tr>
+  </tbody>
+</table>
+<p>306 rows × 6 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_state_growth_data_by_year</span><span class="p">[</span><span class="s1">&#39;Total_Pop_25_to_29&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">df_state_growth_data_by_year</span><span class="p">[</span>
+<span class="s1">&#39;SEX BY AGE_Estimate!!Total:!!Male:!!25 to 29 years (B01001_011E)&#39;</span><span class="p">]</span> <span class="o">+</span> 
+<span class="n">df_state_growth_data_by_year</span><span class="p">[</span>
+<span class="s1">&#39;SEX BY AGE_Estimate!!Total:!!Female:!!25 to 29 years (B01001_035E)&#39;</span><span class="p">])</span>
+<span class="n">df_state_growth_data_by_year</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span>
+    <span class="n">columns</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;SEX BY AGE_Estimate!!Total: (B01001_001E)&#39;</span><span class="p">:</span><span class="s1">&#39;Total_Pop&#39;</span><span class="p">},</span> 
+<span class="n">inplace</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+<span class="n">df_state_growth_data_by_year</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span>
+    <span class="p">[</span><span class="s1">&#39;SEX BY AGE_Estimate!!Total:!!Male:!!25 to 29 years (B01001_011E)&#39;</span><span class="p">,</span>
+     <span class="s1">&#39;SEX BY AGE_Estimate!!Total:!!Female:!!25 to 29 years (B01001_035E)&#39;</span><span class="p">],</span>
+     <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+                             
+
+<span class="n">df_state_growth_data_by_year</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Year</th>
+      <th>NAME</th>
+      <th>...</th>
+      <th>Total_Pop</th>
+      <th>Total_Pop_25_to_29</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>2009</td>
+      <td>Alabama</td>
+      <td>...</td>
+      <td>4633360</td>
+      <td>312650</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2009</td>
+      <td>Alaska</td>
+      <td>...</td>
+      <td>683142</td>
+      <td>53206</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>50</th>
+      <td>2021</td>
+      <td>Wisconsin</td>
+      <td>...</td>
+      <td>5871661</td>
+      <td>369922</td>
+    </tr>
+    <tr>
+      <th>51</th>
+      <td>2021</td>
+      <td>Wyoming</td>
+      <td>...</td>
+      <td>576641</td>
+      <td>37324</td>
+    </tr>
+  </tbody>
+</table>
+<p>306 rows × 5 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_state_growth_data_by_year_pivot</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">df_state_growth_data_by_year</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span><span class="o">.</span><span class="n">pivot</span><span class="p">(</span>
+    <span class="n">columns</span> <span class="o">=</span> <span class="s1">&#39;Year&#39;</span><span class="p">,</span> <span class="n">index</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;NAME&#39;</span><span class="p">,</span> <span class="s1">&#39;state&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">reset_index</span><span class="p">())</span>
+
+<span class="n">df_state_growth_data_by_year_pivot</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">df_state_growth_data_by_year_pivot</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">to_flat_index</span><span class="p">())</span>
+
+<span class="n">df_state_growth_data_by_year_pivot</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">column</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;_&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">column</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">column</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="nb">int</span><span class="p">)</span> 
+    <span class="k">else</span> <span class="n">column</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">column</span> 
+    <span class="ow">in</span> <span class="n">df_state_growth_data_by_year_pivot</span><span class="o">.</span><span class="n">columns</span><span class="p">]</span>
+
+
+<span class="n">df_state_growth_data_by_year_pivot</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>NAME</th>
+      <th>state</th>
+      <th>...</th>
+      <th>Total_Pop_25_to_29_2016</th>
+      <th>Total_Pop_25_to_29_2021</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Alabama</td>
+      <td>01</td>
+      <td>...</td>
+      <td>319177</td>
+      <td>331435</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Alaska</td>
+      <td>02</td>
+      <td>...</td>
+      <td>61185</td>
+      <td>59218</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Arizona</td>
+      <td>04</td>
+      <td>...</td>
+      <td>456680</td>
+      <td>496623</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Arkansas</td>
+      <td>05</td>
+      <td>...</td>
+      <td>194179</td>
+      <td>197068</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>California</td>
+      <td>06</td>
+      <td>...</td>
+      <td>2918435</td>
+      <td>2992210</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 14 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">field_var</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;Total_Pop&#39;</span><span class="p">,</span> <span class="s1">&#39;Total_Pop_25_to_29&#39;</span><span class="p">]:</span>
+    <span class="n">create_comparison_fields</span><span class="p">(</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">df_state_growth_data_by_year_pivot</span><span class="p">,</span>
+        <span class="n">field_var</span> <span class="o">=</span> <span class="n">field_var</span><span class="p">,</span>
+        <span class="n">year_list</span> <span class="o">=</span> <span class="n">years_to_retrieve</span><span class="p">,</span>
+        <span class="n">field_year_separator</span><span class="o">=</span><span class="s1">&#39;_&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Saving this dataset to a .csv file so that it too can be used as a basis for choropleth maps:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_state_growth_data_by_year_pivot</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span>
+    <span class="sa">f</span><span class="s1">&#39;Datasets/grad_destinations_acs_state_data.csv&#39;</span><span class="p">,</span> 
+    <span class="n">index</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Creating a DataFrame that shows the 5 states with the highest and lowest total population growth rates during the latest 5 years in the dataset:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_state_growth_data_by_year_pivot</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span>
+    <span class="n">total_pop_sort_column</span><span class="p">,</span> <span class="n">inplace</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+<span class="n">df_state_growth_data_by_year_pivot</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">inplace</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span>
+    <span class="p">[</span><span class="n">df_state_growth_data_by_year_pivot</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">),</span> 
+    <span class="n">df_state_growth_data_by_year_pivot</span><span class="o">.</span><span class="n">tail</span><span class="p">(</span><span class="mi">5</span><span class="p">)])[</span>
+<span class="n">total_pop_display_cols</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>NAME</th>
+      <th>2016-2021 Total_Pop Change</th>
+      <th>...</th>
+      <th>2016-2021 Total_Pop % Change Rank</th>
+      <th>2016-2021 Total_Pop % Change Percentile</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Idaho</td>
+      <td>176134</td>
+      <td>...</td>
+      <td>1.0</td>
+      <td>100.000000</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Utah</td>
+      <td>282943</td>
+      <td>...</td>
+      <td>2.0</td>
+      <td>98.039216</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>49</th>
+      <td>Wyoming</td>
+      <td>-6388</td>
+      <td>...</td>
+      <td>50.0</td>
+      <td>3.921569</td>
+    </tr>
+    <tr>
+      <th>50</th>
+      <td>West Virginia</td>
+      <td>-45043</td>
+      <td>...</td>
+      <td>51.0</td>
+      <td>1.960784</td>
+    </tr>
+  </tbody>
+</table>
+<p>10 rows × 5 columns</p>
+</div></div></div>
+</div>
+<p>Creating a similar DataFrame that displays 25-to-29-year-old population growth rates:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_state_growth_data_by_year_pivot</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span>
+    <span class="n">young_pop_sort_column</span><span class="p">,</span> <span class="n">inplace</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+<span class="n">df_state_growth_data_by_year_pivot</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">inplace</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span>
+    <span class="p">[</span><span class="n">df_state_growth_data_by_year_pivot</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">),</span> 
+    <span class="n">df_state_growth_data_by_year_pivot</span><span class="o">.</span><span class="n">tail</span><span class="p">(</span><span class="mi">5</span><span class="p">)])[</span>
+<span class="n">young_pop_display_cols</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>NAME</th>
+      <th>2016-2021 Total_Pop_25_to_29 Change</th>
+      <th>...</th>
+      <th>2016-2021 Total_Pop_25_to_29 % Change Rank</th>
+      <th>2016-2021 Total_Pop_25_to_29 % Change Percentile</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Utah</td>
+      <td>29737</td>
+      <td>...</td>
+      <td>1.0</td>
+      <td>100.000000</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Washington</td>
+      <td>58422</td>
+      <td>...</td>
+      <td>2.0</td>
+      <td>98.039216</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>49</th>
+      <td>Louisiana</td>
+      <td>-15558</td>
+      <td>...</td>
+      <td>50.0</td>
+      <td>3.921569</td>
+    </tr>
+    <tr>
+      <th>50</th>
+      <td>Wyoming</td>
+      <td>-3359</td>
+      <td>...</td>
+      <td>51.0</td>
+      <td>1.960784</td>
+    </tr>
+  </tbody>
+</table>
+<p>10 rows × 5 columns</p>
+</div></div></div>
+</div>
+</section>
+<section id="retrieving-additional-data-for-a-regression-analysis">
+<h2>Retrieving additional data for a regression analysis<a class="headerlink" href="#retrieving-additional-data-for-a-regression-analysis" title="Link to this heading">#</a></h2>
+<p>The NVCU admissions department would like to make the case to high schoolers on the fence about pursuing higher education that going to college is (generally) worth it from a financial perspective. Therefore, they would like you to determine how the median income for a given county and state increases as the percentage of residents with at least a bachelor’s degree increases.* They figure that a strong relationship between the two could help convince teenagers to pursue a higher education.**</p>
+<p>We can shed some light on these questions by performing a series of linear regressions–but first, we’ll need to obtain data that can get incorporated into those regressions. The following code creates tables of populations, median incomes, median home values, and regions for each US county and state. This data can then get incorporated into a regression analysis later in Python for Nonprofits.</p>
+<ul class="simple">
+<li><p>(A more valid measure of the monetary value of a bachelor’s, to be honest, would be to simply compare the median incomes of state/county residents by education level. Therefore, the following code will retrieve these median as well. However, the continuous nature of the ‘% with bachelor’s’ metric will make it a great fit for our linear regression example.</p></li>
+</ul>
+<p>** There are of course many non-monetary benefits to a college education–but given the size of student loans these days, it doesn’t hurt to look into the financial rewards of a bachelor’s degree.</p>
+<section id="importing-us-census-data-on-educational-attainment-and-median-earnings">
+<h3>Importing US Census data on educational attainment and median earnings<a class="headerlink" href="#importing-us-census-data-on-educational-attainment-and-median-earnings" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Retrieving a new list of ACS5 variables for the most recent year with</span>
+<span class="c1"># ACS5 data (as of February 2025):</span>
+<span class="k">if</span> <span class="n">download_new_variable_list</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
+    <span class="n">download_variable_list</span><span class="p">(</span><span class="n">acs5_latest_year</span><span class="p">,</span> <span class="s1">&#39;acs5&#39;</span><span class="p">)</span>
+
+<span class="c1"># Reading this dataset into our script:</span>
+<span class="n">df_variables_latest</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span>
+    <span class="sa">f</span><span class="s1">&#39;Datasets/acs5_</span><span class="si">{</span><span class="n">acs5_latest_year</span><span class="si">}</span><span class="s1">_variables.csv&#39;</span><span class="p">)</span>
+
+<span class="n">regression_variable_list</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;B01001_001E&#39;</span><span class="p">,</span> <span class="s1">&#39;B15003_001E&#39;</span><span class="p">,</span> <span class="s1">&#39;B15003_022E&#39;</span><span class="p">,</span>
+<span class="s1">&#39;B15003_023E&#39;</span><span class="p">,</span><span class="s1">&#39;B15003_024E&#39;</span><span class="p">,</span><span class="s1">&#39;B15003_025E&#39;</span><span class="p">,</span> <span class="s1">&#39;B20004_001E&#39;</span><span class="p">,</span>
+<span class="s1">&#39;B20004_002E&#39;</span><span class="p">,</span><span class="s1">&#39;B20004_003E&#39;</span><span class="p">,</span><span class="s1">&#39;B20004_004E&#39;</span><span class="p">,</span><span class="s1">&#39;B20004_005E&#39;</span><span class="p">,</span><span class="s1">&#39;B20004_006E&#39;</span><span class="p">]</span>
+
+<span class="n">regression_alias_dict</span> <span class="o">=</span> <span class="n">create_variable_aliases</span><span class="p">(</span>
+    <span class="n">df_variables</span> <span class="o">=</span> <span class="n">df_variables_latest</span><span class="p">,</span> 
+    <span class="n">variable_list</span> <span class="o">=</span> <span class="n">regression_variable_list</span><span class="p">)</span>
+
+<span class="n">df_regression_data_county</span> <span class="o">=</span> <span class="n">retrieve_census_data</span><span class="p">(</span>
+        <span class="n">survey</span> <span class="o">=</span> <span class="s1">&#39;acs5&#39;</span><span class="p">,</span> <span class="n">year</span> <span class="o">=</span> <span class="n">acs5_latest_year</span><span class="p">,</span> 
+        <span class="n">region</span> <span class="o">=</span> <span class="s1">&#39;county&#39;</span><span class="p">,</span>
+        <span class="n">variable_list</span> <span class="o">=</span> <span class="n">regression_variable_list</span><span class="p">,</span> 
+        <span class="n">rename_data_fields</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">field_vars_dict</span> <span class="o">=</span> <span class="n">regression_alias_dict</span><span class="p">,</span>
+        <span class="n">key</span> <span class="o">=</span> <span class="n">key</span><span class="p">)</span>
+
+<span class="n">df_regression_data_state</span> <span class="o">=</span> <span class="n">retrieve_census_data</span><span class="p">(</span>
+        <span class="n">survey</span> <span class="o">=</span> <span class="s1">&#39;acs5&#39;</span><span class="p">,</span> <span class="n">year</span> <span class="o">=</span> <span class="n">acs5_latest_year</span><span class="p">,</span> 
+        <span class="n">region</span> <span class="o">=</span> <span class="s1">&#39;state&#39;</span><span class="p">,</span>
+        <span class="n">variable_list</span> <span class="o">=</span> <span class="n">regression_variable_list</span><span class="p">,</span> 
+        <span class="n">rename_data_fields</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">field_vars_dict</span> <span class="o">=</span> <span class="n">regression_alias_dict</span><span class="p">,</span>
+        <span class="n">key</span> <span class="o">=</span> <span class="n">key</span><span class="p">)</span>
+
+<span class="c1"># Retrieving national-level data (which will be useful for another</span>
+<span class="c1"># data analysis that I&#39;ll include within the regressions section</span>
+<span class="c1"># of Python for Nonprofits):</span>
+<span class="n">df_regression_data_national</span> <span class="o">=</span> <span class="n">retrieve_census_data</span><span class="p">(</span>
+        <span class="n">survey</span> <span class="o">=</span> <span class="s1">&#39;acs5&#39;</span><span class="p">,</span> <span class="n">year</span> <span class="o">=</span> <span class="n">acs5_latest_year</span><span class="p">,</span> 
+        <span class="n">region</span> <span class="o">=</span> <span class="s1">&#39;us&#39;</span><span class="p">,</span>
+        <span class="n">variable_list</span> <span class="o">=</span> <span class="n">regression_variable_list</span><span class="p">,</span> 
+        <span class="n">rename_data_fields</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">field_vars_dict</span> <span class="o">=</span> <span class="n">regression_alias_dict</span><span class="p">,</span>
+        <span class="n">key</span> <span class="o">=</span> <span class="n">key</span><span class="p">)</span>
+
+<span class="n">df_regression_data_state</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Year</th>
+      <th>NAME</th>
+      <th>...</th>
+      <th>Median Earnings in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) by Sex by Educational Attainment for the Population 25 Years and Over_Estimate!!Total:!!Bachelor's degree (B20004_005E)</th>
+      <th>Median Earnings in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) by Sex by Educational Attainment for the Population 25 Years and Over_Estimate!!Total:!!Graduate or professional degree (B20004_006E)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>2023</td>
+      <td>Alabama</td>
+      <td>...</td>
+      <td>59318</td>
+      <td>72667</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2023</td>
+      <td>Alaska</td>
+      <td>...</td>
+      <td>68158</td>
+      <td>90606</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>51</th>
+      <td>2023</td>
+      <td>Wyoming</td>
+      <td>...</td>
+      <td>58411</td>
+      <td>73535</td>
+    </tr>
+    <tr>
+      <th>52</th>
+      <td>2023</td>
+      <td>Puerto Rico</td>
+      <td>...</td>
+      <td>28988</td>
+      <td>41197</td>
+    </tr>
+  </tbody>
+</table>
+<p>52 rows × 15 columns</p>
+</div></div></div>
+</div>
+<p>The following code calculates the percentage of residents within a given row who have at least a bachelor’s degree; it also dramatically condenses many fields. (I converted it into a function in order to eliminate the need to enter this code twice, first for our county-level dataset and again for our state-level one.)</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">rename_and_calc_dataset</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">year</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;This dataset renames certain median earnings columns within </span>
+<span class="sd">    a copy of census results and also estimates the percentage of </span>
+<span class="sd">    respondents within each row who have at least a bachelor&#39;s degree.</span>
+<span class="sd">    df: the DataFrame containing census results to process.</span>
+<span class="sd">    year: the year in which the ACS was conducted. (This year shows</span>
+<span class="sd">    up in many median earnings columns.&#39;&#39;&#39;</span>
+    <span class="n">df</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Median Earnings in the </span><span class="se">\</span>
+<span class="s1">Past 12 Months (in 2023 Inflation-Adjusted Dollars) by Sex by Educational </span><span class="se">\</span>
+<span class="s1">Attainment for the Population 25 Years and Over_Estimate!!</span><span class="se">\</span>
+<span class="s1">Total:!!Less than high school graduate (B20004_002E)&#39;</span><span class="p">:</span>
+<span class="s1">&#39;Median_Earnings_Less_Than_HS&#39;</span><span class="p">,</span>
+<span class="s1">&#39;Median Earnings in the Past 12 Months (in 2023 Inflation-Adjusted </span><span class="se">\</span>
+<span class="s1">Dollars) by Sex by Educational Attainment for the Population 25 Years </span><span class="se">\</span>
+<span class="s1">and Over_Estimate!!Total:!!High school graduate </span><span class="se">\</span>
+<span class="s1">(includes equivalency) (B20004_003E)&#39;</span><span class="p">:</span><span class="s1">&#39;Median_Earnings_HS&#39;</span><span class="p">,</span>
+<span class="s2">&quot;Median Earnings in the Past 12 Months (in 2023 Inflation-Adjusted </span><span class="se">\</span>
+<span class="s2">Dollars) by Sex by Educational Attainment for the Population 25 Years </span><span class="se">\</span>
+<span class="s2">and Over_Estimate!!Total:!!Some college or associate&#39;s </span><span class="se">\</span>
+<span class="s2">degree (B20004_004E)&quot;</span><span class="p">:</span><span class="s2">&quot;Median_Earnings_Some_College&quot;</span><span class="p">,</span>
+<span class="s2">&quot;Median Earnings in the Past 12 Months (in 2023 Inflation-Adjusted </span><span class="se">\</span>
+<span class="s2">Dollars) by Sex by Educational Attainment for the Population 25 </span><span class="se">\</span>
+<span class="s2">Years and Over_Estimate!!Total:!!Bachelor&#39;s degree (B20004_005E)&quot;</span><span class="p">:</span>
+<span class="s2">&quot;Median_Earnings_Bachelors_Degree&quot;</span><span class="p">,</span>
+<span class="s2">&quot;Median Earnings in the Past 12 Months (in 2023 </span><span class="se">\</span>
+<span class="s2">Inflation-Adjusted Dollars) by Sex by Educational Attainment </span><span class="se">\</span>
+<span class="s2">for the Population 25 Years and Over_Estimate!!Total:!!Graduate </span><span class="se">\</span>
+<span class="s2">or professional degree (B20004_006E)&quot;</span><span class="p">:</span><span class="s2">&quot;Median_Earnings_Postgraduate&quot;</span><span class="p">,</span>
+<span class="s2">&quot;Median Earnings in the Past 12 Months (in 2023 </span><span class="se">\</span>
+<span class="s2">Inflation-Adjusted Dollars) by Sex by Educational Attainment </span><span class="se">\</span>
+<span class="s2">for the Population 25 Years and Over_Estimate!!Total: (B20004_001E)&quot;</span><span class="p">:</span>
+<span class="s2">&quot;Median_Earnings_for_Total_25plus_Population&quot;</span><span class="p">,</span>
+<span class="s1">&#39;Sex by Age_Estimate!!Total: (B01001_001E)&#39;</span><span class="p">:</span><span class="s1">&#39;Total_Population&#39;</span><span class="p">,</span>
+<span class="p">},</span>
+    <span class="n">inplace</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+    <span class="n">df</span><span class="p">[</span><span class="s2">&quot;Pct_With_Bachelors_Degree&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">100</span><span class="o">*</span><span class="p">(</span>
+    <span class="n">df</span><span class="p">[</span><span class="s2">&quot;Educational Attainment for the Population </span><span class="se">\</span>
+<span class="s2">25 Years and Over_Estimate!!Total:!!Bachelor&#39;s degree (B15003_022E)&quot;</span><span class="p">]</span> <span class="o">+</span>
+    <span class="n">df</span><span class="p">[</span><span class="s2">&quot;Educational Attainment for the Population 25 </span><span class="se">\</span>
+<span class="s2">Years and Over_Estimate!!Total:!!Master&#39;s degree (B15003_023E)&quot;</span><span class="p">]</span> <span class="o">+</span> 
+    <span class="n">df</span><span class="p">[</span><span class="s2">&quot;Educational Attainment for the Population </span><span class="se">\</span>
+<span class="s2">25 Years and Over_Estimate!!Total:!!Professional school degree </span><span class="se">\</span>
+<span class="s2">(B15003_024E)&quot;</span><span class="p">]</span> <span class="o">+</span> 
+    <span class="n">df</span><span class="p">[</span><span class="s2">&quot;Educational Attainment for the Population 25 </span><span class="se">\</span>
+<span class="s2">Years and Over_Estimate!!Total:!!Doctorate degree (B15003_025E)&quot;</span><span class="p">])</span>
+    <span class="o">/</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;Educational Attainment for the </span><span class="se">\</span>
+<span class="s2">Population 25 Years and Over_Estimate!!Total: (B15003_001E)&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">rename_and_calc_dataset</span><span class="p">(</span><span class="n">df</span> <span class="o">=</span> <span class="n">df_regression_data_county</span><span class="p">,</span> 
+                        <span class="n">year</span> <span class="o">=</span> <span class="n">acs5_latest_year</span><span class="p">)</span>
+<span class="n">rename_and_calc_dataset</span><span class="p">(</span><span class="n">df</span> <span class="o">=</span> <span class="n">df_regression_data_state</span><span class="p">,</span> 
+                        <span class="n">year</span> <span class="o">=</span> <span class="n">acs5_latest_year</span><span class="p">)</span>
+<span class="n">rename_and_calc_dataset</span><span class="p">(</span><span class="n">df</span> <span class="o">=</span> <span class="n">df_regression_data_national</span><span class="p">,</span> 
+                        <span class="n">year</span> <span class="o">=</span> <span class="n">acs5_latest_year</span><span class="p">)</span>
+<span class="n">df_regression_data_state</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Year</th>
+      <th>NAME</th>
+      <th>...</th>
+      <th>Median_Earnings_Postgraduate</th>
+      <th>Pct_With_Bachelors_Degree</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>2023</td>
+      <td>Alabama</td>
+      <td>...</td>
+      <td>72667</td>
+      <td>27.755139</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2023</td>
+      <td>Alaska</td>
+      <td>...</td>
+      <td>90606</td>
+      <td>31.242276</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>51</th>
+      <td>2023</td>
+      <td>Wyoming</td>
+      <td>...</td>
+      <td>73535</td>
+      <td>29.920304</td>
+    </tr>
+    <tr>
+      <th>52</th>
+      <td>2023</td>
+      <td>Puerto Rico</td>
+      <td>...</td>
+      <td>41197</td>
+      <td>29.130778</td>
+    </tr>
+  </tbody>
+</table>
+<p>52 rows × 16 columns</p>
+</div></div></div>
+</div>
+</section>
+<section id="mapping-each-county-and-state-to-a-geographical-region">
+<h3>Mapping each county and state to a geographical region<a class="headerlink" href="#mapping-each-county-and-state-to-a-geographical-region" title="Link to this heading">#</a></h3>
+<p>As part of our regression analysis, we’ll want to determine whether the relationship between the prevalence of bachelor’s degrees and median earnings is influenced by the region in which a particular county or state is located. I’ll first merge in this data for our county-level dataset; next, I’ll do the same for the state-level table.</p>
+<p>In order to add region information to our county-level dataset, we’ll first need to figure out the state corresponding to each county; we can then map these states to their respective regions. Our dataset already contains numerical values for each state in the form of FIPS codes; however, to make sense of these codes, we’ll also need to import a table that shows the actual state name for each code. Such a table is available on the Census wesbite at <a class="reference external" href="https://www2.census.gov/geo/docs/reference/codes2020/national_state2020.txt">https://www2.census.gov/geo/docs/reference/codes2020/national_state2020.txt</a> .</p>
+<p>I copied and pasted the contents of this table into state_fips_codes_from_census.txt, which can be found in the same folder as this script. The following code reads this table into a DataFrame. Note that (1) you can apply <code class="docutils literal notranslate"><span class="pre">read_csv()</span></code> on more than just .csv files and that (2) because the entries in this table were separated by the ‘|’ character, I needed to specify that character as my separator.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_fips</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;state_fips_codes_from_census.txt&#39;</span><span class="p">,</span>
+            <span class="n">sep</span> <span class="o">=</span> <span class="s1">&#39;|&#39;</span><span class="p">)</span>
+<span class="c1"># Renaming columns to help facilitate an upcoming merge:</span>
+<span class="n">df_fips</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;STATE&#39;</span><span class="p">:</span><span class="s1">&#39;State_Abbrev&#39;</span><span class="p">,</span>
+<span class="s1">&#39;STATEFP&#39;</span><span class="p">:</span><span class="s1">&#39;state&#39;</span><span class="p">},</span> <span class="n">inplace</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+<span class="c1"># Converting the &#39;state&#39; column into a zero-filled string</span>
+<span class="c1"># so that its values can get matched with the corresponding</span>
+<span class="c1"># FIPS codes in df_regression_data_county:</span>
+<span class="n">df_fips</span><span class="p">[</span><span class="s1">&#39;state&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_fips</span><span class="p">[</span><span class="s1">&#39;state&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;str&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">zfill</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">df_fips</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>State_Abbrev</th>
+      <th>state</th>
+      <th>STATENS</th>
+      <th>STATE_NAME</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>AL</td>
+      <td>01</td>
+      <td>1779775</td>
+      <td>Alabama</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>AK</td>
+      <td>02</td>
+      <td>1785533</td>
+      <td>Alaska</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>55</th>
+      <td>UM</td>
+      <td>74</td>
+      <td>1878752</td>
+      <td>U.S. Minor Outlying Islands</td>
+    </tr>
+    <tr>
+      <th>56</th>
+      <td>VI</td>
+      <td>78</td>
+      <td>1802710</td>
+      <td>United States Virgin Islands</td>
+    </tr>
+  </tbody>
+</table>
+<p>57 rows × 4 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_regression_data_county</span> <span class="o">=</span> <span class="n">df_regression_data_county</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span>
+    <span class="n">df_fips</span><span class="p">[[</span><span class="s1">&#39;State_Abbrev&#39;</span><span class="p">,</span> <span class="s1">&#39;state&#39;</span><span class="p">]],</span>
+    <span class="n">on</span> <span class="o">=</span> <span class="s1">&#39;state&#39;</span><span class="p">,</span> <span class="n">how</span> <span class="o">=</span> <span class="s1">&#39;left&#39;</span><span class="p">)</span>
+<span class="n">df_regression_data_county</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Year</th>
+      <th>county</th>
+      <th>...</th>
+      <th>Pct_With_Bachelors_Degree</th>
+      <th>State_Abbrev</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2023</td>
+      <td>001</td>
+      <td>...</td>
+      <td>28.282680</td>
+      <td>AL</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2023</td>
+      <td>003</td>
+      <td>...</td>
+      <td>32.797637</td>
+      <td>AL</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>3220</th>
+      <td>2023</td>
+      <td>151</td>
+      <td>...</td>
+      <td>18.360524</td>
+      <td>PR</td>
+    </tr>
+    <tr>
+      <th>3221</th>
+      <td>2023</td>
+      <td>153</td>
+      <td>...</td>
+      <td>27.116371</td>
+      <td>PR</td>
+    </tr>
+  </tbody>
+</table>
+<p>3222 rows × 18 columns</p>
+</div></div></div>
+</div>
+<p>Now that we know each county’s state abbreviation, we can merge region data into our table as well. We’ll do so by importing state_regions.csv, a file that stores the state-region relationships found in this PDF file: <a class="reference external" href="https://www2.census.gov/geo/pdfs/maps-data/maps/reference/us_regdiv.pdf">https://www2.census.gov/geo/pdfs/maps-data/maps/reference/us_regdiv.pdf</a></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_state_regions</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;state_regions.csv&#39;</span><span class="p">)</span>
+<span class="n">df_state_regions</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>State_Abbrev</th>
+      <th>Region</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>WA</td>
+      <td>West</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>OR</td>
+      <td>West</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>49</th>
+      <td>NH</td>
+      <td>Northeast</td>
+    </tr>
+    <tr>
+      <th>50</th>
+      <td>ME</td>
+      <td>Northeast</td>
+    </tr>
+  </tbody>
+</table>
+<p>51 rows × 2 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_regression_data_county</span> <span class="o">=</span> <span class="n">df_regression_data_county</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span>
+    <span class="n">df_state_regions</span><span class="p">,</span> <span class="n">on</span> <span class="o">=</span> <span class="s1">&#39;State_Abbrev&#39;</span><span class="p">,</span> <span class="n">how</span> <span class="o">=</span> <span class="s1">&#39;left&#39;</span><span class="p">)</span>
+<span class="n">df_regression_data_county</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Year</th>
+      <th>county</th>
+      <th>...</th>
+      <th>State_Abbrev</th>
+      <th>Region</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2023</td>
+      <td>001</td>
+      <td>...</td>
+      <td>AL</td>
+      <td>South</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2023</td>
+      <td>003</td>
+      <td>...</td>
+      <td>AL</td>
+      <td>South</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>3220</th>
+      <td>2023</td>
+      <td>151</td>
+      <td>...</td>
+      <td>PR</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>3221</th>
+      <td>2023</td>
+      <td>153</td>
+      <td>...</td>
+      <td>PR</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+<p>3222 rows × 19 columns</p>
+</div></div></div>
+</div>
+</section>
+<section id="merging-region-information-into-our-state-level-dataset">
+<h3>Merging region information into our state-level dataset<a class="headerlink" href="#merging-region-information-into-our-state-level-dataset" title="Link to this heading">#</a></h3>
+<p>Although the state-level Census dataset contains full state names, I’ll still use the same approach that I took for the county level dataset, as that reduces the amount of additional code that I need to write. As the following cell demonstrates, it’s possible to chain multiple <code class="docutils literal notranslate"><span class="pre">merge()</span></code> calls together; this allows for more concise code, though if anything goes wrong, you may need to call each merge operation individually for debugging purposes.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_regression_data_state</span> <span class="o">=</span> <span class="n">df_regression_data_state</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span>
+    <span class="n">df_fips</span><span class="p">[[</span><span class="s1">&#39;State_Abbrev&#39;</span><span class="p">,</span> <span class="s1">&#39;state&#39;</span><span class="p">]],</span>
+    <span class="n">on</span> <span class="o">=</span> <span class="s1">&#39;state&#39;</span><span class="p">,</span> <span class="n">how</span> <span class="o">=</span> <span class="s1">&#39;left&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span>
+    <span class="n">df_state_regions</span><span class="p">,</span> <span class="n">on</span> <span class="o">=</span> <span class="s1">&#39;State_Abbrev&#39;</span><span class="p">,</span> <span class="n">how</span> <span class="o">=</span> <span class="s1">&#39;left&#39;</span><span class="p">)</span>
+<span class="n">df_regression_data_state</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Year</th>
+      <th>NAME</th>
+      <th>...</th>
+      <th>State_Abbrev</th>
+      <th>Region</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2023</td>
+      <td>Alabama</td>
+      <td>...</td>
+      <td>AL</td>
+      <td>South</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2023</td>
+      <td>Alaska</td>
+      <td>...</td>
+      <td>AK</td>
+      <td>West</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>50</th>
+      <td>2023</td>
+      <td>Wyoming</td>
+      <td>...</td>
+      <td>WY</td>
+      <td>West</td>
+    </tr>
+    <tr>
+      <th>51</th>
+      <td>2023</td>
+      <td>Puerto Rico</td>
+      <td>...</td>
+      <td>PR</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+<p>52 rows × 18 columns</p>
+</div></div></div>
+</div>
+<p>Saving these DataFrames to .csv files so that they can get incorporated into the regressions section of Python for Nonprofits:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_regression_data_county</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span>
+    <span class="s1">&#39;Datasets/education_and_earnings_county.csv&#39;</span><span class="p">,</span> <span class="n">index</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
+
+<span class="n">df_regression_data_state</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span>
+    <span class="s1">&#39;Datasets/education_and_earnings_state.csv&#39;</span><span class="p">,</span> <span class="n">index</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
+
+<span class="n">df_regression_data_national</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span>
+    <span class="s1">&#39;Datasets/education_and_earnings_national.csv&#39;</span><span class="p">,</span> <span class="n">index</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># B19013_001E: Median household income</span>
+<span class="c1"># B25077_001E: median home value</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="appendix">
+<h2>Appendix<a class="headerlink" href="#appendix" title="Link to this heading">#</a></h2>
+<section id="the-census-python-library">
+<h3>1: The Census Python Library<a class="headerlink" href="#the-census-python-library" title="Link to this heading">#</a></h3>
+<p>It’s worth noting that there is also a ‘census’ Python library (available via pypi and conda) that helps simplify the process of requesting API data. You may choose to use it for your own Census research, but I ended up not needing it for the data retrieval tasks shown above. In addition, foregoing the library allowed me to demonstrate how to retrieve data directly from an API, which you may find helpful when working with APIs that don’t have a corresponding Python library.</p>
+<p>Here’s an example of the Census library in use:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Example of reading data from the Census library into a </span>
+<span class="c1"># Pandas DataFrame:</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">census</span><span class="w"> </span><span class="kn">import</span> <span class="n">Census</span>
+<span class="n">c</span> <span class="o">=</span> <span class="n">Census</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">acs5</span><span class="o">.</span><span class="n">get</span><span class="p">((</span><span class="s1">&#39;NAME&#39;</span><span class="p">,</span> <span class="s1">&#39;B01001_001E&#39;</span><span class="p">),</span>
+<span class="p">{</span><span class="s1">&#39;for&#39;</span><span class="p">:</span> <span class="s1">&#39;county:*&#39;</span><span class="p">}))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>NAME</th>
+      <th>B01001_001E</th>
+      <th>state</th>
+      <th>county</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Autauga County, Alabama</td>
+      <td>58761.0</td>
+      <td>01</td>
+      <td>001</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Baldwin County, Alabama</td>
+      <td>233420.0</td>
+      <td>01</td>
+      <td>003</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>3220</th>
+      <td>Yabucoa Municipio, Puerto Rico</td>
+      <td>30313.0</td>
+      <td>72</td>
+      <td>151</td>
+    </tr>
+    <tr>
+      <th>3221</th>
+      <td>Yauco Municipio, Puerto Rico</td>
+      <td>33988.0</td>
+      <td>72</td>
+      <td>153</td>
+    </tr>
+  </tbody>
+</table>
+<p>3222 rows × 4 columns</p>
+</div></div></div>
+</div>
+</section>
+<section id="the-requests-library">
+<h3>2: The requests library<a class="headerlink" href="#the-requests-library" title="Link to this heading">#</a></h3>
+<p>We can also use Python’s <em>requests</em> library to retrieve data from the Census API, then convert it to JSON format:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># The following code borrows from the requests library documentation at </span>
+<span class="c1"># https://docs.python-requests.org/en/latest/index.html</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">requests</span>
+<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;https://api.census.gov/data/</span><span class="si">{</span><span class="n">acs5_year</span><span class="si">}</span><span class="s1">/</span><span class="se">\</span>
+<span class="s1">acs/acs5?get=NAME,B01001_001E&amp;for=county:*&amp;key=</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="c1"># Printing the first 300 characters of this output:</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;r.text:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span><span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">300</span><span class="p">],</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="c1"># Printing the first 5 lines of r.json:</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;r.json:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span><span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="mi">0</span><span class="p">:</span><span class="mi">5</span><span class="p">],</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>r.text:
+ [[&quot;NAME&quot;,&quot;B01001_001E&quot;,&quot;state&quot;,&quot;county&quot;],
+[&quot;Autauga County, Alabama&quot;,&quot;58239&quot;,&quot;01&quot;,&quot;001&quot;],
+[&quot;Baldwin County, Alabama&quot;,&quot;227131&quot;,&quot;01&quot;,&quot;003&quot;],
+[&quot;Barbour County, Alabama&quot;,&quot;25259&quot;,&quot;01&quot;,&quot;005&quot;],
+[&quot;Bibb County, Alabama&quot;,&quot;22412&quot;,&quot;01&quot;,&quot;007&quot;],
+[&quot;Blount County, Alabama&quot;,&quot;58884&quot;,&quot;01&quot;,&quot;009&quot;],
+[&quot;Bullock County, Ala 
+
+r.json:
+ [[&#39;NAME&#39;, &#39;B01001_001E&#39;, &#39;state&#39;, &#39;county&#39;], [&#39;Autauga County, Alabama&#39;, &#39;58239&#39;, &#39;01&#39;, &#39;001&#39;], [&#39;Baldwin County, Alabama&#39;, &#39;227131&#39;, &#39;01&#39;, &#39;003&#39;], [&#39;Barbour County, Alabama&#39;, &#39;25259&#39;, &#39;01&#39;, &#39;005&#39;], [&#39;Bibb County, Alabama&#39;, &#39;22412&#39;, &#39;01&#39;, &#39;007&#39;]] 
+</pre></div>
+</div>
+</div>
+</div>
+<p>Converting our response to JSON allows it to be easily read into a Pandas DataFrame, as shown below:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">())</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<span class="c1"># Note that pd.DataFrame(r.text) would produce the following error:</span>
+<span class="c1"># &quot;ValueError: DataFrame constructor not properly called!&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>0</th>
+      <th>1</th>
+      <th>2</th>
+      <th>3</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>NAME</td>
+      <td>B01001_001E</td>
+      <td>state</td>
+      <td>county</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Autauga County, Alabama</td>
+      <td>58239</td>
+      <td>01</td>
+      <td>001</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Baldwin County, Alabama</td>
+      <td>227131</td>
+      <td>01</td>
+      <td>003</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Barbour County, Alabama</td>
+      <td>25259</td>
+      <td>01</td>
+      <td>005</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Bibb County, Alabama</td>
+      <td>22412</td>
+      <td>01</td>
+      <td>007</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>I included this approach in the appendix because you may find the requests library useful for other online data retrieval tasks. However, our use of <code class="docutils literal notranslate"><span class="pre">pd.read_json()</span></code> to import Census data rendered an explicit call to the requests library unnecessary.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">program_end_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="n">run_time</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">program_end_time</span> <span class="o">-</span> <span class="n">program_start_time</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Finished running script in </span><span class="si">{</span><span class="n">run_time</span><span class="si">}</span><span class="s2"> seconds.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Finished running script in 13.762 seconds.
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<div class="toctree-wrapper compound">
+</div>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./Census_Data_Imports"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../Descriptive_Stats/descriptive_stats_part_2.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Descriptive Stats: Part 2</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../Book_Specific_Materials/census_import_scripts_py_nb.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">census_import_scripts.py</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#deciding-where-to-move-to-start-a-family">Deciding where to move to start a family</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#an-introduction-to-the-american-community-survey">An introduction to the American Community Survey</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introducing-the-census-api">Introducing the Census API</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#importing-a-census-api-key">Importing a Census API Key</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#importing-custom-census-functions">Importing custom Census functions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#retrieving-our-data">Retrieving our Data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#defining-a-census-data-retrieval-function">Defining a Census data retrieval function</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#adding-in-comparison-fields">Adding in comparison fields</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ranking-counties-by-population-growth">Ranking counties by population growth</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sorting-counties-with-at-least-100k-residents-in-2016-by-their-2016-2021-total-population-growth-rates">Sorting counties with at least 100K residents in 2016 by their 2016-2021 total population growth rates:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sorting-counties-with-at-least-one-million-residents-in-2016-by-their-2016-2021-total-population-growth-rates">Sorting counties with at least <em>one million</em> residents in 2016 by their 2016-2021 total population growth rates:</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#repeating-these-steps-in-order-to-compare-25-to-29-year-old-population-growth-rates">Repeating these steps in order to compare 25-to-29-year-old population growth rates</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#retrieving-state-level-data">Retrieving state-level data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#retrieving-additional-data-for-a-regression-analysis">Retrieving additional data for a regression analysis</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#importing-us-census-data-on-educational-attainment-and-median-earnings">Importing US Census data on educational attainment and median earnings</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mapping-each-county-and-state-to-a-geographical-region">Mapping each county and state to a geographical region</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#merging-region-information-into-our-state-level-dataset">Merging region information into our state-level dataset</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#appendix">Appendix</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-census-python-library">1: The Census Python Library</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-requests-library">2: The requests library</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Kenneth Burchfiel
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

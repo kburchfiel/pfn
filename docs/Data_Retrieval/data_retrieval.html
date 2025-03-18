@@ -1,0 +1,1329 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Data Retrieval &#8212; Python for Nonprofits</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Data_Retrieval/data_retrieval';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Data Prep" href="../Data_Prep/data_prep.html" />
+    <link rel="prev" title="Getting Started" href="../Book_Specific_Materials/getting_started_for_book.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../front_matter_for_book.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Python for Nonprofits</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../front_matter_for_book.html">
+                    Wecome to Python for Nonprofits!
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Introduction</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Introduction/introduction.html">An Introduction to Python for Nonprofits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Introduction/the_case_for_python_at_nonprofits.html">The Case for Using Python at Nonprofits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Book_Specific_Materials/getting_started_for_book.html">Getting Started</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Importing and Prepping Data</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Data Retrieval</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Data_Prep/data_prep.html">Data Prep</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Analyzing Data</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Descriptive_Stats/descriptive_stats.html">Descriptive Stats</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Descriptive_Stats/descriptive_stats_part_2.html">Descriptive Stats: Part 2</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Census_Data_Imports/census_data_imports.html">Census Data Imports</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Book_Specific_Materials/census_import_scripts_py_nb.html">census_import_scripts.py</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Visualizing Data</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Graphing/graphing.html">Creating Interactive and Static Charts with Plotly</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../Graphing/pivot_and_graph_functions.html">Pivot and Graph Functions</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Mapping/choropleth_maps.html">Mapping Census Data using Plotly (Work in progress)</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Book_Specific_Materials/plotly_choropleth_map_functions_py_nb.html">plotly_choropleth_map_functions.py</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Mapping/choropleth_maps_with_folium.html">Creating Choropleth Maps with Folium</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Book_Specific_Materials/folium_choropleth_map_functions_py_nb.html">folium_choropleth_map_functions.py</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Regressions</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Regressions/regression_analyses.html">Regression Analyses</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Publishing Analyses Online</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Static_Sites/simple_static_site.html">Creating a Simple Static Webpage</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Updating_Online_Spreadsheets/updating_online_spreadsheets.html">Updating Online Spreadsheets</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Book_Specific_Materials/weather_import_py_nb.html">weather_import.py</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Online_Visualizations/Simple_App_Without_Login/readme.html">Simple Dash App Without Login</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Book_Specific_Materials/Simple_App_Without_Login_py_nb.html">Source code for Simple App Without Login</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Online_Visualizations/PFN_Dash_App_Demo/readme.html">PFN Dash App Demo</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Book_Specific_Materials/PFN_Dash_App_Demo_py_nb.html">Source code for PFN Dash App Demo</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendix</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Appendix/nvcu_db_gen.html">NVCU Database Generator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Book_Specific_Materials/helper_funcs_py_nb.html">helper_funcs.py</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/Data_Retrieval/data_retrieval.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Data Retrieval</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-pandas-primer">A Pandas primer</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#back-to-data-retrieval">Back to data retrieval</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#importing-csv-data">Importing .csv data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#importing-xlsx-data">Importing .xlsx data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#importing-sql-data">Importing SQL data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#importing-html-data">Importing HTML data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-about-exports">What about exports?</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exporting-data-to-a-csv-file">Exporting data to a .csv file:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exporting-data-to-an-xlsx-file">Exporting data to an .xlsx file:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#a-caveat-about-data-types">A caveat about data types</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion">Conclusion</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="data-retrieval">
+<h1>Data Retrieval<a class="headerlink" href="#data-retrieval" title="Link to this heading">#</a></h1>
+<p>By Kenneth Burchfiel</p>
+<p>Released under the MIT License</p>
+<p>In order to begin analyzing data, we’ll first need to load it into our program. This script will demonstrate how to import a variety of data formats into Python using <strong>pandas</strong>, a fantastic library for loading, reformatting, and analyzing data. Before I dive into the code, I’d like to provide a brief overview of Pandas for those who aren’t yet familiar with this library.</p>
+<section id="a-pandas-primer">
+<h2>A Pandas primer<a class="headerlink" href="#a-pandas-primer" title="Link to this heading">#</a></h2>
+<p>You can think of Pandas as a tool for performing spreadsheet-based tasks within Python programs. One benefit of performing such tasks in Python (rather than Excel, Google Sheets, or another spreadsheet program) is that, once you have them scripted, you can quickly rerun them whenever the original data gets updated.* You could even have your computer run your analysis script on a daily or hourly basis, thus freeing up time you’d need to spend on busywork for more interesting tasks.</p>
+<p>A central feature of Pandas is the <em>DataFrame</em>, which is essentially a within-Python spreadsheet that you can filter, modify, and extend as needed. You can import data into DataFrames (as this section will demonstrate); perform calculations on specific DataFrame columns; graph DataFrame data using libraries like Plotly; and then export DataFrames to a variety of formats. DataFrames and Jupyter Notebooks work very well together: by executing Pandas code within Jupyter Notebook cells, you can easily see how particular operations will modify your DataFrame.</p>
+<p>If you need more information about a given Pandas function, make sure to consult the library’s documentation (<a class="reference external" href="https://pandas.pydata.org/docs/user_guide/index.html">https://pandas.pydata.org/docs/user_guide/index.html</a>); this is a well-written resource that I’ve relied on heavily in my own work. (In general, I recommend consulting official documentation (including the official Python documentation at <a class="reference external" href="https://docs.python.org/">https://docs.python.org/</a>) whenever possible, though some libraries will have better documentation than others.)</p>
+<p>Pandas will play a key or leading role in many sections of Python for Nonprofits. Although PFN will introduce you to many essential Pandas operations, you’ll likely come across many more in your own Python programming journey.</p>
+<p>* There are certainly ways to automate Excel tasks as well (e.g. using Visual Basic). I don’t have any experience with Visual Basic, so I’m not the best person to compare these two tools; however, I have no doubt that learning it would take some time, and given Python’s versatility and power, I would recommend applying that time to learning Python instead. (You can get an estimate of the world’s interest in Python versus Visual Basic by checking out the <a class="reference external" href="https://www.tiobe.com/tiobe-index/">TIOBE index</a>.)</p>
+</section>
+<section id="back-to-data-retrieval">
+<h2>Back to data retrieval<a class="headerlink" href="#back-to-data-retrieval" title="Link to this heading">#</a></h2>
+<p>One of the key strengths of Pandas is its compatibility with a wide variety of data formats. This script will demonstrate how to use pandas to import data from .csv files, .xlsx files, SQL tables, and HTML pages; however, <em>many</em> other data types are supported, either by Python itself or via additional libraries. Later sections of Python for Nonprofits will introduce additional data sources.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sqlalchemy</span><span class="w"> </span><span class="kn">import</span> <span class="n">create_engine</span>
+<span class="c1"># The above code can be found at</span>
+<span class="c1"># https://docs.sqlalchemy.org/en/20/core/engines.html .</span>
+
+<span class="c1"># The following two lines temporarily update your sys.path value</span>
+<span class="c1"># to include the Appendix folder; that way, our import statement can</span>
+<span class="c1"># access that folder in order to import its helper_funcs.py file.</span>
+<span class="c1"># (This code was derived from Cameron&#39;s StackOverflow answer at</span>
+<span class="c1"># https://stackoverflow.com/questions/4383571/</span>
+<span class="c1"># importing-files-from-different-folder ).</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;../Appendix&#39;</span><span class="p">)</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">helper_funcs</span><span class="w"> </span><span class="kn">import</span> <span class="n">config_notebook</span> <span class="c1"># This function improves the</span>
+<span class="c1"># appearance of PDF-based copies of notebooks, as it limits the number</span>
+<span class="c1"># of rows and columns that can be displayed. It also allows us to display</span>
+<span class="c1"># charts and maps in PNG rather than HTML format, thus making these </span>
+<span class="c1"># graphics easier to view in PDF format. </span>
+<span class="c1"># For more details on this function, consult the documentation </span>
+<span class="c1"># for config_notebook within helper_funcs.py.</span>
+
+<span class="n">display_type</span> <span class="o">=</span> <span class="n">config_notebook</span><span class="p">(</span><span class="n">display_max_columns</span><span class="o">=</span><span class="mi">7</span><span class="p">)</span> 
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="importing-csv-data">
+<h2>Importing .csv data<a class="headerlink" href="#importing-csv-data" title="Link to this heading">#</a></h2>
+<p>Pandas’ <code class="docutils literal notranslate"><span class="pre">read_csv()</span></code> (<a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.read_csv.html">https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.read_csv.html</a>) function simplifies the process of reading .csv data into your Python script. The following cell provides an example of this function.</p>
+<p>Note that the path argument begins with <code class="docutils literal notranslate"><span class="pre">../</span></code>. This instructs the code to move up one directory within the file system (to the root Python for Nonprofits folder), which in turn allows it to enter into the Appendix folder and retrieve the curr_enrollment.csv file stored there.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_curr_enrollment_csv</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span>
+    <span class="s1">&#39;../Appendix/curr_enrollment.csv&#39;</span><span class="p">)</span>
+<span class="n">df_curr_enrollment_csv</span><span class="o">.</span><span class="n">head</span><span class="p">()</span> <span class="c1"># head() prints the first 5 rows of</span>
+<span class="c1"># a DataFrame by default, though you can specify a larger or smaller number</span>
+<span class="c1"># within the parentheses if needed. The last 5 rows can be viewed via</span>
+<span class="c1"># .tail().</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>first_name</th>
+      <th>last_name</th>
+      <th>gender</th>
+      <th>...</th>
+      <th>class_of</th>
+      <th>level</th>
+      <th>level_for_sorting</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Brandy</td>
+      <td>Wang</td>
+      <td>F</td>
+      <td>...</td>
+      <td>2024</td>
+      <td>Se</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Cynthia</td>
+      <td>Whitaker</td>
+      <td>F</td>
+      <td>...</td>
+      <td>2024</td>
+      <td>Se</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Kathryn</td>
+      <td>Romero</td>
+      <td>F</td>
+      <td>...</td>
+      <td>2024</td>
+      <td>Se</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Paige</td>
+      <td>Martinez</td>
+      <td>F</td>
+      <td>...</td>
+      <td>2024</td>
+      <td>Se</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Christine</td>
+      <td>Rios</td>
+      <td>F</td>
+      <td>...</td>
+      <td>2024</td>
+      <td>Se</td>
+      <td>3</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 11 columns</p>
+</div></div></div>
+</div>
+<p>However, you’ll sometimes need to add additional arguments to <code class="docutils literal notranslate"><span class="pre">read_csv()</span></code> in order to correctly import your data. For example, if a separator other than a comma was used, you’ll want to specify that separator via the ‘sep’ argument.</p>
+<p>The following example shows what you’ll see if you try to use <code class="docutils literal notranslate"><span class="pre">read_csv()</span></code> to import <em>tab</em>-separated .csv data:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_curr_enrollment_tab_csv</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span>
+    <span class="s1">&#39;curr_enrollment_tab_separated.csv&#39;</span><span class="p">)</span>
+<span class="n">df_curr_enrollment_tab_csv</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>first_name\tlast_name\tgender\tmatriculation_year\tmatriculation_number\tstudent_id\tdate_of_birth\tcollege\tclass_of\tlevel\tlevel_for_sorting</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Brandy\tWang\tF\t2020\t1\t2020-1\t2002-12-16\t...</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Cynthia\tWhitaker\tF\t2020\t2\t2020-2\t2002-09...</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Kathryn\tRomero\tF\t2020\t3\t2020-3\t2002-05-1...</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Paige\tMartinez\tF\t2020\t4\t2020-4\t2002-11-1...</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Christine\tRios\tF\t2020\t5\t2020-5\t2002-06-2...</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">'\t'</span></code> strings within the column and field values <em>and</em> the lack of column separators are dead giveaways that this file used tab separators rather than commas. To correctly import this information, you’ll need to add <code class="docutils literal notranslate"><span class="pre">sep='\t'</span></code> within your <code class="docutils literal notranslate"><span class="pre">read_csv()</span></code> call, as shown below. (<code class="docutils literal notranslate"><span class="pre">'\t'</span></code> represents tabs, just as <code class="docutils literal notranslate"><span class="pre">'\n'</span></code> represents newlines.)</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_curr_enrollment_tab_csv</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span>
+    <span class="s1">&#39;curr_enrollment_tab_separated.csv&#39;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="n">df_curr_enrollment_tab_csv</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>first_name</th>
+      <th>last_name</th>
+      <th>gender</th>
+      <th>...</th>
+      <th>class_of</th>
+      <th>level</th>
+      <th>level_for_sorting</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Brandy</td>
+      <td>Wang</td>
+      <td>F</td>
+      <td>...</td>
+      <td>2024</td>
+      <td>Se</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Cynthia</td>
+      <td>Whitaker</td>
+      <td>F</td>
+      <td>...</td>
+      <td>2024</td>
+      <td>Se</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Kathryn</td>
+      <td>Romero</td>
+      <td>F</td>
+      <td>...</td>
+      <td>2024</td>
+      <td>Se</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Paige</td>
+      <td>Martinez</td>
+      <td>F</td>
+      <td>...</td>
+      <td>2024</td>
+      <td>Se</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Christine</td>
+      <td>Rios</td>
+      <td>F</td>
+      <td>...</td>
+      <td>2024</td>
+      <td>Se</td>
+      <td>3</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 11 columns</p>
+</div></div></div>
+</div>
+<p>In addition, if your .csv file uses an encoding other than UTF-8 (the default), you may need to specify an alternative codec (<a class="reference external" href="https://docs.python.org/3/library/codecs.html#standard-encodings">https://docs.python.org/3/library/codecs.html#standard-encodings</a>) using the ‘encoding’ argument.</p>
+<p><code class="docutils literal notranslate"><span class="pre">read_csv()</span></code> can also be used for .csv files hosted online; you’ll simply substitute a URL in your function call for your local file path. For instance, the following cell reads in a .csv file from GitHub that will be processed by a later section of Python for Nonprofits:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_web_csv_example</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span>
+<span class="s1">&#39;https://raw.githubusercontent.com/kburchfiel/pfn/</span><span class="se">\</span>
+<span class="s1">refs/heads/main/Data_Prep/winter_results/STB_So_results.csv&#39;</span><span class="p">)</span>
+<span class="n">df_web_csv_example</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>MATRIC#</th>
+      <th>SEASON</th>
+      <th>SURVEY_SCORE</th>
+      <th>STARTINGYR</th>
+      <th>MATRICYR</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1297</td>
+      <td>W</td>
+      <td>55.0%</td>
+      <td>23</td>
+      <td>22</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1017</td>
+      <td>W</td>
+      <td>59.0%</td>
+      <td>23</td>
+      <td>22</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>968</th>
+      <td>3699</td>
+      <td>W</td>
+      <td>69.0%</td>
+      <td>23</td>
+      <td>22</td>
+    </tr>
+    <tr>
+      <th>969</th>
+      <td>1875</td>
+      <td>W</td>
+      <td>67.0%</td>
+      <td>23</td>
+      <td>22</td>
+    </tr>
+  </tbody>
+</table>
+<p>970 rows × 5 columns</p>
+</div></div></div>
+</div>
+<p>While this is a handy feature to have, if you’re dealing with a large and unchanging dataset, you may want to consider downloading it to your computer beforehand–as reading in the file from your local hard drive will likely be faster than retrieving it via your internet connection.</p>
+</section>
+<section id="importing-xlsx-data">
+<h2>Importing .xlsx data<a class="headerlink" href="#importing-xlsx-data" title="Link to this heading">#</a></h2>
+<p>Importing .xlsx files is also easy to do within Python, although I’ve found that this process can take longer to execute than does importing .csv files. (Therefore, I tend to prefer .csv files over .xlsx ones when importing data into Python.)</p>
+<p>The following code imports an .xlsx version of the same current enrollment dataset that we imported earlier. You may need to install the openpyxl library in order for this code to run on your computer.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_curr_enrollment_xlsx</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_excel</span><span class="p">(</span><span class="s1">&#39;curr_enrollment.xlsx&#39;</span><span class="p">)</span>
+<span class="n">df_curr_enrollment_xlsx</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>first_name</th>
+      <th>last_name</th>
+      <th>gender</th>
+      <th>...</th>
+      <th>class_of</th>
+      <th>level</th>
+      <th>level_for_sorting</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Brandy</td>
+      <td>Wang</td>
+      <td>F</td>
+      <td>...</td>
+      <td>2024</td>
+      <td>Se</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Cynthia</td>
+      <td>Whitaker</td>
+      <td>F</td>
+      <td>...</td>
+      <td>2024</td>
+      <td>Se</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Kathryn</td>
+      <td>Romero</td>
+      <td>F</td>
+      <td>...</td>
+      <td>2024</td>
+      <td>Se</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Paige</td>
+      <td>Martinez</td>
+      <td>F</td>
+      <td>...</td>
+      <td>2024</td>
+      <td>Se</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Christine</td>
+      <td>Rios</td>
+      <td>F</td>
+      <td>...</td>
+      <td>2024</td>
+      <td>Se</td>
+      <td>3</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 11 columns</p>
+</div></div></div>
+</div>
+<p>This cell took 1.38 seconds to execute on my computer, whereas the first .csv import cell ran in just 21 miliseconds (or 0.021 seconds). In other words, the .csv import was around 65 times faster than the .xlsx import.</p>
+</section>
+<section id="importing-sql-data">
+<h2>Importing SQL data<a class="headerlink" href="#importing-sql-data" title="Link to this heading">#</a></h2>
+<p>Python’s SQLAlchemy and Pandas libraries make it easy to import SQL tables into your script. Many different types of SQL (such as PostgreSQL) are supported, but this example will focus on a SQLite table created within PFN’s appendix.</p>
+<p>In order to import data from a database, we’ll first need to connect to it via SQLAlchemy’s <code class="docutils literal notranslate"><span class="pre">create_engine</span></code> function:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">e</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="s1">&#39;sqlite:///../Appendix/nvcu_db.db&#39;</span><span class="p">)</span>
+<span class="c1"># Based on: </span>
+<span class="c1"># https://docs.sqlalchemy.org/en/20/dialects/sqlite.html#pysqlite</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Note that the first 3 forward slashes indicate that a relative path will be used. The actual relative path (‘../Appendix/nvcu_db.db’) follows those forward slashes.</p>
+<p>For guidance on creating engines for other database types (such as PostgreSQL, MySQL, and others), visit <a class="reference external" href="https://docs.sqlalchemy.org/en/20/core/engines.html#database-urls">https://docs.sqlalchemy.org/en/20/core/engines.html#database-urls</a> .</p>
+<p>Once this SQLAlchemy engine has been created, we can use it to read in data from our database:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_curr_enrollment_sql</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_sql</span><span class="p">(</span>
+    <span class="s1">&#39;select * from curr_enrollment&#39;</span><span class="p">,</span> <span class="n">con</span><span class="o">=</span><span class="n">e</span><span class="p">)</span>
+<span class="n">df_curr_enrollment_sql</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>first_name</th>
+      <th>last_name</th>
+      <th>gender</th>
+      <th>...</th>
+      <th>class_of</th>
+      <th>level</th>
+      <th>level_for_sorting</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Brandy</td>
+      <td>Wang</td>
+      <td>F</td>
+      <td>...</td>
+      <td>2024</td>
+      <td>Se</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Cynthia</td>
+      <td>Whitaker</td>
+      <td>F</td>
+      <td>...</td>
+      <td>2024</td>
+      <td>Se</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Kathryn</td>
+      <td>Romero</td>
+      <td>F</td>
+      <td>...</td>
+      <td>2024</td>
+      <td>Se</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Paige</td>
+      <td>Martinez</td>
+      <td>F</td>
+      <td>...</td>
+      <td>2024</td>
+      <td>Se</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Christine</td>
+      <td>Rios</td>
+      <td>F</td>
+      <td>...</td>
+      <td>2024</td>
+      <td>Se</td>
+      <td>3</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 11 columns</p>
+</div></div></div>
+</div>
+<p>SQL is a whole language in itself, but you need not be a SQL expert to use Python to connect to database tables. In the above cell, <code class="docutils literal notranslate"><span class="pre">'select</span> <span class="pre">*</span> <span class="pre">from</span> <span class="pre">curr_enrollment'</span></code> is a line of SQL code that requests that all fields (and, thus, all data) be retrieved from the <code class="docutils literal notranslate"><span class="pre">curr_enrollment</span></code> SQLite table.</p>
+<p>SQL makes it possible to select specific columns, choose only particular groups of rows, and perform other more advanced operations. However, many of these operations can also be performed within Python. If you’re already a SQL whiz, feel free to pass more advanced code to <code class="docutils literal notranslate"><span class="pre">read_sql()</span></code>; if you’re a SQL novice, ‘select * from [table]’ will still get you pretty far!</p>
+<p><em>Also note that a SQLAlchemy engine can be used as the ‘con’ argument within both <code class="docutils literal notranslate"><span class="pre">read_sql()</span></code> and <code class="docutils literal notranslate"><span class="pre">to_sql()</span></code>. This is mentioned explicitly within Pandas’ <code class="docutils literal notranslate"><span class="pre">to_sql()</span></code> documentation (<a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.to_sql.html">https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.to_sql.html</a>) but can also be inferred from pandas’ <code class="docutils literal notranslate"><span class="pre">read_sql()</span></code> page (<a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.read_sql.html">https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.read_sql.html</a>). This page states that ‘con’ needs to be a ‘SQLAlchemy connectable,’ and the source code for <a class="reference external" href="http://sql.py">sql.py</a>() (<a class="github reference external" href="https://github.com/pandas-dev/pandas/blob/v2.2.2/pandas/io/sql.py#L570-L743">pandas-dev/pandas</a>) specifies that ‘SQLAlchemy connectable’ can be either an engine or a connection. I mention this in part because using an engine as your argument for the ‘con’ parameter in <code class="docutils literal notranslate"><span class="pre">read_sql()</span></code> and <code class="docutils literal notranslate"><span class="pre">to_sql()</span></code> can save you a bit of code.</em></p>
+</section>
+<section id="importing-html-data">
+<h2>Importing HTML data<a class="headerlink" href="#importing-html-data" title="Link to this heading">#</a></h2>
+<p>There are a number of ways to access data directly from the internet via Python. One means of doing so is <code class="docutils literal notranslate"><span class="pre">pd.read_html()</span></code>, which lets you read HTML tables from websites driectly into DataFrames.</p>
+<p>The following code imports a list of sample Census API connection strings into a DataFrame. The [0] at the end of the <code class="docutils literal notranslate"><span class="pre">read_html()</span></code> call instructs Pandas to convert the <em>first</em> table retrieved by <code class="docutils literal notranslate"><span class="pre">read_html()</span></code> into a DataFrame. (There’s only one HTML table on this page, but it’s still necessary to add [0].)</p>
+<p>Note that the import isn’t perfect: for some reason, the data on the ‘Number’ field on the right didn’t get downloaded successfully. As noted in the <code class="docutils literal notranslate"><span class="pre">read_html()</span></code> documentation (<a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.read_html.html">https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.read_html.html</a>), “Expect to do some cleanup after you call this function.”</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_census_examples</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_html</span><span class="p">(</span>
+    <span class="s1">&#39;https://api.census.gov/data/2022/acs/acs5/examples.html&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">df_census_examples</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Geography Hierarchy</th>
+      <th>Geography Level</th>
+      <th>Example URL</th>
+      <th>Number</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>us</td>
+      <td>010</td>
+      <td>https://api.census.gov/data/2022/acs/acs5?get=...</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>us</td>
+      <td>010</td>
+      <td>https://api.census.gov/data/2022/acs/acs5?get=...</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>region</td>
+      <td>020</td>
+      <td>https://api.census.gov/data/2022/acs/acs5?get=...</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>region</td>
+      <td>020</td>
+      <td>https://api.census.gov/data/2022/acs/acs5?get=...</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>division</td>
+      <td>030</td>
+      <td>https://api.census.gov/data/2022/acs/acs5?get=...</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="what-about-exports">
+<h2>What about exports?<a class="headerlink" href="#what-about-exports" title="Link to this heading">#</a></h2>
+<p>The above examples focused on <em>importing</em> data; however, Pandas also makes it easy to <em>export</em> data to a variety of formats.</p>
+<section id="exporting-data-to-a-csv-file">
+<h3>Exporting data to a .csv file:<a class="headerlink" href="#exporting-data-to-a-csv-file" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_curr_enrollment_csv</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span>
+    <span class="s1">&#39;curr_enrollment_export.csv&#39;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">index=False</span></code> specifies that we do not want to include the DataFrame’s index within our .csv file. This is the best option in this case, since the DataFrame’s index doesn’t contain any meaningful data–and it will get recreated anyway when we import the .csv file back into Python.</p>
+<p>As the following two cells demonstrate, If we leave this component out, then attempt to import the DataFrame, we’ll end up with an ugly <code class="docutils literal notranslate"><span class="pre">Unnamed:</span> <span class="pre">0</span></code> column:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_curr_enrollment_csv</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">5</span><span class="p">]</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span>
+    <span class="s1">&#39;curr_enrollment_export_with_index.csv&#39;</span><span class="p">)</span> <span class="c1"># Using .iloc to export</span>
+<span class="c1"># only the first 5 rows will reduce the size of this file within</span>
+<span class="c1"># our project folder.</span>
+
+<span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;curr_enrollment_export_with_index.csv&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Unnamed: 0</th>
+      <th>first_name</th>
+      <th>last_name</th>
+      <th>...</th>
+      <th>class_of</th>
+      <th>level</th>
+      <th>level_for_sorting</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0</td>
+      <td>Brandy</td>
+      <td>Wang</td>
+      <td>...</td>
+      <td>2024</td>
+      <td>Se</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1</td>
+      <td>Cynthia</td>
+      <td>Whitaker</td>
+      <td>...</td>
+      <td>2024</td>
+      <td>Se</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2</td>
+      <td>Kathryn</td>
+      <td>Romero</td>
+      <td>...</td>
+      <td>2024</td>
+      <td>Se</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>3</td>
+      <td>Paige</td>
+      <td>Martinez</td>
+      <td>...</td>
+      <td>2024</td>
+      <td>Se</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>4</td>
+      <td>Christine</td>
+      <td>Rios</td>
+      <td>...</td>
+      <td>2024</td>
+      <td>Se</td>
+      <td>3</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 12 columns</p>
+</div></div></div>
+</div>
+</section>
+<section id="exporting-data-to-an-xlsx-file">
+<h3>Exporting data to an .xlsx file:<a class="headerlink" href="#exporting-data-to-an-xlsx-file" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_curr_enrollment_xlsx</span><span class="o">.</span><span class="n">to_excel</span><span class="p">(</span>
+    <span class="s1">&#39;curr_enrollment_export.xlsx&#39;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>On my computer, this .xlsx export took 52 times as long as the .csv export (1.36 seconds vs. 26 milliseconds). Therefore, as noted earlier, you may want to use .csv files in place of .xlsx files when working in Python.</p>
+<p>For examples of exporting data to SQL tables via <code class="docutils literal notranslate"><span class="pre">to_sql()</span></code>, reference the <code class="docutils literal notranslate"><span class="pre">nvcu_db_gen.ipynb</span></code> file within the Appendix.</p>
+</section>
+<section id="a-caveat-about-data-types">
+<h3>A caveat about data types<a class="headerlink" href="#a-caveat-about-data-types" title="Link to this heading">#</a></h3>
+<p>You’ll often find that using <code class="docutils literal notranslate"><span class="pre">read_csv()</span></code>, <code class="docutils literal notranslate"><span class="pre">read_excel()</span></code>, and <code class="docutils literal notranslate"><span class="pre">read_sql()</span></code> will create identical DataFrames as long as the source data is the same. However, in some cases, the data types returned by these functions will differ–requiring you to add in some additional code to resolve this discrepancy.</p>
+<p>For instance, if you retrieve a dataset from a SQL table, dates of birth might be formatted as datetime values. Meanwhile, those same values may be formatted as strings if they were imported from a .csv file. Therefore, if you’re switching your import source from a SQL table to a .csv file or vice versa, it’s not a bad idea to check the data types of your imported fields using <code class="docutils literal notranslate"><span class="pre">df.dtypes</span></code> (<a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.dtypes.html">https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.dtypes.html</a>).</p>
+</section>
+</section>
+<section id="conclusion">
+<h2>Conclusion<a class="headerlink" href="#conclusion" title="Link to this heading">#</a></h2>
+<p>As this notebook demonstrates, Pandas tends to make data retrieval very simple. Cleaning and reformatting data, the subject of the following chapter, isn’t always so simple–but Pandas will play a very valuable role with this process as well.</p>
+<p>For a more comprehensive listing of the many data import (and export) tasks that Pandas can perform, visit <a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/io.html">https://pandas.pydata.org/pandas-docs/stable/reference/io.html</a> .</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./Data_Retrieval"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../Book_Specific_Materials/getting_started_for_book.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Getting Started</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../Data_Prep/data_prep.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Data Prep</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-pandas-primer">A Pandas primer</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#back-to-data-retrieval">Back to data retrieval</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#importing-csv-data">Importing .csv data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#importing-xlsx-data">Importing .xlsx data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#importing-sql-data">Importing SQL data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#importing-html-data">Importing HTML data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-about-exports">What about exports?</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exporting-data-to-a-csv-file">Exporting data to a .csv file:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exporting-data-to-an-xlsx-file">Exporting data to an .xlsx file:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#a-caveat-about-data-types">A caveat about data types</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion">Conclusion</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Kenneth Burchfiel
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

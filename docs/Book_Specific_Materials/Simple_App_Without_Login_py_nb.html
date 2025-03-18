@@ -1,0 +1,709 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Source code for Simple App Without Login &#8212; Python for Nonprofits</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Book_Specific_Materials/Simple_App_Without_Login_py_nb';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="PFN Dash App Demo" href="../Online_Visualizations/PFN_Dash_App_Demo/readme.html" />
+    <link rel="prev" title="Simple Dash App Without Login" href="../Online_Visualizations/Simple_App_Without_Login/readme.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../front_matter_for_book.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Python for Nonprofits</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../front_matter_for_book.html">
+                    Wecome to Python for Nonprofits!
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Introduction</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Introduction/introduction.html">An Introduction to Python for Nonprofits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Introduction/the_case_for_python_at_nonprofits.html">The Case for Using Python at Nonprofits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting_started_for_book.html">Getting Started</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Importing and Prepping Data</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Data_Retrieval/data_retrieval.html">Data Retrieval</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Data_Prep/data_prep.html">Data Prep</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Analyzing Data</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Descriptive_Stats/descriptive_stats.html">Descriptive Stats</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Descriptive_Stats/descriptive_stats_part_2.html">Descriptive Stats: Part 2</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Census_Data_Imports/census_data_imports.html">Census Data Imports</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="census_import_scripts_py_nb.html">census_import_scripts.py</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Visualizing Data</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Graphing/graphing.html">Creating Interactive and Static Charts with Plotly</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../Graphing/pivot_and_graph_functions.html">Pivot and Graph Functions</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Mapping/choropleth_maps.html">Mapping Census Data using Plotly (Work in progress)</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="plotly_choropleth_map_functions_py_nb.html">plotly_choropleth_map_functions.py</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Mapping/choropleth_maps_with_folium.html">Creating Choropleth Maps with Folium</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="folium_choropleth_map_functions_py_nb.html">folium_choropleth_map_functions.py</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Regressions</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Regressions/regression_analyses.html">Regression Analyses</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Publishing Analyses Online</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Static_Sites/simple_static_site.html">Creating a Simple Static Webpage</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Updating_Online_Spreadsheets/updating_online_spreadsheets.html">Updating Online Spreadsheets</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="weather_import_py_nb.html">weather_import.py</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../Online_Visualizations/Simple_App_Without_Login/readme.html">Simple Dash App Without Login</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Source code for Simple App Without Login</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Online_Visualizations/PFN_Dash_App_Demo/readme.html">PFN Dash App Demo</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="PFN_Dash_App_Demo_py_nb.html">Source code for PFN Dash App Demo</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendix</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Appendix/nvcu_db_gen.html">NVCU Database Generator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="helper_funcs_py_nb.html">helper_funcs.py</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/Book_Specific_Materials/Simple_App_Without_Login_py_nb.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Source code for Simple App Without Login</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#app-py">app.py</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#procfile">Procfile</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#requirements-txt">requirements.txt</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="source-code-for-simple-app-without-login">
+<h1>Source code for Simple App Without Login<a class="headerlink" href="#source-code-for-simple-app-without-login" title="Link to this heading">#</a></h1>
+<section id="app-py">
+<h2><a class="reference external" href="http://app.py">app.py</a><a class="headerlink" href="#app-py" title="Link to this heading">#</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Simple Dash app for displaying Virginia weather data</span>
+
+<span class="c1"># By Kenneth Burchfiel</span>
+<span class="c1"># Released under the MIT License</span>
+
+<span class="c1"># Note: the Cloud Run-hosted copy of this app can be found </span>
+<span class="c1"># at https://simpleappwithoutlogin-470317599391.us-central1.run.app/ .</span>
+
+<span class="c1"># (See readme for more information on the code used to connect</span>
+<span class="c1"># to a Google Sheets workbook with recent weather data)</span>
+
+<span class="c1"># Parts of the following code were based on the Dash app tutorial</span>
+<span class="c1"># at https://dash.plotly.com/tutorial ; the Dash callbacks documentation at</span>
+<span class="c1"># https://dash.plotly.com/basic-callbacks; the online Dash deployment</span>
+<span class="c1"># guide at https://dash.plotly.com/deployment ; the Dash Bootstrap intro at</span>
+<span class="c1"># https://dash-bootstrap-components.opensource.faculty.ai/docs/quickstart/ </span>
+<span class="c1"># ; and the Dash Bootstrap Layout documentation at</span>
+<span class="c1"># https://dash-bootstrap-components.opensource</span>
+<span class="c1"># .faculty.ai/docs/components/layout/ .</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">gspread</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">gspread_dataframe</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_as_dataframe</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">dash</span><span class="w"> </span><span class="kn">import</span> <span class="n">Dash</span><span class="p">,</span> <span class="n">html</span><span class="p">,</span> <span class="n">dcc</span><span class="p">,</span> <span class="n">dash_table</span><span class="p">,</span> <span class="n">callback</span><span class="p">,</span> <span class="n">Input</span><span class="p">,</span> <span class="n">Output</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">plotly.express</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">px</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">dash_bootstrap_components</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">dbc</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timedelta</span>
+
+<span class="c1"># From https://pypi.org/project/gspread-dataframe/</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Initializing gspread using service account key stored within </span><span class="se">\</span>
+<span class="s2">Cloud Run secrets volume:&quot;</span><span class="p">)</span>
+
+
+<span class="n">local_data_import</span> <span class="o">=</span> <span class="kc">False</span> <span class="c1"># This allows data to get imported from local</span>
+<span class="c1"># .csv files, which can help save time when debugging. It must be </span>
+<span class="c1"># set to False prior to exporting the app to Cloud Run, however.</span>
+
+<span class="k">if</span> <span class="n">local_data_import</span> <span class="o">==</span> <span class="kc">False</span><span class="p">:</span>
+<span class="c1"># Guillaume Blaquiere&#39;s post at </span>
+<span class="c1"># https://stackoverflow.com/a/68536068/13097194 </span>
+<span class="c1"># was helpful in drafting the following line. </span>
+
+    <span class="n">gc</span> <span class="o">=</span> <span class="n">gspread</span><span class="o">.</span><span class="n">service_account</span><span class="p">(</span>
+    <span class="n">filename</span><span class="o">=</span><span class="s1">&#39;/svcacctsecret/kjb3server_service_account&#39;</span><span class="p">)</span>
+    <span class="n">wb</span> <span class="o">=</span> <span class="n">gc</span><span class="o">.</span><span class="n">open_by_key</span><span class="p">(</span><span class="s1">&#39;17aDJ3mg49-n0IEnDgN7ZB85pO87fiUpkZPULYDB8dmo&#39;</span><span class="p">)</span>
+
+<span class="c1"># Note: the code above will only run successfully when the app is</span>
+<span class="c1"># deployed to Cloud Run. That&#39;s because the file path is actually a volume</span>
+<span class="c1"># within my Cloud Run container.</span>
+<span class="c1"># (See the readme for further details on successfully running</span>
+<span class="c1"># this code on your end.)</span>
+
+<span class="c1"># Importing data from each spreadsheet:</span>
+<span class="n">wx_df_list</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">for</span> <span class="n">station</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;KCHO&#39;</span><span class="p">,</span> <span class="s1">&#39;KIAD&#39;</span><span class="p">,</span> <span class="s1">&#39;KOKV&#39;</span><span class="p">]:</span>
+    <span class="k">if</span> <span class="n">local_data_import</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">wx_df_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;../../Updating_Online_</span><span class="se">\</span>
+<span class="s1">Spreadsheets/weather_data/</span><span class="si">{</span><span class="n">station</span><span class="si">}</span><span class="s1">_historical_hourly_data_</span><span class="se">\</span>
+<span class="s1">updated.csv&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">960</span><span class="p">:])</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">ws</span> <span class="o">=</span> <span class="n">wb</span><span class="o">.</span><span class="n">worksheet</span><span class="p">(</span><span class="n">station</span><span class="p">)</span>
+        <span class="n">wx_df_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">get_as_dataframe</span><span class="p">(</span><span class="n">ws</span><span class="p">)[</span><span class="o">-</span><span class="mi">960</span><span class="p">:])</span> <span class="c1"># Importing up to</span>
+        <span class="c1"># 40 days of data for each station (in order to keep the charts</span>
+        <span class="c1"># readable)</span>
+
+<span class="c1"># Combining these station-specific tables into a single DataFrame:</span>
+
+<span class="n">df_wx</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">df</span> <span class="k">for</span> <span class="n">df</span> <span class="ow">in</span> <span class="n">wx_df_list</span><span class="p">])</span>
+
+<span class="n">df_wx</span><span class="p">[</span><span class="s1">&#39;Date/Time&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">df_wx</span><span class="p">[</span><span class="s1">&#39;Date/Time&#39;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df_wx</span><span class="o">.</span><span class="n">tail</span><span class="p">())</span>
+
+<span class="c1"># Creating a condensed copy of df_wx for </span>
+<span class="c1"># incorporation in a DataTable:</span>
+<span class="c1"># (This table will also be sorted in descending chronological order</span>
+<span class="c1"># in order to display the most recent metrics first.)</span>
+
+<span class="n">current_date</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">today</span><span class="p">()</span>
+
+<span class="n">app</span> <span class="o">=</span> <span class="n">Dash</span><span class="p">(</span><span class="n">external_stylesheets</span><span class="o">=</span><span class="p">[</span><span class="n">dbc</span><span class="o">.</span><span class="n">themes</span><span class="o">.</span><span class="n">BOOTSTRAP</span><span class="p">])</span>
+<span class="n">server</span> <span class="o">=</span> <span class="n">app</span><span class="o">.</span><span class="n">server</span>
+
+<span class="c1"># The dcc.Markdown() code below was based on</span>
+<span class="c1"># https://dash.plotly.com/dash-core-components/markdown</span>
+
+<span class="n">app</span><span class="o">.</span><span class="n">layout</span> <span class="o">=</span> <span class="n">dbc</span><span class="o">.</span><span class="n">Container</span><span class="p">(</span>
+    <span class="p">[</span><span class="n">dbc</span><span class="o">.</span><span class="n">Row</span><span class="p">(</span><span class="n">dcc</span><span class="o">.</span><span class="n">Markdown</span><span class="p">(</span><span class="s1">&#39;&#39;&#39;</span>
+<span class="s1">## Recent Weather Data for Three Virginia Airports</span>
+<span class="s1">This Dash app is part of [Python for Nonprofits]</span><span class="se">\</span>
+<span class="s1">(https://github.com/kburchfiel/pfn) and has been </span>
+<span class="s1">released under the MIT license. The source code for this app can </span>
+<span class="s1">be viewed at [this page](https://github.com/kburchfiel/pfn/blob/main/</span><span class="se">\</span>
+<span class="s1">Online_Visualizations/Simple_App_Without_Login/app.py). </span>
+
+<span class="s1">The NWS data displayed within this notebook was accessed via</span>
+<span class="s1">[this Google Sheets file](https://docs.google.com/spreadsheets/d/</span><span class="se">\</span>
+<span class="s1">17aDJ3mg49-n0IEnDgN7ZB85pO87fiUpkZPULYDB8dmo/edit?gid=0#gid=0). </span>
+<span class="s1">This file gets updated with new NWS data</span>
+<span class="s1">on an hourly basis via [this script](https://github.com/kburchfiel/</span><span class="se">\</span>
+<span class="s1">pfn/blob/main/Updating_Online_Spreadsheets/</span><span class="se">\</span>
+<span class="s1">updating_online_spreadsheets.py), which in turn calls </span>
+<span class="s1">[this script](https://github.com/kburchfiel/pfn/blob/main/</span><span class="se">\</span>
+<span class="s1">Updating_Online_Spreadsheets/weather_import.py).</span>
+
+<span class="s1">A more complex </span><span class="se">\</span>
+<span class="s1">Dash app can be found within [this part of PFN]</span><span class="se">\</span>
+<span class="s1">(https://github.com/kburchfiel/pfn/tree/main/</span><span class="se">\</span>
+<span class="s1">Online_Visualizations/PFN_Dash_App_Demo).</span>
+
+<span class="s1">    </span>
+<span class="s1">    &#39;&#39;&#39;</span><span class="p">)),</span>
+<span class="n">dbc</span><span class="o">.</span><span class="n">Row</span><span class="p">([</span>
+    <span class="n">dbc</span><span class="o">.</span><span class="n">Col</span><span class="p">(</span>
+        <span class="n">dcc</span><span class="o">.</span><span class="n">Markdown</span><span class="p">(</span><span class="s1">&#39;**Metric**:&#39;</span><span class="p">),</span> <span class="n">md</span> <span class="o">=</span> <span class="mi">2</span><span class="p">),</span>
+    <span class="n">dbc</span><span class="o">.</span><span class="n">Col</span><span class="p">(</span>
+        <span class="n">dcc</span><span class="o">.</span><span class="n">Dropdown</span><span class="p">(</span>
+    <span class="n">options</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Temp&#39;</span><span class="p">,</span> <span class="s1">&#39;Dew Point&#39;</span><span class="p">,</span> 
+<span class="s1">&#39;1-Hour Precip&#39;</span><span class="p">,</span> <span class="s1">&#39;Rolling 3-Hour Precip&#39;</span><span class="p">,</span> <span class="s1">&#39;Rolling 6-Hour Precip&#39;</span><span class="p">,</span>
+<span class="s1">&#39;Rolling 12-Hour Precip&#39;</span><span class="p">,</span> <span class="s1">&#39;Rolling 24-Hour Precip&#39;</span><span class="p">,</span>
+<span class="s1">&#39;Altimeter (in.)&#39;</span><span class="p">,</span> <span class="s1">&#39;Windspeed&#39;</span><span class="p">],</span> <span class="n">value</span> <span class="o">=</span> <span class="s1">&#39;Temp&#39;</span><span class="p">,</span> <span class="nb">id</span> <span class="o">=</span> <span class="s1">&#39;metric&#39;</span><span class="p">),</span> 
+        <span class="n">md</span> <span class="o">=</span> <span class="mi">3</span><span class="p">)]),</span>
+ <span class="n">dbc</span><span class="o">.</span><span class="n">Row</span><span class="p">([</span>
+     <span class="n">dbc</span><span class="o">.</span><span class="n">Col</span><span class="p">(</span><span class="n">dcc</span><span class="o">.</span><span class="n">Markdown</span><span class="p">(</span><span class="s1">&#39;**Stations:**&#39;</span><span class="p">),</span> <span class="n">md</span> <span class="o">=</span> <span class="mi">2</span><span class="p">),</span>
+     <span class="n">dbc</span><span class="o">.</span><span class="n">Col</span><span class="p">(</span><span class="n">dcc</span><span class="o">.</span><span class="n">Dropdown</span><span class="p">([</span><span class="s1">&#39;KCHO&#39;</span><span class="p">,</span> <span class="s1">&#39;KIAD&#39;</span><span class="p">,</span> <span class="s1">&#39;KOKV&#39;</span><span class="p">],</span> 
+                      <span class="p">[</span><span class="s1">&#39;KCHO&#39;</span><span class="p">,</span> <span class="s1">&#39;KIAD&#39;</span><span class="p">,</span> <span class="s1">&#39;KOKV&#39;</span><span class="p">],</span> 
+                          <span class="n">multi</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                     <span class="nb">id</span> <span class="o">=</span> <span class="s1">&#39;station_list&#39;</span><span class="p">),</span>  <span class="n">md</span> <span class="o">=</span> <span class="mi">4</span><span class="p">)]),</span>
+<span class="n">dbc</span><span class="o">.</span><span class="n">Row</span><span class="p">([</span><span class="n">dbc</span><span class="o">.</span><span class="n">Col</span><span class="p">(</span><span class="n">dcc</span><span class="o">.</span><span class="n">Markdown</span><span class="p">(</span><span class="s1">&#39;**Days to Include:**&#39;</span><span class="p">),</span> 
+                <span class="n">md</span> <span class="o">=</span> <span class="mi">2</span><span class="p">),</span>
+        <span class="n">dbc</span><span class="o">.</span><span class="n">Col</span><span class="p">(</span><span class="n">dcc</span><span class="o">.</span><span class="n">Slider</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">value</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span> 
+        <span class="c1"># I had originally used one-day increments for the slider,</span>
+       <span class="c1"># but this resulted in overlapping text on mobile displays.</span>
+                   <span class="nb">id</span> <span class="o">=</span> <span class="s1">&#39;days_to_include&#39;</span><span class="p">))]),</span>
+<span class="n">dbc</span><span class="o">.</span><span class="n">Row</span><span class="p">(</span><span class="n">dcc</span><span class="o">.</span><span class="n">Graph</span><span class="p">(</span><span class="nb">id</span> <span class="o">=</span> <span class="s1">&#39;fig&#39;</span><span class="p">)),</span>                                   
+ <span class="n">dbc</span><span class="o">.</span><span class="n">Row</span><span class="p">(</span><span class="n">dcc</span><span class="o">.</span><span class="n">Markdown</span><span class="p">(</span><span class="s2">&quot;By Kenneth Burchfiel&quot;</span><span class="p">))])</span>
+
+
+<span class="c1"># Defining a callback function that, given the inputs specified</span>
+<span class="c1"># above, can plot and return a graph of weather data:</span>
+<span class="nd">@callback</span><span class="p">(</span>
+    <span class="n">Output</span><span class="p">(</span><span class="s1">&#39;fig&#39;</span><span class="p">,</span> <span class="s1">&#39;figure&#39;</span><span class="p">),</span>
+    <span class="n">Input</span><span class="p">(</span><span class="s1">&#39;metric&#39;</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">),</span>
+    <span class="n">Input</span><span class="p">(</span><span class="s1">&#39;station_list&#39;</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">),</span>
+    <span class="n">Input</span><span class="p">(</span><span class="s1">&#39;days_to_include&#39;</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">))</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">plot_graph</span><span class="p">(</span><span class="n">metric</span><span class="p">,</span> <span class="n">station_list</span><span class="p">,</span> <span class="n">days_to_include</span><span class="p">):</span>
+    <span class="c1"># Determining the earliest point at which data should be displayed:</span>
+    <span class="n">data_cutoff</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">current_date</span> <span class="o">-</span> <span class="n">timedelta</span><span class="p">(</span>
+        <span class="n">days</span> <span class="o">=</span> <span class="n">days_to_include</span><span class="p">))</span>
+
+    <span class="c1"># Modifying the title so that it&#39;s gramatically correct when</span>
+    <span class="c1"># only one day of data is being displayed:</span>
+    <span class="k">if</span> <span class="n">days_to_include</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">day_title_component</span> <span class="o">=</span> <span class="s1">&#39;Past Day&#39;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">day_title_component</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;Last </span><span class="si">{</span><span class="n">days_to_include</span><span class="si">}</span><span class="s1"> Days&#39;</span>
+    
+    <span class="n">fig</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">line</span><span class="p">(</span>
+        <span class="n">df_wx</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;(Station in @station_list) </span><span class="se">\</span>
+<span class="s2">    &amp; (`Date/Time` &gt;= @data_cutoff)&quot;</span><span class="p">),</span> 
+        <span class="n">x</span> <span class="o">=</span> <span class="s1">&#39;Date/Time&#39;</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">metric</span><span class="p">,</span>
+        <span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;Station&#39;</span><span class="p">,</span>
+        <span class="n">title</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">metric</span><span class="si">}</span><span class="s2"> Over </span><span class="si">{</span><span class="n">day_title_component</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    
+    <span class="c1"># Updating y axis title based on the selected metric:</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">update_layout</span><span class="p">(</span><span class="n">xaxis_title</span> <span class="o">=</span> <span class="s1">&#39;Date&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">metric</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;Temp&#39;</span><span class="p">,</span> <span class="s1">&#39;Dew Point&#39;</span><span class="p">]:</span>
+        <span class="n">fig</span><span class="o">.</span><span class="n">update_layout</span><span class="p">(</span><span class="n">yaxis_title</span> <span class="o">=</span> <span class="s1">&#39;Degrees (F)&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">metric</span> <span class="o">==</span> <span class="s1">&#39;Windspeed&#39;</span><span class="p">:</span>
+        <span class="n">fig</span><span class="o">.</span><span class="n">update_layout</span><span class="p">(</span><span class="n">yaxis_title</span> <span class="o">=</span> <span class="s1">&#39;Windspeed (mph)&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="s1">&#39;Precip&#39;</span> <span class="ow">in</span> <span class="n">metric</span><span class="p">:</span>
+        <span class="n">fig</span><span class="o">.</span><span class="n">update_layout</span><span class="p">(</span><span class="n">yaxis_title</span> <span class="o">=</span> <span class="s1">&#39;Precipitation (in.)&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">fig</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">debug</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="procfile">
+<h2>Procfile<a class="headerlink" href="#procfile" title="Link to this heading">#</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">web</span><span class="p">:</span> <span class="n">gunicorn</span> <span class="n">app</span><span class="p">:</span><span class="n">server</span>
+</pre></div>
+</div>
+</section>
+<section id="requirements-txt">
+<h2>requirements.txt<a class="headerlink" href="#requirements-txt" title="Link to this heading">#</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">gspread</span>
+<span class="n">gspread</span><span class="o">-</span><span class="n">dataframe</span>
+<span class="n">dash</span>
+<span class="n">plotly</span>
+<span class="n">pandas</span>
+<span class="n">gunicorn</span>
+<span class="n">dash</span><span class="o">-</span><span class="n">bootstrap</span><span class="o">-</span><span class="n">components</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./Book_Specific_Materials"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../Online_Visualizations/Simple_App_Without_Login/readme.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Simple Dash App Without Login</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../Online_Visualizations/PFN_Dash_App_Demo/readme.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">PFN Dash App Demo</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#app-py">app.py</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#procfile">Procfile</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#requirements-txt">requirements.txt</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Kenneth Burchfiel
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

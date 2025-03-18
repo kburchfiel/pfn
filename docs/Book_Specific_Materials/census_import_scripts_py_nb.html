@@ -1,0 +1,852 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>census_import_scripts.py &#8212; Python for Nonprofits</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Book_Specific_Materials/census_import_scripts_py_nb';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Creating Interactive and Static Charts with Plotly" href="../Graphing/graphing.html" />
+    <link rel="prev" title="Census Data Imports" href="../Census_Data_Imports/census_data_imports.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../front_matter_for_book.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Python for Nonprofits</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../front_matter_for_book.html">
+                    Wecome to Python for Nonprofits!
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Introduction</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Introduction/introduction.html">An Introduction to Python for Nonprofits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Introduction/the_case_for_python_at_nonprofits.html">The Case for Using Python at Nonprofits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting_started_for_book.html">Getting Started</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Importing and Prepping Data</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Data_Retrieval/data_retrieval.html">Data Retrieval</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Data_Prep/data_prep.html">Data Prep</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Analyzing Data</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Descriptive_Stats/descriptive_stats.html">Descriptive Stats</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Descriptive_Stats/descriptive_stats_part_2.html">Descriptive Stats: Part 2</a></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../Census_Data_Imports/census_data_imports.html">Census Data Imports</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">census_import_scripts.py</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Visualizing Data</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Graphing/graphing.html">Creating Interactive and Static Charts with Plotly</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../Graphing/pivot_and_graph_functions.html">Pivot and Graph Functions</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Mapping/choropleth_maps.html">Mapping Census Data using Plotly (Work in progress)</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="plotly_choropleth_map_functions_py_nb.html">plotly_choropleth_map_functions.py</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Mapping/choropleth_maps_with_folium.html">Creating Choropleth Maps with Folium</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="folium_choropleth_map_functions_py_nb.html">folium_choropleth_map_functions.py</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Regressions</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Regressions/regression_analyses.html">Regression Analyses</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Publishing Analyses Online</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Static_Sites/simple_static_site.html">Creating a Simple Static Webpage</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Updating_Online_Spreadsheets/updating_online_spreadsheets.html">Updating Online Spreadsheets</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="weather_import_py_nb.html">weather_import.py</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Online_Visualizations/Simple_App_Without_Login/readme.html">Simple Dash App Without Login</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="Simple_App_Without_Login_py_nb.html">Source code for Simple App Without Login</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Online_Visualizations/PFN_Dash_App_Demo/readme.html">PFN Dash App Demo</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="PFN_Dash_App_Demo_py_nb.html">Source code for PFN Dash App Demo</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendix</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Appendix/nvcu_db_gen.html">NVCU Database Generator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="helper_funcs_py_nb.html">helper_funcs.py</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/Book_Specific_Materials/census_import_scripts_py_nb.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>census_import_scripts.py</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="census-import-scripts-py">
+<h1>census_import_scripts.py<a class="headerlink" href="#census-import-scripts-py" title="Link to this heading">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># This Python file creates scripts for creating lists of American</span>
+<span class="c1"># Community Survey variables; generating aliases for variable codes;</span>
+<span class="c1"># using the Census API to download data; and adding certain statistical</span>
+<span class="c1"># fields to tables.</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">iteration_utilities</span><span class="w"> </span><span class="kn">import</span> <span class="n">duplicates</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">download_variable_list</span><span class="p">(</span><span class="n">year</span><span class="p">,</span> <span class="n">survey</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;This function imports a list of all variables from the Census</span>
+<span class="sd">    website, thus allowing variable codes to get mapped to names in </span>
+<span class="sd">    subsequent analyses.</span>
+<span class="sd">    year: the year for which to retrieve variables.</span>
+<span class="sd">    survey: the ACS type for which to retrieve variables (e.g.</span>
+<span class="sd">    &#39;acs5&#39; or &#39;acs1&#39; for the 5-year and 1-year ACS estimates,</span>
+<span class="sd">    respectively.)</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Importing </span><span class="si">{</span><span class="n">survey</span><span class="si">}</span><span class="s2"> variables from </span><span class="si">{</span><span class="n">year</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+    <span class="n">df_variables_page</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_html</span><span class="p">(</span>
+        <span class="sa">f</span><span class="s1">&#39;https://api.census.gov/data/</span><span class="se">\</span>
+<span class="si">{</span><span class="n">year</span><span class="si">}</span><span class="s1">/acs/</span><span class="si">{</span><span class="n">survey</span><span class="si">}</span><span class="s1">/variables.html&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> 
+    <span class="c1"># [0] selects the first HTML table found on this page.</span>
+    <span class="c1"># See https://pandas.pydata.org/pandas-docs/stable/reference/api/</span>
+    <span class="c1"># pandas.read_html.html</span>
+    <span class="c1"># for more information on pd.read_html().</span>
+        
+    <span class="c1"># Some rows in this table contain items other than demographic </span>
+    <span class="c1"># variables (e.g. region names). We can exclude them by selecting </span>
+    <span class="c1"># only rows that begin with &#39;Estimate&#39;. (Another option would have </span>
+    <span class="c1"># been to filter out rows with N/A &#39;Group&#39; entries (i.e. </span>
+    <span class="c1"># df_variables.query(&quot;Group.isna() == False&quot;)), </span>
+    <span class="c1"># but this would have left a couple non-variable rows in place.</span>
+    
+    <span class="n">df_variables</span> <span class="o">=</span> <span class="n">df_variables_page</span><span class="p">[</span>
+    <span class="n">df_variables_page</span><span class="p">[</span><span class="s1">&#39;Label&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">8</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Estimate&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span>
+    <span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="c1"># Removing an extraneous column from our output</span>
+    <span class="k">if</span> <span class="s1">&#39;Unnamed: 8&#39;</span> <span class="ow">in</span> <span class="n">df_variables</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+        <span class="n">df_variables</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;Unnamed: 8&#39;</span><span class="p">,</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+    <span class="c1"># Saving this table to a local .csv file:</span>
+    <span class="n">df_variables</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Datasets/</span><span class="si">{</span><span class="n">survey</span><span class="si">}</span><span class="s1">_</span><span class="si">{</span><span class="n">year</span><span class="si">}</span><span class="s1">_variables.csv&#39;</span><span class="p">,</span>
+                       <span class="n">index</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> 
+
+    <span class="c1"># Given that there are tens of thousands of individual variables</span>
+    <span class="c1"># within the ACS, it could take a very long time to identify </span>
+    <span class="c1"># the items you&#39;d like to retrieve from this dataset. </span>
+    <span class="c1"># The following code makes this search process somewhat easier by </span>
+    <span class="c1"># creating a separate *groups* table that shows only unique group </span>
+    <span class="c1"># names and their written descriptions (e.g. &#39;Sex by Age&#39;).</span>
+    
+    <span class="n">df_groups</span> <span class="o">=</span> <span class="n">df_variables</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">(</span>
+        <span class="s1">&#39;Group&#39;</span><span class="p">)[[</span><span class="s1">&#39;Concept&#39;</span><span class="p">,</span> <span class="s1">&#39;Group&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">df_groups</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+
+    <span class="n">df_groups</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Datasets/</span><span class="si">{</span><span class="n">survey</span><span class="si">}</span><span class="s1">_</span><span class="si">{</span><span class="n">year</span><span class="si">}</span><span class="s1">_groups.csv&#39;</span><span class="p">,</span> 
+                 <span class="n">index</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
+
+    
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Finished saving variable and group tables to .csv files.&quot;</span><span class="p">)</span>
+    
+
+<span class="k">def</span><span class="w"> </span><span class="nf">create_variable_aliases</span><span class="p">(</span><span class="n">df_variables</span><span class="p">,</span> <span class="n">variable_list</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;This function creates a dictionary whose keys are </span>
+<span class="sd">    the original &#39;Name&#39; values (e.g. &#39;B001_001E&#39;) within a variable</span>
+<span class="sd">    list on the Census API website and whose values are the replacement </span>
+<span class="sd">    names (e.g. &#39;Sex by Age_Estimate!!Total:_B01001_001E&#39;).</span>
+<span class="sd">    This resulting dictionary can then be passed to a df.rename() call</span>
+<span class="sd">    within retrieve_census_data() in order to make the output of that</span>
+<span class="sd">    function easier to interpret.</span>
+<span class="sd">    </span>
+<span class="sd">    df_variables: A DataFrame containing a list of Census variables. For</span>
+<span class="sd">    an example of this list for the 2021 American Community Survey (5-Year </span>
+<span class="sd">    Estimates), visit: </span>
+<span class="sd">    https://api.census.gov/data/2021/acs/acs5/examples.html .</span>
+<span class="sd">    </span>
+<span class="sd">    variable_list: The list of variables to rename </span>
+<span class="sd">    (e.g. [&#39;B01001_001E&#39;, &#39;B01001_002E&#39;]).</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="c1"># Creating a DataFrame that contains the information needed for the</span>
+    <span class="c1"># updated column names:</span>
+    <span class="n">df_aliases</span> <span class="o">=</span> <span class="n">df_variables</span><span class="o">.</span><span class="n">query</span><span class="p">(</span>
+        <span class="s2">&quot;Name in @variable_list&quot;</span><span class="p">)[[</span><span class="s1">&#39;Name&#39;</span><span class="p">,</span> <span class="s1">&#39;Label&#39;</span><span class="p">,</span> <span class="s1">&#39;Concept&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="c1"># Creating a new &#39;Description&#39; column that will replace the original</span>
+    <span class="c1"># output field names:</span>
+    <span class="n">df_aliases</span><span class="p">[</span><span class="s1">&#39;Description&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">df_aliases</span><span class="p">[</span><span class="s1">&#39;Concept&#39;</span><span class="p">]</span> 
+                                 <span class="o">+</span> <span class="s1">&#39;_&#39;</span> <span class="o">+</span> <span class="n">df_aliases</span><span class="p">[</span><span class="s1">&#39;Label&#39;</span><span class="p">]</span> 
+                                 <span class="o">+</span> <span class="s1">&#39; (&#39;</span> <span class="o">+</span> <span class="n">df_aliases</span><span class="p">[</span><span class="s1">&#39;Name&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;)&#39;</span><span class="p">)</span>
+    <span class="c1"># Creating a dictionary whose keys are the original field names and </span>
+    <span class="c1"># whose values are the new &#39;Description&#39; entries that were </span>
+    <span class="c1"># just created:</span>
+    <span class="n">alias_dict</span> <span class="o">=</span> <span class="n">df_aliases</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;Name&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()[</span><span class="s1">&#39;Description&#39;</span><span class="p">]</span>
+    <span class="c1"># See https://pandas.pydata.org/pandas-docs/stable/reference/api/</span>
+    <span class="c1"># pandas.DataFrame.to_dict.html</span>
+    <span class="k">return</span> <span class="n">alias_dict</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">retrieve_census_data</span><span class="p">(</span><span class="n">survey</span><span class="p">,</span> <span class="n">year</span><span class="p">,</span> <span class="n">region</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">variable_list</span><span class="p">,</span>
+                         <span class="n">rename_data_fields</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> 
+                         <span class="n">field_vars_dict</span> <span class="o">=</span> <span class="p">{}):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;This function (which I plan to expand) retrieves data from the US</span>
+<span class="sd">    Census API. It accommodates more than 50 variables.</span>
+<span class="sd">    </span>
+<span class="sd">    survey: the survey from which to retrieve data. The only arguments</span>
+<span class="sd">    currently supported are &#39;acs5&#39; and &#39;acs1&#39; (for the American Community </span>
+<span class="sd">    Survey 5-Year and 1-Year estimates, respectively).</span>
+<span class="sd">    </span>
+<span class="sd">    year: the year for which you wish to retrieve survey data. Note that,</span>
+<span class="sd">    When region is set to &#39;acs5&#39;, the survey results will include data</span>
+<span class="sd">    for the 5 years leading up to (and including) the &#39;year&#39; argument.</span>
+<span class="sd">    (For example, if you set &#39;year&#39; to 2021, you&#39;ll retrieve ACS5 data</span>
+<span class="sd">    from 2017 to 2021 (inclusive).)</span>
+<span class="sd">    </span>
+<span class="sd">    </span>
+<span class="sd">    region: The geographic level at which you wish to retrieve data. </span>
+<span class="sd">    Examples include &#39;us&#39;, &#39;state&#39;, &#39;county&#39;, &#39;zip&#39;, &#39;msa&#39; </span>
+<span class="sd">    (for metropolitan/micropolitan statistical area data), and &#39;csa&#39; </span>
+<span class="sd">    (for combined statistical area data); </span>
+<span class="sd">    however, other regions are supported as well. Consult your survey&#39;s </span>
+<span class="sd">    API examples page for other options. (For instance, if you wanted to </span>
+<span class="sd">    retrieve data by urban area within the 2021 ACS5, you could go to </span>
+<span class="sd">    https://api.census.gov/data/2021/acs/acs5/examples.html, then search</span>
+<span class="sd">    for &#39;urban area.&#39; The Urban Area URL ends with</span>
+<span class="sd">    &#39;&amp;for=urban%20area:*&amp;key=YOUR_KEY_GOES_HERE&#39;. Therefore, you&#39;d want to</span>
+<span class="sd">    use &#39;urban%20area&#39; as your &#39;region&#39; argument.)   </span>
+
+<span class="sd">    (Note: &#39;zip&#39; will retrieve results by Zip Code</span>
+<span class="sd">    Tabulation Area, which are similar to (but not identical to)</span>
+<span class="sd">    # zip codes. See </span>
+<span class="sd">    # https://en.wikipedia.org/wiki/ZIP_Code_Tabulation_Area</span>
+<span class="sd">    # for more information.</span>
+<span class="sd">    </span>
+<span class="sd">    variable_list: The list of variables for which to retrieve data.</span>
+
+<span class="sd">    key: your personal Census API key.</span>
+
+<span class="sd">    rename_data_fields: set to True to replace column names in your </span>
+<span class="sd">    dataset with new entries of your choice.</span>
+
+<span class="sd">    field_vars_dict: A dictionary that stores the original variable names</span>
+<span class="sd">    retrieved by the Census (e.g. &#39;B01001_001E&#39; as keys and your desired</span>
+<span class="sd">    replacements as values. Example: </span>
+<span class="sd">    {&#39;B01001_001E&#39;: &#39;Sex by Age_Estimate!!Total:_B01001_001E&#39;,</span>
+<span class="sd">     &#39;B01001_002E&#39;: &#39;Sex by Age_Estimate!!Total:!!Male:_B01001_002E&#39;}&#39;</span>
+<span class="sd">     </span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="c1"># Using the iteration_utilities library to check for duplicate</span>
+    <span class="c1"># values within variable_list (which could cause issues later on):</span>
+    <span class="c1"># The following code is based on</span>
+    <span class="c1"># https://iteration-utilities.readthedocs.io/en/latest/generated/</span>
+    <span class="c1"># duplicates.html</span>
+    <span class="n">duplicate_variables</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">duplicates</span><span class="p">(</span><span class="n">variable_list</span><span class="p">))</span>
+    
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">duplicate_variables</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The following variables appear more than once </span><span class="se">\</span>
+<span class="s2">in your variable list: </span><span class="si">{</span><span class="n">duplicate_variables</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    
+    <span class="k">if</span> <span class="n">survey</span> <span class="o">==</span> <span class="s1">&#39;acs5&#39;</span><span class="p">:</span>
+        <span class="n">survey_string</span> <span class="o">=</span> <span class="s1">&#39;acs/acs5&#39;</span>
+
+    <span class="k">elif</span> <span class="n">survey</span> <span class="o">==</span> <span class="s1">&#39;acs1&#39;</span><span class="p">:</span>
+        <span class="n">survey_string</span> <span class="o">=</span> <span class="s1">&#39;acs/acs1&#39;</span>
+    
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;This survey type is not currently supported by </span><span class="se">\</span>
+<span class="s2">                         the function.&quot;</span><span class="p">)</span>
+
+    
+    <span class="c1"># Converting simplified region names into strings that the API </span>
+    <span class="c1"># function will recognize:</span>
+    <span class="k">if</span> <span class="n">region</span> <span class="o">==</span> <span class="s1">&#39;zip&#39;</span><span class="p">:</span>
+        <span class="n">region</span> <span class="o">=</span> <span class="s1">&#39;zip</span><span class="si">%20c</span><span class="s1">ode%20tabulation</span><span class="si">%20a</span><span class="s1">rea&#39;</span> <span class="c1"># Based on</span>
+        <span class="c1"># the ZCTA example within</span>
+        <span class="c1"># https://api.census.gov/data/2021/acs/acs5/examples.html</span>
+    
+    <span class="k">if</span> <span class="n">region</span> <span class="o">==</span> <span class="s1">&#39;csa&#39;</span><span class="p">:</span>
+        <span class="n">region</span> <span class="o">=</span> <span class="s1">&#39;combined</span><span class="si">%20s</span><span class="s1">tatistical</span><span class="si">%20a</span><span class="s1">rea&#39;</span>
+    
+    <span class="k">if</span> <span class="n">region</span> <span class="o">==</span> <span class="s1">&#39;msa&#39;</span><span class="p">:</span>
+        <span class="n">region</span> <span class="o">=</span> <span class="s1">&#39;metropolitan</span><span class="si">%20s</span><span class="s1">tatistical</span><span class="se">\</span>
+<span class="si">%20a</span><span class="s1">rea/micropolitan</span><span class="si">%20s</span><span class="s1">tatistical</span><span class="si">%20a</span><span class="s1">rea&#39;</span>
+
+    
+    <span class="c1"># Only 50 variables can be retrieved from the Census API at a time </span>
+    <span class="c1"># using the approach shown in this function. The following code </span>
+    <span class="c1"># accommodates this limitation by splitting variable_list into </span>
+    <span class="c1"># sublists of up to 49 variables. The data retrieved for the variables </span>
+    <span class="c1"># in these sublists will then get merged back together.</span>
+    <span class="c1"># (49 variables are retrieved at a time instead of 50 because it </span>
+    <span class="c1"># appears that the initial &#39;NAME&#39; variable also counts towards </span>
+    <span class="c1"># the 50-variable limit.)</span>
+    
+    <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+       
+    <span class="k">while</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">variable_list</span><span class="p">):</span> <span class="c1"># i.e. while there</span>
+        <span class="c1"># are still more variables to iterate through</span>
+        <span class="n">variable_sublist</span> <span class="o">=</span> <span class="n">variable_list</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="o">+</span><span class="mi">49</span><span class="p">]</span> <span class="c1"># This line reads the </span>
+        <span class="c1"># next 49 variables from variable_list into a sublist that can </span>
+        <span class="c1"># then be\ passed to the API</span>
+        <span class="c1"># print(&quot;variable_sublist:&quot;, variable_sublist)</span>
+        <span class="c1"># Converting the list of variables into a string that can be </span>
+        <span class="c1"># passed to the API call:</span>
+        <span class="c1"># (The Census API guide at</span>
+        <span class="c1"># https://www.census.gov/content/dam/Census/data/developers/</span>
+        <span class="c1"># api-user-guide/api-guide.pdf</span>
+        <span class="c1"># demonstrates how to call multiple census variables at once.)</span>
+        <span class="n">variable_string</span> <span class="o">=</span> <span class="s1">&#39;,&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">variable_sublist</span><span class="p">)</span>
+        <span class="c1"># print(&quot;variable_string:&quot;,variable_string)</span>
+    
+        <span class="c1"># Retrieving data via the Census API:</span>
+        <span class="c1"># This line was originally based on an example found in</span>
+        <span class="c1"># https://api.census.gov/data/2022/acs/acs5/examples.html .</span>
+    
+        <span class="c1"># read_json documentation:</span>
+        <span class="c1"># https://pandas.pydata.org/pandas-docs/stable/reference/api/</span>
+        <span class="c1"># pandas.read_json.html</span>
+
+        <span class="n">api_url</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;https://api.census.gov/data/</span><span class="si">{</span><span class="n">year</span><span class="si">}</span><span class="s1">/</span><span class="se">\</span>
+<span class="si">{</span><span class="n">survey_string</span><span class="si">}</span><span class="s1">?get=NAME,</span><span class="si">{</span><span class="n">variable_string</span><span class="si">}</span><span class="s1">&amp;for=</span><span class="si">{</span><span class="n">region</span><span class="si">}</span><span class="s1">:*&amp;key=</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s1">&#39;</span>
+        <span class="c1"># print(api_url)</span>
+        
+        <span class="n">df_results</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_json</span><span class="p">(</span><span class="n">api_url</span><span class="p">)</span>
+    
+        <span class="c1"># At this point, the DataFrame&#39;s columns are a list of integers; </span>
+        <span class="c1"># the desired column names are stored within the first row. </span>
+        <span class="c1"># The following code resolves this issue by setting these row </span>
+        <span class="c1"># values as the column values and then deleting this row.</span>
+    
+        <span class="n">df_results</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="n">df_results</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">df_results</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">inplace</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+
+
+        <span class="c1"># Determining which merge keys to use when combining API results</span>
+        <span class="c1"># for different sublists together:</span>
+        <span class="c1"># This is made more complicated by the fact that results for </span>
+        <span class="c1"># different regions will have different identifier</span>
+        <span class="c1"># columns (e.g. &#39;NAME&#39;, &#39;county&#39;, and &#39;state&#39; for county data but </span>
+        <span class="c1"># only &#39;NAME&#39; and &#39;state&#39; for state data). However, we can </span>
+        <span class="c1"># accommodate this behavior by simply initializing our list of </span>
+        <span class="c1"># merge keys as the set of all columns that are *not* also </span>
+        <span class="c1"># variable columns.</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span> <span class="c1"># This step only needs to be performed for our first</span>
+            <span class="c1"># sublist of variables, since merge keys for other sublists</span>
+            <span class="c1"># will be identical.</span>
+            <span class="n">merge_keys</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">df_results</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span> 
+              <span class="o">-</span> <span class="nb">set</span><span class="p">(</span><span class="n">variable_sublist</span><span class="p">))</span>
+            <span class="c1"># print(&quot;merge_keys:&quot;,merge_keys)</span>
+
+        <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span> <span class="c1"># Since this is the first set </span>
+            <span class="c1"># of results, we can initialize df_combined_results </span>
+            <span class="c1"># as a copy of df_results.</span>
+            <span class="n">df_combined_results</span> <span class="o">=</span> <span class="n">df_results</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span> <span class="c1"># Merging our latest set of results into df_results:</span>
+            <span class="n">df_combined_results</span> <span class="o">=</span> <span class="n">df_combined_results</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span>
+                <span class="n">df_results</span><span class="p">,</span> <span class="n">on</span> <span class="o">=</span> <span class="n">merge_keys</span><span class="p">,</span>
+                <span class="n">how</span> <span class="o">=</span> <span class="s1">&#39;outer&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+            <span class="c1"># Added .copy() here in response to a data fragmentation </span>
+        <span class="c1"># warning</span>
+
+        <span class="n">i</span> <span class="o">+=</span> <span class="mi">49</span> 
+        <span class="c1"># Allows the function to iterate through the next 49 variables</span>
+        <span class="c1"># within variable_list</span>
+
+        
+    <span class="c1"># Converting variable columns to numeric data types:</span>
+    <span class="k">for</span> <span class="n">column</span> <span class="ow">in</span> <span class="n">variable_list</span><span class="p">:</span>
+        <span class="c1"># print(f&quot;Now converting {column} to a numeric type.&quot;)</span>
+        <span class="n">df_combined_results</span><span class="p">[</span><span class="n">column</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_numeric</span><span class="p">(</span>
+            <span class="n">df_combined_results</span><span class="p">[</span><span class="n">column</span><span class="p">])</span>
+        <span class="c1"># pd.to_numeric() allows for either integer or float outputs</span>
+        <span class="c1"># depending on the nature of the original data.</span>
+        <span class="c1"># See https://pandas.pydata.org/pandas-docs/stable/reference/api/</span>
+        <span class="c1"># pandas.to_numeric.html</span>
+
+    <span class="c1"># Replacing column names with aliases if requested:</span>
+    <span class="k">if</span> <span class="n">rename_data_fields</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">df_combined_results</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span>
+            <span class="n">columns</span> <span class="o">=</span> <span class="n">field_vars_dict</span><span class="p">,</span> <span class="n">inplace</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+
+    <span class="c1"># The following for loop moves all of the merge keys (e.g. geographic</span>
+    <span class="c1"># identifiers) to the left side of the table. This is particularly</span>
+    <span class="c1"># useful when retrieving longer lists of variables, as otherwise,</span>
+    <span class="c1"># certain keys can get buried in the middle of the dataset</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">merge_keys</span><span class="p">)):</span>
+        <span class="n">df_combined_results</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span>
+            <span class="n">i</span><span class="p">,</span> <span class="n">merge_keys</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> 
+            <span class="n">df_combined_results</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">merge_keys</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
+
+    <span class="c1"># Adding a &#39;Year&#39; column to the left of all existing DataFrame columns:</span>
+    <span class="c1"># (this will prove particularly</span>
+    <span class="c1"># helpful when comparing data from different years.)</span>
+    <span class="n">df_combined_results</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;Year&#39;</span><span class="p">,</span> <span class="n">year</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">df_combined_results</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">create_comparison_fields</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">field_var</span><span class="p">,</span> <span class="n">year_list</span><span class="p">,</span>
+                             <span class="n">field_year_separator</span> <span class="o">=</span> <span class="s1">&#39;_&#39;</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;This function calculates nominal and percentage changes</span>
+<span class="sd">    between the last year in a list and all years leading up to that year.</span>
+<span class="sd">    It also calculates both rank and percentile information for these</span>
+<span class="sd">    changes.</span>
+<span class="sd">    </span>
+<span class="sd">    df: the DataFrame that will be updated with comparisons between years.</span>
+<span class="sd">    This function assumes that the fields within df that contain </span>
+<span class="sd">    data for a particular year use the format</span>
+<span class="sd">    {field_var}{field_year_separator}{latest_year} (e.g. &#39;Total_Pop_2009&#39;, </span>
+<span class="sd">    &#39;Total_Pop_2015&#39;, etc.). </span>
+<span class="sd">    </span>
+<span class="sd">    field_var: A string representing the variable </span>
+<span class="sd">    whose values should be compared (e.g. &#39;Total_Pop&#39; within the field</span>
+<span class="sd">    &#39;Total_Pop_2009&#39;. </span>
+
+<span class="sd">    year_list: A list of years to compare. The function will compare</span>
+<span class="sd">    all years leading up to the last year with the last year. For example,</span>
+<span class="sd">    if year_list equals [2005, 2009, 2015], the function will create</span>
+<span class="sd">    comparisons between (1) 2005 and 2015 and (2) 2009 and 2015 (but not</span>
+<span class="sd">    2005 and 2009).</span>
+<span class="sd">    field_var data for each of these years should be stored within</span>
+<span class="sd">    the DataFrame. For instance, if year_list is equal to the example</span>
+<span class="sd">    shown above, field_var is &#39;Total_Pop&#39;, and field_year_separator (see</span>
+<span class="sd">    below) is &#39;_&#39;, the script will expect to see the following fields</span>
+<span class="sd">    within the DataFrame:</span>
+<span class="sd">    &#39;Total_Pop_2005&#39;, &#39;Total_Pop_2009&#39;, &#39;Total_Pop_2015&#39;</span>
+
+<span class="sd">    field_year_separator: The character (e.g. a space, an underscore,</span>
+<span class="sd">    etc.) separating the field_var and year values within the DataFrame&#39;s</span>
+<span class="sd">    fields.</span>
+<span class="sd">    </span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">latest_year</span> <span class="o">=</span> <span class="n">year_list</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">year</span> <span class="ow">in</span> <span class="n">year_list</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span> <span class="c1"># E.g. for all years leading up </span>
+        <span class="c1"># to (but not including) latest_year</span>
+
+        <span class="c1"># Calculating the nominal change between the two years:</span>
+        <span class="n">df</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">year</span><span class="si">}</span><span class="s1">-</span><span class="si">{</span><span class="n">latest_year</span><span class="si">}</span><span class="s1"> </span><span class="si">{</span><span class="n">field_var</span><span class="si">}</span><span class="s1"> Change&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">df</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">field_var</span><span class="si">}{</span><span class="n">field_year_separator</span><span class="si">}{</span><span class="n">latest_year</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">]</span> 
+        <span class="o">-</span> <span class="n">df</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">field_var</span><span class="si">}{</span><span class="n">field_year_separator</span><span class="si">}{</span><span class="n">year</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">]</span> <span class="p">)</span>
+
+        <span class="c1"># Calculating the percentage change:</span>
+        <span class="n">df</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">year</span><span class="si">}</span><span class="s1">-</span><span class="si">{</span><span class="n">latest_year</span><span class="si">}</span><span class="s1"> </span><span class="si">{</span><span class="n">field_var</span><span class="si">}</span><span class="s1"> % Change&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">100</span><span class="o">*</span><span class="p">((</span>
+        <span class="n">df</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">field_var</span><span class="si">}{</span><span class="n">field_year_separator</span><span class="si">}{</span><span class="n">latest_year</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">]</span> 
+        <span class="o">/</span> <span class="n">df</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">field_var</span><span class="si">}{</span><span class="n">field_year_separator</span><span class="si">}{</span><span class="n">year</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">])</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+
+    
+        <span class="c1"># Calculating ranks and percentiles for both the nominal </span>
+        <span class="c1"># change and % change columns:</span>
+        <span class="c1"># Note that field_var still needs to be included within these</span>
+        <span class="c1"># columns in order to specify what change, exactly, is being</span>
+        <span class="c1"># analyzed. (This is particularly important when this function</span>
+        <span class="c1"># gets called for multiple field_var entries.)</span>
+        <span class="n">df</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">year</span><span class="si">}</span><span class="s1">-</span><span class="si">{</span><span class="n">latest_year</span><span class="si">}</span><span class="s1"> </span><span class="si">{</span><span class="n">field_var</span><span class="si">}</span><span class="s1"> Change Rank&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span>
+        <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">year</span><span class="si">}</span><span class="s1">-</span><span class="si">{</span><span class="n">latest_year</span><span class="si">}</span><span class="s1"> </span><span class="si">{</span><span class="n">field_var</span><span class="si">}</span><span class="s1"> Change&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">rank</span><span class="p">(</span>
+            <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">method</span> <span class="o">=</span> <span class="s1">&#39;min&#39;</span><span class="p">)</span>
+        
+        <span class="n">df</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">year</span><span class="si">}</span><span class="s1">-</span><span class="si">{</span><span class="n">latest_year</span><span class="si">}</span><span class="s1"> </span><span class="si">{</span><span class="n">field_var</span><span class="si">}</span><span class="s1"> Change Percentile&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="mi">100</span> <span class="o">*</span> <span class="n">df</span><span class="p">[</span>
+        <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">year</span><span class="si">}</span><span class="s1">-</span><span class="si">{</span><span class="n">latest_year</span><span class="si">}</span><span class="s1"> </span><span class="si">{</span><span class="n">field_var</span><span class="si">}</span><span class="s1"> Change&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">rank</span><span class="p">(</span>
+            <span class="n">pct</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;max&#39;</span><span class="p">))</span>
+        
+        <span class="n">df</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">year</span><span class="si">}</span><span class="s1">-</span><span class="si">{</span><span class="n">latest_year</span><span class="si">}</span><span class="s1"> </span><span class="si">{</span><span class="n">field_var</span><span class="si">}</span><span class="s1"> % Change Rank&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">df</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">year</span><span class="si">}</span><span class="s1">-</span><span class="si">{</span><span class="n">latest_year</span><span class="si">}</span><span class="s1"> </span><span class="si">{</span><span class="n">field_var</span><span class="si">}</span><span class="s1"> % Change&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">rank</span><span class="p">(</span>
+            <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">method</span> <span class="o">=</span> <span class="s1">&#39;min&#39;</span><span class="p">))</span>
+        
+        <span class="n">df</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">year</span><span class="si">}</span><span class="s1">-</span><span class="si">{</span><span class="n">latest_year</span><span class="si">}</span><span class="s1"> </span><span class="si">{</span><span class="n">field_var</span><span class="si">}</span><span class="s1"> % Change Percentile&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="mi">100</span> <span class="o">*</span> <span class="n">df</span><span class="p">[</span>
+            <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">year</span><span class="si">}</span><span class="s1">-</span><span class="si">{</span><span class="n">latest_year</span><span class="si">}</span><span class="s1"> </span><span class="si">{</span><span class="n">field_var</span><span class="si">}</span><span class="s1"> % Change&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">rank</span><span class="p">(</span>
+            <span class="n">pct</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;max&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./Book_Specific_Materials"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../Census_Data_Imports/census_data_imports.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Census Data Imports</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../Graphing/graphing.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Creating Interactive and Static Charts with Plotly</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Kenneth Burchfiel
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

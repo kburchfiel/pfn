@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<!-- Source: jinnyzor at https://community.plotly.com/t/dash-app-pages-
+with-flask-login-flow-using-flask/69507/38. Jinnyzor wrote later in this
+thread that "this is free to use, no license". -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Flask Login Flow</title>
+</head>
+<body>
+<form method="POST" action="/login">
+    <div>Please log in to continue:</div>
+    <div>Note: this login page is simply meant to demonstrate that Dash 
+        apps can be used with the Flask-Login library. No private 
+        information is being 
+        displayed.<br>You can use <strong>hello</strong> as the username 
+        and  <strong>world</strong> as the password.</div>
+    <div><span style="color:red">{{message}}</span></div>
+    <input placeholder="Enter your username here" type="text" 
+        id="uname-box" name='username'>
+    <input placeholder="Enter your password here" type="password" 
+        id="pwd-box" name='password'>
+    <Button type="Submit" id="login-button">Log in</Button>
+</form>
+</body>
+</html>

@@ -1,0 +1,2250 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Data Prep &#8212; Python for Nonprofits</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Data_Prep/data_prep';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Descriptive Stats" href="../Descriptive_Stats/descriptive_stats.html" />
+    <link rel="prev" title="Data Retrieval" href="../Data_Retrieval/data_retrieval.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../front_matter_for_book.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Python for Nonprofits</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../front_matter_for_book.html">
+                    Wecome to Python for Nonprofits!
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Introduction</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Introduction/introduction.html">An Introduction to Python for Nonprofits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Introduction/the_case_for_python_at_nonprofits.html">The Case for Using Python at Nonprofits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Book_Specific_Materials/getting_started_for_book.html">Getting Started</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Importing and Prepping Data</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Data_Retrieval/data_retrieval.html">Data Retrieval</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Data Prep</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Analyzing Data</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Descriptive_Stats/descriptive_stats.html">Descriptive Stats</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Descriptive_Stats/descriptive_stats_part_2.html">Descriptive Stats: Part 2</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Census_Data_Imports/census_data_imports.html">Census Data Imports</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Book_Specific_Materials/census_import_scripts_py_nb.html">census_import_scripts.py</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Visualizing Data</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Graphing/graphing.html">Creating Interactive and Static Charts with Plotly</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../Graphing/pivot_and_graph_functions.html">Pivot and Graph Functions</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Mapping/choropleth_maps.html">Mapping Census Data using Plotly (Work in progress)</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Book_Specific_Materials/plotly_choropleth_map_functions_py_nb.html">plotly_choropleth_map_functions.py</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Mapping/choropleth_maps_with_folium.html">Creating Choropleth Maps with Folium</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Book_Specific_Materials/folium_choropleth_map_functions_py_nb.html">folium_choropleth_map_functions.py</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Regressions</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Regressions/regression_analyses.html">Regression Analyses</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Publishing Analyses Online</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Static_Sites/simple_static_site.html">Creating a Simple Static Webpage</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Updating_Online_Spreadsheets/updating_online_spreadsheets.html">Updating Online Spreadsheets</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Book_Specific_Materials/weather_import_py_nb.html">weather_import.py</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Online_Visualizations/Simple_App_Without_Login/readme.html">Simple Dash App Without Login</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Book_Specific_Materials/Simple_App_Without_Login_py_nb.html">Source code for Simple App Without Login</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Online_Visualizations/PFN_Dash_App_Demo/readme.html">PFN Dash App Demo</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Book_Specific_Materials/PFN_Dash_App_Demo_py_nb.html">Source code for PFN Dash App Demo</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendix</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Appendix/nvcu_db_gen.html">NVCU Database Generator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Book_Specific_Materials/helper_funcs_py_nb.html">helper_funcs.py</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/Data_Prep/data_prep.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Data Prep</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reformatting-and-cleaning-our-winter-results-dataset">Reformatting and cleaning our winter results dataset</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#removing-duplicates">Removing duplicates</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#combining-winter-survey-results-with-our-fall-spring-dataset">Combining winter survey results with our fall/spring dataset</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#merging-college-and-level-data-into-our-survey-results-table">Merging college and level data into our survey results table</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion">Conclusion</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="data-prep">
+<h1>Data Prep<a class="headerlink" href="#data-prep" title="Link to this heading">#</a></h1>
+<p>By Kenneth Burchfiel</p>
+<p>Released under the MIT License</p>
+<p>Before a dataset can be analyzed and visualized within Python, it often needs to be reformatted and cleaned. In order to demonstrate how Python can easily perform these reformatting and cleaning tasks, this script will clean and reformat a set of NVCU winter student survey results; combine those results with fall and spring survey data; and merge in information from our current enrollment table.</p>
+<p>Our survey_results database file (which we’ll import from PFN’s Appendix folder) already contains student survey responses for the fall and spring. However, let’s say that you’ve been asked to add a set of <em>winter</em> results to this dataset as well, then calculate a weighted average of fall, winter, and spring survey results for each student.</p>
+<p>If these results were in the same format as the fall and spring ones and had no missing data, this process would be very simple. Unfortunately, that’s not the case with the winter results that we’ll be processing within this script. These results feature:</p>
+<ol class="arabic simple">
+<li><p>Column names that differ from those in the fall/spring results</p></li>
+<li><p>Different data formats</p></li>
+<li><p>A missing column</p></li>
+<li><p>Duplicate values</p></li>
+<li><p>Missing values for certain students</p></li>
+</ol>
+<p>In addition, to make matters even more complex, these winter results are spread out over 16 different files (one for each level within each college).</p>
+<p>It would be cumbersome and mind-numbing to modify each of these 16 datasets within Excel, Google Sheets, or a similar program so that they could be combined with our pre-existing fall and spring data. However, the Python code shown below will make this data cleaning process much easier. And once this script is in place, if you happened to get next year’s winter results in the same format* as this year’s, you’d be able to get them cleaned up and reformatted in no time.</p>
+<p><em>*You may find in your work, however, that the results are in yet another format the following year, followed by a different format the year after that. Data-related tasks are always made easier when inputs stay the same, but in the real world, you’ll often need to rework datasets in order to make them compatible with pre-existing processes.</em></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;../Appendix&#39;</span><span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">helper_funcs</span><span class="w"> </span><span class="kn">import</span> <span class="n">config_notebook</span>
+<span class="n">display_type</span> <span class="o">=</span> <span class="n">config_notebook</span><span class="p">(</span><span class="n">display_max_columns</span> <span class="o">=</span> <span class="mi">7</span><span class="p">)</span> 
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sqlalchemy</span><span class="w"> </span><span class="kn">import</span> <span class="n">create_engine</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Our first step in preparing our winter survey results will be to import the 16 files that comprise them into a DataFrame. We’ll start this process by calling <code class="docutils literal notranslate"><span class="pre">os.listdir()</span></code> to create a list of all files within our winter_results folder:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">file_list</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="s1">&#39;winter_results&#39;</span><span class="p">)</span>
+<span class="n">file_list</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">5</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;STM_Ju_results.csv&#39;,
+ &#39;STB_Se_results.csv&#39;,
+ &#39;STM_Se_results.csv&#39;,
+ &#39;STC_So_results.csv&#39;,
+ &#39;STB_Ju_results.csv&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<p>Note that each file represents a single college/level pair.</p>
+<p><em>(Note: as an American university, NVCU has four ‘levels’: freshmen, sophomore, junior, and senior. These four terms (which will often be truncated to ‘Fr’, ‘So’, ‘Ju’, and ‘Se’ within our datasets and tables) correspond to the first, second, third, and fourth years of enrollment at the university.</em></p>
+<p><em>‘Year’ is a more common term than ‘level’ to refer to these four names, but it could easily get confused with school year values in our datasets. Therefore, I’ll normally use ‘level’ to represent these terms within PFN.</em>)</p>
+<p>Next, we’ll use a for loop to (1) read each file within this list into a DataFrame, then (2) add those files to a list of DataFrames. We’ll then apply <code class="docutils literal notranslate"><span class="pre">pd.concat()</span></code> to combine these file-specific DataFrames into a single DataFrame.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_list</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">file_list</span><span class="p">:</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;winter_results/</span><span class="si">{</span><span class="n">file</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">df_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+
+<span class="c1"># Combining these individual DataFrames into a single file:</span>
+<span class="n">df_winter_results</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span>
+    <span class="p">[</span><span class="n">df</span> <span class="k">for</span> <span class="n">df</span> <span class="ow">in</span> <span class="n">df_list</span><span class="p">])</span> <span class="c1"># df for df in df_list is a list comprehension</span>
+<span class="c1"># that contains all DataFrames in df_list.</span>
+<span class="c1"># Replacing the original indices with a new, unified index:</span>
+<span class="n">df_winter_results</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">df_winter_results</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>MATRIC#</th>
+      <th>SEASON</th>
+      <th>SURVEY_SCORE</th>
+      <th>STARTINGYR</th>
+      <th>MATRICYR</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1163</td>
+      <td>W</td>
+      <td>64.0%</td>
+      <td>23</td>
+      <td>21</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2574</td>
+      <td>W</td>
+      <td>70.0%</td>
+      <td>23</td>
+      <td>21</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1475</td>
+      <td>W</td>
+      <td>72.0%</td>
+      <td>23</td>
+      <td>21</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2388</td>
+      <td>W</td>
+      <td>87.0%</td>
+      <td>23</td>
+      <td>21</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>3510</td>
+      <td>W</td>
+      <td>58.0%</td>
+      <td>23</td>
+      <td>21</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>The following cell shows a more concise means of creating the same DataFrame. Although this approach requires fewer lines of code, it’s also less flexible (as the former method allows you to make individual updates to each DataFrame if needed).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_winter_results</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span>
+    <span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;winter_results/</span><span class="si">{</span><span class="n">file</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span> 
+     <span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="s1">&#39;winter_results&#39;</span><span class="p">)])</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">df_winter_results</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>MATRIC#</th>
+      <th>SEASON</th>
+      <th>SURVEY_SCORE</th>
+      <th>STARTINGYR</th>
+      <th>MATRICYR</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1163</td>
+      <td>W</td>
+      <td>64.0%</td>
+      <td>23</td>
+      <td>21</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2574</td>
+      <td>W</td>
+      <td>70.0%</td>
+      <td>23</td>
+      <td>21</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1475</td>
+      <td>W</td>
+      <td>72.0%</td>
+      <td>23</td>
+      <td>21</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2388</td>
+      <td>W</td>
+      <td>87.0%</td>
+      <td>23</td>
+      <td>21</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>3510</td>
+      <td>W</td>
+      <td>58.0%</td>
+      <td>23</td>
+      <td>21</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<section id="reformatting-and-cleaning-our-winter-results-dataset">
+<h2>Reformatting and cleaning our winter results dataset<a class="headerlink" href="#reformatting-and-cleaning-our-winter-results-dataset" title="Link to this heading">#</a></h2>
+<p>Our next step is to combine these winter survey results with the fall and spring results in our NVCU database. Here’s what those results look like:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Connecting to our database:</span>
+<span class="n">e</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="s1">&#39;sqlite:///../Appendix/nvcu_db.db&#39;</span><span class="p">)</span>
+<span class="n">df_fall_spring_results</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_sql</span><span class="p">(</span>
+    <span class="s2">&quot;Select * from survey_results&quot;</span><span class="p">,</span> <span class="n">con</span><span class="o">=</span><span class="n">e</span><span class="p">)</span>
+<span class="n">df_fall_spring_results</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>student_id</th>
+      <th>starting_year</th>
+      <th>season</th>
+      <th>score</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2020-1</td>
+      <td>2023</td>
+      <td>Fall</td>
+      <td>88</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2020-2</td>
+      <td>2023</td>
+      <td>Fall</td>
+      <td>37</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2020-3</td>
+      <td>2023</td>
+      <td>Fall</td>
+      <td>54</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2020-4</td>
+      <td>2023</td>
+      <td>Fall</td>
+      <td>56</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2020-5</td>
+      <td>2023</td>
+      <td>Fall</td>
+      <td>77</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>If we naively tried to add our winter results to our fall/spring results, we’d end up with a very messy DataFrame with numerous blank (i.e. <code class="docutils literal notranslate"><span class="pre">NaN</span></code>) cells:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_messy_combo</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">df_fall_spring_results</span><span class="p">,</span> 
+           <span class="n">df_winter_results</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Compare the beginning of this DataFrame (which has fall/spring results) with the end (which has the new winter results we just imported):</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_messy_combo</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>student_id</th>
+      <th>starting_year</th>
+      <th>season</th>
+      <th>...</th>
+      <th>SURVEY_SCORE</th>
+      <th>STARTINGYR</th>
+      <th>MATRICYR</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2020-1</td>
+      <td>2023.0</td>
+      <td>Fall</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2020-2</td>
+      <td>2023.0</td>
+      <td>Fall</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2020-3</td>
+      <td>2023.0</td>
+      <td>Fall</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2020-4</td>
+      <td>2023.0</td>
+      <td>Fall</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2020-5</td>
+      <td>2023.0</td>
+      <td>Fall</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 9 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_messy_combo</span><span class="o">.</span><span class="n">tail</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>student_id</th>
+      <th>starting_year</th>
+      <th>season</th>
+      <th>...</th>
+      <th>SURVEY_SCORE</th>
+      <th>STARTINGYR</th>
+      <th>MATRICYR</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>14617</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>...</td>
+      <td>81.0%</td>
+      <td>23.0</td>
+      <td>23.0</td>
+    </tr>
+    <tr>
+      <th>14618</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>...</td>
+      <td>58.0%</td>
+      <td>23.0</td>
+      <td>23.0</td>
+    </tr>
+    <tr>
+      <th>14619</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>...</td>
+      <td>83.0%</td>
+      <td>23.0</td>
+      <td>23.0</td>
+    </tr>
+    <tr>
+      <th>14620</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>...</td>
+      <td>69.0%</td>
+      <td>23.0</td>
+      <td>23.0</td>
+    </tr>
+    <tr>
+      <th>14621</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>...</td>
+      <td>63.0%</td>
+      <td>23.0</td>
+      <td>23.0</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 9 columns</p>
+</div></div></div>
+</div>
+<p>This unkempt output is caused by discrepancies in column names between the two tables. To rectify this issue, we’ll need to rename our winter results fields to match their corresponding fields within the fall/spring table. Thankfully, Pandas makes this process very straightforward:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_winter_results</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;SEASON&#39;</span><span class="p">:</span><span class="s1">&#39;season&#39;</span><span class="p">,</span><span class="s1">&#39;STARTINGYR&#39;</span><span class="p">:</span><span class="s1">&#39;starting_year&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;SURVEY_SCORE&#39;</span><span class="p">:</span><span class="s1">&#39;score&#39;</span><span class="p">},</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">df_winter_results</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>MATRIC#</th>
+      <th>season</th>
+      <th>score</th>
+      <th>starting_year</th>
+      <th>MATRICYR</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1163</td>
+      <td>W</td>
+      <td>64.0%</td>
+      <td>23</td>
+      <td>21</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2574</td>
+      <td>W</td>
+      <td>70.0%</td>
+      <td>23</td>
+      <td>21</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1475</td>
+      <td>W</td>
+      <td>72.0%</td>
+      <td>23</td>
+      <td>21</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2388</td>
+      <td>W</td>
+      <td>87.0%</td>
+      <td>23</td>
+      <td>21</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>3510</td>
+      <td>W</td>
+      <td>58.0%</td>
+      <td>23</td>
+      <td>21</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>We’ll also need to convert our <code class="docutils literal notranslate"><span class="pre">MATRIC#</span></code> and <code class="docutils literal notranslate"><span class="pre">MATRICYR</span></code> fields into a single <code class="docutils literal notranslate"><span class="pre">student_id</span></code> field. (This student_id field simply combines students’ matriculation years with their matriculation numbers; see nvcu_db_gen.ipynb within the Appendix for more details.) This can be done as follows:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_winter_results</span><span class="p">[</span><span class="s1">&#39;MATRICYR&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">2000</span> <span class="c1"># Converts our MATRICYR</span>
+<span class="c1"># values from YY to YYYY format so that they&#39;ll match the format of the </span>
+<span class="c1"># matriculation year component of the student_id values within </span>
+<span class="c1"># df_fall_spring_results</span>
+
+<span class="c1"># Converting students&#39; MATRICYR and MATRIC# values into student IDs (which</span>
+<span class="c1"># are based on these two values):</span>
+<span class="c1"># (Note that both columns must be converted to strings in order for</span>
+<span class="c1"># this code to work. If we just added the two integers together, we&#39;d</span>
+<span class="c1"># get their sum--which isn&#39;t what we want in this case.)</span>
+<span class="n">df_winter_results</span><span class="p">[</span><span class="s1">&#39;student_id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">df_winter_results</span><span class="p">[</span><span class="s1">&#39;MATRICYR&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;str&#39;</span><span class="p">)</span> 
+    <span class="o">+</span> <span class="s1">&#39;-&#39;</span> 
+    <span class="o">+</span> <span class="n">df_winter_results</span><span class="p">[</span><span class="s1">&#39;MATRIC#&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;str&#39;</span><span class="p">))</span>
+
+<span class="c1"># Now that we&#39;ve used our MATRICYR and MATRIC# columns to create </span>
+<span class="c1"># our student IDs, we no longer need to retain them:</span>
+<span class="n">df_winter_results</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span>
+    <span class="p">[</span><span class="s1">&#39;MATRICYR&#39;</span><span class="p">,</span> <span class="s1">&#39;MATRIC#&#39;</span><span class="p">],</span> 
+    <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">df_winter_results</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>season</th>
+      <th>score</th>
+      <th>starting_year</th>
+      <th>student_id</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>W</td>
+      <td>64.0%</td>
+      <td>23</td>
+      <td>2021-1163</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>W</td>
+      <td>70.0%</td>
+      <td>23</td>
+      <td>2021-2574</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>W</td>
+      <td>72.0%</td>
+      <td>23</td>
+      <td>2021-1475</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>W</td>
+      <td>87.0%</td>
+      <td>23</td>
+      <td>2021-2388</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>W</td>
+      <td>58.0%</td>
+      <td>23</td>
+      <td>2021-3510</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>The columns in <code class="docutils literal notranslate"><span class="pre">df_winter_results</span></code> now match those within <code class="docutils literal notranslate"><span class="pre">df_fall_spring_results</span></code>. That’s great! Let’s try combining the two datasets to see if we’re ready to calculate average survey scores for each season:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_results</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">df_fall_spring_results</span><span class="p">,</span> 
+           <span class="n">df_winter_results</span><span class="p">])</span>
+<span class="n">df_results</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>student_id</th>
+      <th>starting_year</th>
+      <th>season</th>
+      <th>score</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2020-1</td>
+      <td>2023</td>
+      <td>Fall</td>
+      <td>88</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2020-2</td>
+      <td>2023</td>
+      <td>Fall</td>
+      <td>37</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2020-3</td>
+      <td>2023</td>
+      <td>Fall</td>
+      <td>54</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2020-4</td>
+      <td>2023</td>
+      <td>Fall</td>
+      <td>56</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2020-5</td>
+      <td>2023</td>
+      <td>Fall</td>
+      <td>77</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Note the differences between the previous and following outputs (which show fall and winter data, respectively):</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_winter_results</span><span class="o">.</span><span class="n">tail</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>season</th>
+      <th>score</th>
+      <th>starting_year</th>
+      <th>student_id</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>14617</th>
+      <td>W</td>
+      <td>81.0%</td>
+      <td>23</td>
+      <td>2023-3073</td>
+    </tr>
+    <tr>
+      <th>14618</th>
+      <td>W</td>
+      <td>58.0%</td>
+      <td>23</td>
+      <td>2023-969</td>
+    </tr>
+    <tr>
+      <th>14619</th>
+      <td>W</td>
+      <td>83.0%</td>
+      <td>23</td>
+      <td>2023-3191</td>
+    </tr>
+    <tr>
+      <th>14620</th>
+      <td>W</td>
+      <td>69.0%</td>
+      <td>23</td>
+      <td>2023-4137</td>
+    </tr>
+    <tr>
+      <th>14621</th>
+      <td>W</td>
+      <td>63.0%</td>
+      <td>23</td>
+      <td>2023-2575</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>These excerpts show that, unfortunately, we’re not quite ready to analyze this data just yet: there are several formatting differences that we’ll need to address.</p>
+<p>For instance, the ‘score’ column within <code class="docutils literal notranslate"><span class="pre">df_fall_spring_results</span></code> uses an integer format, whereas these same numbers are formatted as strings within <code class="docutils literal notranslate"><span class="pre">df_winter_results</span></code>. This will produce errors when we attempt to perform numerical calculations on this field:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># df_results[&#39;score&#39;].mean() </span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>This line was commented out because it would produce the following <code class="docutils literal notranslate"><span class="pre">TypeError</span></code>:</p>
+<p><code class="docutils literal notranslate"><span class="pre">unsupported</span> <span class="pre">operand</span> <span class="pre">type(s)</span> <span class="pre">for</span> <span class="pre">+:</span> <span class="pre">'int'</span> <span class="pre">and</span> <span class="pre">'str'</span></code></p>
+<p>The following cell resolves this issue by converting our string-formatted score values to integers:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_winter_results</span><span class="p">[</span><span class="s1">&#39;score&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_winter_results</span><span class="p">[</span>
+<span class="s1">&#39;score&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;.0%&#39;</span><span class="p">,</span><span class="s1">&#39;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;int&#39;</span><span class="p">)</span> <span class="c1"># Chaining these </span>
+<span class="c1"># column-specific operations together helps reduce the number of</span>
+<span class="c1"># times we need to write the column name--which can help prevent</span>
+<span class="c1"># errors related to incorrect field names.</span>
+<span class="n">df_winter_results</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>season</th>
+      <th>score</th>
+      <th>starting_year</th>
+      <th>student_id</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>W</td>
+      <td>64</td>
+      <td>23</td>
+      <td>2021-1163</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>W</td>
+      <td>70</td>
+      <td>23</td>
+      <td>2021-2574</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>W</td>
+      <td>72</td>
+      <td>23</td>
+      <td>2021-1475</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>W</td>
+      <td>87</td>
+      <td>23</td>
+      <td>2021-2388</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>W</td>
+      <td>58</td>
+      <td>23</td>
+      <td>2021-3510</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>We’ll also need to reformat our winter results’ <code class="docutils literal notranslate"><span class="pre">season</span></code> and <code class="docutils literal notranslate"><span class="pre">starting_year</span></code> values so that they match the formats found in the fall/spring table.</p>
+<p>The following cell replaces the ‘W’ values within the ‘season’ column with ‘Winter’ so that they’ll better match the ‘Fall’ and ‘Spring’ values in <code class="docutils literal notranslate"><span class="pre">df_fall_spring_results</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_winter_results</span><span class="p">[</span><span class="s1">&#39;season&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">df_winter_results</span><span class="p">[</span><span class="s1">&#39;season&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">({</span><span class="s1">&#39;W&#39;</span><span class="p">:</span><span class="s1">&#39;Winter&#39;</span><span class="p">}))</span>
+<span class="n">df_winter_results</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>season</th>
+      <th>score</th>
+      <th>starting_year</th>
+      <th>student_id</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Winter</td>
+      <td>64</td>
+      <td>23</td>
+      <td>2021-1163</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Winter</td>
+      <td>70</td>
+      <td>23</td>
+      <td>2021-2574</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Winter</td>
+      <td>72</td>
+      <td>23</td>
+      <td>2021-1475</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Winter</td>
+      <td>87</td>
+      <td>23</td>
+      <td>2021-2388</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Winter</td>
+      <td>58</td>
+      <td>23</td>
+      <td>2021-3510</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>The following code would also have worked; however, it assumes that every row within the DataFrame is indeed a winter result. This is the case in our simulated data, but in the real world, some data from other seasons might have leaked in, causing this code to incorrectly reclassify certain results.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># df_winter_results[&#39;season&#39;] = &#39;Winter&#39;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Finally, we’ll add 2000 to every starting_year value so that our years will show up within YYYY format–just as they do within our fall/spring dataset.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_winter_results</span><span class="p">[</span><span class="s1">&#39;starting_year&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">2000</span>
+<span class="n">df_winter_results</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>season</th>
+      <th>score</th>
+      <th>starting_year</th>
+      <th>student_id</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Winter</td>
+      <td>64</td>
+      <td>2023</td>
+      <td>2021-1163</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Winter</td>
+      <td>70</td>
+      <td>2023</td>
+      <td>2021-2574</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Winter</td>
+      <td>72</td>
+      <td>2023</td>
+      <td>2021-1475</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Winter</td>
+      <td>87</td>
+      <td>2023</td>
+      <td>2021-2388</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Winter</td>
+      <td>58</td>
+      <td>2023</td>
+      <td>2021-3510</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="removing-duplicates">
+<h2>Removing duplicates<a class="headerlink" href="#removing-duplicates" title="Link to this heading">#</a></h2>
+<p>We’ve now successfully made our winter dataset’s field names and values compatible with those in our fall/spring dataset. However, before we can combine the two together, we’ll need to remove some duplicate results. (The NVCU administration has specified that they want only <em>one</em> survey score per student/season pair to get retained; otherwise, students who fill out a given survey multiple times will get weighted more often than those who complete it only once.)</p>
+<p>Let’s first identify these duplicate rows. The following code filters <code class="docutils literal notranslate"><span class="pre">df_winter_results</span></code> to include any rows whose <code class="docutils literal notranslate"><span class="pre">season</span></code>, <code class="docutils literal notranslate"><span class="pre">starting_year</span></code>, and <code class="docutils literal notranslate"><span class="pre">student_id</span></code> columns match. (The inclusion of <code class="docutils literal notranslate"><span class="pre">keep=False</span></code> instructs Pandas to return all copies of a duplicated row, not just the first one that it encounters.)</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_winter_results</span><span class="p">[</span><span class="n">df_winter_results</span><span class="o">.</span><span class="n">duplicated</span><span class="p">(</span>
+    <span class="n">subset</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;season&#39;</span><span class="p">,</span> <span class="s1">&#39;starting_year&#39;</span><span class="p">,</span> <span class="s1">&#39;student_id&#39;</span><span class="p">],</span> 
+    <span class="n">keep</span><span class="o">=</span><span class="kc">False</span><span class="p">)]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>season</th>
+      <th>score</th>
+      <th>starting_year</th>
+      <th>student_id</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>56</th>
+      <td>Winter</td>
+      <td>73</td>
+      <td>2023</td>
+      <td>2021-564</td>
+    </tr>
+    <tr>
+      <th>74</th>
+      <td>Winter</td>
+      <td>71</td>
+      <td>2023</td>
+      <td>2021-1156</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>14620</th>
+      <td>Winter</td>
+      <td>69</td>
+      <td>2023</td>
+      <td>2023-4137</td>
+    </tr>
+    <tr>
+      <th>14621</th>
+      <td>Winter</td>
+      <td>63</td>
+      <td>2023</td>
+      <td>2023-2575</td>
+    </tr>
+  </tbody>
+</table>
+<p>1392 rows × 4 columns</p>
+</div></div></div>
+</div>
+<p>These duplicate values can easily be removed using Pandas’ drop_duplicates() function. However, before removing duplicate rows, it’s a good idea to first consider which of these duplicated entries to retain. (For instance, you might choose to keep the earliest copy of a set of duplicated surveys; the latest copy; or the one with the highest/lowest score.)</p>
+<p>In our case, we’ll keep the duplicated row with the <em>highest</em> score and remove all others. We can do this by (1) sorting our DataFrame to show higher scores before lower ones, then (2) keeping the first row (i.e. the one with the highest score) when removing our duplicates.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_winter_results</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span>
+    <span class="s1">&#39;score&#39;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">df_winter_results</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>season</th>
+      <th>score</th>
+      <th>starting_year</th>
+      <th>student_id</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1898</th>
+      <td>Winter</td>
+      <td>99</td>
+      <td>2023</td>
+      <td>2020-616</td>
+    </tr>
+    <tr>
+      <th>1036</th>
+      <td>Winter</td>
+      <td>98</td>
+      <td>2023</td>
+      <td>2020-35</td>
+    </tr>
+    <tr>
+      <th>8199</th>
+      <td>Winter</td>
+      <td>97</td>
+      <td>2023</td>
+      <td>2020-816</td>
+    </tr>
+    <tr>
+      <th>8216</th>
+      <td>Winter</td>
+      <td>97</td>
+      <td>2023</td>
+      <td>2020-395</td>
+    </tr>
+    <tr>
+      <th>646</th>
+      <td>Winter</td>
+      <td>97</td>
+      <td>2023</td>
+      <td>2021-468</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Removing duplicate values:</p>
+<p>Note: when removing duplicates, think carefully about which columns to include in your <code class="docutils literal notranslate"><span class="pre">subset</span></code> argument. For instance, if we had multiple years’ worth of data in our table, using <code class="docutils literal notranslate"><span class="pre">['season',</span> <span class="pre">'student_id']</span></code> as your subset would cause only <em>one</em> result for each student/season pair to get retained, thus removing valid data for other years from your table.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_winter_results</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">(</span>
+    <span class="n">subset</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;season&#39;</span><span class="p">,</span> <span class="s1">&#39;starting_year&#39;</span><span class="p">,</span> <span class="s1">&#39;student_id&#39;</span><span class="p">],</span> 
+    <span class="n">keep</span> <span class="o">=</span> <span class="s1">&#39;first&#39;</span><span class="p">,</span> <span class="n">inplace</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+<span class="n">df_winter_results</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>season</th>
+      <th>score</th>
+      <th>starting_year</th>
+      <th>student_id</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1898</th>
+      <td>Winter</td>
+      <td>99</td>
+      <td>2023</td>
+      <td>2020-616</td>
+    </tr>
+    <tr>
+      <th>1036</th>
+      <td>Winter</td>
+      <td>98</td>
+      <td>2023</td>
+      <td>2020-35</td>
+    </tr>
+    <tr>
+      <th>8199</th>
+      <td>Winter</td>
+      <td>97</td>
+      <td>2023</td>
+      <td>2020-816</td>
+    </tr>
+    <tr>
+      <th>8216</th>
+      <td>Winter</td>
+      <td>97</td>
+      <td>2023</td>
+      <td>2020-395</td>
+    </tr>
+    <tr>
+      <th>646</th>
+      <td>Winter</td>
+      <td>97</td>
+      <td>2023</td>
+      <td>2021-468</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Rerunning our duplicate check code confirms that no duplicate entries remain within our dataset:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_duplicated_winter_results</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">df_winter_results</span><span class="p">[</span><span class="n">df_winter_results</span><span class="o">.</span><span class="n">duplicated</span><span class="p">(</span>
+    <span class="n">subset</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;season&#39;</span><span class="p">,</span> <span class="s1">&#39;starting_year&#39;</span><span class="p">,</span> <span class="s1">&#39;student_id&#39;</span><span class="p">],</span> 
+    <span class="n">keep</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)])</span>
+<span class="nb">len</span><span class="p">(</span><span class="n">df_duplicated_winter_results</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0
+</pre></div>
+</div>
+</div>
+</div>
+<p>Since we may need to run this code again in the future with new sets of winter data, we should include a block of code at this point that will check whether we have any duplicates, then raise an error if so. (This will prevent the script from continuing on and possibly generating incorrect findings.)</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">df_duplicated_winter_results</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Duplicate winter survey results are still present!&quot;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;No duplicate entries are present within the winter dataset.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>No duplicate entries are present within the winter dataset.
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="combining-winter-survey-results-with-our-fall-spring-dataset">
+<h2>Combining winter survey results with our fall/spring dataset<a class="headerlink" href="#combining-winter-survey-results-with-our-fall-spring-dataset" title="Link to this heading">#</a></h2>
+<p>We’re now finally ready to combine df_winter_results with df_fall_spring results. However, one final issue remains with this table: winter survey results are missing for a number of students. This won’t cause any issues with the following code, but we’ll need to take these missing entries into account when analyzing our survey data within the upcoming Descriptive Stats chapter.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_results</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span>
+    <span class="p">[</span><span class="n">df_fall_spring_results</span><span class="p">,</span> 
+     <span class="n">df_winter_results</span><span class="p">])</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span>
+    <span class="p">[</span><span class="s1">&#39;starting_year&#39;</span><span class="p">,</span> <span class="s1">&#39;season&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">df_results</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>student_id</th>
+      <th>starting_year</th>
+      <th>season</th>
+      <th>score</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2020-1</td>
+      <td>2023</td>
+      <td>Fall</td>
+      <td>88</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2020-2</td>
+      <td>2023</td>
+      <td>Fall</td>
+      <td>37</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2020-3</td>
+      <td>2023</td>
+      <td>Fall</td>
+      <td>54</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2020-4</td>
+      <td>2023</td>
+      <td>Fall</td>
+      <td>56</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2020-5</td>
+      <td>2023</td>
+      <td>Fall</td>
+      <td>77</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>The following output confirms that the format of the winter results within this table matches that of the fall/spring rows:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_results</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;season == &#39;Winter&#39;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>student_id</th>
+      <th>starting_year</th>
+      <th>season</th>
+      <th>score</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>32768</th>
+      <td>2020-616</td>
+      <td>2023</td>
+      <td>Winter</td>
+      <td>99</td>
+    </tr>
+    <tr>
+      <th>32769</th>
+      <td>2020-35</td>
+      <td>2023</td>
+      <td>Winter</td>
+      <td>98</td>
+    </tr>
+    <tr>
+      <th>32770</th>
+      <td>2020-816</td>
+      <td>2023</td>
+      <td>Winter</td>
+      <td>97</td>
+    </tr>
+    <tr>
+      <th>32771</th>
+      <td>2020-395</td>
+      <td>2023</td>
+      <td>Winter</td>
+      <td>97</td>
+    </tr>
+    <tr>
+      <th>32772</th>
+      <td>2021-468</td>
+      <td>2023</td>
+      <td>Winter</td>
+      <td>97</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Note that, when our seasons are sorted alphabetically, Fall will come first, followed by Spring and then Winter. In order to allow for a chronological sort (which will prove useful when creating charts and pivot tables), we’ll add in a ‘season_order’ column that maps these seasons to integers.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_results</span><span class="p">[</span><span class="s1">&#39;season_order&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_results</span><span class="p">[</span><span class="s1">&#39;season&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span>
+    <span class="p">{</span><span class="s1">&#39;Fall&#39;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="s1">&#39;Winter&#39;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="s1">&#39;Spring&#39;</span><span class="p">:</span><span class="mi">2</span><span class="p">})</span>
+<span class="n">df_results</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>student_id</th>
+      <th>starting_year</th>
+      <th>season</th>
+      <th>score</th>
+      <th>season_order</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2020-1</td>
+      <td>2023</td>
+      <td>Fall</td>
+      <td>88</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2020-2</td>
+      <td>2023</td>
+      <td>Fall</td>
+      <td>37</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2020-3</td>
+      <td>2023</td>
+      <td>Fall</td>
+      <td>54</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2020-4</td>
+      <td>2023</td>
+      <td>Fall</td>
+      <td>56</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2020-5</td>
+      <td>2023</td>
+      <td>Fall</td>
+      <td>77</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="merging-college-and-level-data-into-our-survey-results-table">
+<h2>Merging college and level data into our survey results table<a class="headerlink" href="#merging-college-and-level-data-into-our-survey-results-table" title="Link to this heading">#</a></h2>
+<p>In its current form, <code class="docutils literal notranslate"><span class="pre">df_results</span></code> allows us to calculate survey results at the university-wide level. However, in order to determine whether these results differ by college and by level, we’ll also need to merge college and level data into our dataset.</p>
+<p>We can accomplish this by reading data from our curr_enrollment SQL table into a DataFrame, then merging that data with df_results. (The student_id field present in both DataFrames can serve as a merge key.)</p>
+<p><em>Note: if we had survey data for multiple years, our current enrollment table wouldn’t be a good candidate for our merge, since it would show only the current college and levels for each student. We’d instead want to source our enrollment data from a historical enrollment table so that students’ yearly survey results could be matched with their levels and colleges during the years that they took the survey.</em></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># The following code reads in only the fields from df_curr_enrollment </span>
+<span class="c1"># that we&#39;ll need for our analyses. (If we wanted to read in all fields,</span>
+<span class="c1"># we could replace the field names in our SQL query with *.)</span>
+
+<span class="n">df_curr_enrollment</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_sql</span><span class="p">(</span>
+    <span class="s2">&quot;Select student_id, college, level, </span><span class="se">\</span>
+<span class="s2">level_for_sorting from curr_enrollment&quot;</span><span class="p">,</span> <span class="n">con</span><span class="o">=</span><span class="n">e</span><span class="p">)</span>
+<span class="n">df_curr_enrollment</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>student_id</th>
+      <th>college</th>
+      <th>level</th>
+      <th>level_for_sorting</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2020-1</td>
+      <td>STC</td>
+      <td>Se</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2020-2</td>
+      <td>STM</td>
+      <td>Se</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2020-3</td>
+      <td>STC</td>
+      <td>Se</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2020-4</td>
+      <td>STC</td>
+      <td>Se</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2020-5</td>
+      <td>STM</td>
+      <td>Se</td>
+      <td>3</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>The next cell uses a <em>left</em> merge to add enrollment data into df_results. The <code class="docutils literal notranslate"><span class="pre">left</span></code> argument for the <code class="docutils literal notranslate"><span class="pre">how</span></code> parameter instructs the code to retain all rows in df_results even if no corresponding enrollment data were found. (If we had instead used <code class="docutils literal notranslate"><span class="pre">right</span></code> as our argument, all rows in <code class="docutils literal notranslate"><span class="pre">df_curr_enrollment</span></code> would have been retained whether or not we had corresponding <em>survey</em> data for them.)</p>
+<p>Other options for the <code class="docutils literal notranslate"><span class="pre">how</span></code> parameter include <code class="docutils literal notranslate"><span class="pre">outer</span></code>, which preserves all rows in <em>both</em> datasets regardless of whether or not a given key was found in both of them, and <code class="docutils literal notranslate"><span class="pre">inner</span></code>, which would only keep rows whose student IDs were found in both datasets.</p>
+<p>For more on the <code class="docutils literal notranslate"><span class="pre">df.merge()</span></code> function used below, visit <a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.merge.html">https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.merge.html</a> .</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_results</span> <span class="o">=</span> <span class="n">df_results</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span>
+    <span class="n">df_curr_enrollment</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="s1">&#39;student_id&#39;</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">)</span>
+<span class="n">df_results</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>student_id</th>
+      <th>starting_year</th>
+      <th>season</th>
+      <th>...</th>
+      <th>college</th>
+      <th>level</th>
+      <th>level_for_sorting</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2020-1</td>
+      <td>2023</td>
+      <td>Fall</td>
+      <td>...</td>
+      <td>STC</td>
+      <td>Se</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2020-2</td>
+      <td>2023</td>
+      <td>Fall</td>
+      <td>...</td>
+      <td>STM</td>
+      <td>Se</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2020-3</td>
+      <td>2023</td>
+      <td>Fall</td>
+      <td>...</td>
+      <td>STC</td>
+      <td>Se</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2020-4</td>
+      <td>2023</td>
+      <td>Fall</td>
+      <td>...</td>
+      <td>STC</td>
+      <td>Se</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2020-5</td>
+      <td>2023</td>
+      <td>Fall</td>
+      <td>...</td>
+      <td>STM</td>
+      <td>Se</td>
+      <td>3</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 8 columns</p>
+</div></div></div>
+</div>
+<p>Now that we’ve merged in college and level data, we’ll save this dataset to a .csv file so that it can be processed by the code in our descriptive statistics chapters:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_results</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;2023_survey_results.csv&#39;</span><span class="p">,</span> <span class="n">index</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="conclusion">
+<h2>Conclusion<a class="headerlink" href="#conclusion" title="Link to this heading">#</a></h2>
+<p>This script has provided a brief introduction to data cleaning and reformatting. Other PFN sections will provide further examples of data reformatting, as this process is often a necessary prerequisite for analysis and visualization tasks.</p>
+<p>Next up is the Descriptive Stats chapter, in which we’ll perform various statistical tests on the new .csv file that we created within this section.</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./Data_Prep"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../Data_Retrieval/data_retrieval.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Data Retrieval</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../Descriptive_Stats/descriptive_stats.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Descriptive Stats</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reformatting-and-cleaning-our-winter-results-dataset">Reformatting and cleaning our winter results dataset</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#removing-duplicates">Removing duplicates</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#combining-winter-survey-results-with-our-fall-spring-dataset">Combining winter survey results with our fall/spring dataset</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#merging-college-and-level-data-into-our-survey-results-table">Merging college and level data into our survey results table</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion">Conclusion</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Kenneth Burchfiel
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

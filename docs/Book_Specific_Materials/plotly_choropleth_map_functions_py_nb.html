@@ -1,0 +1,1048 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>plotly_choropleth_map_functions.py &#8212; Python for Nonprofits</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Book_Specific_Materials/plotly_choropleth_map_functions_py_nb';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Creating Choropleth Maps with Folium" href="../Mapping/choropleth_maps_with_folium.html" />
+    <link rel="prev" title="Mapping Census Data using Plotly (Work in progress)" href="../Mapping/choropleth_maps.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../front_matter_for_book.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Python for Nonprofits</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../front_matter_for_book.html">
+                    Wecome to Python for Nonprofits!
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Introduction</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Introduction/introduction.html">An Introduction to Python for Nonprofits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Introduction/the_case_for_python_at_nonprofits.html">The Case for Using Python at Nonprofits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting_started_for_book.html">Getting Started</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Importing and Prepping Data</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Data_Retrieval/data_retrieval.html">Data Retrieval</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Data_Prep/data_prep.html">Data Prep</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Analyzing Data</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Descriptive_Stats/descriptive_stats.html">Descriptive Stats</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Descriptive_Stats/descriptive_stats_part_2.html">Descriptive Stats: Part 2</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Census_Data_Imports/census_data_imports.html">Census Data Imports</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="census_import_scripts_py_nb.html">census_import_scripts.py</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Visualizing Data</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Graphing/graphing.html">Creating Interactive and Static Charts with Plotly</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../Graphing/pivot_and_graph_functions.html">Pivot and Graph Functions</a></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../Mapping/choropleth_maps.html">Mapping Census Data using Plotly (Work in progress)</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">plotly_choropleth_map_functions.py</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Mapping/choropleth_maps_with_folium.html">Creating Choropleth Maps with Folium</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="folium_choropleth_map_functions_py_nb.html">folium_choropleth_map_functions.py</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Regressions</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Regressions/regression_analyses.html">Regression Analyses</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Publishing Analyses Online</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Static_Sites/simple_static_site.html">Creating a Simple Static Webpage</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Updating_Online_Spreadsheets/updating_online_spreadsheets.html">Updating Online Spreadsheets</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="weather_import_py_nb.html">weather_import.py</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Online_Visualizations/Simple_App_Without_Login/readme.html">Simple Dash App Without Login</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="Simple_App_Without_Login_py_nb.html">Source code for Simple App Without Login</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Online_Visualizations/PFN_Dash_App_Demo/readme.html">PFN Dash App Demo</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="PFN_Dash_App_Demo_py_nb.html">Source code for PFN Dash App Demo</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendix</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Appendix/nvcu_db_gen.html">NVCU Database Generator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="helper_funcs_py_nb.html">helper_funcs.py</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/Book_Specific_Materials/plotly_choropleth_map_functions_py_nb.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>plotly_choropleth_map_functions.py</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="plotly-choropleth-map-functions-py">
+<h1>plotly_choropleth_map_functions.py<a class="headerlink" href="#plotly-choropleth-map-functions-py" title="Link to this heading">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">geopandas</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">plotly.express</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">px</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">plotly.graph_objects</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">go</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">update_and_save_plotly_map</span><span class="p">(</span>
+    <span class="n">fig</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">static_file_folder</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">html_file_folder</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> 
+    <span class="n">image_extension</span> <span class="o">=</span> <span class="s1">&#39;png&#39;</span><span class="p">,</span> <span class="n">save_html</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">save_static</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="n">include_plotlyjs</span> <span class="o">=</span> <span class="s1">&#39;cdn&#39;</span><span class="p">,</span> <span class="n">screenshot_label_font_size</span> <span class="o">=</span> <span class="mi">18</span><span class="p">,</span>
+    <span class="n">screenshot_width</span> <span class="o">=</span> <span class="mi">1920</span><span class="p">,</span> <span class="n">screenshot_height</span> <span class="o">=</span> <span class="mi">1080</span><span class="p">,</span>
+    <span class="n">screenshot_scale</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="n">screenshot_title_y</span> <span class="o">=</span> <span class="mf">0.95</span><span class="p">,</span>
+    <span class="n">screenshot_title_font_size</span> <span class="o">=</span> <span class="mi">40</span><span class="p">,</span>
+    <span class="n">screenshot_colorbar_thickness</span> <span class="o">=</span> <span class="mi">80</span><span class="p">,</span> <span class="n">screenshot_colorbar_len</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">,</span>
+    <span class="n">screenshot_colorbar_tickfont_size</span> <span class="o">=</span> <span class="mi">20</span><span class="p">,</span> 
+    <span class="n">screenshot_colorbar_title_font_size</span> <span class="o">=</span> <span class="mi">30</span><span class="p">):</span>
+<span class="w">    </span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;This function assists with the process of saving a Plotly map as </span>
+<span class="sd">    both an HTML file and a static image (if requested). </span>
+<span class="sd">    After saving an HTML version of the map, it will then increase the </span>
+<span class="sd">    map&#39;s width and height so as to increase its relative size; next, it </span>
+<span class="sd">    will enlarge certain text and colorbar values accordingly. </span>
+<span class="sd">    (These changes are performed in order to adjust for changes in the </span>
+<span class="sd">    map&#39;s size when it gets converted to a screenshot.) Finally, the </span>
+<span class="sd">    function will a static copy of the map.</span>
+<span class="sd">    </span>
+<span class="sd">    fig: the map to be saved as an image.</span>
+<span class="sd">    </span>
+<span class="sd">    static_file_folder and html_file_folder: The folder paths </span>
+<span class="sd">    (either relative or absolute) in which to save static and interactive </span>
+<span class="sd">    copies of the map, respectively. These paths should not include the </span>
+<span class="sd">    desired filename, as that will get added in via the filename argument. </span>
+<span class="sd">    In addition, they should not include any trailing forward or </span>
+<span class="sd">    backward slashes.</span>
+
+<span class="sd">    filename: The name to use when saving the file. This name should </span>
+<span class="sd">    include the file name but *not* any image extensions; these will get </span>
+<span class="sd">    added in manually.</span>
+<span class="sd">    </span>
+<span class="sd">    image_extension: the image extension (e.g. &#39;png&#39;, &#39;svg&#39;, etc) to use </span>
+<span class="sd">    when saving a static copy of the map.</span>
+
+<span class="sd">    save_html and save_static: set to True to save HTML-based and static</span>
+<span class="sd">    copies of the map, respectively.</span>
+
+<span class="sd">    include_plotlyjs: The argument to pass to the respective </span>
+<span class="sd">    include_plotlyjs parameter within write_html(). The default setting</span>
+<span class="sd">    allows for smaller HTML file sizes; however, if it&#39;s important for</span>
+<span class="sd">    your maps to render offline, select True as your argument instead.</span>
+<span class="sd">    For more details on these and other options, consult </span>
+<span class="sd">    https://plotly.com/python-api-reference/generated/</span>
+<span class="sd">    plotly.io.write_html.html .</span>
+
+<span class="sd">    screenshot_label_font_size: The font size in which data labels</span>
+<span class="sd">    should appear within the screenshot.</span>
+
+<span class="sd">    screenshot_width and screenshot_height: The values to pass to the</span>
+<span class="sd">    width and height arguments, respectively, of an update_layout()</span>
+<span class="sd">    call.</span>
+
+<span class="sd">    screenshot_scale: The scale to use when saving a static copy of the</span>
+<span class="sd">    map. NOTE: the actual dimensions of the map will equal </span>
+<span class="sd">    screenshot_width * scale and screenshot_height * scale. You can </span>
+<span class="sd">    tweak these values as needed so that your screenshot has a </span>
+<span class="sd">    sufficiently high resoultion but remains readable.</span>
+
+<span class="sd">    screenshot_title_y and screenshot_title_font_size: Arguments for</span>
+<span class="sd">    tweaking the screenshot title&#39;s vertical location and font size,</span>
+<span class="sd">    respectively.</span>
+<span class="sd">  </span>
+<span class="sd">    screenshot_colorbar_thickness, screenshot_colorbar_len,</span>
+<span class="sd">    screenshot_colorbar_tickfont_size, and </span>
+<span class="sd">    screenshot_colorbar_title_font_size: Arguments for modifying the</span>
+<span class="sd">    thickness, length, tick font size, and title font size, </span>
+<span class="sd">    respectively, of the screenshot&#39;s colorbar.  </span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="s2">&quot;Please specify a name to assign your map file(s).&quot;</span><span class="p">)</span>
+    
+    <span class="k">if</span> <span class="n">save_html</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="c1"># Adding a forward slash to html_file_folder in order to </span>
+        <span class="c1"># distinguish it from the directory: (this step is unnecessary,</span>
+        <span class="c1"># and will thus be skipped, if html_file_folder is </span>
+        <span class="c1"># an empty string.)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">html_file_folder</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">html_file_folder</span> <span class="o">+=</span> <span class="s1">&#39;/&#39;</span>
+            <span class="n">fig</span><span class="o">.</span><span class="n">write_html</span><span class="p">(</span><span class="n">html_file_folder</span> <span class="o">+</span> <span class="n">filename</span> <span class="o">+</span> <span class="s1">&#39;.html&#39;</span><span class="p">,</span>
+                <span class="n">include_plotlyjs</span> <span class="o">=</span> <span class="n">include_plotlyjs</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">save_static</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">fig_for_chart</span> <span class="o">=</span> <span class="n">go</span><span class="o">.</span><span class="n">Figure</span><span class="p">(</span><span class="n">fig</span><span class="p">)</span> <span class="c1"># This method of creating a copy of</span>
+        <span class="c1"># the original figure (suggested by StackOverflow user vestland</span>
+        <span class="c1"># at https://stackoverflow.com/questions/58375026/how-to-make-a-</span>
+        <span class="c1"># copy-of-a-plotly-figure-object/58375046#58375046)</span>
+        <span class="c1"># ensures that the following changes won&#39;t have any effect on the</span>
+        <span class="c1"># original figure.</span>
+        
+        <span class="c1"># Adjusting values within the HTML-based map in order to prepare</span>
+        <span class="c1"># it for conversion to a static image:</span>
+        <span class="n">fig_for_chart</span><span class="o">.</span><span class="n">update_layout</span><span class="p">(</span>
+            <span class="n">width</span> <span class="o">=</span> <span class="n">screenshot_width</span><span class="p">,</span> <span class="n">height</span> <span class="o">=</span> <span class="n">screenshot_height</span><span class="p">,</span> 
+            <span class="n">title_font_size</span> <span class="o">=</span> <span class="n">screenshot_title_font_size</span><span class="p">,</span> 
+            <span class="n">title_y</span> <span class="o">=</span> <span class="n">screenshot_title_y</span><span class="p">)</span>
+        <span class="n">fig_for_chart</span><span class="o">.</span><span class="n">update_coloraxes</span><span class="p">(</span>
+            <span class="n">colorbar_thickness</span> <span class="o">=</span> <span class="n">screenshot_colorbar_thickness</span><span class="p">,</span> 
+            <span class="n">colorbar_len</span> <span class="o">=</span> <span class="n">screenshot_colorbar_len</span><span class="p">,</span> 
+            <span class="n">colorbar_tickfont_size</span> <span class="o">=</span> <span class="n">screenshot_colorbar_tickfont_size</span><span class="p">,</span>
+            <span class="n">colorbar_title_font_size</span> <span class="o">=</span> <span class="n">screenshot_colorbar_title_font_size</span><span class="p">)</span>
+        <span class="n">fig_for_chart</span><span class="o">.</span><span class="n">update_traces</span><span class="p">(</span>
+            <span class="n">textfont_size</span><span class="o">=</span><span class="n">screenshot_label_font_size</span><span class="p">,</span> 
+            <span class="n">selector</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="s1">&#39;scattergeo&#39;</span><span class="p">))</span>
+        <span class="c1"># The above line is based on the documentation found in </span>
+        <span class="c1"># https://plotly.com/python/reference/scattergeo/ .</span>
+        
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">static_file_folder</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">static_file_folder</span> <span class="o">+=</span> <span class="s1">&#39;/&#39;</span>
+        <span class="n">fig_for_chart</span><span class="o">.</span><span class="n">write_image</span><span class="p">(</span>
+            <span class="n">file</span> <span class="o">=</span> <span class="n">static_file_folder</span> <span class="o">+</span> <span class="n">filename</span> <span class="o">+</span> <span class="s1">&#39;.&#39;</span> <span class="o">+</span> <span class="n">image_extension</span><span class="p">,</span> 
+            <span class="n">width</span> <span class="o">=</span> <span class="n">screenshot_width</span><span class="p">,</span> <span class="n">height</span> <span class="o">=</span> <span class="n">screenshot_height</span><span class="p">,</span> 
+            <span class="n">scale</span> <span class="o">=</span> <span class="n">screenshot_scale</span><span class="p">)</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">gen_choropleth</span><span class="p">(</span>
+    <span class="n">original_gdf</span><span class="p">,</span> <span class="n">geojson_col</span><span class="p">,</span> <span class="n">data_col</span><span class="p">,</span> <span class="n">extra_hover_cols</span> <span class="o">=</span> <span class="p">[],</span> 
+    <span class="n">color_continuous_scale</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">scope</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">basemap_visible</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">colormap_type</span><span class="o">=</span><span class="s1">&#39;linear&#39;</span><span class="p">,</span> 
+    <span class="n">colorscale_tick_count</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">tick_round_value</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">custom_colorbar_title</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">add_labels</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> 
+    <span class="n">label_round_value</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">save_html</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">save_static</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">static_file_folder</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span>
+    <span class="n">html_file_folder</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">image_extension</span><span class="o">=</span><span class="s1">&#39;png&#39;</span><span class="p">,</span>
+    <span class="n">include_plotlyjs</span><span class="o">=</span><span class="s1">&#39;cdn&#39;</span><span class="p">,</span> <span class="n">screenshot_label_font_size</span><span class="o">=</span><span class="mi">18</span><span class="p">,</span>
+    <span class="n">screenshot_width</span><span class="o">=</span><span class="mi">1920</span><span class="p">,</span> <span class="n">screenshot_height</span><span class="o">=</span><span class="mi">1080</span><span class="p">,</span>
+    <span class="n">screenshot_scale</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">screenshot_title_y</span><span class="o">=</span><span class="mf">0.95</span><span class="p">,</span>
+    <span class="n">screenshot_title_font_size</span><span class="o">=</span><span class="mi">40</span><span class="p">,</span> <span class="n">screenshot_colorbar_thickness</span><span class="o">=</span><span class="mi">80</span><span class="p">,</span> 
+    <span class="n">screenshot_colorbar_len</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">screenshot_colorbar_tickfont_size</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> 
+    <span class="n">screenshot_colorbar_title_font_size</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span>
+    <span class="n">revise_state_label_points</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">show_tiles</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">tile_source</span><span class="o">=</span><span class="s1">&#39;open-street-map&#39;</span><span class="p">,</span> <span class="n">zoom</span><span class="o">=</span><span class="mf">4.35</span><span class="p">,</span> 
+    <span class="n">starting_loc</span><span class="o">=</span><span class="p">[</span><span class="mf">37.9</span><span class="p">,</span> <span class="o">-</span><span class="mi">96</span><span class="p">],</span>
+    <span class="n">opacity</span><span class="o">=</span><span class="mf">0.75</span><span class="p">,</span> <span class="n">margin_list</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">colorbar_len</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
+<span class="w">    </span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;This function converts a GeoDataFrame into a choropleth map within </span>
+<span class="sd">    Plotly, then saves that map (if requested by the caller) to HTML and </span>
+<span class="sd">    image files. It also allows for percentile-based color ranges </span>
+<span class="sd">    (which can better display data that contains outliers).</span>
+<span class="sd">    </span>
+<span class="sd">    Note: this function assumes that the values to be passed to the </span>
+<span class="sd">    choropleth map exist within the GeoDataFrame&#39;s index.</span>
+
+<span class="sd">    Make sure to consult the documentation for px.choropleth()</span>
+<span class="sd">    available at </span>
+<span class="sd">    (https://plotly.com/python-api-reference/generated/plotly.</span>
+<span class="sd">    express.choropleth.html)</span>
+<span class="sd">    as needed.</span>
+<span class="sd">    </span>
+<span class="sd">    original_gdf: the GeoDataFrame from which regional boundaries </span>
+<span class="sd">    and data will be retrieved. (The function will create a copy of this</span>
+<span class="sd">    DataFrame so as not to modify it.)</span>
+
+<span class="sd">    geojson_col: the column within gdf that contains boundary data. This</span>
+<span class="sd">    will be passed to the geojson argument of px.choropleth().</span>
+
+<span class="sd">    data_col: the column within gdf that contains data to be mapped.</span>
+
+<span class="sd">    extra_hover_cols: A list of columns *in addition to* data_col that </span>
+<span class="sd">    should be displayed when the user hovers over a given region.</span>
+
+<span class="sd">    color_continuous_scale: A custom color scale to pass to the </span>
+<span class="sd">    color_continuous_scale parameter of px.choropleth().</span>
+
+<span class="sd">    scope: the argument (e.g. &#39;usa&#39;) to pass to the &#39;scope&#39; parameter</span>
+<span class="sd">    of px.choropleth().</span>
+
+<span class="sd">    title: the title to use for the map.</span>
+
+<span class="sd">    basemap_visible: set to True to render the Plotly basemap and False</span>
+<span class="sd">    to exclued it.</span>
+
+<span class="sd">    colormap_type: set to &#39;percentile&#39; in order to render map colors</span>
+<span class="sd">    based on the *percentile ranks* of data_col values. Set to *linear*</span>
+<span class="sd">    in order to base these colors directly on data_col values. Although</span>
+<span class="sd">    both the region colors and colorbar color scale will reflect</span>
+<span class="sd">    percentile ranks, the colorbar text entries will still show actual</span>
+<span class="sd">    data_col values.</span>
+
+<span class="sd">    colorscale_tick_count: The number of ticks (and, in turn, text entries)</span>
+<span class="sd">    to include within the map&#39;s colorbar. (Currently, this argument will </span>
+<span class="sd">    only get applied if colormap_type is set to &#39;percentile.&#39;)</span>
+
+<span class="sd">    tick_round_value: The value to pass to round() when rounding colorbar</span>
+<span class="sd">    text entries. Set this value to 0 for integers, 1 for single </span>
+<span class="sd">    decimal points, 2 for two decimal points, and so on.</span>
+<span class="sd">    Set to None to prevent these entries from getting rounded. If </span>
+<span class="sd">    colormap_type is not set to &#39;percentile&#39;, this argument will have</span>
+<span class="sd">    no effect.</span>
+
+<span class="sd">    custom_colorbar_title: A custom title to use for the colorbar. </span>
+<span class="sd">    If None is used as its argument, data_col will be used as the </span>
+<span class="sd">    colorbar title by default. If colormap_type is not set to &#39;percentile&#39;, </span>
+<span class="sd">    this argument will have no effect.</span>
+
+<span class="sd">    add_labels: set to True to add text labels to the map.</span>
+
+<span class="sd">    label_round_value: The value to pass to round() when rounding labels. </span>
+<span class="sd">    Set this value to 0 for integers, 1 for single </span>
+<span class="sd">    decimal points, 2 for two decimal points, and so on.</span>
+<span class="sd">    Set to None to prevent these entries from getting rounded.</span>
+
+<span class="sd">    revise_state_label_points: set to True to shift the data label </span>
+<span class="sd">    locations for Maryland; (so as not to overlap with DC&#39;s); </span>
+<span class="sd">    Michigan (so that it appears within the &#39;hand&#39; rather than the </span>
+<span class="sd">    &#39;peninsula&#39;); and Louisana (to move it off of the Mississippi border). </span>
+<span class="sd">    These operations will only work if you&#39;re creating labels</span>
+<span class="sd">    for US states and have &#39;Maryland&#39;, &#39;Michigan&#39;, and &#39;Louisiana&#39; </span>
+<span class="sd">    as index entries.</span>
+
+<span class="sd">    save_html and subsequent arguments will get passed to their equivalent </span>
+<span class="sd">    arguments within update_and_save_plotly_map(); </span>
+<span class="sd">    see that function&#39;s documentation for further details on these</span>
+<span class="sd">    entries.</span>
+
+<span class="sd">    debug: set to True to return both the figure and additional variables</span>
+<span class="sd">    that can help with troubleshooting or extending the function; </span>
+<span class="sd">    set to False to return just the figure.</span>
+
+<span class="sd">    show_tiles: Set to True to render the map using px.choropleth_map(),</span>
+<span class="sd">    thus allowing tiles to appear behind the map. Keep False to render</span>
+<span class="sd">    the map using px.choropleth() instead. Both options have their </span>
+<span class="sd">    strengths and weaknesses for various use cases.</span>
+<span class="sd">    For more on choropleth_map(), see https://plotly.com/python-api-reference/generated/plotly.express.choropleth_map.html .</span>
+
+<span class="sd">    tile_source: The map tile provider to use. (Will only have an effect</span>
+<span class="sd">    if show_tiles is set to True.)</span>
+
+<span class="sd">    zoom: The starting zoom to use for a map. (Will only have an effect</span>
+<span class="sd">    if show_tiles is set to True.) </span>
+
+<span class="sd">    starting_loc: A list of floats representing the starting latitude</span>
+<span class="sd">    and longitude for the map. These should be represented in decimal</span>
+<span class="sd">    degree format rather than degrees/minutes/seconds format. (Will only </span>
+<span class="sd">    have an effect if show_tiles is set to True.)</span>
+
+<span class="sd">    (Note: the default zoom and starting_loc settings are tailored towards</span>
+<span class="sd">    HTML-resolution maps of the lower 48 US states.)</span>
+
+<span class="sd">    opacity: The opacity level to use for choropleth regions. It will only</span>
+<span class="sd">    have an effect if show_tiles is set to True.</span>
+
+<span class="sd">    margin_list: The right, top, left, and bottom margins to use for</span>
+<span class="sd">    the map, respectively. If set to None, the map&#39;s default margins</span>
+<span class="sd">    will be retained if show_tiles is False but set to 0 on all sides</span>
+<span class="sd">    if show_tiles is True.</span>
+
+<span class="sd">    coloraxis_colorbar_len: The length to use for colorbars. If set</span>
+<span class="sd">    to -1, this value will get changed within the function to 1 (if</span>
+<span class="sd">    show_tiles is False) or 0.8 (if show_tiles is True). (A smaller</span>
+<span class="sd">    colorbar can help prevent its title from getting cut off when the</span>
+<span class="sd">    bottom margin is removed--which will occur by default when show_tiles</span>
+<span class="sd">    is set to True.)</span>
+<span class="sd">    </span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="c1"># Creating a copy of the original DataFrame (so as not to modify</span>
+    <span class="c1"># it):</span>
+    <span class="c1"># This copy will also be sorted by the data column in descending </span>
+    <span class="c1"># order. This step helps ensure that, when a percentile-based </span>
+    <span class="c1"># colorbar is requested, the colorbar legend entries (which are </span>
+    <span class="c1"># retrieved from the sort_list variable created within this function)</span>
+    <span class="c1"># will appear within the same order as the percentile_quantile_list</span>
+    <span class="c1"># values. The latter are sorted explicitly within the function,</span>
+    <span class="c1"># but the former are not--so sorting the DataFrame at the outset</span>
+    <span class="c1"># helps keep them synchronized.</span>
+    
+    <span class="n">gdf</span> <span class="o">=</span> <span class="n">original_gdf</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">data_col</span><span class="p">,</span> <span class="n">ascending</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">colormap_type</span> <span class="o">==</span> <span class="s1">&#39;percentile&#39;</span><span class="p">:</span>
+        <span class="c1"># In order to accommodate percentile-based color ranges, </span>
+        <span class="c1"># the following code will (1) generate percentile ranks</span>
+        <span class="c1"># for the values in data_col, then (2) create lists of selected</span>
+        <span class="c1"># ranks along with their corresponding data_col values.</span>
+        <span class="c1"># These rank and value lists will then be passed to the</span>
+        <span class="c1"># colorbar_tickvals and colorbar_ticktext arguments</span>
+        <span class="c1"># of an update_coloraxes() call.</span>
+    
+        <span class="n">percentile_col</span> <span class="o">=</span> <span class="n">data_col</span><span class="o">+</span><span class="s1">&#39;_percentiles_for_map&#39;</span>
+        <span class="k">if</span> <span class="n">percentile_col</span> <span class="ow">in</span> <span class="n">gdf</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The name of the column that will be used </span><span class="se">\</span>
+<span class="s2">to store data_col percentiles (</span><span class="si">{</span><span class="n">percentile_col</span><span class="si">}</span><span class="s2">) is already present </span><span class="se">\</span>
+<span class="s2">within gdf. Rename this column before calling the function to prevent </span><span class="se">\</span>
+<span class="s2">any conflicts.&quot;</span><span class="p">)</span>   
+
+        <span class="n">gdf</span><span class="p">[</span><span class="n">percentile_col</span><span class="p">]</span> <span class="o">=</span> <span class="mi">100</span> <span class="o">*</span> <span class="n">gdf</span><span class="p">[</span>
+        <span class="n">data_col</span><span class="p">]</span><span class="o">.</span><span class="n">rank</span><span class="p">(</span><span class="n">pct</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;max&#39;</span><span class="p">)</span> <span class="c1"># See</span>
+        <span class="c1"># https://pandas.pydata.org/pandas-docs/stable/reference/api/</span>
+        <span class="c1"># pandas.DataFrame.rank.html</span>
+        <span class="c1"># for more information on the use of df.rank() to create</span>
+        <span class="c1"># percentile ranks.</span>
+
+
+        <span class="n">quantile_increment</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="n">colorscale_tick_count</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> 
+        <span class="c1"># This variable will determine</span>
+        <span class="c1"># the distance between increments within np.arange(), </span>
+        <span class="c1"># which we&#39;ll call below in order to determine which </span>
+        <span class="c1"># quantiles to retrieve from the DataFrame.</span>
+        <span class="c1"># I subtracted 1 from the denominator so that the final number of</span>
+        <span class="c1"># quantiles (which will include both a minimum and maximum value)</span>
+        <span class="c1"># will match the &#39;quantile quantity&#39; specified within </span>
+        <span class="c1"># tick_count.</span>
+
+        <span class="c1"># Using quantile_increment to specify which quantiles to retrieve:</span>
+
+        <span class="c1"># quantile_range will increase from 0 to 1 by the amount </span>
+        <span class="c1"># specified in quantile_increment. `quantile_increment/2` </span>
+        <span class="c1"># is added to 1 in the function call in order to ensure that </span>
+        <span class="c1"># the output will include, but also stop at, 1.</span>
+
+        <span class="n">quantile_range</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="o">+</span><span class="n">quantile_increment</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> 
+                           <span class="n">quantile_increment</span><span class="p">)</span>
+        
+        <span class="c1"># The &#39;lower&#39; interpretation method will help ensure that only </span>
+        <span class="c1"># actual percentile ranks present in the DataFrame get retrieved.</span>
+        <span class="c1"># This is a necessary prerequisite for using df.query() to </span>
+        <span class="c1"># locate the scores that match these percentile ranks, </span>
+        <span class="c1"># which we&#39;ll do shortly.</span>
+
+        <span class="c1"># Finding the actual percentile ranks within our DataFrame </span>
+        <span class="c1"># that correspond to these quantiles:</span>
+
+        <span class="c1"># (A quantile of 0 refers to the smallest percentile rank in the </span>
+        <span class="c1"># dataset, while a quantile of 1 refers to the highest percentile </span>
+        <span class="c1"># rank; a quantile of 0.5, if specified, refers to the median </span>
+        <span class="c1"># percentile rank.)</span>
+        
+        <span class="c1"># Note: in an earlier version of this code, I created revised </span>
+        <span class="c1"># colorbars using the following steps:</span>
+        
+        <span class="c1"># 1. I used quantile() to figure out which data column values to </span>
+        <span class="c1"># pass to the colorbar&#39;s &#39;ticktext&#39; property.</span>
+        <span class="c1"># 2. I then multiplied quantile_range() by 100 to create a range </span>
+        <span class="c1"># of percentile ranks (called `percentile_range`) that could be </span>
+        <span class="c1"># passed to the colorbar&#39;s &#39;tickvals&#39; property.</span>
+          
+        <span class="c1"># However, this approach had a significant flaw: because datasets </span>
+        <span class="c1"># often wouldn&#39;t have an exact copy of one of the percentile ranks </span>
+        <span class="c1"># in percentile_range, the scores that replaced those </span>
+        <span class="c1"># percentile ranks often corresponded to a slightly different </span>
+        <span class="c1"># percentile rank. (In one actual example, Pandas calculated </span>
+        <span class="c1"># the quantile of 0.5 (e.g. the 50.000th percentile) as 6.289%, </span>
+        <span class="c1"># but this percentage actually represented the 50.98th percentile. </span>
+        <span class="c1"># It would therefore be inaccurate to replace the 50th-percentile </span>
+        <span class="c1"># marker in the colorbar with this value.)</span>
+        
+        <span class="c1"># In order to avoid this issue, I revised the code so that it </span>
+        <span class="c1"># would find the quantiles of the actual *percentile ranks* in </span>
+        <span class="c1"># our dataset. This way, all of the percentile ranks passed to </span>
+        <span class="c1"># the colorbar&#39;s tickvals property would have actual corresponding </span>
+        <span class="c1"># values that could be passed to colorbar_ticktext.</span>
+
+        <span class="c1"># This sort_values() call is necessary for the quantile</span>
+        <span class="c1"># ranges to line up with the score_list values that will</span>
+        <span class="c1"># get created shortly.</span>
+        <span class="n">percentile_quantiles</span> <span class="o">=</span> <span class="n">gdf</span><span class="p">[</span><span class="n">percentile_col</span><span class="p">]</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span>
+        <span class="n">quantile_range</span><span class="p">,</span> <span class="n">interpolation</span> <span class="o">=</span> <span class="s1">&#39;lower&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span>
+        <span class="n">ascending</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
+
+        <span class="n">percentile_quantile_list</span> <span class="o">=</span> <span class="n">percentile_quantiles</span><span class="o">.</span><span class="n">to_list</span><span class="p">()</span>
+
+        <span class="c1"># Determining the actual data_col values within the dataset </span>
+        <span class="c1"># that correspond to these percentile ranks:</span>
+
+        <span class="c1"># Note that only one row will be retained for each percentile rank; </span>
+        <span class="c1"># this will ensure that the lengths of the percentile rank and </span>
+        <span class="c1"># percentile score lists match. (If these lengths differed, we </span>
+        <span class="c1"># could encounter issues when trying to replace the former with </span>
+        <span class="c1"># the latter within our colorbar.)</span>
+
+        <span class="n">percentile_rank_score_pairs</span> <span class="o">=</span> <span class="n">gdf</span><span class="o">.</span><span class="n">query</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;`</span><span class="si">{</span><span class="n">percentile_col</span><span class="si">}</span><span class="s2">` in @percentile_quantile_list&quot;</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">(</span><span class="n">percentile_col</span><span class="p">)</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        
+        <span class="n">score_series</span> <span class="o">=</span> <span class="n">percentile_rank_score_pairs</span><span class="p">[</span><span class="n">data_col</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">tick_round_value</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">score_series</span> <span class="o">=</span> <span class="n">score_series</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">tick_round_value</span><span class="p">)</span>
+        <span class="n">score_list</span> <span class="o">=</span> <span class="n">score_series</span><span class="o">.</span><span class="n">to_list</span><span class="p">()</span>
+               
+        <span class="n">color</span> <span class="o">=</span> <span class="n">percentile_col</span> <span class="c1"># Setting percentile_col as the color</span>
+        <span class="c1"># argument will allow fdor a wider diversity of colors in the </span>
+        <span class="c1"># event that outliers exist within the dataset.</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">color</span> <span class="o">=</span> <span class="n">data_col</span>
+    <span class="k">if</span> <span class="n">show_tiles</span> <span class="o">==</span> <span class="kc">False</span><span class="p">:</span> <span class="c1"># px.choropleth() will be called</span>
+        <span class="c1"># to produce a tileless choropleth map.</span>
+        <span class="k">if</span> <span class="n">colorbar_len</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+            <span class="n">colorbar_len</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="n">fig</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">choropleth</span><span class="p">(</span><span class="n">gdf</span><span class="p">,</span> 
+        <span class="n">geojson</span><span class="o">=</span><span class="n">gdf</span><span class="p">[</span><span class="n">geojson_col</span><span class="p">],</span>
+        <span class="n">locations</span><span class="o">=</span><span class="n">gdf</span><span class="o">.</span><span class="n">index</span><span class="p">,</span>
+        <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span>
+        <span class="n">hover_data</span><span class="o">=</span><span class="p">[</span><span class="n">data_col</span><span class="p">]</span> <span class="o">+</span> <span class="n">extra_hover_cols</span><span class="p">,</span> 
+        <span class="n">color_continuous_scale</span><span class="o">=</span><span class="n">color_continuous_scale</span><span class="p">,</span>
+        <span class="n">scope</span><span class="o">=</span><span class="n">scope</span><span class="p">,</span>
+        <span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">,</span>
+        <span class="n">basemap_visible</span> <span class="o">=</span> <span class="n">basemap_visible</span><span class="p">)</span>
+
+    <span class="k">else</span><span class="p">:</span> <span class="c1"># px.choropleth_map() will be called</span>
+        <span class="c1"># to allow a map with tiles to be produced.</span>
+        <span class="k">if</span> <span class="n">colorbar_len</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+            <span class="n">colorbar_len</span> <span class="o">=</span> <span class="mf">0.8</span>
+        <span class="n">fig</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">choropleth_map</span><span class="p">(</span><span class="n">gdf</span><span class="p">,</span> 
+        <span class="n">geojson</span> <span class="o">=</span> <span class="n">gdf</span><span class="p">[</span><span class="n">geojson_col</span><span class="p">],</span>
+        <span class="n">locations</span> <span class="o">=</span> <span class="n">gdf</span><span class="o">.</span><span class="n">index</span><span class="p">,</span>
+        <span class="n">color</span> <span class="o">=</span> <span class="n">color</span><span class="p">,</span>
+        <span class="n">hover_data</span> <span class="o">=</span> <span class="p">[</span><span class="n">data_col</span><span class="p">]</span> <span class="o">+</span> <span class="n">extra_hover_cols</span><span class="p">,</span> 
+        <span class="n">color_continuous_scale</span> <span class="o">=</span> <span class="n">color_continuous_scale</span><span class="p">,</span>
+        <span class="n">title</span> <span class="o">=</span> <span class="n">title</span><span class="p">,</span> 
+        <span class="n">map_style</span><span class="o">=</span><span class="n">tile_source</span><span class="p">,</span> <span class="n">zoom</span> <span class="o">=</span> <span class="n">zoom</span><span class="p">,</span>
+        <span class="n">center</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;lat&#39;</span><span class="p">:</span><span class="n">starting_loc</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;lon&#39;</span><span class="p">:</span><span class="n">starting_loc</span><span class="p">[</span><span class="mi">1</span><span class="p">]},</span>
+        <span class="n">opacity</span><span class="o">=</span><span class="n">opacity</span><span class="p">)</span>
+        
+    
+    <span class="k">if</span> <span class="n">margin_list</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">show_tiles</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="c1"># Setting each margin to 0 will allow the map to take up more</span>
+        <span class="c1"># of the window--which can be particularly useful for tiled maps.</span>
+        <span class="c1"># (This code is based on a snippet from</span>
+        <span class="c1"># https://plotly.com/python/map-configuration/ .)</span>
+            <span class="n">fig</span><span class="o">.</span><span class="n">update_layout</span><span class="p">(</span><span class="n">margin</span> <span class="o">=</span> <span class="p">{</span>
+                    <span class="s2">&quot;r&quot;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="s2">&quot;t&quot;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="s2">&quot;l&quot;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="s2">&quot;b&quot;</span><span class="p">:</span><span class="mi">0</span><span class="p">})</span>
+        <span class="c1"># No changes will be made in this case if show_tiles is set to</span>
+        <span class="c1"># False.</span>
+        
+    <span class="k">else</span><span class="p">:</span> <span class="c1"># Updating the margins (if requested by the user)</span>
+        <span class="n">fig</span><span class="o">.</span><span class="n">update_layout</span><span class="p">(</span><span class="n">margin</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;r&quot;</span><span class="p">:</span><span class="n">margin_list</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="s2">&quot;t&quot;</span><span class="p">:</span><span class="n">margin_list</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+            <span class="s2">&quot;l&quot;</span><span class="p">:</span><span class="n">margin_list</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span><span class="s2">&quot;b&quot;</span><span class="p">:</span><span class="n">margin_list</span><span class="p">[</span><span class="mi">3</span><span class="p">]})</span>
+
+    <span class="c1"># This code will also shorten the colorbar a little so that</span>
+    <span class="c1"># the reduced bottom margin does not cut off our title.</span>
+    <span class="c1"># (This code was derived from</span>
+    <span class="c1"># https://plotly.com/python/reference/layout/coloraxis/ )</span>
+    
+    <span class="n">fig</span><span class="o">.</span><span class="n">update_layout</span><span class="p">(</span><span class="n">coloraxis_colorbar_len</span> <span class="o">=</span> <span class="n">colorbar_len</span><span class="p">)</span>
+
+        
+    
+    
+    <span class="k">if</span> <span class="n">colormap_type</span> <span class="o">==</span> <span class="s1">&#39;percentile&#39;</span><span class="p">:</span>
+    <span class="c1"># The following code updates the figure&#39;s colorbar to show the values </span>
+    <span class="c1"># corresponding to each percentile rather than the percentiles </span>
+    <span class="c1"># themselves. It does so by (1) </span>
+    <span class="c1"># selecting the percentile quantiles calculated earlier </span>
+    <span class="c1"># as the colorbar tick locations; (2) selecting these quantiles&#39; </span>
+    <span class="c1"># corresponding percentile scores as the colorbar values; </span>
+    <span class="c1"># and (3) changing the title of the colorbar to reflect</span>
+    <span class="c1"># the data being displayed within the tick text entries.</span>
+
+        <span class="k">if</span> <span class="n">custom_colorbar_title</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">colorbar_title</span> <span class="o">=</span> <span class="n">custom_colorbar_title</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">colorbar_title</span> <span class="o">=</span> <span class="n">data_col</span>
+
+    <span class="c1"># The documentation at </span>
+    <span class="c1"># https://plotly.com/python/reference/layout/coloraxis/</span>
+    <span class="c1"># proved indispensable in drafting this code.</span>
+        
+        <span class="n">fig</span><span class="o">.</span><span class="n">update_coloraxes</span><span class="p">(</span>
+            <span class="n">colorbar_tickvals</span> <span class="o">=</span> <span class="n">percentile_quantile_list</span><span class="p">,</span>
+            <span class="n">colorbar_tickmode</span> <span class="o">=</span> <span class="s1">&#39;array&#39;</span><span class="p">,</span>
+            <span class="n">colorbar_ticktext</span> <span class="o">=</span> <span class="n">score_list</span><span class="p">,</span>
+            <span class="n">colorbar_title</span> <span class="o">=</span> <span class="n">colorbar_title</span><span class="p">,</span>
+            <span class="n">colorbar_title_side</span> <span class="o">=</span> <span class="s1">&#39;bottom&#39;</span><span class="p">)</span>
+
+    <span class="c1"># I chose to set colorbar_title_side as &#39;bottom&#39; because it ended up </span>
+    <span class="c1"># pretty close to the topmost tick when the default setting </span>
+    <span class="c1"># (&#39;top&#39;) was used.)</span>
+
+    <span class="k">if</span> <span class="n">add_labels</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">label_col</span> <span class="o">=</span> <span class="n">data_col</span><span class="o">+</span><span class="s1">&#39;_for_labels&#39;</span>
+        <span class="k">if</span> <span class="n">label_col</span> <span class="ow">in</span> <span class="n">gdf</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The name of the column that will be used </span><span class="se">\</span>
+<span class="s2">to store text labels (</span><span class="si">{</span><span class="n">label_col</span><span class="si">}</span><span class="s2">) is already present </span><span class="se">\</span>
+<span class="s2">within gdf. Rename this column before calling the function to prevent </span><span class="se">\</span>
+<span class="s2">any conflicts.&quot;</span><span class="p">)</span>   
+        <span class="c1"># The function assumes that the caller wishes to plot data_col</span>
+        <span class="c1"># values as text labels; however, it could be revised</span>
+        <span class="c1"># to allow for an alternative set of labels.</span>
+        <span class="n">gdf</span><span class="p">[</span><span class="n">label_col</span><span class="p">]</span> <span class="o">=</span> <span class="n">gdf</span><span class="p">[</span><span class="n">data_col</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">label_round_value</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">gdf</span><span class="p">[</span><span class="n">label_col</span><span class="p">]</span> <span class="o">=</span> <span class="n">gdf</span><span class="p">[</span><span class="n">label_col</span><span class="p">]</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">label_round_value</span><span class="p">)</span>
+    
+        <span class="c1"># Determining points within each region that can serve as </span>
+        <span class="c1"># text label locations:</span>
+        <span class="c1"># (See https://geopandas.org/en/stable/docs/reference/</span>
+        <span class="c1"># api/geopandas.GeoSeries.representative_point.html</span>
+        <span class="c1"># for more infomation.)</span>
+        <span class="k">for</span> <span class="n">column</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;label_loc&#39;</span><span class="p">,</span> <span class="s1">&#39;label_lat&#39;</span><span class="p">,</span> <span class="s1">&#39;label_lon&#39;</span><span class="p">]:</span>
+            <span class="k">if</span> <span class="n">column</span> <span class="ow">in</span> <span class="n">gdf</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Rename the column </span><span class="si">{</span><span class="n">column</span><span class="si">}</span><span class="s2"> in order </span><span class="se">\</span>
+<span class="s2">to prevent a conflict with gen_choropleth.&quot;</span><span class="p">)</span>
+        <span class="n">gdf</span><span class="p">[</span><span class="s1">&#39;label_loc&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">gdf</span><span class="p">[</span><span class="s1">&#39;geometry&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">representative_point</span><span class="p">()</span>
+        <span class="c1"># Adding the x and y coordinates stored within label_loc to</span>
+        <span class="c1"># standalone fields for use within Plotly&#39;s </span>
+        <span class="c1"># add_scattergeo() function:</span>
+        <span class="n">gdf</span><span class="p">[</span><span class="s1">&#39;label_lat&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">coord</span><span class="o">.</span><span class="n">y</span> <span class="k">for</span> <span class="n">coord</span> <span class="ow">in</span> <span class="n">gdf</span><span class="p">[</span><span class="s1">&#39;label_loc&#39;</span><span class="p">]]</span>
+        <span class="n">gdf</span><span class="p">[</span><span class="s1">&#39;label_lon&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">coord</span><span class="o">.</span><span class="n">x</span> <span class="k">for</span> <span class="n">coord</span> <span class="ow">in</span> <span class="n">gdf</span><span class="p">[</span><span class="s1">&#39;label_loc&#39;</span><span class="p">]]</span>
+
+        <span class="k">if</span> <span class="n">revise_state_label_points</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="c1"># Shifting data labels to make them easier to locate</span>
+            <span class="c1"># and read:</span>
+            <span class="c1"># (These points were determined using Openstreetmap </span>
+            <span class="c1"># coordinates as a reference.)</span>
+            <span class="n">gdf</span><span class="o">.</span><span class="n">at</span><span class="p">[</span><span class="s1">&#39;Maryland&#39;</span><span class="p">,</span> <span class="s1">&#39;label_lat&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">39.4</span>
+            <span class="n">gdf</span><span class="o">.</span><span class="n">at</span><span class="p">[</span><span class="s1">&#39;Maryland&#39;</span><span class="p">,</span> <span class="s1">&#39;label_lon&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mf">77.24</span>
+            
+            <span class="n">gdf</span><span class="o">.</span><span class="n">at</span><span class="p">[</span><span class="s1">&#39;Michigan&#39;</span><span class="p">,</span> <span class="s1">&#39;label_lat&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">43.63</span>
+            <span class="n">gdf</span><span class="o">.</span><span class="n">at</span><span class="p">[</span><span class="s1">&#39;Michigan&#39;</span><span class="p">,</span> <span class="s1">&#39;label_lon&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mf">84.97</span>
+            
+            <span class="n">gdf</span><span class="o">.</span><span class="n">at</span><span class="p">[</span><span class="s1">&#39;Louisiana&#39;</span><span class="p">,</span> <span class="s1">&#39;label_lat&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">30.5</span>
+            <span class="n">gdf</span><span class="o">.</span><span class="n">at</span><span class="p">[</span><span class="s1">&#39;Louisiana&#39;</span><span class="p">,</span> <span class="s1">&#39;label_lon&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mf">92.54</span>
+        
+
+        <span class="c1"># This code was based mostly on</span>
+        <span class="c1"># https://plotly.com/python/scatter-plots-on-</span>
+        <span class="c1"># maps/#simple-us-airports-map .</span>
+        <span class="n">fig</span><span class="o">.</span><span class="n">add_scattergeo</span><span class="p">(</span>
+            <span class="n">text</span> <span class="o">=</span> <span class="n">gdf</span><span class="p">[</span><span class="n">label_col</span><span class="p">],</span>
+            <span class="n">mode</span> <span class="o">=</span> <span class="s1">&#39;text&#39;</span><span class="p">,</span>
+            <span class="n">lat</span> <span class="o">=</span> <span class="n">gdf</span><span class="p">[</span><span class="s1">&#39;label_lat&#39;</span><span class="p">],</span>
+            <span class="n">lon</span> <span class="o">=</span> <span class="n">gdf</span><span class="p">[</span><span class="s1">&#39;label_lon&#39;</span><span class="p">])</span>
+
+        <span class="c1"># Disabling hover functionality for these text labels (as they</span>
+        <span class="c1"># can interfere with the pre-existing labels):</span>
+        <span class="n">fig</span><span class="o">.</span><span class="n">update_traces</span><span class="p">(</span><span class="n">hoverinfo</span> <span class="o">=</span> <span class="s1">&#39;skip&#39;</span><span class="p">,</span> <span class="n">selector</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;scattergeo&#39;</span><span class="p">))</span>
+    <span class="c1"># This code was based on</span>
+<span class="c1"># https://plotly.com/python/reference/scattergeo/</span>
+
+    <span class="c1"># Saving this map to HTML and static files </span>
+    <span class="c1"># (if requested by the caller):</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">save_html</span> <span class="o">==</span> <span class="kc">True</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">save_static</span> <span class="o">==</span> <span class="kc">True</span><span class="p">):</span>
+        <span class="n">update_and_save_plotly_map</span><span class="p">(</span>
+            <span class="n">fig</span> <span class="o">=</span> <span class="n">fig</span><span class="p">,</span> <span class="n">save_html</span> <span class="o">=</span> <span class="n">save_html</span><span class="p">,</span> <span class="n">save_static</span> <span class="o">=</span> <span class="n">save_static</span><span class="p">,</span> 
+            <span class="n">static_file_folder</span> <span class="o">=</span> <span class="n">static_file_folder</span><span class="p">,</span>
+            <span class="n">html_file_folder</span> <span class="o">=</span> <span class="n">html_file_folder</span><span class="p">,</span> <span class="n">filename</span> <span class="o">=</span> <span class="n">filename</span><span class="p">,</span> 
+            <span class="n">image_extension</span> <span class="o">=</span> <span class="n">image_extension</span><span class="p">,</span> 
+            <span class="n">include_plotlyjs</span> <span class="o">=</span> <span class="n">include_plotlyjs</span><span class="p">,</span> 
+            <span class="n">screenshot_label_font_size</span> <span class="o">=</span> <span class="n">screenshot_label_font_size</span><span class="p">,</span>
+            <span class="n">screenshot_width</span> <span class="o">=</span> <span class="n">screenshot_width</span><span class="p">,</span> 
+            <span class="n">screenshot_height</span> <span class="o">=</span> <span class="n">screenshot_height</span><span class="p">,</span>
+            <span class="n">screenshot_scale</span> <span class="o">=</span> <span class="n">screenshot_scale</span><span class="p">,</span> 
+            <span class="n">screenshot_title_y</span> <span class="o">=</span> <span class="n">screenshot_title_y</span><span class="p">,</span>
+            <span class="n">screenshot_title_font_size</span> <span class="o">=</span> <span class="n">screenshot_title_font_size</span><span class="p">,</span> 
+            <span class="n">screenshot_colorbar_thickness</span> <span class="o">=</span> <span class="n">screenshot_colorbar_thickness</span><span class="p">,</span> 
+            <span class="n">screenshot_colorbar_len</span> <span class="o">=</span> <span class="n">screenshot_colorbar_len</span><span class="p">,</span> 
+            <span class="n">screenshot_colorbar_tickfont_size</span> <span class="o">=</span> \
+<span class="n">screenshot_colorbar_tickfont_size</span><span class="p">,</span> 
+            <span class="n">screenshot_colorbar_title_font_size</span> <span class="o">=</span> \
+<span class="n">screenshot_colorbar_title_font_size</span><span class="p">)</span>
+        
+    <span class="k">if</span> <span class="n">debug</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">fig</span><span class="p">,</span> <span class="n">percentile_quantiles</span><span class="p">,</span> <span class="n">score_list</span><span class="p">,</span> <span class="n">gdf</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">fig</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./Book_Specific_Materials"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../Mapping/choropleth_maps.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Mapping Census Data using Plotly (Work in progress)</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../Mapping/choropleth_maps_with_folium.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Creating Choropleth Maps with Folium</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Kenneth Burchfiel
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

@@ -1,0 +1,1194 @@
+Concept,Group
+Sex by Age,B01001
+Sex by Age (White Alone),B01001A
+Sex by Age (Black or African American Alone),B01001B
+Sex by Age (American Indian and Alaska Native Alone),B01001C
+Sex by Age (Asian Alone),B01001D
+Sex by Age (Native Hawaiian and Other Pacific Islander Alone),B01001E
+Sex by Age (Some Other Race Alone),B01001F
+Sex by Age (Two or More Races),B01001G
+"Sex by Age (White Alone, Not Hispanic or Latino)",B01001H
+Sex by Age (Hispanic or Latino),B01001I
+Median Age by Sex,B01002
+Median Age by Sex (White Alone),B01002A
+Median Age by Sex (Black or African American Alone),B01002B
+Median Age by Sex (American Indian and Alaska Native Alone),B01002C
+Median Age by Sex (Asian Alone),B01002D
+Median Age by Sex (Native Hawaiian and Other Pacific Islander Alone),B01002E
+Median Age by Sex (Some Other Race Alone),B01002F
+Median Age by Sex (Two or More Races),B01002G
+"Median Age by Sex (White Alone, Not Hispanic or Latino)",B01002H
+Median Age by Sex (Hispanic or Latino),B01002I
+Total Population,B01003
+Race,B02001
+White Alone or in Combination With One or More Other Races,B02008
+Black or African American Alone or in Combination With One or More Other Races,B02009
+American Indian and Alaska Native Alone or in Combination With One or More Other Races,B02010
+Asian Alone or in Combination With One or More Other Races,B02011
+Native Hawaiian and Other Pacific Islander Alone or in Combination With One or More Other Races,B02012
+Some Other Race Alone or in Combination With One or More Other Races,B02013
+Asian Alone by Selected Groups,B02015
+Native Hawaiian and Other Pacific Islander Alone by Selected Groups,B02016
+Asian Alone or in Any Combination by Selected Groups,B02018
+Native Hawaiian and Other Pacific Islander Alone or in Any Combination by Selected Groups,B02019
+American Indian and Alaska Native Alone by Selected Tribes and Villages,B02020
+American Indian and Alaska Native Alone or in Any Combination by Selected Tribes and Villages,B02021
+Hispanic or Latino Origin by Specific Origin,B03001
+Hispanic or Latino Origin by Race,B03002
+Hispanic or Latino Origin,B03003
+People Reporting Single Ancestry,B04004
+People Reporting Multiple Ancestry,B04005
+People Reporting Ancestry,B04006
+Ancestry,B04007
+Nativity and Citizenship Status in the United States,B05001
+Nativity and Citizenship Status in Puerto Rico,B05001PR
+Place of Birth by Nativity and Citizenship Status,B05002
+Sex by Age by Nativity and Citizenship Status,B05003
+Sex by Age by Nativity and Citizenship Status (White Alone),B05003A
+Sex by Age by Nativity and Citizenship Status (Black or African American Alone),B05003B
+Sex by Age by Nativity and Citizenship Status (American Indian and Alaska Native Alone),B05003C
+Sex by Age by Nativity and Citizenship Status (Asian Alone),B05003D
+Sex by Age by Nativity and Citizenship Status (Native Hawaiian and Other Pacific Islander Alone),B05003E
+Sex by Age by Nativity and Citizenship Status (Some Other Race Alone),B05003F
+Sex by Age by Nativity and Citizenship Status (Two or More Races),B05003G
+"Sex by Age by Nativity and Citizenship Status (White Alone, Not Hispanic or Latino)",B05003H
+Sex by Age by Nativity and Citizenship Status (Hispanic or Latino),B05003I
+Median Age by Nativity and Citizenship Status by Sex,B05004
+Period of Entry by Nativity and Citizenship Status in the United States,B05005
+Period of Entry by Nativity and Citizenship Status in Puerto Rico,B05005PR
+Place of Birth for the Foreign-Born Population in the United States,B05006
+Place of Birth for the Foreign-Born Population in Puerto Rico,B05006PR
+Place of Birth by Year of Entry by Citizenship Status for the Foreign-Born Population,B05007
+Sex by Place of Birth by Year of Entry for the Foreign-Born Population,B05008
+Age and Nativity of Own Children Under 18 Years in Families and Subfamilies by Number and Nativity of Parents,B05009
+Ratio of Income to Poverty Level in the Past 12 Months by Nativity of Children Under 18 Years in Families and Subfamilies by Living Arrangements and Nativity of Parents,B05010
+Period of Naturalization,B05011
+Nativity in the United States,B05012
+Nativity in Puerto Rico,B05012PR
+Sex by Age for the Foreign-Born Population,B05013
+Sex by Age for the Foreign-Born Population,B05014
+Place of Birth by Year of Entry for the Foreign-Born Population,B05015
+Place of Birth by Age in the United States,B06001
+Place of Birth by Age in Puerto Rico,B06001PR
+Median Age by Place of Birth in the United States,B06002
+Median Age by Place of Birth in Puerto Rico,B06002PR
+Place of Birth by Sex in the United States,B06003
+Place of Birth by Sex in Puerto Rico,B06003PR
+Place of Birth (White Alone) in the United States,B06004A
+Place of Birth (White Alone) in Puerto Rico,B06004APR
+Place of Birth (Black or African American Alone) in the United States,B06004B
+Place of Birth (Black or African American Alone) in Puerto Rico,B06004BPR
+Place of Birth (American Indian and Alaska Native Alone) in the United States,B06004C
+Place of Birth (American Indian and Alaska Native Alone) in Puerto Rico,B06004CPR
+Place of Birth (Asian Alone) in the United States,B06004D
+Place of Birth (Asian Alone) in Puerto Rico,B06004DPR
+Place of Birth (Native Hawaiian and Other Pacific Islander Alone) in the United States,B06004E
+Place of Birth (Native Hawaiian and Other Pacific Islander Alone) in Puerto Rico,B06004EPR
+Place of Birth (Some Other Race Alone) in the United States,B06004F
+Place of Birth (Some Other Race Alone) in Puerto Rico,B06004FPR
+Place of Birth (Two or More Races) in the United States,B06004G
+Place of Birth (Two or More Races) in Puerto Rico,B06004GPR
+"Place of Birth (White Alone, Not Hispanic or Latino) in the United States",B06004H
+"Place of Birth (White Alone, Not Hispanic or Latino) in Puerto Rico",B06004HPR
+Place of Birth (Hispanic or Latino) in the United States,B06004I
+Place of Birth (Hispanic or Latino) in Puerto Rico,B06004IPR
+Place of Birth by Language Spoken at Home and Ability to Speak English in the United States,B06007
+Place of Birth by Language Spoken at Home and Ability to Speak English in Puerto Rico,B06007PR
+Place of Birth by Marital Status in the United States,B06008
+Place of Birth by Marital Status in Puerto Rico,B06008PR
+Place of Birth by Educational Attainment in the United States,B06009
+Place of Birth by Educational Attainment in Puerto Rico,B06009PR
+Place of Birth by Individual Income in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) in the United States,B06010
+Place of Birth by Individual Income in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) in Puerto Rico,B06010PR
+Median Income in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) by Place of Birth in the United States,B06011
+Median Income in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) by Place of Birth in Puerto Rico,B06011PR
+Place of Birth by Poverty Status in the Past 12 Months in the United States,B06012
+Place of Birth by Poverty Status in the Past 12 Months in Puerto Rico,B06012PR
+Geographical Mobility in the Past Year by Age for Current Residence in the United States,B07001
+Geographical Mobility in the Past Year by Age for Current Residence in Puerto Rico,B07001PR
+Median Age by Geographical Mobility in the Past Year for Current Residence in the United States,B07002
+Median Age by Geographical Mobility in the Past Year for Current Residence in Puerto Rico,B07002PR
+Geographical Mobility in the Past Year by Sex for Current Residence in the United States,B07003
+Geographical Mobility in the Past Year by Sex for Current Residence in Puerto Rico,B07003PR
+Geographical Mobility in the Past Year (White Alone) for Current Residence in the United States,B07004A
+Geographical Mobility in the Past Year (White Alone) for Current Residence in Puerto Rico,B07004APR
+Geographical Mobility in the Past Year (Black or African American Alone) for Current Residence in the United States,B07004B
+Geographical Mobility in the Past Year (Black or African American Alone) for Current Residence in Puerto Rico,B07004BPR
+Geographical Mobility in the Past Year (American Indian and Alaska Native Alone) for Current Residence in the United States,B07004C
+Geographical Mobility in the Past Year (American Indian and Alaska Native Alone) for Current Residence in Puerto Rico,B07004CPR
+Geographical Mobility in the Past Year (Asian Alone) for Current Residence in the United States,B07004D
+Geographical Mobility in the Past Year (Asian Alone) for Current Residence in Puerto Rico,B07004DPR
+Geographical Mobility in the Past Year (Native Hawaiian and Other Pacific Islander Alone) for Current Residence in the United States,B07004E
+Geographical Mobility in the Past Year (Native Hawaiian and Other Pacific Islander Alone) for Current Residence in Puerto Rico,B07004EPR
+Geographical Mobility in the Past Year (Some Other Race Alone) for Current Residence in the United States,B07004F
+Geographical Mobility in the Past Year (Some Other Race Alone) for Current Residence in Puerto Rico,B07004FPR
+Geographical Mobility in the Past Year (Two or More Races) for Current Residence in the United States,B07004G
+Geographical Mobility in the Past Year (Two or More Races) for Current Residence in Puerto Rico,B07004GPR
+"Geographical Mobility in the Past Year (White Alone, Not Hispanic or Latino) for Current Residence in the United States",B07004H
+"Geographical Mobility in the Past Year (White Alone, Not Hispanic or Latino) for Current Residence in Puerto Rico",B07004HPR
+Geographical Mobility in the Past Year (Hispanic or Latino) for Current Residence in the United States,B07004I
+Geographical Mobility in the Past Year (Hispanic or Latino) for Current Residence in Puerto Rico,B07004IPR
+Geographical Mobility in the Past Year by Citizenship Status for Current Residence in the United States,B07007
+Geographical Mobility in the Past Year by Citizenship Status for Current Residence in Puerto Rico,B07007PR
+Geographical Mobility in the Past Year by Marital Status for Current Residence in the United States,B07008
+Geographical Mobility in the Past Year by Marital Status for Current Residence in Puerto Rico,B07008PR
+Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the United States,B07009
+Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico,B07009PR
+Geographical Mobility in the Past Year by Individual Income in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) for Current Residence in the United States,B07010
+Geographical Mobility in the Past Year by Individual Income in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) for Current Residence in Puerto Rico,B07010PR
+Median Income in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) by Geographical Mobility in the Past Year for Current Residence in the United States,B07011
+Median Income in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) by Geographical Mobility in the Past Year for Current Residence in Puerto Rico,B07011PR
+Geographical Mobility in the Past Year by Poverty Status in the Past 12 Months for Current Residence in the United States,B07012
+Geographical Mobility in the Past Year by Poverty Status in the Past 12 Months for Current Residence in Puerto Rico,B07012PR
+Geographical Mobility in the Past Year by Tenure for Current Residence in the United States,B07013
+Geographical Mobility in the Past Year by Tenure for Current Residence in Puerto Rico,B07013PR
+Movers Between Regions in the United States,B07101
+Geographical Mobility in the Past Year for Current Residence--Metropolitan Statistical Area Level in the United States,B07201
+Geographical Mobility in the Past Year for Current Residence--Metropolitan Statistical Area Level in Puerto Rico,B07201PR
+Geographical Mobility in the Past Year for Current Residence--Micropolitan Statistical Area Level in the United States,B07202
+Geographical Mobility in the Past Year for Current Residence--Micropolitan Statistical Area Level in Puerto Rico,B07202PR
+Geographical Mobility in the Past Year for Current Residence--Not Metropolitan or Micropolitan Statistical Area Level in the United States,B07203
+Geographical Mobility in the Past Year for Current Residence--Not Metropolitan or Micropolitan Statistical Area Level in Puerto Rico,B07203PR
+"Geographical Mobility in the Past Year for Current Residence--State, County and Place Level in the United States",B07204
+"Geographical Mobility in the Past Year for Current Residence--State, County and Place Level in Puerto Rico",B07204PR
+Geographical Mobility in the Past Year by Age for Residence 1 Year Ago in the United States,B07401
+Geographical Mobility in the Past Year by Age for Residence 1 Year Ago in Puerto Rico,B07401PR
+Median Age by Geographical Mobility in the Past Year for Residence 1 Year Ago in the United States,B07402
+Median Age by Geographical Mobility in the Past Year for Residence 1 Year Ago in Puerto Rico,B07402PR
+Geographical Mobility in the Past Year by Sex for Residence 1 Year Ago in the United States,B07403
+Geographical Mobility in the Past Year by Sex for Residence 1 Year Ago in Puerto Rico,B07403PR
+Geographical Mobility in the Past Year (White Alone) for Residence 1 Year Ago in the United States,B07404A
+Geographical Mobility in the Past Year (White Alone) for Residence 1 Year Ago in Puerto Rico,B07404APR
+Geographical Mobility in the Past Year (Black or African American Alone) for Residence 1 Year Ago in the United States,B07404B
+Geographical Mobility in the Past Year (Black or African American Alone) for Residence 1 Year Ago in Puerto Rico,B07404BPR
+Geographical Mobility in the Past Year (American Indian and Alaska Native Alone) for Residence 1 Year Ago in the United States,B07404C
+Geographical Mobility in the Past Year (American Indian and Alaska Native Alone) for Residence 1 Year Ago in Puerto Rico,B07404CPR
+Geographical Mobility in the Past Year (Asian Alone) for Residence 1 Year Ago in the United States,B07404D
+Geographical Mobility in the Past Year (Asian Alone) for Residence 1 Year Ago in Puerto Rico,B07404DPR
+Geographical Mobility in the Past Year (Native Hawaiian and Other Pacific Islander Alone) for Residence 1 Year Ago in the United States,B07404E
+Geographical Mobility in the Past Year (Native Hawaiian and Other Pacific Islander Alone) for Residence 1 Year Ago in Puerto Rico,B07404EPR
+Geographical Mobility in the Past Year (Some Other Race Alone) for Residence 1 Year Ago in the United States,B07404F
+Geographical Mobility in the Past Year (Some Other Race Alone) for Residence 1 Year Ago in Puerto Rico,B07404FPR
+Geographical Mobility in the Past Year (Two or More Races) for Residence 1 Year Ago in the United States,B07404G
+Geographical Mobility in the Past Year (Two or More Races) for Residence 1 Year Ago in Puerto Rico,B07404GPR
+"Geographical Mobility in the Past Year (White Alone, Not Hispanic or Latino) for Residence 1 Year Ago in the United States",B07404H
+"Geographical Mobility in the Past Year (White Alone, Not Hispanic or Latino) for Residence 1 Year Ago in Puerto Rico",B07404HPR
+Geographical Mobility in the Past Year (Hispanic or Latino) for Residence 1 Year Ago in the United States,B07404I
+Geographical Mobility in the Past Year (Hispanic or Latino) for Residence 1 Year Ago in Puerto Rico,B07404IPR
+Geographical Mobility in the Past Year by Citizenship Status for Residence 1 Year Ago in the United States,B07407
+Geographical Mobility in the Past Year by Citizenship Status for Residence 1 Year Ago in Puerto Rico,B07407PR
+Geographical Mobility in the Past Year by Marital Status for Residence 1 Year Ago in the United States,B07408
+Geographical Mobility in the Past Year by Marital Status for Residence 1 Year Ago in Puerto Rico,B07408PR
+Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in the United States,B07409
+Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in Puerto Rico,B07409PR
+Geographical Mobility in the Past Year by Individual Income in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) for Residence 1 Year Ago in the United States,B07410
+Geographical Mobility in the Past Year by Individual Income in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) for Residence 1 Year Ago in Puerto Rico,B07410PR
+Median Income in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) by Geographical Mobility in the Past Year for Residence 1 Year Ago in the United States,B07411
+Median Income in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) by Geographical Mobility in the Past Year for Residence 1 Year Ago in Puerto Rico,B07411PR
+Geographical Mobility in the Past Year by Poverty Status in the Past 12 Months for Residence 1 Year Ago in the United States,B07412
+Geographical Mobility in the Past Year by Poverty Status in the Past 12 Months for Residence 1 Year Ago in Puerto Rico,B07412PR
+Geographical Mobility in the Past Year by Tenure for Residence 1 Year Ago in the United States,B07413
+Geographical Mobility in the Past Year by Tenure for Residence 1 Year Ago in Puerto Rico,B07413PR
+Sex of Workers by Means of Transportation to Work,B08006
+Sex of Workers by Place of Work--State and County Level,B08007
+Sex of Workers by Place of Work--Place Level,B08008
+"Sex of Workers by Place of Work--Minor Civil Division Level for 12 Selected States (CT, ME, MA, MI, MN, NH, NJ, NY, PA, RI, VT, WI)",B08009
+Sex of Workers by Time of Departure to Go to Work,B08011
+Sex of Workers by Travel Time to Work,B08012
+Aggregate Travel Time to Work (in Minutes) of Workers by Sex,B08013
+Sex of Workers by Vehicles Available,B08014
+"Aggregate Number of Vehicles (Car, Truck, or Van) Used in Commuting by Workers 16 Years and Over by Sex",B08015
+Place of Work for Workers 16 Years and Over--Metropolitan Statistical Area Level,B08016
+Place of Work for Workers 16 Years and Over--Micropolitan Statistical Area Level,B08017
+Place of Work for Workers 16 Years and Over--Not Metropolitan or Micropolitan Statistical Area Level,B08018
+Means of Transportation to Work by Age,B08101
+Median Age by Means of Transportation to Work,B08103
+Means of Transportation to Work (White Alone),B08105A
+Means of Transportation to Work (Black or African American Alone),B08105B
+Means of Transportation to Work (American Indian and Alaska Native Alone),B08105C
+Means of Transportation to Work (Asian Alone),B08105D
+Means of Transportation to Work (Native Hawaiian and Other Pacific Islander Alone),B08105E
+Means of Transportation to Work (Some Other Race Alone),B08105F
+Means of Transportation to Work (Two or More Races),B08105G
+"Means of Transportation to Work (White Alone, Not Hispanic or Latino)",B08105H
+Means of Transportation to Work (Hispanic or Latino),B08105I
+Means of Transportation to Work by Citizenship Status,B08111
+Means of Transportation to Work by Language Spoken at Home and Ability to Speak English,B08113
+Means of Transportation to Work by Workers' Earnings in the Past 12 Months (in 2023 Inflation-Adjusted Dollars),B08119
+Median Earnings in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) by Means of Transportation to Work,B08121
+Means of Transportation to Work by Poverty Status in the Past 12 Months,B08122
+Means of Transportation to Work by Occupation,B08124
+Means of Transportation to Work by Industry,B08126
+Means of Transportation to Work by Class of Worker,B08128
+Means of Transportation to Work by Place of Work--State and County Level,B08130
+Aggregate Travel Time to Work (in Minutes) of Workers by Place of Work--State and County Level,B08131
+Means of Transportation to Work by Time of Departure to Go to Work,B08132
+Aggregate Travel Time to Work (in Minutes) of Workers by Time of Departure to Go to Work,B08133
+Means of Transportation to Work by Travel Time to Work,B08134
+Aggregate Travel Time to Work (in Minutes) of Workers by Travel Time to Work,B08135
+Aggregate Travel Time to Work (in Minutes) of Workers by Means of Transportation to Work,B08136
+Means of Transportation to Work by Tenure,B08137
+Means of Transportation to Work by Vehicles Available,B08141
+Household Size by Vehicles Available,B08201
+Household Size by Number of Workers in Household,B08202
+Number of Workers in Household by Vehicles Available,B08203
+Means of Transportation to Work,B08301
+Time of Departure to Go to Work,B08302
+Travel Time to Work,B08303
+Sex of Workers by Means of Transportation to Work for Workplace Geography,B08406
+Sex of Workers by Travel Time to Work for Workplace Geography,B08412
+Means of Transportation to Work by Age for Workplace Geography,B08501
+Median Age by Means of Transportation to Work for Workplace Geography,B08503
+Means of Transportation to Work for Workplace Geography (White Alone),B08505A
+Means of Transportation to Work for Workplace Geography (Black or African American Alone),B08505B
+Means of Transportation to Work for Workplace Geography (American Indian and Alaska Native Alone),B08505C
+Means of Transportation to Work for Workplace Geography (Asian Alone),B08505D
+Means of Transportation to Work for Workplace Geography (Native Hawaiian and Other Pacific Islander Alone),B08505E
+Means of Transportation to Work for Workplace Geography (Some Other Race Alone),B08505F
+Means of Transportation to Work for Workplace Geography (Two or More Races),B08505G
+"Means of Transportation to Work for Workplace Geography (White Alone, Not Hispanic or Latino)",B08505H
+Means of Transportation to Work for Workplace Geography (Hispanic or Latino),B08505I
+Means of Transportation to Work by Citizenship Status for Workplace Geography,B08511
+Means of Transportation to Work by Language Spoken at Home and Ability to Speak English for Workplace Geography,B08513
+Means of Transportation to Work by Workers' Earnings in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) for Workplace Geography,B08519
+Median Earnings in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) by Means of Transportation to Work for Workplace Geography,B08521
+Means of Transportation to Work by Poverty Status in the Past 12 Months for Workplace Geography,B08522
+Means of Transportation to Work by Occupation for Workplace Geography,B08524
+Means of Transportation to Work by Industry for Workplace Geography,B08526
+Means of Transportation to Work by Class of Worker for Workplace Geography,B08528
+Means of Transportation to Work by Time Arriving at Work for Workplace Geography,B08532
+Means of Transportation to Work by Travel Time to Work for Workplace Geography,B08534
+Aggregate Travel Time to Work (in Minutes) of Workers by Means of Transportation to Work for Workplace Geography,B08536
+Means of Transportation to Work by Tenure for Workplace Geography,B08537
+Means of Transportation to Work by Vehicles Available for Workplace Geography,B08541
+Means of Transportation to Work for Workplace Geography,B08601
+Time Arriving at Work for Workplace Geography,B08602
+Travel Time to Work for Workplace Geography,B08603
+Worker Population for Workplace Geography,B08604
+Population Under 18 Years by Age,B09001
+Own Children Under 18 Years by Family Type and Age,B09002
+"Household Type for Children Under 18 Years in Households (Excluding Householders, Spouses, and Unmarried Partners)",B09005
+"Receipt of Supplemental Security Income (SSI), Cash Public Assistance Income, or Food Stamps/SNAP in the Past 12 Months by Household Type for Children Under 18 Years in Households",B09010
+Relationship to Householder for Children Under 18 Years in Households,B09018
+Household Type (Including Living Alone) by Relationship,B09019
+Relationship by Household Type (Including Living Alone) for the Population 65 Years and Over,B09020
+Living Arrangements of Adults 18 Years and Over by Age,B09021
+Grandchildren Under 18 Years Living With a Grandparent Householder by Age of Grandchild,B10001
+Grandchildren Under 18 Years Living With a Grandparent Householder by Grandparent Responsibility and Presence of Parent,B10002
+Median Family Income for Families With Grandparent Householders and/or Spouses Living With Own Grandchildren Under 18 Years by Responsibility for Own Grandchildren and Presence of Parent of Grandchildren,B10010
+Grandparents Living With Own Grandchildren Under 18 Years by Responsibility for Own Grandchildren by Length of Time Responsible for Own Grandchildren for the Population 30 Years and Over,B10050
+Grandparents Living With Own Grandchildren Under 18 Years by Responsibility for Own Grandchildren by Presence of Parent of Grandchildren and Age of Grandparent,B10051
+Grandparents Living With Own Grandchildren Under 18 Years by Responsibility for Own Grandchildren and Age of Grandparent (White Alone),B10051A
+Grandparents Living With Own Grandchildren Under 18 Years by Responsibility for Own Grandchildren and Age of Grandparent (Black or African American Alone),B10051B
+Grandparents Living With Own Grandchildren Under 18 Years by Responsibility for Own Grandchildren and Age of Grandparent (American Indian and Alaska Native Alone),B10051C
+Grandparents Living With Own Grandchildren Under 18 Years by Responsibility for Own Grandchildren and Age of Grandparent (Asian Alone),B10051D
+Grandparents Living With Own Grandchildren Under 18 Years by Responsibility for Own Grandchildren and Age of Grandparent (Native Hawaiian and Other Pacific Islander Alone),B10051E
+Grandparents Living With Own Grandchildren Under 18 Years by Responsibility for Own Grandchildren and Age of Grandparent (Some Other Race Alone),B10051F
+Grandparents Living With Own Grandchildren Under 18 Years by Responsibility for Own Grandchildren and Age of Grandparent (Two or More Races),B10051G
+"Grandparents Living With Own Grandchildren Under 18 Years by Responsibility for Own Grandchildren and Age of Grandparent (White Alone, Not Hispanic or Latino)",B10051H
+Grandparents Living With Own Grandchildren Under 18 Years by Responsibility for Own Grandchildren and Age of Grandparent (Hispanic or Latino),B10051I
+Disability Status of Grandparents Living With Own Grandchildren Under 18 Years by Responsibility for Own Grandchildren and Age of Grandparent,B10052
+Nativity by Grandparents Responsible for Own Grandchildren Under 18 Years by Age of Grandparent,B10053
+Language and Ability to Speak English of Grandparents Living With Own Grandchildren Under 18 Years by Responsibility for Own Grandchildren and Age of Grandparent,B10054
+Sex of Grandparents Living With Own Grandchildren Under 18 Years by Responsibility for Own Grandchildren and Age of Grandparent,B10056
+Marital Status by Grandparents Living With Own Grandchildren Under 18 Years by Responsibility for Own Grandchildren and Age of Grandparent,B10057
+Employment Status of Grandparents Living With Own Grandchildren Under 18 Years by Responsibility for Own Grandchildren and Age of Grandparent,B10058
+Poverty Status in the Past 12 Months of Grandparents Living With Own Grandchildren Under 18 Years by Responsibility for Own Grandchildren and Age of Grandparent,B10059
+Households With Grandparents Living With Own Grandchildren Under 18 Years by Responsibility for Own Grandchildren and Presence of Parent of Grandchildren,B10063
+Household Type (Including Living Alone),B11001
+Household Type (Including Living Alone) (White Alone),B11001A
+Household Type (Including Living Alone) (Black or African American Alone),B11001B
+Household Type (Including Living Alone) (American Indian and Alaska Native Alone),B11001C
+Household Type (Including Living Alone) (Asian Alone),B11001D
+Household Type (Including Living Alone) (Native Hawaiian and Other Pacific Islander Alone),B11001E
+Household Type (Including Living Alone) (Some Other Race Alone),B11001F
+Household Type (Including Living Alone) (Two or More Races),B11001G
+"Household Type (Including Living Alone) (White Alone, Not Hispanic or Latino)",B11001H
+Household Type (Including Living Alone) (Hispanic or Latino),B11001I
+Household Type by Relatives and Nonrelatives for Population in Households,B11002
+Household Type by Relatives and Nonrelatives for Population in Households (White Alone),B11002A
+Household Type by Relatives and Nonrelatives for Population in Households (Black or African American Alone),B11002B
+Household Type by Relatives and Nonrelatives for Population in Households (American Indian and Alaska Native Alone),B11002C
+Household Type by Relatives and Nonrelatives for Population in Households (Asian Alone),B11002D
+Household Type by Relatives and Nonrelatives for Population in Households (Native Hawaiian and Other Pacific Islander Alone),B11002E
+Household Type by Relatives and Nonrelatives for Population in Households (Some Other Race Alone),B11002F
+Household Type by Relatives and Nonrelatives for Population in Households (Two or More Races),B11002G
+"Household Type by Relatives and Nonrelatives for Population in Households (White Alone, Not Hispanic or Latino)",B11002H
+Household Type by Relatives and Nonrelatives for Population in Households (Hispanic or Latino),B11002I
+Family Type by Presence and Age of Own Children Under 18 Years,B11003
+Family Type by Presence and Age of Related Children Under 18 Years,B11004
+Households by Presence of People Under 18 Years by Household Type,B11005
+Households by Presence of People 60 Years and Over by Household Type,B11006
+"Households by Presence of People 65 Years and Over, Household Size and Household Type",B11007
+Cohabiting Couple Households by Presence and Age of Own Children Under 18 Years,B11008
+Coupled Households by Type,B11009
+Nonfamily Households by Sex of Householder by Living Alone by Age of Householder,B11010
+Household Type by Units in Structure,B11011
+Households by Type,B11012
+Subfamily Type by Presence of Own Children Under 18 Years,B11013
+Population in Subfamilies by Subfamily Type by Relationship,B11014
+Households by Presence of Nonrelatives,B11015
+Household Type by Household Size,B11016
+Multigenerational Households,B11017
+Sex by Marital Status for the Population 15 Years and Over,B12001
+Sex by Marital Status by Age for the Population 15 Years and Over,B12002
+Sex by Marital Status for the Population 15 Years and Over (White Alone),B12002A
+Sex by Marital Status for the Population 15 Years and Over (Black or African American Alone),B12002B
+Sex by Marital Status for the Population 15 Years and Over (American Indian and Alaska Native Alone),B12002C
+Sex by Marital Status for the Population 15 Years and Over (Asian Alone),B12002D
+Sex by Marital Status for the Population 15 Years and Over (Native Hawaiian and Other Pacific Islander Alone),B12002E
+Sex by Marital Status for the Population 15 Years and Over (Some Other Race Alone),B12002F
+Sex by Marital Status for the Population 15 Years and Over (Two or More Races),B12002G
+"Sex by Marital Status for the Population 15 Years and Over (White Alone, Not Hispanic or Latino)",B12002H
+Sex by Marital Status for the Population 15 Years and Over (Hispanic or Latino),B12002I
+Marital Status by Sex by Labor Force Participation,B12006
+Median Age at First Marriage,B12007
+Median Age at First Marriage (White Alone),B12007A
+Median Age at First Marriage (Black or African American Alone),B12007B
+Median Age at First Marriage (American Indian and Alaska Native Alone),B12007C
+Median Age at First Marriage (Asian Alone),B12007D
+Median Age at First Marriage (Native Hawaiian and Other Pacific Islander Alone),B12007E
+Median Age at First Marriage (Some Other Race Alone),B12007F
+Median Age at First Marriage (Two or More Races),B12007G
+"Median Age at First Marriage (White Alone, Not Hispanic or Latino)",B12007H
+Median Age at First Marriage (Hispanic or Latino),B12007I
+Marriages in the Last Year by Sex by Marital Status for the Population 15 Years and Over,B12501
+Marriages Ending in Widowhood in the Last Year by Sex by Marital Status for the Population 15 Years and Over,B12502
+Divorces in the Last Year by Sex by Marital Status for the Population 15 Years and Over,B12503
+Median Duration of Current Marriage in Years by Sex by Marital Status for the Married Population 15 Years and Over,B12504
+Number of Times Married by Sex by Marital Status for the Population 15 Years and Over,B12505
+Women 15 to 50 Years Who Had a Birth in the Past 12 Months by Marital Status and Age,B13002
+Women 15 to 50 Years Who Had a Birth in the Past 12 Months by Marital Status (White Alone),B13002A
+Women 15 to 50 Years Who Had a Birth in the Past 12 Months by Marital Status (Black or African American Alone),B13002B
+Women 15 to 50 Years Who Had a Birth in the Past 12 Months by Marital Status (American Indian and Alaska Native Alone),B13002C
+Women 15 to 50 Years Who Had a Birth in the Past 12 Months by Marital Status (Asian Alone),B13002D
+Women 15 to 50 Years Who Had a Birth in the Past 12 Months by Marital Status (Native Hawaiian and Other Pacific Islander Alone),B13002E
+Women 15 to 50 Years Who Had a Birth in the Past 12 Months by Marital Status (Some Other Race Alone),B13002F
+Women 15 to 50 Years Who Had a Birth in the Past 12 Months by Marital Status (Two or More Races),B13002G
+"Women 15 to 50 Years Who Had a Birth in the Past 12 Months by Marital Status (White Alone, Not Hispanic or Latino)",B13002H
+Women 15 to 50 Years Who Had a Birth in the Past 12 Months by Marital Status (Hispanic or Latino),B13002I
+Women 15 to 50 Years Who Had a Birth in the Past 12 Months by Presence of Spouse or Unmarried Partner,B13004
+Women 15 to 50 Years Who Had a Birth in the Past 12 Months by Marital Status and Nativity,B13008
+Women 15 to 50 Years Who Had a Birth in the Past 12 Months by Marital Status and Poverty Status in the Past 12 Months,B13010
+Women 16 to 50 Years Who Had a Birth in the Past 12 Months by Marital Status and Labor Force Status,B13012
+Women 15 to 50 Years Who Had a Birth in the Past 12 Months by Marital Status and Educational Attainment,B13014
+Women 15 to 50 Years Who Had a Birth in the Past 12 Months by Marital Status and Receipt of Public Assistance Income in the Past 12 Months,B13015
+Women 15 to 50 Years Who Had a Birth in the Past 12 Months by Age,B13016
+School Enrollment by Level of School for the Population 3 Years and Over,B14001
+Sex by School Enrollment by Level of School by Type of School for the Population 3 Years and Over,B14002
+Sex by School Enrollment by Type of School by Age for the Population 3 Years and Over,B14003
+Sex by College or Graduate School Enrollment by Type of School by Age for the Population 15 Years and Over,B14004
+Sex by School Enrollment by Educational Attainment by Employment Status for the Population 16 to 19 Years,B14005
+Poverty Status in the Past 12 Months by School Enrollment by Level of School for the Population 3 Years and Over,B14006
+School Enrollment by Detailed Level of School for the Population 3 Years and Over,B14007
+School Enrollment by Detailed Level of School for the Population 3 Years and Over (White Alone),B14007A
+School Enrollment by Detailed Level of School for the Population 3 Years and Over (Black or African American Alone),B14007B
+School Enrollment by Detailed Level of School for the Population 3 Years and Over (American Indian and Alaska Native Alone),B14007C
+School Enrollment by Detailed Level of School for the Population 3 Years and Over (Asian Alone),B14007D
+School Enrollment by Detailed Level of School for the Population 3 Years and Over (Native Hawaiian and Other Pacific Islander Alone),B14007E
+School Enrollment by Detailed Level of School for the Population 3 Years and Over (Some Other Race Alone),B14007F
+School Enrollment by Detailed Level of School for the Population 3 Years and Over (Two or More Races),B14007G
+"School Enrollment by Detailed Level of School for the Population 3 Years and Over (White Alone, Not Hispanic or Latino)",B14007H
+School Enrollment by Detailed Level of School for the Population 3 Years and Over (Hispanic or Latino),B14007I
+Sex by Age by Educational Attainment for the Population 18 Years and Over,B15001
+Sex by Educational Attainment for the Population 25 Years and Over,B15002
+Educational Attainment for the Population 25 Years and Over,B15003
+Sex by Age by Field of Bachelor's Degree for First Major for the Population 25 Years and Over,B15011
+Total Fields of Bachelor's Degrees Reported,B15012
+Median Earnings in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) by Sex by Field of Bachelor's Degree for First Major,B15013
+Median Earnings in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) by Age by Field of Bachelor's Degree for First Major,B15014
+Language Spoken at Home by Ability to Speak English for the Population 5 Years and Over,B16001
+Detailed Household Language by Household Limited English Speaking Status,B16002
+Age by Language Spoken at Home for the Population 5 Years and Over in Limited English Speaking Households,B16003
+Age by Language Spoken at Home by Ability to Speak English for the Population 5 Years and Over,B16004
+Nativity by Language Spoken at Home by Ability to Speak English for the Population 5 Years and Over,B16005
+Nativity by Language Spoken at Home by Ability to Speak English for the Population 5 Years and Over (White Alone),B16005A
+Nativity by Language Spoken at Home by Ability to Speak English for the Population 5 Years and Over (Black or African American Alone),B16005B
+Nativity by Language Spoken at Home by Ability to Speak English for the Population 5 Years and Over (American Indian and Alaska Native Alone),B16005C
+Nativity by Language Spoken at Home by Ability to Speak English for the Population 5 Years and Over (Asian Alone),B16005D
+Nativity by Language Spoken at Home by Ability to Speak English for the Population 5 Years and Over (Native Hawaiian and Other Pacific Islander Alone),B16005E
+Nativity by Language Spoken at Home by Ability to Speak English for the Population 5 Years and Over (Some Other Race Alone),B16005F
+Nativity by Language Spoken at Home by Ability to Speak English for the Population 5 Years and Over (Two or More Races),B16005G
+"Nativity by Language Spoken at Home by Ability to Speak English for the Population 5 Years and Over (White Alone, Not Hispanic or Latino)",B16005H
+Nativity by Language Spoken at Home by Ability to Speak English for the Population 5 Years and Over (Hispanic or Latino),B16005I
+Language Spoken at Home by Ability to Speak English for the Population 5 Years and Over (Hispanic or Latino),B16006
+Age by Language Spoken at Home for the Population 5 Years and Over,B16007
+Citizenship Status by Age by Language Spoken at Home and Ability to Speak English for the Population 5 Years and Over,B16008
+Poverty Status in the Past 12 Months by Age by Language Spoken at Home for the Population 5 Years and Over,B16009
+Educational Attainment and Employment Status by Language Spoken at Home for the Population 25 Years and Over,B16010
+Poverty Status in the Past 12 Months by Sex by Age,B17001
+Poverty Status in the Past 12 Months by Sex by Age (White Alone),B17001A
+Poverty Status in the Past 12 Months by Sex by Age (Black or African American Alone),B17001B
+Poverty Status in the Past 12 Months by Sex by Age (American Indian and Alaska Native Alone),B17001C
+Poverty Status in the Past 12 Months by Sex by Age (Asian Alone),B17001D
+Poverty Status in the Past 12 Months by Sex by Age (Native Hawaiian and Other Pacific Islander Alone),B17001E
+Poverty Status in the Past 12 Months by Sex by Age (Some Other Race Alone),B17001F
+Poverty Status in the Past 12 Months by Sex by Age (Two or More Races),B17001G
+"Poverty Status in the Past 12 Months by Sex by Age (White Alone, Not Hispanic or Latino)",B17001H
+Poverty Status in the Past 12 Months by Sex by Age (Hispanic or Latino),B17001I
+Poverty Status in the Past 12 Months of Individuals by Sex by Educational Attainment,B17003
+Poverty Status in the Past 12 Months of Individuals by Sex by Work Experience,B17004
+Poverty Status in the Past 12 Months of Individuals by Sex by Employment Status,B17005
+Poverty Status in the Past 12 Months of Related Children Under 18 Years by Family Type by Age of Related Children Under 18 Years,B17006
+Poverty Status in the Past 12 Months of Unrelated Individuals 15 Years and Over by Sex by Age,B17007
+Aggregate Income Deficit (Dollars) in the Past 12 Months of Unrelated Individuals by Sex,B17008
+Poverty Status by Work Experience of Unrelated Individuals by Householder Status,B17009
+Poverty Status in the Past 12 Months of Families by Family Type by Presence of Related Children Under 18 Years by Age of Related Children,B17010
+Poverty Status in the Past 12 Months of Families by Family Type by Presence of Related Children Under 18 Years by Age of Related Children (White Alone Householder),B17010A
+Poverty Status in the Past 12 Months of Families by Family Type by Presence of Related Children Under 18 Years by Age of Related Children (Black or African American Alone Householder),B17010B
+Poverty Status in the Past 12 Months of Families by Family Type by Presence of Related Children Under 18 Years by Age of Related Children (American Indian and Alaska Native Alone),B17010C
+Poverty Status in the Past 12 Months of Families by Family Type by Presence of Related Children Under 18 Years by Age of Related Children (Asian Alone Householder),B17010D
+Poverty Status in the Past 12 Months of Families by Family Type by Presence of Related Children Under 18 Years by Age of Related Children (Native Hawaiian and Other Pacific Islander Alone Householder),B17010E
+Poverty Status in the Past 12 Months of Families by Family Type by Presence of Related Children Under 18 Years by Age of Related Children (Some Other Race Alone Householder),B17010F
+Poverty Status in the Past 12 Months of Families by Family Type by Presence of Related Children Under 18 Years by Age of Related Children (Two or More Races Householder),B17010G
+"Poverty Status in the Past 12 Months of Families by Family Type by Presence of Related Children Under 18 Years by Age of Related Children (White Alone, Not Hispanic or Latino Householder)",B17010H
+Poverty Status in the Past 12 Months of Families by Family Type by Presence of Related Children Under 18 Years by Age of Related Children (Hispanic or Latino),B17010I
+Aggregate Income Deficit (Dollars) in the Past 12 Months for Families by Family Type,B17011
+Poverty Status in the Past 12 Months of Families by Household Type by Number of Related Children Under 18 Years,B17012
+Poverty Status in the Past 12 Months of Families by Household Type by Number of Persons in Family,B17013
+Poverty Status in the Past 12 Months of Families by Household Type by Number of Workers in Family,B17014
+Poverty Status in the Past 12 Months of Families by Family Type by Social Security Income by Supplemental Security Income (SSI) and Cash Public Assistance Income,B17015
+Poverty Status in the Past 12 Months of Families by Family Type by Work Experience of Householder and Spouse,B17016
+Poverty Status in the Past 12 Months by Household Type by Age of Householder,B17017
+Poverty Status in the Past 12 Months of Families by Household Type by Educational Attainment of Householder,B17018
+Poverty Status in the Past 12 Months of Families by Household Type by Tenure,B17019
+Poverty Status in the Past 12 Months by Age,B17020
+Poverty Status in the Past 12 Months by Age (White Alone),B17020A
+Poverty Status in the Past 12 Months by Age (Black or African American Alone),B17020B
+Poverty Status in the Past 12 Months by Age (American Indian and Alaska Native Alone),B17020C
+Poverty Status in the Past 12 Months by Age (Asian Alone),B17020D
+Poverty Status in the Past 12 Months by Age (Native Hawaiian and Other Pacific Islander Alone),B17020E
+Poverty Status in the Past 12 Months by Age (Some Other Race Alone),B17020F
+Poverty Status in the Past 12 Months by Age (Two or More Races),B17020G
+"Poverty Status in the Past 12 Months by Age (White Alone, Not Hispanic or Latino)",B17020H
+Poverty Status in the Past 12 Months by Age (Hispanic or Latino),B17020I
+Poverty Status of Individuals in the Past 12 Months by Living Arrangement,B17021
+Ratio of Income to Poverty Level in the Past 12 Months of Families by Family Type by Presence of Related Children Under 18 Years by Age of Related Children,B17022
+Poverty Status in the Past 12 Months of Families by Household Type by Number of Own Children Under 18 Years,B17023
+Age by Ratio of Income to Poverty Level in the Past 12 Months,B17024
+Poverty Status in the Past 12 Months by Nativity,B17025
+Ratio of Income to Poverty Level of Families in the Past 12 Months,B17026
+Poverty Status in the Past 12 Months of People in Housing Units,B17101
+Sex by Age by Disability Status,B18101
+Age by Disability Status (White Alone),B18101A
+Age by Disability Status (Black or African American Alone),B18101B
+Age by Disability Status (American Indian and Alaska Native Alone),B18101C
+Age by Disability Status (Asian Alone),B18101D
+Age by Disability Status (Native Hawaiian and Other Pacific Islander Alone),B18101E
+Age by Disability Status (Some Other Race Alone),B18101F
+Age by Disability Status (Two or More Races),B18101G
+"Age by Disability Status (White Alone, Not Hispanic or Latino)",B18101H
+Age by Disability Status (Hispanic or Latino),B18101I
+Sex by Age by Hearing Difficulty,B18102
+Sex by Age by Vision Difficulty,B18103
+Sex by Age by Cognitive Difficulty,B18104
+Sex by Age by Ambulatory Difficulty,B18105
+Sex by Age by Self-Care Difficulty,B18106
+Sex by Age by Independent Living Difficulty,B18107
+Age by Disability Status by Health Insurance Coverage Status,B18135
+Median Earnings in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) by Disability Status by Sex for the Civilian Noninstitutionalized Population 16 Years and Over With Earnings,B18140
+Household Income in the Past 12 Months (in 2023 Inflation-Adjusted Dollars),B19001
+Household Income in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) (White Alone Householder),B19001A
+Household Income in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) (Black or African American Alone Householder),B19001B
+Household Income in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) (American Indian and Alaska Native Alone Householder),B19001C
+Household Income in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) (Asian Alone Householder),B19001D
+Household Income in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) (Native Hawaiian and Other Pacific Islander Alone Householder),B19001E
+Household Income in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) (Some Other Race Alone Householder),B19001F
+Household Income in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) (Two or More Races Householder),B19001G
+"Household Income in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) (White Alone, Not Hispanic or Latino Householder)",B19001H
+Household Income in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) (Hispanic or Latino Householder),B19001I
+Median Household Income in the Past 12 Months (in 2023 Inflation-Adjusted Dollars),B19013
+Median Household Income in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) (White Alone Householder),B19013A
+Median Household Income in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) (Black or African American Alone Householder),B19013B
+Median Household Income in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) (American Indian and Alaska Native Alone Householder),B19013C
+Median Household Income in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) (Asian Alone Householder),B19013D
+Median Household Income in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) (Native Hawaiian and Other Pacific Islander Alone Householder),B19013E
+Median Household Income in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) (Some Other Race Alone Householder),B19013F
+Median Household Income in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) (Two or More Races Householder),B19013G
+"Median Household Income in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) (White Alone, Not Hispanic or Latino Householder)",B19013H
+Median Household Income in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) (Hispanic or Latino Householder),B19013I
+Median Household Income in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) by Household Size,B19019
+Aggregate Household Income in the Past 12 Months (in 2023 Inflation-Adjusted Dollars),B19025
+Aggregate Household Income in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) (White Alone Householder),B19025A
+Aggregate Household Income in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) (Black or African American Alone Householder),B19025B
+Aggregate Household Income in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) (American Indian and Alaska Native Alone Householder),B19025C
+Aggregate Household Income in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) (Asian Alone Householder),B19025D
+Aggregate Household Income in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) (Native Hawaiian and Other Pacific Islander Alone Householder),B19025E
+Aggregate Household Income in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) (Some Other Race Alone Householder),B19025F
+Aggregate Household Income in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) (Two or More Races Householder),B19025G
+"Aggregate Household Income in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) (White Alone, Not Hispanic or Latino Householder)",B19025H
+Aggregate Household Income in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) (Hispanic or Latino Householder),B19025I
+Age of Householder by Household Income in the Past 12 Months (in 2023 Inflation-Adjusted Dollars),B19037
+Age of Householder by Household Income in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) (White Alone Householder),B19037A
+Age of Householder by Household Income in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) (Black or African American Alone Householder),B19037B
+Age of Householder by Household Income in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) (American Indian and Alaska Native Alone Householder),B19037C
+Age of Householder by Household Income in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) (Asian Alone Householder),B19037D
+Age of Householder by Household Income in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) (Native Hawaiian and Other Pacific Islander Alone Householder),B19037E
+Age of Householder by Household Income in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) (Some Other Race Alone Householder),B19037F
+Age of Householder by Household Income in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) (Two or More Races Householder),B19037G
+"Age of Householder by Household Income in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) (White Alone, Not Hispanic or Latino Householder)",B19037H
+Age of Householder by Household Income in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) (Hispanic or Latino Householder),B19037I
+Median Household Income in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) by Age of Householder,B19049
+Aggregate Household Income in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) by Age of Householder,B19050
+Earnings in the Past 12 Months for Households,B19051
+Wage or Salary Income in the Past 12 Months for Households,B19052
+Self-Employment Income in the Past 12 Months for Households,B19053
+"Interest, Dividends, or Net Rental Income in the Past 12 Months for Households",B19054
+Social Security Income in the Past 12 Months for Households,B19055
+Supplemental Security Income (SSI) in the Past 12 Months for Households,B19056
+Public Assistance Income in the Past 12 Months for Households,B19057
+Public Assistance Income or Food Stamps/SNAP in the Past 12 Months for Households,B19058
+Retirement Income in the Past 12 Months for Households,B19059
+Other Types of Income in the Past 12 Months for Households,B19060
+Aggregate Earnings in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) for Households,B19061
+Aggregate Wage or Salary Income in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) for Households,B19062
+Aggregate Self-Employment Income in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) for Households,B19063
+"Aggregate Interest, Dividends, or Net Rental Income in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) for Households",B19064
+Aggregate Social Security Income in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) for Households,B19065
+Aggregate Supplemental Security Income (SSI) in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) for Households,B19066
+Aggregate Public Assistance Income in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) for Households,B19067
+Aggregate Retirement Income in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) for Households,B19069
+Aggregate Other Types of Income in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) for Households,B19070
+Household Income Quintile Upper Limits,B19080
+Mean Household Income of Quintiles,B19081
+Shares of Aggregate Household Income by Quintile,B19082
+Gini Index of Income Inequality,B19083
+Family Income in the Past 12 Months (in 2023 Inflation-Adjusted Dollars),B19101
+Family Income in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) (White Alone Householder),B19101A
+Family Income in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) (Black or African American Alone Householder),B19101B
+Family Income in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) (American Indian and Alaska Native Alone Householder),B19101C
+Family Income in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) (Asian Alone Householder),B19101D
+Family Income in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) (Native Hawaiian and Other Pacific Islander Alone Householder),B19101E
+Family Income in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) (Some Other Race Alone Householder),B19101F
+Family Income in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) (Two or More Races Householder),B19101G
+"Family Income in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) (White Alone, Not Hispanic or Latino Householder)",B19101H
+Family Income in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) (Hispanic or Latino Householder),B19101I
+Median Family Income in the Past 12 Months (in 2023 Inflation-Adjusted Dollars),B19113
+Median Family Income in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) (White Alone Householder),B19113A
+Median Family Income in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) (Black or African American Alone Householder),B19113B
+Median Family Income in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) (American Indian and Alaska Native Alone Householder),B19113C
+Median Family Income in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) (Asian Alone Householder),B19113D
+Median Family Income in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) (Native Hawaiian and Other Pacific Islander Alone Householder),B19113E
+Median Family Income in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) (Some Other Race Alone Householder),B19113F
+Median Family Income in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) (Two or More Races),B19113G
+"Median Family Income in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) (White Alone, Not Hispanic or Latino Householder)",B19113H
+Median Family Income in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) (Hispanic or Latino Householder),B19113I
+Median Family Income in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) by Family Size,B19119
+Median Family Income in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) by Number of Earners in Family,B19121
+Number of Earners in Family,B19122
+Family Size by Cash Public Assistance Income or Households Receiving Food Stamps/SNAP Benefits in the Past 12 Months,B19123
+Median Family Income in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) by Presence of Own Children Under 18 Years,B19125
+Median Family Income in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) by Family Type by Presence of Own Children Under 18 Years,B19126
+Aggregate Family Income in the Past 12 Months (in 2023 Inflation-Adjusted Dollars),B19127
+Aggregate Family Income in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) by Family Type by Presence of Own Children Under 18 Years,B19128
+Aggregate Family Income in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) by Number of Workers in Family,B19129
+Aggregate Family Income in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) by Family Type by Age of Householder,B19130
+Family Type by Presence of Own Children Under 18 Years by Family Income in the Past 12 Months (in 2023 Inflation-Adjusted Dollars),B19131
+Nonfamily Household Income in the Past 12 Months (in 2023 Inflation-Adjusted Dollars),B19201
+Median Nonfamily Household Income in the Past 12 Months (in 2023 Inflation-Adjusted Dollars),B19202
+Median Nonfamily Household Income in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) (White Alone Householder),B19202A
+Median Nonfamily Household Income in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) (Black or African American Alone Householder),B19202B
+Median Nonfamily Household Income in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) (American Indian and Alaska Native Alone Householder),B19202C
+Median Nonfamily Household Income in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) (Asian Alone Householder),B19202D
+Median Nonfamily Household Income in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) (Native Hawaiian and Other Pacific Islander Alone Householder),B19202E
+Median Nonfamily Household Income in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) (Some Other Race Alone Householder),B19202F
+Median Nonfamily Household Income in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) (Two or More Races Householder),B19202G
+"Median Nonfamily Household Income in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) (White Alone, Not Hispanic or Latino Householder)",B19202H
+Median Nonfamily Household Income in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) (Hispanic or Latino Householder),B19202I
+Aggregate Nonfamily Household Income in the Past 12 Months (in 2023 Inflation-Adjusted Dollars),B19214
+Median Nonfamily Household Income in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) by Sex of Householder by Living Alone by Age of Householder,B19215
+Aggregate Nonfamily Household Income in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) by Sex of Householder by Living Alone by Age of Householder,B19216
+Per Capita Income in the Past 12 Months (in 2023 Inflation-Adjusted Dollars),B19301
+Per Capita Income in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) (White Alone),B19301A
+Per Capita Income in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) (Black or African American Alone),B19301B
+Per Capita Income in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) (American Indian and Alaska Native Alone),B19301C
+Per Capita Income in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) (Asian Alone),B19301D
+Per Capita Income in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) (Native Hawaiian and Other Pacific Islander Alone),B19301E
+Per Capita Income in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) (Some Other Race Alone),B19301F
+Per Capita Income in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) (Two or More Races),B19301G
+"Per Capita Income in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) (White Alone, Not Hispanic or Latino)",B19301H
+Per Capita Income in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) (Hispanic or Latino),B19301I
+Aggregate Income in the Past 12 Months (in 2023 Inflation-Adjusted Dollars),B19313
+Aggregate Income in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) for the Population 15 Years and Over (White Alone),B19313A
+Aggregate Income in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) for the Population 15 Years and Over (Black or African American Alone),B19313B
+Aggregate Income in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) for the Population 15 Years and Over (American Indian and Alaska Native Alone),B19313C
+Aggregate Income in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) for the Population 15 Years and Over (Asian Alone),B19313D
+Aggregate Income in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) for the Population 15 Years and Over (Native Hawaiian and Other Pacific Islander Alone),B19313E
+Aggregate Income in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) for the Population 15 Years and Over (Some Other Race Alone),B19313F
+Aggregate Income in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) for the Population 15 Years and Over (Two or More Races),B19313G
+"Aggregate Income in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) for the Population 15 Years and Over (White Alone, Not Hispanic or Latino)",B19313H
+Aggregate Income in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) for the Population 15 Years and Over (Hispanic or Latino),B19313I
+Sex by Work Experience in the Past 12 Months by Income in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) for the Population 15 Years and Over,B19325
+Median Income in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) by Sex by Work Experience in the Past 12 Months for the Population 15 Years and Over With Income,B19326
+Sex by Earnings in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) for the Population 16 Years and Over With Earnings in the Past 12 Months,B20001
+Median Earnings in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) by Sex for the Population 16 Years and Over With Earnings in the Past 12 Months,B20002
+Aggregate Earnings in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) by Sex by Work Experience for the Population 16 Years and Over With Earnings,B20003
+Median Earnings in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) by Sex by Educational Attainment for the Population 25 Years and Over,B20004
+Sex by Work Experience in the Past 12 Months by Earnings in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) for the Population 16 Years and Over,B20005
+Sex by Work Experience in the Past 12 Months by Earnings in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) for the Population 16 Years and Over (White Alone),B20005A
+Sex by Work Experience in the Past 12 Months by Earnings in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) for the Population 16 Years and Over (Black or African American Alone),B20005B
+Sex by Work Experience in the Past 12 Months by Earnings in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) for the Population 16 Years and Over (American Indian and Alaska Native Alone),B20005C
+Sex by Work Experience in the Past 12 Months by Earnings in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) for the Population 16 Years and Over (Asian Alone),B20005D
+Sex by Work Experience in the Past 12 Months by Earnings in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) for the Population 16 Years and Over (Native Hawaiian and Other Pacific Islander Alone),B20005E
+Sex by Work Experience in the Past 12 Months by Earnings in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) for the Population 16 Years and Over (Some Other Race Alone),B20005F
+Sex by Work Experience in the Past 12 Months by Earnings in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) for the Population 16 Years and Over (Two or More Races),B20005G
+"Sex by Work Experience in the Past 12 Months by Earnings in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) for the Population 16 Years and Over (White Alone, Not Hispanic or Latino)",B20005H
+Sex by Work Experience in the Past 12 Months by Earnings in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) for the Population 16 Years and Over (Hispanic or Latino),B20005I
+Median Earnings in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) by Sex by Work Experience in the Past 12 Months for the Population 16 Years and Over With Earnings in the Past 12 Months,B20017
+Median Earnings in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) by Sex by Work Experience in the Past 12 Months for the Population 16 Years and Over With Earnings in the Past 12 Months (White Alone),B20017A
+Median Earnings in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) by Sex by Work Experience in the Past 12 Months for the Population 16 Years and Over With Earnings in the Past 12 Months (Black or African American Alone),B20017B
+Median Earnings in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) by Sex by Work Experience in the Past 12 Months for the Population 16 Years and Over With Earnings in the Past 12 Months (American Indian and Alaska Native Alone),B20017C
+Median Earnings in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) by Sex by Work Experience in the Past 12 Months for the Population 16 Years and Over With Earnings in the Past 12 Months (Asian Alone),B20017D
+Median Earnings in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) by Sex by Work Experience in the Past 12 Months for the Population 16 Years and Over With Earnings in the Past 12 Months (Native Hawaiian and Other Pacific Islander Alone),B20017E
+Median Earnings in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) by Sex by Work Experience in the Past 12 Months for the Population 16 Years and Over With Earnings in the Past 12 Months (Some Other Race Alone),B20017F
+Median Earnings in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) by Sex by Work Experience in the Past 12 Months for the Population 16 Years and Over With Earnings in the Past 12 Months (Two or More Races),B20017G
+"Median Earnings in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) by Sex by Work Experience in the Past 12 Months for the Population 16 Years and Over With Earnings in the Past 12 Months (White Alone, Not Hispanic or Latino)",B20017H
+Median Earnings in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) by Sex by Work Experience in the Past 12 Months for the Population 16 Years and Over With Earnings (Hispanic or Latino),B20017I
+"Median Earnings in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) for the Population 16 Years and Over Who Worked Full-Time, Year-Round With Earnings in the Past 12 Months",B20018
+Sex by Age by Veteran Status for the Civilian Population 18 Years and Over,B21001
+Period of Military Service for Civilian Veterans 18 Years and Over,B21002
+Veteran Status by Educational Attainment for the Civilian Population 25 Years and Over,B21003
+Median Income in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) by Veteran Status by Sex for the Civilian Population 18 Years and Over With Income,B21004
+Age by Veteran Status by Employment Status for the Civilian Population 18 to 64 Years,B21005
+Service-Connected Disability-Rating Status and Ratings for Civilian Veterans 18 Years and Over,B21100
+Receipt of Food Stamps/SNAP in the Past 12 Months by Presence of People 60 Years and Over for Households,B22001
+Receipt of Food Stamps/SNAP in the Past 12 Months by Presence of Children Under 18 Years by Household Type for Households,B22002
+Receipt of Food Stamps/SNAP in the Past 12 Months by Poverty Status in the Past 12 Months for Households,B22003
+Receipt of Food Stamps/SNAP in the Past 12 Months by Race of Householder (White Alone),B22005A
+Receipt of Food Stamps/SNAP in the Past 12 Months by Race of Householder (Black or African American Alone),B22005B
+Receipt of Food Stamps/SNAP in the Past 12 Months by Race of Householder (American Indian and Alaska Native Alone),B22005C
+Receipt of Food Stamps/SNAP in the Past 12 Months by Race of Householder (Asian Alone),B22005D
+Receipt of Food Stamps/SNAP in the Past 12 Months by Race of Householder (Native Hawaiian and Other Pacific Islander Alone),B22005E
+Receipt of Food Stamps/SNAP in the Past 12 Months by Race of Householder (Some Other Race Alone),B22005F
+Receipt of Food Stamps/SNAP in the Past 12 Months by Race of Householder (Two or More Races),B22005G
+"Receipt of Food Stamps/SNAP in the Past 12 Months by Race of Householder (White Alone, Not Hispanic or Latino)",B22005H
+Receipt of Food Stamps/SNAP in the Past 12 Months by Race of Householder (Hispanic or Latino),B22005I
+Receipt of Food Stamps/SNAP in the Past 12 Months by Family Type by Number of Workers in Family in the Past 12 Months,B22007
+Median Household Income in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) by Receipt of Food Stamps/SNAP in the Past 12 Months,B22008
+Receipt of Food Stamps/SNAP in the Past 12 Months by Disability Status for Households,B22010
+Sex by Age by Employment Status for the Population 16 Years and Over,B23001
+Presence of Own Children Under 18 Years by Age of Own Children Under 18 Years by Employment Status for Females 20 to 64 Years,B23003
+Educational Attainment by Employment Status for the Population 25 to 64 Years,B23006
+Presence of Own Children Under 18 Years by Family Type by Employment Status,B23007
+Age of Own Children Under 18 Years in Families and Subfamilies by Living Arrangements by Employment Status of Parents,B23008
+Presence of Own Children Under 18 Years by Family Type by Number of Workers in Family in the Past 12 Months,B23009
+Presence of Own Children Under 18 Years in Married-Couple Families by Work Experience of Householder and Spouse,B23010
+Median Age by Sex for Workers 16 to 64 Years,B23013
+Aggregate Usual Hours Worked in the Past 12 Months by Sex for Workers 16 to 64 Years,B23018
+Mean Usual Hours Worked in the Past 12 Months for Workers 16 to 64 Years,B23020
+Sex by Work Status in the Past 12 Months by Usual Hours Worked per Week in the Past 12 Months by Weeks Worked in the Past 12 Months for the Population 16 to 64 Years,B23022
+Poverty Status in the Past 12 Months by Disability Status by Employment Status for the Population 20 to 64 Years,B23024
+Employment Status for the Population 16 Years and Over,B23025
+Sex by Work Status in the Past 12 Months by Usual Hours Worked per Week in the Past 12 Months by Weeks Worked in the Past 12 Months for the Population 65 Years and Over,B23026
+"Full-Time, Year-Round Work Status in the Past 12 Months by Age for the Population 16 Years and Over",B23027
+Occupation by Median Earnings in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) for the Civilian Employed Population 16 Years and Over,B24011
+Sex by Occupation and Median Earnings in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) for the Civilian Employed Population 16 Years and Over,B24012
+"Occupation by Median Earnings in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) for the Full-Time, Year-Round Civilian Employed Population 16 Years and Over",B24021
+"Sex by Occupation and Median Earnings in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) for the Full-Time, Year-Round Civilian Employed Population 16 Years and Over",B24022
+Industry by Median Earnings in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) for the Civilian Employed Population 16 Years and Over,B24031
+Sex by Industry and Median Earnings in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) for the Civilian Employed Population 16 Years and Over,B24032
+"Industry by Median Earnings in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) for the Full-Time, Year-Round Civilian Employed Population 16 Years and Over",B24041
+"Sex by Industry and Median Earnings in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) for the Full-Time, Year-Round Civilian Employed Population 16 Years and Over",B24042
+Sex by Class of Worker for the Civilian Employed Population 16 Years and Over,B24080
+Class of Worker by Median Earnings in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) for the Civilian Employed Population 16 Years and Over,B24081
+Sex by Class of Worker and Median Earnings in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) for the Civilian Employed Population 16 Years and Over,B24082
+"Sex by Class of Worker for the Full-Time, Year-Round Civilian Employed Population 16 Years and Over",B24090
+"Class of Worker by Median Earnings in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) for the Full-Time, Year-Round Civilian Employed Population 16 Years and Over",B24091
+"Sex by Class of Worker and Median Earnings in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) for the Full-Time, Year-Round Civilian Employed Population 16 Years and Over",B24092
+Detailed Occupation for the Civilian Employed Population 16 Years and Over,B24114
+Detailed Occupation for the Civilian Employed Male Population 16 Years and Over,B24115
+Detailed Occupation for the Civilian Employed Female Population 16 Years and Over,B24116
+"Detailed Occupation by Median Earnings in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) for the Full-Time, Year-Round Civilian Employed Population 16 Years and Over",B24121
+"Detailed Occupation by Median Earnings in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) for the Full-Time, Year-Round Civilian Employed Male Population 16 Years and Over",B24122
+"Detailed Occupation by Median Earnings in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) for the Full-Time, Year-Round Civilian Employed Female Population 16 Years and Over",B24123
+"Detailed Occupation for the Full-Time, Year-Round Civilian Employed Population 16 Years and Over",B24124
+"Detailed Occupation for the Full-Time, Year-Round Civilian Employed Male Population 16 Years and Over",B24125
+"Detailed Occupation for the Full-Time, Year-Round Civilian Employed Female Population 16 Years and Over",B24126
+Detailed Industry for the Civilian Employed Population 16 Years and Over,B24134
+Detailed Industry for the Civilian Employed Male Population 16 Years and Over,B24135
+Detailed Industry for the Civilian Employed Female Population 16 Years and Over,B24136
+Housing Units,B25001
+Occupancy Status,B25002
+Tenure,B25003
+Tenure (White Alone Householder),B25003A
+Tenure (Black or African American Alone Householder),B25003B
+Tenure (American Indian and Alaska Native Alone Householder),B25003C
+Tenure (Asian Alone Householder),B25003D
+Tenure (Native Hawaiian and Other Pacific Islander Alone Householder),B25003E
+Tenure (Some Other Race Alone Householder),B25003F
+Tenure (Two or More Races Householder),B25003G
+"Tenure (White Alone, Not Hispanic or Latino Householder)",B25003H
+Tenure (Hispanic or Latino Householder),B25003I
+Vacancy Status,B25004
+Vacant - Current Residence Elsewhere,B25005
+Race of Householder,B25006
+Tenure by Age of Householder,B25007
+Total Population in Occupied Housing Units by Tenure,B25008
+Total Population in Occupied Housing Units by Tenure (White Alone Householder),B25008A
+Total Population in Occupied Housing Units by Tenure (Black or African American Alone Householder),B25008B
+Total Population in Occupied Housing Units by Tenure (American Indian and Alaska Native Alone Householder),B25008C
+Total Population in Occupied Housing Units by Tenure (Asian Alone Householder),B25008D
+Total Population in Occupied Housing Units by Tenure (Native Hawaiian and Other Pacific Islander Alone Householder),B25008E
+Total Population in Occupied Housing Units by Tenure (Some Other Race Alone Householder),B25008F
+Total Population in Occupied Housing Units by Tenure (Two or More Races Householder),B25008G
+"Total Population in Occupied Housing Units by Tenure (White Alone, Not Hispanic or Latino Householder)",B25008H
+Total Population in Occupied Housing Units by Tenure (Hispanic or Latino Householder),B25008I
+Tenure by Household Size,B25009
+Average Household Size of Occupied Housing Units by Tenure,B25010
+Average Household Size of Occupied Housing Units by Tenure (White Alone Householder),B25010A
+Average Household Size of Occupied Housing Units by Tenure (Black or African American Alone Householder),B25010B
+Average Household Size of Occupied Housing Units by Tenure (American Indian and Alaska Native Alone Householder),B25010C
+Average Household Size of Occupied Housing Units by Tenure (Asian Alone Householder),B25010D
+Average Household Size of Occupied Housing Units by Tenure (Native Hawaiian and Other Pacific Islander Alone Householder),B25010E
+Average Household Size of Occupied Housing Units by Tenure (Some Other Race Alone Householder),B25010F
+Average Household Size of Occupied Housing Units by Tenure (Two or More Races Householder),B25010G
+"Average Household Size of Occupied Housing Units by Tenure (White Alone, Not Hispanic or Latino Householder)",B25010H
+Average Household Size of Occupied Housing Units by Tenure (Hispanic or Latino Householder),B25010I
+Tenure by Household Type (Including Living Alone) and Age of Householder,B25011
+Tenure by Families and Presence of Own Children,B25012
+Tenure by Educational Attainment of Householder,B25013
+Tenure by Occupants per Room,B25014
+Occupants per Room (White Alone Householder),B25014A
+Occupants per Room (Black or African American Alone Householder),B25014B
+Occupants per Room (American Indian and Alaska Native Alone Householder),B25014C
+Occupants per Room (Asian Alone Householder),B25014D
+Occupants per Room (Native Hawaiian and Other Pacific Islander Alone Householder),B25014E
+Occupants per Room (Some Other Race Alone Householder),B25014F
+Occupants per Room (Two or More Races Householder),B25014G
+"Occupants per Room (White Alone, Not Hispanic or Latino Householder)",B25014H
+Occupants per Room (Hispanic or Latino Householder),B25014I
+Tenure by Age of Householder by Occupants per Room,B25015
+Tenure by Plumbing Facilities by Occupants per Room,B25016
+Rooms,B25017
+Median Number of Rooms,B25018
+Aggregate Number of Rooms,B25019
+Tenure by Rooms,B25020
+Median Number of Rooms by Tenure,B25021
+Aggregate Number of Rooms by Tenure,B25022
+Units in Structure,B25024
+Total Population in Occupied Housing Units by Tenure by Year Householder Moved Into Unit,B25026
+Mortgage Status by Age of Householder,B25027
+Median Gross Rent by Bedrooms,B25031
+Tenure by Units in Structure,B25032
+Units in Structure (White Alone Householder),B25032A
+Units in Structure (Black or African American Alone Householder),B25032B
+Units in Structure (American Indian and Alaska Native Alone Householder),B25032C
+Units in Structure (Asian Alone Householder),B25032D
+Units in Structure (Native Hawaiian and Other Pacific Islander Alone Householder),B25032E
+Units in Structure (Some Other Race Alone Householder),B25032F
+Units in Structure (Two or More Races Householder),B25032G
+"Units in Structure (White Alone, Not Hispanic or Latino Householder)",B25032H
+Units in Structure (Hispanic or Latino Householder),B25032I
+Total Population in Occupied Housing Units by Tenure by Units in Structure,B25033
+Year Structure Built,B25034
+Median Year Structure Built,B25035
+Tenure by Year Structure Built,B25036
+Median Year Structure Built by Tenure,B25037
+Tenure by Year Householder Moved Into Unit,B25038
+Median Year Householder Moved Into Unit by Tenure,B25039
+House Heating Fuel,B25040
+Bedrooms,B25041
+Tenure by Bedrooms,B25042
+Tenure by Telephone Service Available by Age of Householder,B25043
+Tenure by Vehicles Available,B25044
+Tenure by Vehicles Available by Age of Householder,B25045
+Aggregate Number of Vehicles Available by Tenure,B25046
+Plumbing Facilities for All Housing Units,B25047
+Plumbing Facilities for Occupied Housing Units,B25048
+Tenure by Plumbing Facilities,B25049
+Plumbing Facilities by Occupants per Room by Year Structure Built,B25050
+Kitchen Facilities for All Housing Units,B25051
+Kitchen Facilities for Occupied Housing Units,B25052
+Tenure by Kitchen Facilities,B25053
+Kitchen Facilities by Meals Included in Rent,B25054
+Age of Householder by Meals Included in Rent,B25055
+Contract Rent,B25056
+Lower Contract Rent Quartile (Dollars),B25057
+Median Contract Rent (Dollars),B25058
+Upper Contract Rent Quartile (Dollars),B25059
+Aggregate Contract Rent (Dollars),B25060
+Rent Asked,B25061
+Aggregate Rent Asked (Dollars),B25062
+Gross Rent,B25063
+Median Gross Rent (Dollars),B25064
+Aggregate Gross Rent (Dollars),B25065
+Aggregate Gross Rent (Dollars) by Units in Structure,B25066
+Aggregate Gross Rent (Dollars) by Meals Included in Rent,B25067
+Bedrooms by Gross Rent,B25068
+Inclusion of Utilities in Rent,B25069
+Gross Rent as a Percentage of Household Income in the Past 12 Months,B25070
+Median Gross Rent as a Percentage of Household Income in the Past 12 Months (Dollars),B25071
+Age of Householder by Gross Rent as a Percentage of Household Income in the Past 12 Months,B25072
+Household Income by Gross Rent as a Percentage of Household Income in the Past 12 Months,B25074
+Value,B25075
+Lower Value Quartile (Dollars),B25076
+Median Value (Dollars),B25077
+"Median Value (Dollars, White Alone Householder)",B25077A
+"Median Value (Dollars, Black or African American Alone Householder)",B25077B
+"Median Value (Dollars, American Indian and Alaska Native Alone Householder)",B25077C
+"Median Value (Dollars, Asian Alone Householder)",B25077D
+"Median Value (Dollars, Native Hawaiian and Other Pacific Islander Alone Householder)",B25077E
+"Median Value (Dollars, Some Other Race Alone Householder)",B25077F
+"Median Value (Dollars, Two or More Races Householder)",B25077G
+"Median Value (Dollars, White Alone, Not Hispanic or Latino Householder)",B25077H
+"Median Value (Dollars, Hispanic or Latino Householder)",B25077I
+Upper Value Quartile (Dollars),B25078
+Aggregate Value (Dollars) by Age of Householder,B25079
+Aggregate Value (Dollars) by Units in Structure,B25080
+Mortgage Status,B25081
+Aggregate Value (Dollars) by Mortgage Status,B25082
+Median Value (Dollars) for Mobile Homes,B25083
+Price Asked,B25085
+Aggregate Price Asked (Dollars),B25086
+Mortgage Status and Selected Monthly Owner Costs,B25087
+Median Selected Monthly Owner Costs (Dollars) by Mortgage Status,B25088
+Aggregate Selected Monthly Owner Costs (Dollars) by Mortgage Status,B25089
+Mortgage Status by Aggregate Real Estate Taxes Paid (Dollars),B25090
+Mortgage Status by Selected Monthly Owner Costs as a Percentage of Household Income in the Past 12 Months,B25091
+Median Selected Monthly Owner Costs as a Percentage of Household Income in the Past 12 Months,B25092
+Age of Householder by Selected Monthly Owner Costs as a Percentage of Household Income in the Past 12 Months,B25093
+Selected Monthly Owner Costs,B25094
+Household Income by Selected Monthly Owner Costs as a Percentage of Household Income in the Past 12 Months,B25095
+Mortgage Status by Value,B25096
+Mortgage Status by Median Value (Dollars),B25097
+Mortgage Status by Household Income in the Past 12 Months (in 2023 Inflation-Adjusted Dollars),B25098
+Mortgage Status by Median Household Income in the Past 12 Months (in 2023 Inflation-Adjusted Dollars),B25099
+Mortgage Status by Ratio of Value to Household Income in the Past 12 Months,B25100
+Mortgage Status by Monthly Housing Costs as a Percentage of Household Income in the Past 12 Months,B25101
+Mortgage Status by Real Estate Taxes Paid,B25102
+Mortgage Status by Median Real Estate Taxes Paid (Dollars),B25103
+Monthly Housing Costs,B25104
+Median Monthly Housing Costs (Dollars),B25105
+Tenure by Housing Costs as a Percentage of Household Income in the Past 12 Months,B25106
+Median Value by Year Structure Built,B25107
+Aggregate Value (Dollars) by Year Structure Built,B25108
+Median Value by Year Householder Moved Into Unit,B25109
+Aggregate Value (Dollars) by Year Householder Moved Into Unit,B25110
+Median Gross Rent by Year Structure Built,B25111
+Aggregate Gross Rent (Dollars) by Year Structure Built,B25112
+Median Gross Rent by Year Householder Moved Into Unit,B25113
+Aggregate Gross Rent (Dollars) by Year Householder Moved Into Unit,B25114
+Tenure by Household Type and Presence and Age of Own Children,B25115
+Tenure by Household Size by Age of Householder,B25116
+Tenure by House Heating Fuel,B25117
+Tenure by Household Income in the Past 12 Months (in 2023 Inflation-Adjusted Dollars),B25118
+Median Household Income in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) by Tenure,B25119
+Aggregate Household Income in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) by Tenure and Mortgage Status,B25120
+Household Income in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) by Value,B25121
+Household Income in the Past 12 Months (in 2023 Inflation-Adjusted Dollars) by Gross Rent,B25122
+Tenure by Selected Physical and Financial Conditions,B25123
+Tenure by Household Size by Units in Structure,B25124
+Tenure by Age of Householder by Units in Structure,B25125
+Tenure by Age of Householder by Year Structure Built,B25126
+Tenure by Year Structure Built by Units in Structure,B25127
+Tenure by Age of Householder by Year Householder Moved Into Unit,B25128
+Tenure by Year Householder Moved Into Unit by Units in Structure,B25129
+Monthly Electricity Costs,B25132
+Monthly Gas Costs,B25133
+Annual Water and Sewer Costs,B25134
+Annual Other Fuel Costs,B25135
+Structure Type by Occupancy Status,B25136
+Bedrooms by Occupancy Status,B25137
+Lower Gross Rent Quartile (Dollars),B25138
+Upper Gross Rent Quartile (Dollars),B25139
+Housing Costs as a Percentage of Household Income in the Past 12 Months,B25140
+Housing Costs as a Percentage of Household Income in the Past 12 Months (White Alone Householder),B25140A
+Housing Costs as a Percentage of Household Income in the Past 12 Months (Black Alone Householder),B25140B
+Housing Costs as a Percentage of Household Income in the Past 12 Months (American Indian and Alaska Native Alone Householder),B25140C
+Housing Costs as a Percentage of Household Income in the Past 12 Months (Asian Alone Householder),B25140D
+Housing Costs as a Percentage of Household Income in the Past 12 Months (Native Hawaiian and Other Pacific Islander Alone Householder),B25140E
+Housing Costs as a Percentage of Household Income in the Past 12 Months (Some Other Race Alone Householder),B25140F
+Housing Costs as a Percentage of Household Income in the Past 12 Months (Two or More Races Householder),B25140G
+"Housing Costs as a Percentage of Household Income in the Past 12 Months (White Alone, Not Hispanic or Latino Householder)",B25140H
+Housing Costs as a Percentage of Household Income in the Past 12 Months (Hispanic or Latino Householder),B25140I
+Homeowners Insurance Costs by Mortgage Status (Yearly),B25141
+Group Quarters Population,B26001
+Group Quarters Type (3 Types) by Sex by Age,B26101
+Median Age by Group Quarters Type (3 Types),B26102
+Group Quarters Type (3 Types),B26103
+Group Quarters Type (3 Types) (White Alone),B26103A
+Group Quarters Type (3 Types) (Black or African American Alone),B26103B
+Group Quarters Type (3 Types) (American Indian and Alaska Native Alone),B26103C
+Group Quarters Type (3 Types) (Asian Alone),B26103D
+Group Quarters Type (3 Types) (Native Hawaiian and Other Pacific Islander Alone),B26103E
+Group Quarters Type (3 Types) (Some Other Race Alone),B26103F
+Group Quarters Type (3 Types) (Two or More Races),B26103G
+"Group Quarters Type (3 Types) (White Alone, Not Hispanic or Latino)",B26103H
+Group Quarters Type (3 Types) (Hispanic or Latino),B26103I
+Group Quarters Type (3 Types) by Marital Status,B26104
+Group Quarters Type (3 Types) by School Enrollment,B26105
+Group Quarters Type (3 Types) by Educational Attainment,B26106
+Group Quarters Type (3 Types) by Veteran Status,B26107
+Group Quarters Type (3 Types) by Age by Disability Status,B26108
+Group Quarters Type (3 Types) by Geographical Mobility in the Past Year for Current Residence in the United States,B26109
+Group Quarters Type (3 Types) by Geographical Mobility in the Past Year for Current Residence in Puerto Rico,B26109PR
+Group Quarters Type (3 Types) by Nativity and Citizenship Status by Sex,B26110
+Group Quarters Type (3 Types) by Language Spoken at Home by Ability to Speak English,B26113
+Group Quarters Type (3 Types) by Employment Status,B26114
+Group Quarters Type (3 Types) by Occupation,B26115
+Group Quarters Type (3 Types) by Sex With Earnings in the Past 12 Months,B26117
+Aggregate Earnings in the Past 12 Months by Group Quarters Type (3 Types) by Sex,B26118
+Median Earnings in the Past 12 Months by Group Quarters Type (3 Types) by Sex,B26119
+Group Quarters Type (3 Types) by Receipt of Food Stamps/SNAP in the Past 12 Months,B26120
+Group Quarters Type (5 Types) by Sex by Age,B26201
+Median Age by Group Quarters Type (5 Types),B26202
+Group Quarters Type (5 Types),B26203
+Group Quarters Type (5 Types) (White Alone),B26203A
+Group Quarters Type (5 Types) (Black or African American Alone),B26203B
+Group Quarters Type (5 Types) (American Indian and Alaska Native Alone),B26203C
+Group Quarters Type (5 Types) (Asian Alone),B26203D
+Group Quarters Type (5 Types) (Native Hawaiian and Other Pacific Islander Alone),B26203E
+Group Quarters Type (5 Types) (Some Other Race Alone),B26203F
+Group Quarters Type (5 Types) (Two or More Races),B26203G
+"Group Quarters Type (5 Types) (White Alone, Not Hispanic or Latino)",B26203H
+Group Quarters Type (5 Types) (Hispanic or Latino),B26203I
+Group Quarters Type (5 Types) by Marital Status,B26204
+Group Quarters Type (5 Types) by School Enrollment,B26205
+Group Quarters Type (5 Types) by Educational Attainment,B26206
+Group Quarters Type (5 Types) by Veteran Status,B26207
+Group Quarters Type (5 Types) by Age by Disability Status,B26208
+Group Quarters Type (5 Types) by Geographical Mobility in the Past Year for Current Residence in the United States,B26209
+Group Quarters Type (5 Types) by Nativity and Citizenship Status by Sex,B26210
+Group Quarters Type (5 Types) by Year of Entry,B26211
+Group Quarters Type (5 Types) by World Region of Birth,B26212
+Group Quarters Type (5 Types) by Language Spoken at Home by Ability to Speak English,B26213
+Group Quarters Type (5 Types) by Employment Status,B26214
+Group Quarters Type (5 Types) by Occupation,B26215
+Aggregate Income in the Past 12 Months by Group Quarters Type (5 Types),B26216
+Group Quarters Type (5 Types) by Sex With Earnings in the Past 12 Months,B26217
+Aggregate Earnings in the Past 12 Months by Group Quarters Type (5 Types) by Sex,B26218
+Median Earnings in the Past 12 Months by Group Quarters Type (5 Types) by Sex,B26219
+Group Quarters Type (5 Types) by Receipt of Food Stamps/SNAP in the Past 12 Months,B26220
+Health Insurance Coverage Status by Sex by Age,B27001
+Private Health Insurance Status by Sex by Age,B27002
+Public Health Insurance Status by Sex by Age,B27003
+Types of Health Insurance Coverage by Age,B27010
+Health Insurance Coverage Status and Type by Employment Status,B27011
+Health Insurance Coverage Status and Type by Household Income in the Past 12 Months (in 2023 Inflation-Adjusted Dollars),B27015
+Health Insurance Coverage Status and Type by Age by Educational Attainment,B27019
+Health Insurance Coverage Status and Type by Citizenship Status,B27020
+Health Insurance Coverage Status by Sex by Enrollment Status for Young Adults Aged 19 to 25,B27022
+Private Health Insurance by Sex by Enrollment Status for Young Adults Aged 19 to 25,B27023
+Types of Computers in Household,B28001
+Presence and Types of Internet Subscriptions in Household,B28002
+Presence of a Computer and Type of Internet Subscription in Household,B28003
+Household Income in the Last 12 Months (in 2023 Inflation-Adjusted Dollars) by Presence and Type of Internet Subscription in Household,B28004
+Age by Presence of a Computer and Types of Internet Subscription in Household,B28005
+Educational Attainment by Presence of a Computer and Types of Internet Subscription in Household,B28006
+Labor Force Status by Presence of a Computer and Types of Internet Subscription in Household,B28007
+Presence of a Computer and Type of Internet Subscription in Household,B28008
+Presence of a Computer and Type of Internet Subscription in Household (White Alone),B28009A
+Presence of a Computer and Type of Internet Subscription in Household (Black or African American Alone),B28009B
+Presence of a Computer and Type of Internet Subscription in Household (American Indian and Alaska Native Alone),B28009C
+Presence of a Computer and Type of Internet Subscription in Household (Asian Alone),B28009D
+Presence of a Computer and Type of Internet Subscription in Household (Native Hawaiian and Other Pacific Islander Alone),B28009E
+Presence of a Computer and Type of Internet Subscription in Household (Some Other Race Alone),B28009F
+Presence of a Computer and Type of Internet Subscription in Household (Two or More Races),B28009G
+"Presence of a Computer and Type of Internet Subscription in Household (White Alone, Not Hispanic or Latino)",B28009H
+Presence of a Computer and Type of Internet Subscription in Household (Hispanic or Latino),B28009I
+Computers in Household,B28010
+Internet Subscriptions in Household,B28011
+Age and Enrollment Status by Computer Ownership and Internet Subscription Status,B28012
+"Citizen, Voting-Age Population by Age",B29001
+"Citizen, Voting-Age Population by Educational Attainment",B29002
+"Citizen, Voting-Age Population by Poverty Status",B29003
+"Median Household Income for Households With a Citizen, Voting-Age Householder (in 2023 Inflation-Adjusted Dollars)",B29004
+Unweighted Housing Unit Sample,B98001
+Unweighted Group Quarters Population Sample,B98002
+Unweighted Total Population Sample,B98003
+Housing Unit Coverage Rate,B98011
+Total Population Coverage Rate by Sex,B98012
+Total Population Coverage Rate by Weighting Race and Hispanic or Latino Groups,B98013
+Group Quarters Population Coverage Rate,B98014
+Housing Unit Response and Nonresponse Rates With Reasons for Noninterviews,B98021
+Group Quarters Population Response and Nonresponse Rates With Reasons for Noninterviews,B98022
+Overall Person Characteristic Allocation Rate,B98031
+Overall Housing Unit Characteristic Allocation Rate,B98032
+Allocation of Sex,B99011
+Allocation of Age,B99012
+Allocation of Race,B99021
+Allocation of Hispanic or Latino Origin,B99031
+Allocation of Citizenship Status,B99051
+Allocation of Year of Entry,B99052
+Allocation of Year of Entry for Population Born Outside Puerto Rico,B99052PR
+Allocation of Year of Naturalization,B99053
+Allocation of Place of Birth,B99061
+Allocation of Mobility Status for the Population 1 Year and Over,B99071
+Allocation of Residence 1 Year Ago for the Population 1 Year and Over,B99072
+Allocation of Means of Transportation to Work,B99080
+Allocation of Place of Work,B99081
+Allocation of Private Vehicle Occupancy,B99082
+Allocation of Time of Departure to Go to Work,B99083
+Allocation of Travel Time to Work,B99084
+Allocation of Vehicles Available for Workers,B99085
+Allocation of Means of Transportation to Work for Workplace Geography,B99086
+Allocation of Time Arriving at Work From Home for Workplace Geography,B99087
+Allocation of Travel Time to Work for Workplace Geography,B99088
+Allocation of Vehicles Available for Workers for Workplace Geography,B99089
+Allocation of Relationship,B99092
+Allocation of Grandparents Living With Grandchildren Under 18 Years,B99102
+Allocation of Grandparents Responsible for Grandchildren Under 18 Years,B99103
+Allocation of Length of Time Grandparent Responsible for Own Grandchildren Under 18 Years for the Population 30 Years and Over,B99104
+Allocation of Marital Status for the Population 15 Years and Over,B99121
+Allocation of Divorced in the Past 12 Months for the Population 15 Years and Over,B99122
+Allocation of Married in the Past 12 Months for the Population 15 Years and Over,B99123
+Allocation of Widowed in the Past 12 Months for the Population 15 Years and Over,B99124
+Allocation of Times Married for the Population 15 Years and Over,B99125
+Allocation of Year Last Married for the Population 15 Years and Over,B99126
+Allocation of Marital Status for Females 15 to 50 Years,B99131
+Allocation of Fertility of Women 15 to 50 Years,B99132
+Allocation of School Enrollment for the Population 3 Years and Over,B99141
+Allocation of Grade Enrolled for the Population 3 Years and Over Enrolled in School,B99142
+Allocation of Educational Attainment for the Population 25 Years and Over,B99151
+Allocation of Field of Degree for the Population 25 Years and Over,B99152
+Allocation of Language Status for the Population 5 Years and Over,B99161
+Allocation of Language Spoken at Home for the Population 5 Years and Over,B99162
+Allocation of Ability to Speak English for the Population 5 Years and Over,B99163
+Allocation of Poverty Status in the Past 12 Months for Unrelated Individuals,B99171
+Allocation of Poverty Status in the Past 12 Months for Families,B99172
+Allocation of Disability Items for the Civilian Noninstitutionalized Population,B99181
+Allocation of Hearing Difficulty for the Civilian Noninstitutionalized Population,B99182
+Allocation of Vision Difficulty for the Civilian Noninstitutionalized Population,B99183
+Allocation of Cognitive Difficulty for the Civilian Noninstitutionalized Population 5 Years and Over,B99184
+Allocation of Ambulatory Difficulty for the Civilian Noninstitutionalized Population 5 Years and Over,B99185
+Allocation of Self-Care Difficulty for the Civilian Noninstitutionalized Population 5 Years and Over,B99186
+Age by Allocation of Independent Living Difficulty for the Civilian Noninstitutionalized Population 15 Years and Over,B99187
+Allocation of Individuals' Income in the Past 12 Months for the Population 15 Years and Over - Percent of Income Allocated,B99191
+Allocation of Household Income in the Past 12 Months - Percent of Income Allocated,B99192
+Allocation of Family Income in the Past 12 Months -- Percent of Income Allocated,B99193
+Allocation of Nonfamily Household Income in the Past 12 Months -- Percent of Income Allocated,B99194
+Allocation of Earnings in the Past 12 Months for the Population 16 Years and Over - Percent of Earnings Allocated,B99201
+Allocation of Veteran Status for the Population 18 Years and Over,B99211
+Allocation of Period of Military Service for Civilian Veterans 18 Years and Over,B99212
+Allocation of Food Stamps/SNAP Receipt,B99221
+Allocation of Employment Status for the Population 16 Years and Over,B99231
+Allocation of Work Status in the Past 12 Months for the Population 16 Years and Over,B99232
+Allocation of Usual Hours Worked per Week in the Past 12 Months for the Population 16 Years and Over,B99233
+Allocation of Weeks Worked in the Past 12 Months for the Population 16 Years and Over,B99234
+Allocation of Industry for the Civilian Employed Population 16 Years and Over,B99241
+Allocation of Occupation for the Civilian Employed Population 16 Years and Over,B99242
+Allocation of Class of Worker for the Civilian Employed Population 16 Years and Over,B99243
+"Allocation of Industry for the Full-Time, Year-Round Civilian Employed Population 16 Years and Over",B99244
+"Allocation of Occupation for the Full-Time, Year-Round Civilian Employed Population 16 Years and Over",B99245
+"Allocation of Class of Worker for the Full-Time, Year-Round Civilian Employed Population 16 Years and Over",B99246
+Allocation of Kitchen Facilities,B992510
+Allocation of House Heating Fuel,B992511
+Allocation of Vehicles Available,B992512
+Allocation of Telephone Service Available,B992513
+Allocation of Meals Included in Rent,B992514
+Allocation of Contract Rent,B992515
+Allocation of Rent Asked,B992516
+Allocation of Gross Rent,B992518
+Allocation of Value,B992519
+Allocation of Tenure,B99252
+Allocation of Price Asked,B992520
+Allocation of Mortgage Status,B992521
+Allocation of Mortgage Status and Selected Monthly Owner Costs,B992522
+Allocation of Selected Monthly Owner Costs for Owner-Occupied Housing Units,B992523
+Allocation of Vacancy Status,B99253
+Allocation of Rooms,B99254
+Allocation of Units in Structure,B99255
+Allocation of Year Structure Built,B99256
+Allocation of Year Householder Moved Into Unit,B99257
+Allocation of Bedrooms,B99258
+Allocation of Plumbing Facilities,B99259
+Allocation of Health Insurance Coverage,B992701
+Allocation of Private Health Insurance,B992702
+Allocation of Public Health Insurance,B992703
+Allocation of Employer-Based Health Insurance,B992704
+Allocation of Direct-Purchase Health Insurance,B992705
+Allocation of Medicare Coverage,B992706
+Allocation of Medicaid/Means-Tested Public Coverage,B992707
+Allocation of TRICARE/Military Health Coverage,B992708
+Allocation of VA Health Care,B992709
+Allocation of Household Internet Access,B99281
+Allocation of Household Computer Type,B99282
+Allocation of Household Internet Subscription Type,B99283
+Detailed Race,C02003
+Asian Alone by Selected Groups,C02015
+Native Hawaiian and Other Pacific Islander Alone by Selected Groups,C02016
+American Indian and Alaska Native Alone by Selected Tribes and Villages,C02020
+Sex by Educational Attainment for the Population 25 Years and Over (White Alone),C15002A
+Sex by Educational Attainment for the Population 25 Years and Over (Black or African American Alone),C15002B
+Sex by Educational Attainment for the Population 25 Years and Over (American Indian and Alaska Native Alone),C15002C
+Sex by Educational Attainment for the Population 25 Years and Over (Asian Alone),C15002D
+Sex by Educational Attainment for the Population 25 Years and Over (Native Hawaiian and Other Pacific Islander Alone),C15002E
+Sex by Educational Attainment for the Population 25 Years and Over (Some Other Race Alone),C15002F
+Sex by Educational Attainment for the Population 25 Years and Over (Two or More Races),C15002G
+"Sex by Educational Attainment for the Population 25 Years and Over (White Alone, Not Hispanic or Latino)",C15002H
+Sex by Educational Attainment for the Population 25 Years and Over (Hispanic or Latino),C15002I
+Field of Bachelor's Degree for First Major for the Population 25 Years and Over,C15010
+Field of Bachelor's Degree for First Major for the Population 25 Years and Over (White Alone),C15010A
+Field of Bachelor's Degree for First Major for the Population 25 Years and Over (Black or African American Alone),C15010B
+Field of Bachelor's Degree for First Major for the Population 25 Years and Over (American Indian and Alaska Native Alone),C15010C
+Field of Bachelor's Degree for First Major for the Population 25 Years and Over (Asian Alone),C15010D
+Field of Bachelor's Degree for First Major for the Population 25 Years and Over (Native Hawaiian and Other Pacific Islander Alone),C15010E
+Field of Bachelor's Degree for First Major for the Population 25 Years and Over (Some Other Race Alone),C15010F
+Field of Bachelor's Degree for First Major for the Population 25 Years and Over (Two or More Races),C15010G
+"Field of Bachelor's Degree for First Major for the Population 25 Years and Over (White Alone, Not Hispanic or Latino)",C15010H
+Field of Bachelor's Degree for First Major for the Population 25 Years and Over (Hispanic or Latino),C15010I
+Language Spoken at Home for the Population 5 Years and Over,C16001
+Household Language by Household Limited English Speaking Status,C16002
+Ratio of Income to Poverty Level in the Past 12 Months,C17002
+Age by Number of Disabilities,C18108
+Employment Status by Disability Status,C18120
+Work Experience by Disability Status,C18121
+Age by Disability Status by Poverty Status,C18130
+Ratio of Income to Poverty Level in the Past 12 Months by Disability Status,C18131
+Sex by Age by Veteran Status for the Civilian Population 18 Years and Over (White Alone),C21001A
+Sex by Age by Veteran Status for the Civilian Population 18 Years and Over (Black or African American Alone),C21001B
+Sex by Age by Veteran Status for the Civilian Population 18 Years and Over (American Indian and Alaska Native Alone),C21001C
+Sex by Age by Veteran Status for the Civilian Population 18 Years and Over (Asian Alone),C21001D
+Sex by Age by Veteran Status for the Civilian Population 18 Years and Over (Native Hawaiian and Other Pacific Islander Alone),C21001E
+Sex by Age by Veteran Status for the Civilian Population 18 Years and Over (Some Other Race Alone),C21001F
+Sex by Age by Veteran Status for the Civilian Population 18 Years and Over (Two or More Races),C21001G
+"Sex by Age by Veteran Status for the Civilian Population 18 Years and Over (White Alone, Not Hispanic or Latino)",C21001H
+Sex by Age by Veteran Status for the Civilian Population 18 Years and Over (Hispanic or Latino),C21001I
+Age by Veteran Status by Poverty Status in the Past 12 Months by Disability Status for the Civilian Population 18 Years and Over,C21007
+Sex by Age by Employment Status for the Population 16 Years and Over (White Alone),C23002A
+Sex by Age by Employment Status for the Population 16 Years and Over (Black or African American Alone),C23002B
+Sex by Age by Employment Status for the Population 16 Years and Over (American Indian and Alaska Native Alone),C23002C
+Sex by Age by Employment Status for the Population 16 Years and Over (Asian Alone),C23002D
+Sex by Age by Employment Status for the Population 16 Years and Over (Native Hawaiian and Other Pacific Islander Alone),C23002E
+Sex by Age by Employment Status for the Population 16 Years and Over (Some Other Race Alone),C23002F
+Sex by Age by Employment Status for the Population 16 Years and Over (Two or More Races),C23002G
+"Sex by Age by Employment Status for the Population 16 Years and Over (White Alone, Not Hispanic or Latino)",C23002H
+Sex by Age by Employment Status for the Population 16 Years and Over (Hispanic or Latino),C23002I
+Sex by Occupation for the Civilian Employed Population 16 Years and Over,C24010
+Sex by Occupation for the Civilian Employed Population 16 Years and Over (White Alone),C24010A
+Sex by Occupation for the Civilian Employed Population 16 Years and Over (Black or African American Alone),C24010B
+Sex by Occupation for the Civilian Employed Population 16 Years and Over (American Indian and Alaska Native Alone),C24010C
+Sex by Occupation for the Civilian Employed Population 16 Years and Over (Asian Alone),C24010D
+Sex by Occupation for the Civilian Employed Population 16 Years and Over (Native Hawaiian and Other Pacific Islander Alone),C24010E
+Sex by Occupation for the Civilian Employed Population 16 Years and Over (Some Other Race Alone),C24010F
+Sex by Occupation for the Civilian Employed Population 16 Years and Over (Two or More Races),C24010G
+"Sex by Occupation for the Civilian Employed Population 16 Years and Over (White Alone, Not Hispanic or Latino)",C24010H
+Sex by Occupation for the Civilian Employed Population 16 Years and Over (Hispanic or Latino),C24010I
+"Sex by Occupation for the Full-Time, Year-Round Civilian Employed Population 16 Years and Over",C24020
+Sex by Industry for the Civilian Employed Population 16 Years and Over,C24030
+"Sex by Industry for the Full-Time, Year-Round Civilian Employed Population 16 Years and Over",C24040
+Industry by Occupation for the Civilian Employed Population 16 Years and Over,C24050
+Occupation by Class of Worker for the Civilian Employed Population 16 Years and Over,C24060
+Industry by Class of Worker for the Civilian Employed Population 16 Years and Over,C24070
+Health Insurance Coverage Status by Age (White Alone),C27001A
+Health Insurance Coverage Status by Age (Black or African American Alone),C27001B
+Health Insurance Coverage Status by Age (American Indian and Alaska Native Alone),C27001C
+Health Insurance Coverage Status by Age (Asian Alone),C27001D
+Health Insurance Coverage Status by Age (Native Hawaiian and Other Pacific Islander Alone),C27001E
+Health Insurance Coverage Status by Age (Some Other Race Alone),C27001F
+Health Insurance Coverage Status by Age (Two or More Races),C27001G
+"Health Insurance Coverage Status by Age (White Alone, Not Hispanic or Latino)",C27001H
+Health Insurance Coverage Status by Age (Hispanic or Latino),C27001I
+Employer-Based Health Insurance by Sex by Age,C27004
+Direct-Purchase Health Insurance by Sex by Age,C27005
+Medicare Coverage by Sex by Age,C27006
+Medicaid/Means-Tested Public Coverage by Sex by Age,C27007
+TRICARE/Military Health Coverage by Sex by Age,C27008
+VA Health Care by Sex by Age,C27009
+Health Insurance Coverage Status and Type by Work Experience,C27012
+Private Health Insurance by Work Experience,C27013
+Public Health Insurance by Work Experience,C27014
+Health Insurance Coverage Status by Ratio of Income to Poverty Level in the Past 12 Months by Age,C27016
+Private Health Insurance by Ratio of Income to Poverty Level in the Past 12 Months by Age,C27017
+Public Health Insurance by Ratio of Income to Poverty Level in the Past 12 Months by Age,C27018
+Health Insurance Coverage Status by Living Arrangement,C27021

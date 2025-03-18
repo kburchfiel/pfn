@@ -1,0 +1,617 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Simple Dash App Without Login &#8212; Python for Nonprofits</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Online_Visualizations/Simple_App_Without_Login/readme';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Source code for Simple App Without Login" href="../../Book_Specific_Materials/Simple_App_Without_Login_py_nb.html" />
+    <link rel="prev" title="weather_import.py" href="../../Book_Specific_Materials/weather_import_py_nb.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../front_matter_for_book.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Python for Nonprofits</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../front_matter_for_book.html">
+                    Wecome to Python for Nonprofits!
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Introduction</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../Introduction/introduction.html">An Introduction to Python for Nonprofits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Introduction/the_case_for_python_at_nonprofits.html">The Case for Using Python at Nonprofits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Book_Specific_Materials/getting_started_for_book.html">Getting Started</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Importing and Prepping Data</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../Data_Retrieval/data_retrieval.html">Data Retrieval</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Data_Prep/data_prep.html">Data Prep</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Analyzing Data</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../Descriptive_Stats/descriptive_stats.html">Descriptive Stats</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Descriptive_Stats/descriptive_stats_part_2.html">Descriptive Stats: Part 2</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../Census_Data_Imports/census_data_imports.html">Census Data Imports</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../Book_Specific_Materials/census_import_scripts_py_nb.html">census_import_scripts.py</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Visualizing Data</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../Graphing/graphing.html">Creating Interactive and Static Charts with Plotly</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../../Graphing/pivot_and_graph_functions.html">Pivot and Graph Functions</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../Mapping/choropleth_maps.html">Mapping Census Data using Plotly (Work in progress)</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../Book_Specific_Materials/plotly_choropleth_map_functions_py_nb.html">plotly_choropleth_map_functions.py</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../Mapping/choropleth_maps_with_folium.html">Creating Choropleth Maps with Folium</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../Book_Specific_Materials/folium_choropleth_map_functions_py_nb.html">folium_choropleth_map_functions.py</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Regressions</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../Regressions/regression_analyses.html">Regression Analyses</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Publishing Analyses Online</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../Static_Sites/simple_static_site.html">Creating a Simple Static Webpage</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../Updating_Online_Spreadsheets/updating_online_spreadsheets.html">Updating Online Spreadsheets</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../Book_Specific_Materials/weather_import_py_nb.html">weather_import.py</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="current reference internal" href="#">Simple Dash App Without Login</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../Book_Specific_Materials/Simple_App_Without_Login_py_nb.html">Source code for Simple App Without Login</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../PFN_Dash_App_Demo/readme.html">PFN Dash App Demo</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../Book_Specific_Materials/PFN_Dash_App_Demo_py_nb.html">Source code for PFN Dash App Demo</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendix</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../Appendix/nvcu_db_gen.html">NVCU Database Generator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Book_Specific_Materials/helper_funcs_py_nb.html">helper_funcs.py</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/Online_Visualizations/Simple_App_Without_Login/readme.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Simple Dash App Without Login</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction-to-the-online-visualizations-section-of-python-for-nonprofits">Introduction to the Online Visualizations section of Python for Nonprofits</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-simple-app-without-login-project-itself">The ‘Simple App Without Login’ project itself</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#readme">Readme</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#development-and-setup-notes">Development and setup notes</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#rationale-for-hosting-this-dash-app-on-google-cloud-run">Rationale for hosting this Dash app on Google Cloud Run</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#steps-for-deploying-this-app-to-cloud-run">Steps for deploying this app to Cloud Run</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#using-a-cloud-run-secret-to-retrieve-data-from-a-google-sheets-document">Using a Cloud Run secret to retrieve data from a Google Sheets document</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#folder-structure">Folder structure</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="simple-dash-app-without-login">
+<h1>Simple Dash App Without Login<a class="headerlink" href="#simple-dash-app-without-login" title="Link to this heading">#</a></h1>
+<section id="introduction-to-the-online-visualizations-section-of-python-for-nonprofits">
+<h2>Introduction to the Online Visualizations section of Python for Nonprofits<a class="headerlink" href="#introduction-to-the-online-visualizations-section-of-python-for-nonprofits" title="Link to this heading">#</a></h2>
+<p>PFN’s Online Visualizations section will demonstrate how to host visualizations online via Dash, a powerful Python library made by the same team that develops Plotly.</p>
+<p>Two separate Dash apps will be featured in this section:</p>
+<ol class="arabic simple">
+<li><p>A simple Dash app that doesn’t require users to log in.</p></li>
+<li><p>PFN Dash App Demo, a more detailed Dash app that shows dashboards of varying complexity and also requires users to log in.</p></li>
+</ol>
+<p>These apps take the form of a series of files, most of which (but not all) are .py scripts. In order to get them to run successfully on your own computer, it’s very important to (1) consult their corresponding documentation closely and (2) use the same folder structure that is shown within the Python for Nonprofits GitHub page.</p>
+<p>It’s <em>also</em> important to note that <strong>you may incur some costs when deploying Dash apps online via Google Cloud Run</strong> (the method shown within these notebooks). I have found the costs to be quite small on my end (literally pennies a month), but more complex and widely accessed apps will of course incur higher costs. If you want to avoid these costs, you can simply run these apps locally on your own machine.</p>
+</section>
+<section id="the-simple-app-without-login-project-itself">
+<h2>The ‘Simple App Without Login’ project itself<a class="headerlink" href="#the-simple-app-without-login-project-itself" title="Link to this heading">#</a></h2>
+<section id="readme">
+<h3>Readme<a class="headerlink" href="#readme" title="Link to this heading">#</a></h3>
+<p>(Note: the Cloud Run-hosted version of this app can be found at <a class="reference external" href="https://simpleappwithoutlogin-470317599391.us-central1.run.app/">https://simpleappwithoutlogin-470317599391.us-central1.run.app/</a> .)</p>
+<p>This folder provides sample code for a Dash app that can be deployed to Cloud Run. This code was based on the app deployment steps found in <a class="reference external" href="https://dash.plotly.com/deployment">https://dash.plotly.com/deployment</a> and <a class="reference external" href="https://cloud.google.com/run/docs/quickstarts/build-and-deploy/deploy-python-service">https://cloud.google.com/run/docs/quickstarts/build-and-deploy/deploy-python-service</a> . (The Plotly walkthrough shows how to deploy a Dash app to Heroku, and the Cloud Run walkthrough shows how to deploy a Flask App to Cloud Run; by taking bits from each, you can then learn how to deploy a <em>Dash</em> app to <em>Cloud Run.</em> :)</p>
+<section id="development-and-setup-notes">
+<h4>Development and setup notes<a class="headerlink" href="#development-and-setup-notes" title="Link to this heading">#</a></h4>
+<ol class="arabic simple">
+<li><p>The dash-bootstrap-components (<a class="reference external" href="https://dash-bootstrap-components.opensource.faculty.ai/docs/components/layout/">https://dash-bootstrap-components.opensource.faculty.ai/docs/components/layout/</a>) library is used extensively within many of these dashboards. It’s a great option for making your dashboards more aesthetically pleasing <em>and</em> more flexible.</p></li>
+<li><p>This app is hosted on Google Cloud Run, though you can also host it locally by cloning this project. See the following section for more guidance on hosting Dash apps within Cloud Run.</p></li>
+</ol>
+</section>
+<section id="rationale-for-hosting-this-dash-app-on-google-cloud-run">
+<h4>Rationale for hosting this Dash app on Google Cloud Run<a class="headerlink" href="#rationale-for-hosting-this-dash-app-on-google-cloud-run" title="Link to this heading">#</a></h4>
+<p>Heroku, an alternative site for hosting Dash apps, offers maximum monthly spending caps, which could help you control your costs; however, it’s possible that the minimum amount you would pay on Herkou would be higher than your minimum on Cloud Run. (This is why I chose to deploy this app to Cloud Run rather than Heroku.) Heroku pricing information can be found at <a class="reference external" href="https://www.heroku.com/pricing">https://www.heroku.com/pricing</a> .</h2></p>
+</section>
+<section id="steps-for-deploying-this-app-to-cloud-run">
+<h4>Steps for deploying this app to Cloud Run<a class="headerlink" href="#steps-for-deploying-this-app-to-cloud-run" title="Link to this heading">#</a></h4>
+<p>(Some of these steps will apply to many different Cloud Run-hosted Dash apps; however, in order to replicate this online app on your end, you’ll also need to review the following section, which explains how to connect your Dash app to Google Sheets.)</p>
+<h2 style="color:red">Warning: These steps may cause you to incur hosting charges depending on how frequently your site is visited. I recommend setting billing alerts to keep track of your spending.</h2>
+<ol class="arabic simple">
+<li><p>Visit <a class="reference external" href="https://console.cloud.google.com/">https://console.cloud.google.com/</a> . (Create a Google Cloud Console account if needed).</p></li>
+<li><p>Create a new project. (Note that you <em>can</em> deploy multiple Dash apps within the same project if needed.</p></li>
+<li><p>Follow the steps outlined here (<a class="reference external" href="https://cloud.google.com/run/docs/quickstarts/build-and-deploy/deploy-python-service">https://cloud.google.com/run/docs/quickstarts/build-and-deploy/deploy-python-service</a>)–but note the modifications that I’ve made to these steps below.</p></li>
+<li><p>If you need to install the Google Cloud Command Line Interface (CLI), you can do so at (<a class="reference external" href="https://cloud.google.com/sdk/docs/install">https://cloud.google.com/sdk/docs/install</a>. I deselected the ‘Bundled Python’ component during the installation process since (not surprisingly) I already had Python present on my computer.</p></li>
+</ol>
+<p>I also used the following contents in place of the recommended requirements.txt values:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">gspread</span>
+<span class="n">gspread</span><span class="o">-</span><span class="n">dataframe</span>
+<span class="n">dash</span>
+<span class="n">plotly</span>
+<span class="n">pandas</span>
+<span class="n">gunicorn</span>
+<span class="n">dash</span><span class="o">-</span><span class="n">bootstrap</span><span class="o">-</span><span class="n">components</span>
+</pre></div>
+</div>
+<p>(These libraries will be imported from pip. Therefore, in order to determine what format of their name to use, visit the library on Pypi and then enter the text following the ‘pip install’ example. For instance, on the gspread-dataframe PyPI page (<a class="reference external" href="https://pypi.org/project/gspread-dataframe/">https://pypi.org/project/gspread-dataframe/</a>), you’ll see <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">gspread-dataframe</span></code> as the recommended installation command; therefore, add <code class="docutils literal notranslate"><span class="pre">gspread-dataframe</span></code> to the requirements.txt page rather than <code class="docutils literal notranslate"><span class="pre">gspread-dataframe</span></code> (its name within conda) or <code class="docutils literal notranslate"><span class="pre">gspread_dataframe</span></code> (its name within <code class="docutils literal notranslate"><span class="pre">app.py</span></code>).</p>
+<p>(Also note that entering <code class="docutils literal notranslate"><span class="pre">gcloud</span> <span class="pre">run</span> <span class="pre">deploy</span> <span class="pre">--source</span> <span class="pre">.</span></code> (don’t forget the space and period!) rather than <code class="docutils literal notranslate"><span class="pre">gcloud</span> <span class="pre">run</span> <span class="pre">deploy</span></code> saves you a step during the deployment process.)</p>
+<p>The Google Cloud Region Picker (<a class="reference external" href="https://cloud.withgoogle.com/region-picker/">https://cloud.withgoogle.com/region-picker/</a>) site can help you determine where to host your app. (When prompted for my region choice, I entered <code class="docutils literal notranslate"><span class="pre">us-central1</span></code>. Note that the numbers corresponding to regions can change over time, so if you want to enter a number for the region selection instead, just make sure it still corresponds to your desired area!)</p>
+<ol class="arabic simple" start="4">
+<li><p>You’ll also want to add a file named Procfile (no extension) with the following text:</p></li>
+</ol>
+<p><code class="docutils literal notranslate"><span class="pre">web:</span> <span class="pre">gunicorn</span> <span class="pre">app:server</span></code></p>
+<p>(This line came from <a class="reference external" href="https://dash.plotly.com/deployment">https://dash.plotly.com/deployment</a> .)</p>
+<p>I was prompted to enter this line after seeing the following error message within my Google Cloud Console log:</p>
+<p><code class="docutils literal notranslate"><span class="pre">Step</span> <span class="pre">#1:</span> <span class="pre">[builder]</span> <span class="pre">failed</span> <span class="pre">to</span> <span class="pre">build:</span> <span class="pre">for</span> <span class="pre">Python,</span> <span class="pre">provide</span> <span class="pre">a</span> <span class="pre">main.py</span> <span class="pre">file</span> <span class="pre">or</span> <span class="pre">set</span> <span class="pre">an</span> <span class="pre">entrypoint</span> <span class="pre">with</span> <span class="pre">&quot;GOOGLE_ENTRYPOINT&quot;</span> <span class="pre">env</span> <span class="pre">var</span> <span class="pre">or</span> <span class="pre">by</span> <span class="pre">creating</span> <span class="pre">a</span> <span class="pre">&quot;Procfile&quot;</span> <span class="pre">file&quot;</span></code></p>
+<ol class="arabic simple" start="5">
+<li><p>Hopefully, after Google Cloud finishes processing your deployment request, you’ll see a message like the following:</p></li>
+</ol>
+<p><code class="docutils literal notranslate"><span class="pre">Service</span> <span class="pre">[simpleappwithoutlogin]</span> <span class="pre">revision</span> <span class="pre">[simpleappwithoutlogin-00012-55f]</span> <span class="pre">has</span> <span class="pre">been</span> <span class="pre">deployed</span> <span class="pre">and</span> <span class="pre">is</span> <span class="pre">serving</span> <span class="pre">100</span> <span class="pre">percent</span> <span class="pre">of</span> <span class="pre">traffic.</span> <span class="pre">Service</span> <span class="pre">URL:</span> <span class="pre">https://simpleappwithoutlogin-470317599391.us-central1.run.app</span></code></p>
+<p>To confirm that your page is operating correctly, visit its service URL (e.g. <a class="reference external" href="https://simpleappwithoutlogin-470317599391.us-central1.run.app/">https://simpleappwithoutlogin-470317599391.us-central1.run.app/</a> for this app). Ideally, you’ll see the same screen that you would when deploying the app locally.</p>
+<p>If you instead see a black screen with ‘Service Unavailable’ at the top left corner, don’t panic! (I got this screen many, many times when learning how to upload Dash apps to the cloud.) This message simply means that something about your deployment that is not quite correct. Perhaps you forgot to include a library within requirements.txt that your script uses, for instance. Make sure to check your logs (available at <a class="reference external" href="https://console.cloud.google.com/logs/">https://console.cloud.google.com/logs/</a>) for clues as to what might be going wrong with your script.</p>
+<p>(For example, seeing “ModuleNotFoundError: No module named ‘pandas’” within my log after one failed deployment made me realize that I had forgotten to add pandas to my requirements.txt file.)</p>
+<p>If you receive a message like “service account <a class="reference external" href="mailto:13371337-compute&#37;&#52;&#48;developer&#46;gserviceaccount&#46;com">13371337-compute<span>&#64;</span>developer<span>&#46;</span>gserviceaccount<span>&#46;</span>com</a> does not have access to the bucket,” try entering <code class="docutils literal notranslate"><span class="pre">gcloud</span> <span class="pre">auth</span> <span class="pre">login</span></code> and redoing the login procedure (as suggested by StackOverflow user Lee here: <a class="reference external" href="https://stackoverflow.com/a/70377891/13097194">https://stackoverflow.com/a/70377891/13097194</a> ).</p>
+<ol class="arabic simple" start="6">
+<li><p>After deploying a new version of your app, you may want to delete the old version (especially if it failed to run to begin with) in order to save costs. You can do so by searching for ‘Artifact Registry’ within the Cloud Console website; navigating to the list of containers for your site; and then keeping only the most recent container. Likewise, you may want to keep only the most recent bucket within the source/ folder in your Cloud Storage bucket. (To delete the other ones, search for ‘Buckets’ within your Cloud Console; click on your bucket name; click on the ‘source/’ folder; and then delete all but the most recent bucket.)</p></li>
+</ol>
+</section>
+<section id="using-a-cloud-run-secret-to-retrieve-data-from-a-google-sheets-document">
+<h4>Using a Cloud Run secret to retrieve data from a Google Sheets document<a class="headerlink" href="#using-a-cloud-run-secret-to-retrieve-data-from-a-google-sheets-document" title="Link to this heading">#</a></h4>
+<p>This app retrieves data from a Google Sheets file called ‘Hourly VA Weather Data’; it’s located at <a class="reference external" href="https://docs.google.com/spreadsheets/d/17aDJ3mg49-n0IEnDgN7ZB85pO87fiUpkZPULYDB8dmo/edit?usp=sharing">https://docs.google.com/spreadsheets/d/17aDJ3mg49-n0IEnDgN7ZB85pO87fiUpkZPULYDB8dmo/edit?usp=sharing</a>; this file gets updated on an hourly basis by a laptop running updatintg_online_spreadsheets.py within the Updating Online Spreadsheets section of Python for Nonprofits. (Reference that section for more information about using gspread.)</p>
+<p>In order for the app to connect to that spreadsheet, it retrieves a set of Google service account credentials (which are required for retrieving data from Google Sheets) from a secret stored within a Cloud Run volume. I referenced <a class="reference external" href="https://cloud.google.com/run/docs/configuring/services/secrets">https://cloud.google.com/run/docs/configuring/services/secrets</a> in the process of enabling this functionality. Secrets can be accessed by Cloud Run either through a path to a volume or through an environment variable; although I chose the former, the latter might actually be more straightforward to set up.</p>
+<p>In order to get this code to work, you’ll want to follow the same steps shown within the above link to add your own service account to Cloud Run. You’ll also need to make sure that your compute service account has been granted the Secret Manager Secret Accessor role. More information about that step can be found at <a class="reference external" href="https://cloud.google.com/secret-manager/docs/manage-access-to-secrets">https://cloud.google.com/secret-manager/docs/manage-access-to-secrets</a> .</p>
+<p>If you decide to access your secret through a volume, you can find the path to enter within your code by clicking on your Cloud Run service; selecting ‘Edit &amp; Deploy New Revision’; and clicking on ‘VOLUME MOUNTS’ within the Edit Container menu. The path to use within your code (in my case, ‘/svcacctsecret/kjb3server_service_account’ was listed under ‘Mount path.’</p>
+<p><strong>Note:</strong> In my case, the service account whose credentials I uploaded into Cloud Run is the same account that my laptop is using to update the Hourly VA Weather Data workbook. (The content of my ‘secret’ is simply the .json file containing the account’s key that I downloaded in the process of building out my Updating Online Spreadsheets code.) However, it looks like you can also simply use the service account built into your Cloud Run instance; see <a class="reference external" href="https://stackoverflow.com/questions/65128196/is-there-a-way-to-authenticate-gspread-with-the-default-service-account">https://stackoverflow.com/questions/65128196/is-there-a-way-to-authenticate-gspread-with-the-default-service-account</a> for more information.</p>
+<p>Using your built-in Cloud Run service account should allow you to bypass the hassle of storing a service account key as a secret. However, it’s still ideal to learn how to use Cloud Run secrets in case you’ll ever need to connect to a SQL database within a Dash app. (You could store that database’s password as a secret, which should be much more secure than storing it as plain text within your code.)</p>
+</section>
+<section id="folder-structure">
+<h4>Folder structure<a class="headerlink" href="#folder-structure" title="Link to this heading">#</a></h4>
+<p>(Note that Procfile is a file without a specified extension rather than a folder.)</p>
+<p><a class="reference external" href="http://readme.md">readme.md</a> [this file]</p>
+<p><a class="reference external" href="http://app.py">app.py</a></p>
+<p>Procfile</p>
+<p>requirements.txt</p>
+</section>
+</section>
+</section>
+<div class="toctree-wrapper compound">
+</div>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./Online_Visualizations/Simple_App_Without_Login"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../../Book_Specific_Materials/weather_import_py_nb.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">weather_import.py</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../../Book_Specific_Materials/Simple_App_Without_Login_py_nb.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Source code for Simple App Without Login</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction-to-the-online-visualizations-section-of-python-for-nonprofits">Introduction to the Online Visualizations section of Python for Nonprofits</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-simple-app-without-login-project-itself">The ‘Simple App Without Login’ project itself</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#readme">Readme</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#development-and-setup-notes">Development and setup notes</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#rationale-for-hosting-this-dash-app-on-google-cloud-run">Rationale for hosting this Dash app on Google Cloud Run</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#steps-for-deploying-this-app-to-cloud-run">Steps for deploying this app to Cloud Run</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#using-a-cloud-run-secret-to-retrieve-data-from-a-google-sheets-document">Using a Cloud Run secret to retrieve data from a Google Sheets document</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#folder-structure">Folder structure</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Kenneth Burchfiel
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

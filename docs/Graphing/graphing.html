@@ -1,0 +1,2423 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Creating Interactive and Static Charts with Plotly &#8212; Python for Nonprofits</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Graphing/graphing';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Pivot and Graph Functions" href="pivot_and_graph_functions.html" />
+    <link rel="prev" title="census_import_scripts.py" href="../Book_Specific_Materials/census_import_scripts_py_nb.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../front_matter_for_book.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Python for Nonprofits</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../front_matter_for_book.html">
+                    Wecome to Python for Nonprofits!
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Introduction</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Introduction/introduction.html">An Introduction to Python for Nonprofits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Introduction/the_case_for_python_at_nonprofits.html">The Case for Using Python at Nonprofits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Book_Specific_Materials/getting_started_for_book.html">Getting Started</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Importing and Prepping Data</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Data_Retrieval/data_retrieval.html">Data Retrieval</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Data_Prep/data_prep.html">Data Prep</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Analyzing Data</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Descriptive_Stats/descriptive_stats.html">Descriptive Stats</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Descriptive_Stats/descriptive_stats_part_2.html">Descriptive Stats: Part 2</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Census_Data_Imports/census_data_imports.html">Census Data Imports</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Book_Specific_Materials/census_import_scripts_py_nb.html">census_import_scripts.py</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Visualizing Data</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Creating Interactive and Static Charts with Plotly</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="pivot_and_graph_functions.html">Pivot and Graph Functions</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Mapping/choropleth_maps.html">Mapping Census Data using Plotly (Work in progress)</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Book_Specific_Materials/plotly_choropleth_map_functions_py_nb.html">plotly_choropleth_map_functions.py</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Mapping/choropleth_maps_with_folium.html">Creating Choropleth Maps with Folium</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Book_Specific_Materials/folium_choropleth_map_functions_py_nb.html">folium_choropleth_map_functions.py</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Regressions</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Regressions/regression_analyses.html">Regression Analyses</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Publishing Analyses Online</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Static_Sites/simple_static_site.html">Creating a Simple Static Webpage</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Updating_Online_Spreadsheets/updating_online_spreadsheets.html">Updating Online Spreadsheets</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Book_Specific_Materials/weather_import_py_nb.html">weather_import.py</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Online_Visualizations/Simple_App_Without_Login/readme.html">Simple Dash App Without Login</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Book_Specific_Materials/Simple_App_Without_Login_py_nb.html">Source code for Simple App Without Login</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Online_Visualizations/PFN_Dash_App_Demo/readme.html">PFN Dash App Demo</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Book_Specific_Materials/PFN_Dash_App_Demo_py_nb.html">Source code for PFN Dash App Demo</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendix</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Appendix/nvcu_db_gen.html">NVCU Database Generator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Book_Specific_Materials/helper_funcs_py_nb.html">helper_funcs.py</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/Graphing/graphing.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Creating Interactive and Static Charts with Plotly</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Creating Interactive and Static Charts with Plotly</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-bar-graphs">Creating bar graphs</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#simple-bar-graphs">Simple bar graphs</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#importing-a-function-to-simplify-the-process-of-saving-and-displaying-charts">Importing a function to simplify the process of saving and displaying charts</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#more-detailed-bar-graphs">More detailed bar graphs</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sorting-dataframes-using-a-custom-key">Sorting DataFrames using a custom key</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#graphing-wide-data">Graphing wide data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bar-charts-with-3-or-more-variables">Bar charts with 3 or more variables</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#graphing-results-by-college-level-and-season">Graphing results by college, level, and season:</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-line-graphs">Creating line graphs</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#representing-multiple-variables-within-line-charts">Representing multiple variables within line charts</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#adding-labels-to-points">Adding labels to points</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#scatter-plots">Scatter plots</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#histograms">Histograms</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#treemaps">Treemaps</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#comparing-these-treemaps-to-bar-charts">Comparing these treemaps to bar charts</a></li>
+</ul>
+</li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="creating-interactive-and-static-charts-with-plotly">
+<h1>Creating Interactive and Static Charts with Plotly<a class="headerlink" href="#creating-interactive-and-static-charts-with-plotly" title="Link to this heading">#</a></h1>
+<p>By Kenneth Burchfiel</p>
+<p>Released under the MIT License</p>
+<p>In this section, we’ll learn how to use the Plotly library to create bar and line graphs; scatter plots; histograms; and treemaps. Our main data source will be NVCU survey data, though we’ll also make use of current enrollment data for our treemaps and bookstore transaction data for our scatter plots and histograms. We’ll then save these charts to both interactive HTML files and static .png files.</p>
+<p>When I was first learning Python, I mainly used Matplotlib for my charts. Matplotlib is a great library as well, but I switched over to Plotly for as my default chart library for several reasons:</p>
+<ol class="arabic simple">
+<li><p>Plotly makes it easy to produce both interactive and static versions of a given chart. These interactive versions, which work great on websites (but can also be opened as standalone HTML files), allow users to access more information about the data than they could via an image of the chart alone.</p></li>
+<li><p>Plotly integrates very well with Dash, a Python library that allows you to build interactive web apps within Python. (A later section of Python for Nonprofits will demonstrate how to build both simple and more complex Dash web apps).</p></li>
+<li><p>My general sense is that Plotly tends to require less code to produce my desired result than does Matplotlib, although I don’t have any hard data on which to base this point.</p></li>
+</ol>
+<p>Note: this script will create graphs using Plotly Express (<a class="reference external" href="https://plotly.com/python/plotly-express/">https://plotly.com/python/plotly-express/</a>). This version of Plotly allows you to create detailed charts with relatively few lines of code. For more complex charts, you may need to instead work with <em>graph objects</em>, which allow for more customization: however, I’d recommend using Plotly Express code within your scripts when possible. After all, as the page linked to above notes, “Any figure created in a single function call with Plotly Express could be created using graph objects alone, but with between 5 and 100 times more code.”</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">plotly.express</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">px</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">sqlalchemy</span><span class="w"> </span><span class="kn">import</span> <span class="n">create_engine</span>
+<span class="n">e</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="s1">&#39;sqlite:///../Appendix/nvcu_db.db&#39;</span><span class="p">)</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;../Appendix&#39;</span><span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">helper_funcs</span><span class="w"> </span><span class="kn">import</span> <span class="n">config_notebook</span>
+<span class="n">display_type</span> <span class="o">=</span> <span class="n">config_notebook</span><span class="p">(</span><span class="n">display_max_columns</span> <span class="o">=</span> <span class="mi">8</span><span class="p">)</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">IPython.display</span><span class="w"> </span><span class="kn">import</span> <span class="n">Image</span> <span class="c1"># Based on </span>
+<span class="c1"># a StackOverflow answer from &#39;zach&#39; at</span>
+<span class="c1"># https://stackoverflow.com/a/11855133/13097194 .</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="creating-bar-graphs">
+<h2>Creating bar graphs<a class="headerlink" href="#creating-bar-graphs" title="Link to this heading">#</a></h2>
+<p>(For more details on bar charts in Plotly, consult the <code class="docutils literal notranslate"><span class="pre">px.bar()</span></code> documentation (<a class="reference external" href="https://plotly.com/python/bar-charts/">https://plotly.com/python/bar-charts/</a>).)</p>
+<p>In order to create bar graphs of NVCU survey data, we can import the pivot tables of this data created within PFN’s Descriptive Stats section, then feed them into our Plotly graphing script.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_survey_results_by_college_long</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span>
+    <span class="s1">&#39;../Descriptive_Stats/survey_results_by_college_long.csv&#39;</span><span class="p">)</span>
+<span class="c1"># Capitalizing all column names will allow our charts&#39; x and y axis labels </span>
+<span class="c1"># to appear capitalized by default.</span>
+<span class="n">df_survey_results_by_college_long</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">column</span><span class="o">.</span><span class="n">title</span><span class="p">()</span> <span class="k">for</span> <span class="n">column</span> <span class="ow">in</span> 
+    <span class="n">df_survey_results_by_college_long</span><span class="o">.</span><span class="n">columns</span><span class="p">]</span>
+<span class="n">df_survey_results_by_college_long</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Starting_Year</th>
+      <th>College</th>
+      <th>Season</th>
+      <th>Score</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2023</td>
+      <td>STB</td>
+      <td>Fall</td>
+      <td>69.797119</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2023</td>
+      <td>STB</td>
+      <td>Winter</td>
+      <td>64.404539</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>2023</td>
+      <td>STM</td>
+      <td>Winter</td>
+      <td>64.209075</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>2023</td>
+      <td>STM</td>
+      <td>Spring</td>
+      <td>76.639004</td>
+    </tr>
+  </tbody>
+</table>
+<p>12 rows × 4 columns</p>
+</div></div></div>
+</div>
+<section id="simple-bar-graphs">
+<h3>Simple bar graphs<a class="headerlink" href="#simple-bar-graphs" title="Link to this heading">#</a></h3>
+<p>We’ll begin by creating a bar chart that shows spring survey results by college:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig_spring_survey_results_by_college</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span>
+    <span class="n">df_survey_results_by_college_long</span><span class="o">.</span><span class="n">query</span><span class="p">(</span>
+    <span class="s2">&quot;Season == &#39;Spring&#39;&quot;</span><span class="p">),</span> <span class="n">x</span> <span class="o">=</span> <span class="s1">&#39;College&#39;</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="s1">&#39;Score&#39;</span><span class="p">,</span>
+      <span class="n">title</span> <span class="o">=</span> <span class="s1">&#39;Spring Survey Scores by College&#39;</span><span class="p">,</span>
+      <span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;College&#39;</span><span class="p">,</span> <span class="n">text_auto</span> <span class="o">=</span> <span class="s1">&#39;.0f&#39;</span><span class="p">)</span>
+<span class="c1"># See https://plotly.com/python/bar-charts/</span>
+
+<span class="c1"># The text_auto argument allows you to easily add bar labels using </span>
+<span class="c1"># a format of your choice. &#39;.0f&#39; rounds labels to the nearest integers;</span>
+<span class="c1"># to show values with 2 decimal points, use &#39;.2f&#39; instead. You can also</span>
+<span class="c1"># show percentage figures by replacing &#39;f&#39; with &#39;%&#39;.</span>
+
+<span class="n">fig_spring_survey_results_by_college</span> <span class="k">if</span> <span class="n">display_type</span> <span class="o">==</span> <span class="s1">&#39;.html&#39;</span> <span class="k">else</span> <span class="kc">None</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Plotly charts are generated in HTML format by default; this lets them offer a range of interactive features, such as tooltips (extra information that appears when you hover over a chart element) and panning/zooming options. You can also filter the x axis elements by clicking once on a legend element to remove it and clicking twice to keep only that element.</p>
+<p>These interactive charts can easily be saved as HTML files via the write_html() function:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig_spring_survey_results_by_college</span><span class="o">.</span><span class="n">write_html</span><span class="p">(</span>
+    <span class="s1">&#39;output/spring_results_by_college.html&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>This .html file can now be opened in a web browser as a standalone document or embedded in a website for public display.</p>
+<p>However, it’s also convenient to create static copies of these charts (e.g. for use within a slide deck or a web page that doesn’t allow certain HTML elements to be displayed). Thankfully, it’s very simple to create static copies of these charts. We simply need to call write_image() instead of write_html().</p>
+<p>However, the default settings for write_image() produce, in my view, a relatively blurry image that isn’t suitable for presenting. Therefore, the following cell includes three optional parameters for write_image: <code class="docutils literal notranslate"><span class="pre">height</span></code>, <code class="docutils literal notranslate"><span class="pre">width</span></code>, and <code class="docutils literal notranslate"><span class="pre">scale</span></code>. The settings shown below produce a chart with 4K resolution (3840 * 2160 pixels) whose text is also large enough to be easily readable.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">height</span> <span class="o">=</span> <span class="mi">405</span>
+<span class="n">aspect_ratio</span> <span class="o">=</span> <span class="mi">16</span><span class="o">/</span><span class="mi">9</span>
+<span class="n">width</span> <span class="o">=</span> <span class="n">height</span> <span class="o">*</span> <span class="n">aspect_ratio</span>
+<span class="n">scale</span> <span class="o">=</span> <span class="mi">2160</span> <span class="o">/</span> <span class="n">height</span>
+
+<span class="c1"># The above approach allows the height setting to automatically adjust</span>
+<span class="c1"># the width and scale setting while preserving a resolution of </span>
+<span class="c1"># 3840 * 2160.</span>
+
+<span class="c1"># The chart&#39;s height and width (in pixels) will be height * scale </span>
+<span class="c1"># and width * scale, respectively. Smaller height and width values will </span>
+<span class="c1"># result in larger (and thus more readable) text, but in order to keep </span>
+<span class="c1"># the resulting file sharp, I increased the scale to compensate. For </span>
+<span class="c1"># instance, a height of 540 will result in a scale of 4 (2160 / 540); </span>
+<span class="c1"># a height of 360, on the other hand, will result in a scale of 6.</span>
+
+<span class="c1"># You may want to experiment with different settings in order to find the </span>
+<span class="c1"># result that best meets your needs.</span>
+<span class="c1"># The 16/9 aspect ratio is used in many modern TVs and monitors, thus </span>
+<span class="c1"># making it ideal for full-screen displays of charts.</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Height:&quot;</span><span class="p">,</span><span class="n">height</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Width:&quot;</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Scale:&quot;</span><span class="p">,</span><span class="n">scale</span><span class="p">)</span>
+
+<span class="n">fig_spring_survey_results_by_college</span><span class="o">.</span><span class="n">write_image</span><span class="p">(</span>
+    <span class="s1">&#39;output/spring_results_by_college.png&#39;</span><span class="p">,</span> <span class="n">height</span> <span class="o">=</span> <span class="n">height</span><span class="p">,</span> 
+<span class="n">width</span> <span class="o">=</span> <span class="n">width</span><span class="p">,</span> <span class="n">scale</span> <span class="o">=</span> <span class="n">scale</span><span class="p">)</span>
+<span class="c1"># For more information about write_image, see:</span>
+<span class="c1"># https://plotly.com/python-api-reference/generated/plotly.io.</span>
+<span class="c1"># write_image.html</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Height: 405 
+Width: 720.0 
+Scale: 5.333333333333333
+</pre></div>
+</div>
+</div>
+</div>
+<p>Note: in order for the above code to work, you’ll most likely need to have installed the kaleido library beforehand. When using the conda package manager on Windows, I’ve found that I’ve needed to request version 0.1.0 of kaleido when installing the library (e.g. by calling <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">install</span> <span class="pre">python-kaleido=0.1.0</span></code> within my command prompt); this is because the later version appears to cause image generation scripts to hang indefinitely. (I found this solution via this GitHub post: <a class="github reference external" href="https://github.com/plotly/Kaleido/issues/134#issuecomment-1781183798">plotly/Kaleido#134</a>).</p>
+<p>I haven’t encountered this problem on Linux, so on that operating system (and presumably on Mac), <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">install</span> <span class="pre">python-kaleido</span></code> should work fine.</p>
+<p>The kaleido library makes creating static versions of HTML-based Plotly graphs very straightforward. In the Mapping section of Python for Nonprofits, we’ll go over a more manual approach for creating static versions of HTML files (as that section will utilize a library that doesn’t yet have kaleido support).</p>
+<p>To display this image within this notebook, we can call Image from IPython.display:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Image</span><span class="p">(</span><span class="s1">&#39;output/spring_results_by_college.png&#39;</span><span class="p">,</span> <span class="n">width</span> <span class="o">=</span> <span class="mi">720</span><span class="p">)</span>
+<span class="c1"># Based on the StackOverflow answer from &#39;zach&#39;</span>
+<span class="c1"># at https://stackoverflow.com/a/11855133/13097194 ;</span>
+<span class="c1"># See also:</span>
+<span class="c1"># https://ipython.readthedocs.io/en/stable/api/generated/IPython.display.</span>
+<span class="c1"># html#IPython.display.Image</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="../_images/77528acbaf02881d76deb1a552509ccce37b0964ba26a40d1b741f4fddebbb46.png"><img alt="../_images/77528acbaf02881d76deb1a552509ccce37b0964ba26a40d1b741f4fddebbb46.png" src="../_images/77528acbaf02881d76deb1a552509ccce37b0964ba26a40d1b741f4fddebbb46.png" style="width: 720px;" /></a>
+</div>
+</div>
+</section>
+<section id="importing-a-function-to-simplify-the-process-of-saving-and-displaying-charts">
+<h3>Importing a function to simplify the process of saving and displaying charts<a class="headerlink" href="#importing-a-function-to-simplify-the-process-of-saving-and-displaying-charts" title="Link to this heading">#</a></h3>
+<p>We can more easily save our Plotly charts to HTML and PNG files, then display a copy of the output by importing a function that takes care of all three operations for us. This function, <code class="docutils literal notranslate"><span class="pre">wadi()</span></code>, will get applied within other sections of Python for Nonprofits also. I highly recommend reading its source code, which can be found inside the Appendix folder’s helper_funcs.py file, so that you understand what the function does and how to modify it for your own needs.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">helper_funcs</span><span class="w"> </span><span class="kn">import</span> <span class="n">wadi</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="more-detailed-bar-graphs">
+<h3>More detailed bar graphs<a class="headerlink" href="#more-detailed-bar-graphs" title="Link to this heading">#</a></h3>
+<p>The bar graph created above shows that STL and STM had better survey results than did STB and STC. However, NVCU’s administrators would also want to know how each college’s survey results changed over the course of the year. We can visualize these changes by adding ‘season’ as our argument for the <code class="docutils literal notranslate"><span class="pre">color</span></code> variable within <code class="docutils literal notranslate"><span class="pre">px.bar()</span></code>, thus creating a chart that shows separate color-coded bars for each college/season pair. (We’ll also add <code class="docutils literal notranslate"><span class="pre">barmode</span> <span class="pre">=</span> <span class="pre">'group'</span></code> in order to display grouped bars rather than stacked ones.)</p>
+</section>
+<section id="sorting-dataframes-using-a-custom-key">
+<h3>Sorting DataFrames using a custom key<a class="headerlink" href="#sorting-dataframes-using-a-custom-key" title="Link to this heading">#</a></h3>
+<p>Note that, because ‘Spring’ precedes ‘Winter’ alphabetically, these charts will show winter results before spring results by default. We can display them in chronological order instead by sorting our DataFrame to have winter rows precede spring ones.</p>
+<p>The easiest way to accomplish this sort would be to first add a separate ‘season_sort_order’ column that contains values of 0, 1, and 2 for ‘Fall’, ‘Winter’,’ and ‘Spring’ rows, respectively. Once this column is in place, we could then sort the DataFrame by it. However, for demonstration purposes, the following cell shows how this sort can be accomplished without adding an additional column. The approach shown below relies on the <code class="docutils literal notranslate"><span class="pre">key</span></code> argument available within sort_values together with Pandas’ map() function.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_survey_results_by_college_long</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span>
+    <span class="s1">&#39;Season&#39;</span><span class="p">,</span> <span class="n">key</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">col</span><span class="p">:</span> <span class="n">col</span><span class="o">.</span><span class="n">map</span><span class="p">(</span>
+        <span class="p">{</span><span class="s1">&#39;Fall&#39;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="s1">&#39;Winter&#39;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="s1">&#39;Spring&#39;</span><span class="p">:</span><span class="mi">2</span><span class="p">}),</span> <span class="n">inplace</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+<span class="c1"># See https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.</span>
+<span class="c1"># DataFrame.sort_values.html</span>
+<span class="n">df_survey_results_by_college_long</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Starting_Year</th>
+      <th>College</th>
+      <th>Season</th>
+      <th>Score</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2023</td>
+      <td>STB</td>
+      <td>Fall</td>
+      <td>69.797119</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2023</td>
+      <td>STC</td>
+      <td>Fall</td>
+      <td>69.568665</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>2023</td>
+      <td>STL</td>
+      <td>Spring</td>
+      <td>76.727809</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>2023</td>
+      <td>STM</td>
+      <td>Spring</td>
+      <td>76.639004</td>
+    </tr>
+  </tbody>
+</table>
+<p>12 rows × 4 columns</p>
+</div></div></div>
+</div>
+<p>Now that the DataFrame is sorted correctly, we can create our grouped bar graph:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig_survey_results_by_college_and_season</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span>
+    <span class="n">df_survey_results_by_college_long</span><span class="p">,</span> 
+    <span class="n">x</span> <span class="o">=</span> <span class="s1">&#39;College&#39;</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="s1">&#39;Score&#39;</span><span class="p">,</span> 
+    <span class="n">title</span> <span class="o">=</span> <span class="s1">&#39;Survey Scores by College and Season&#39;</span><span class="p">,</span>
+      <span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;Season&#39;</span><span class="p">,</span> <span class="n">text_auto</span> <span class="o">=</span> <span class="s1">&#39;.0f&#39;</span><span class="p">,</span> <span class="n">barmode</span> <span class="o">=</span> <span class="s1">&#39;group&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Calling <code class="docutils literal notranslate"><span class="pre">wadi</span></code> to save static and interactive copies of this chart, then display one of these formats (depending on the value of <code class="docutils literal notranslate"><span class="pre">render_for_pdf</span></code>):</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wadi</span><span class="p">(</span><span class="n">fig</span><span class="o">=</span><span class="n">fig_survey_results_by_college_and_season</span><span class="p">,</span>
+     <span class="n">file_path</span><span class="o">=</span><span class="s1">&#39;output/results_by_college_and_season&#39;</span><span class="p">,</span>
+     <span class="n">display_type</span><span class="o">=</span><span class="n">display_type</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="../_images/a1a281f87d85538a6dd69ba7cef96020ff84c91c27c9e6d2794feef2bcc822f1.png"><img alt="../_images/a1a281f87d85538a6dd69ba7cef96020ff84c91c27c9e6d2794feef2bcc822f1.png" src="../_images/a1a281f87d85538a6dd69ba7cef96020ff84c91c27c9e6d2794feef2bcc822f1.png" style="width: 720px;" /></a>
+</div>
+</div>
+<p>This graph clearly shows how each school’s scores changed over time. However, in order to more easily compare results among schools for each season, we can switch the <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">color</span></code> arguments:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig_survey_results_by_season_and_college</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span>
+    <span class="n">df_survey_results_by_college_long</span><span class="p">,</span> 
+    <span class="n">x</span> <span class="o">=</span> <span class="s1">&#39;Season&#39;</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="s1">&#39;Score&#39;</span><span class="p">,</span> 
+    <span class="n">title</span> <span class="o">=</span> <span class="s1">&#39;Survey Scores by Season and College&#39;</span><span class="p">,</span>
+      <span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;College&#39;</span><span class="p">,</span> <span class="n">text_auto</span> <span class="o">=</span> <span class="s1">&#39;.0f&#39;</span><span class="p">,</span> <span class="n">barmode</span> <span class="o">=</span> <span class="s1">&#39;group&#39;</span><span class="p">)</span>
+
+<span class="n">wadi</span><span class="p">(</span><span class="n">fig</span><span class="o">=</span><span class="n">fig_survey_results_by_season_and_college</span><span class="p">,</span>
+     <span class="n">file_path</span><span class="o">=</span><span class="s1">&#39;output/results_by_season_and_college&#39;</span><span class="p">,</span>
+     <span class="n">display_type</span><span class="o">=</span><span class="n">display_type</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="../_images/7c44c88b457ff004f32b5ce821847bd76e6fe160f14ee7db4712f940e3c6ed54.png"><img alt="../_images/7c44c88b457ff004f32b5ce821847bd76e6fe160f14ee7db4712f940e3c6ed54.png" src="../_images/7c44c88b457ff004f32b5ce821847bd76e6fe160f14ee7db4712f940e3c6ed54.png" style="width: 720px;" /></a>
+</div>
+</div>
+<p>This chart demonstrates that each college had an average fall score around 70 followed by a 6-point drop to 64 during the winter. Although all colleges demonstrated growth from the fall to the winter, STL and STM clearly outperformed STB and STC (whose spring scores failed to match their fall scores).</p>
+</section>
+<section id="graphing-wide-data">
+<h3>Graphing wide data<a class="headerlink" href="#graphing-wide-data" title="Link to this heading">#</a></h3>
+<p>The previous two graphs used long-formatted data, meaning each row showed only one metric (in this case, one survey score). However, you may often encounter (or choose to create) tables in which multiple metrics are found within the same row. These datasets would be considered ‘wide.’ Here’s an equivalent version of df_survey_results_by_college_long that uses a wide format:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_survey_results_by_college_wide</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span>
+    <span class="s1">&#39;../Descriptive_Stats/survey_results_by_college_wide.csv&#39;</span><span class="p">)</span>
+<span class="n">df_survey_results_by_college_wide</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">column</span><span class="o">.</span><span class="n">title</span><span class="p">()</span> <span class="k">for</span> <span class="n">column</span> <span class="ow">in</span> 
+    <span class="n">df_survey_results_by_college_wide</span><span class="o">.</span><span class="n">columns</span><span class="p">]</span>
+<span class="n">df_survey_results_by_college_wide</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;Starting_Year&#39;</span><span class="p">,</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>College</th>
+      <th>Fall</th>
+      <th>Winter</th>
+      <th>Spring</th>
+      <th>Fall-Spring Change</th>
+      <th>Fall-Winter Change</th>
+      <th>Winter-Spring Change</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>STB</td>
+      <td>69.797119</td>
+      <td>64.404539</td>
+      <td>67.077551</td>
+      <td>-2.719568</td>
+      <td>-5.392580</td>
+      <td>2.673012</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>STC</td>
+      <td>69.568665</td>
+      <td>64.123563</td>
+      <td>66.911444</td>
+      <td>-2.657221</td>
+      <td>-5.445102</td>
+      <td>2.787881</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>STL</td>
+      <td>69.596675</td>
+      <td>64.117350</td>
+      <td>76.727809</td>
+      <td>7.131134</td>
+      <td>-5.479325</td>
+      <td>12.610459</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>STM</td>
+      <td>69.735685</td>
+      <td>64.209075</td>
+      <td>76.639004</td>
+      <td>6.903320</td>
+      <td>-5.526609</td>
+      <td>12.429929</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>This dataset contains the same score data as df_survey_results_by_college_long except that each college’s Fall, Winter, and Spring scores are on the same row. (This makes calculating changes over time somewhat easier.)</p>
+<p>Here’s another look at df_survey_results_by_college_long for comparison:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_survey_results_by_college_long</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Starting_Year</th>
+      <th>College</th>
+      <th>Season</th>
+      <th>Score</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2023</td>
+      <td>STB</td>
+      <td>Fall</td>
+      <td>69.797119</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2023</td>
+      <td>STC</td>
+      <td>Fall</td>
+      <td>69.568665</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>2023</td>
+      <td>STL</td>
+      <td>Spring</td>
+      <td>76.727809</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>2023</td>
+      <td>STM</td>
+      <td>Spring</td>
+      <td>76.639004</td>
+    </tr>
+  </tbody>
+</table>
+<p>12 rows × 4 columns</p>
+</div></div></div>
+</div>
+<p>Plotly makes graphing wide data like this very straightforward. Instead of passing season to the ‘color’ argument (as we did with the long-formatted table), we can simply add each season to a list of y values:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig_survey_results_by_college_and_season_wide</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span>
+    <span class="n">df_survey_results_by_college_wide</span><span class="p">,</span> <span class="n">x</span> <span class="o">=</span> <span class="s1">&#39;College&#39;</span><span class="p">,</span> 
+       <span class="n">y</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Fall&#39;</span><span class="p">,</span> <span class="s1">&#39;Winter&#39;</span><span class="p">,</span> <span class="s1">&#39;Spring&#39;</span><span class="p">],</span> <span class="n">barmode</span> <span class="o">=</span> <span class="s1">&#39;group&#39;</span><span class="p">,</span>
+      <span class="n">title</span> <span class="o">=</span> <span class="s1">&#39;Survey Scores by College and Season&#39;</span><span class="p">,</span>
+    <span class="n">text_auto</span> <span class="o">=</span> <span class="s1">&#39;.0f&#39;</span><span class="p">)</span>
+<span class="c1"># See:</span>
+<span class="c1"># https://plotly.com/python/bar-charts/#bar-charts-with-wide-format-data</span>
+
+<span class="c1"># Because we are displaying multiple y values rather than just one, Plotly</span>
+<span class="c1"># sets the y axis and legend titles as &#39;value&#39; and &#39;variables&#39; by default. </span>
+<span class="c1"># We can change these to &#39;Score&#39; and &#39;Season&#39;, respectively, via the </span>
+<span class="c1"># following code:</span>
+<span class="n">fig_survey_results_by_college_and_season_wide</span><span class="o">.</span><span class="n">update_layout</span><span class="p">(</span>
+    <span class="n">yaxis_title</span> <span class="o">=</span> <span class="s1">&#39;Score&#39;</span><span class="p">,</span> <span class="n">legend_title</span> <span class="o">=</span> <span class="s1">&#39;Season&#39;</span><span class="p">)</span>
+<span class="c1"># https://plotly.com/python/figure-labels/</span>
+
+<span class="c1"># As the following output shows, this graph is identical </span>
+<span class="c1"># to fig_survey_results_by_college_and_season:</span>
+
+<span class="n">wadi</span><span class="p">(</span><span class="n">fig</span><span class="o">=</span><span class="n">fig_survey_results_by_college_and_season_wide</span><span class="p">,</span>
+     <span class="n">file_path</span><span class="o">=</span><span class="s1">&#39;output/results_by_college_and_season_wide&#39;</span><span class="p">,</span>
+     <span class="n">display_type</span><span class="o">=</span><span class="n">display_type</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="../_images/a1a281f87d85538a6dd69ba7cef96020ff84c91c27c9e6d2794feef2bcc822f1.png"><img alt="../_images/a1a281f87d85538a6dd69ba7cef96020ff84c91c27c9e6d2794feef2bcc822f1.png" src="../_images/a1a281f87d85538a6dd69ba7cef96020ff84c91c27c9e6d2794feef2bcc822f1.png" style="width: 720px;" /></a>
+</div>
+</div>
+</section>
+<section id="bar-charts-with-3-or-more-variables">
+<h3>Bar charts with 3 or more variables<a class="headerlink" href="#bar-charts-with-3-or-more-variables" title="Link to this heading">#</a></h3>
+<p>If you need to differentiate between three different variables (such as college, level, and season), you have two different options. One would be to represent the third variable via Plotly’s <code class="docutils literal notranslate"><span class="pre">pattern_shape</span></code> argument, which adds different patterns to bars to represent different variable values; the other would be to group two variables into one via Pandas, then pass that grouped column to the ‘x’ or ‘color’ variable. The following code will show each of these two options.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Reading in a dataset that shows results by school, level, *and* college </span>
+<span class="c1"># (hence the use of &#39;slc&#39; in the DataFrame name):</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_survey_results_slc</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span>
+    <span class="s1">&#39;../Descriptive_Stats/survey_results_slc_long.csv&#39;</span><span class="p">)</span>
+<span class="n">df_survey_results_slc</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">column</span><span class="o">.</span><span class="n">title</span><span class="p">()</span> <span class="k">for</span> <span class="n">column</span> <span class="ow">in</span> 
+    <span class="n">df_survey_results_slc</span><span class="o">.</span><span class="n">columns</span><span class="p">]</span>
+<span class="c1"># In order for our graphs to display levels and seasons in the correct</span>
+<span class="c1"># order, we&#39;ll add in a &#39;Season_For_Sorting&#39; column (an equivalent for </span>
+<span class="c1"># levels already exists), then sort the DataFrame by these two columns.</span>
+<span class="c1"># (I&#39;m using this approach rather than the key-based one shown earlier</span>
+<span class="c1"># because I don&#39;t believe that one works with more than one sort value.)</span>
+<span class="n">df_survey_results_slc</span><span class="p">[</span><span class="s1">&#39;Season_For_Sorting&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_survey_results_slc</span><span class="p">[</span>
+<span class="s1">&#39;Season&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">({</span><span class="s1">&#39;Fall&#39;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="s1">&#39;Winter&#39;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="s1">&#39;Spring&#39;</span><span class="p">:</span><span class="mi">2</span><span class="p">})</span>
+<span class="n">df_survey_results_slc</span><span class="o">.</span><span class="n">sort_values</span><span class="p">([</span><span class="s1">&#39;Season_For_Sorting&#39;</span><span class="p">,</span>
+                                   <span class="s1">&#39;Level_For_Sorting&#39;</span><span class="p">],</span> <span class="n">inplace</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+<span class="n">df_survey_results_slc</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Starting_Year</th>
+      <th>College</th>
+      <th>Level_For_Sorting</th>
+      <th>Level</th>
+      <th>Season</th>
+      <th>Score</th>
+      <th>Season_For_Sorting</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2023</td>
+      <td>STB</td>
+      <td>0</td>
+      <td>Fr</td>
+      <td>Fall</td>
+      <td>69.593583</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>2023</td>
+      <td>STC</td>
+      <td>0</td>
+      <td>Fr</td>
+      <td>Fall</td>
+      <td>69.598913</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>24</th>
+      <td>2023</td>
+      <td>STL</td>
+      <td>0</td>
+      <td>Fr</td>
+      <td>Fall</td>
+      <td>69.585030</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>36</th>
+      <td>2023</td>
+      <td>STM</td>
+      <td>0</td>
+      <td>Fr</td>
+      <td>Fall</td>
+      <td>69.650503</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2023</td>
+      <td>STB</td>
+      <td>1</td>
+      <td>So</td>
+      <td>Fall</td>
+      <td>70.377306</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="graphing-results-by-college-level-and-season">
+<h3>Graphing results by college, level, and season:<a class="headerlink" href="#graphing-results-by-college-level-and-season" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig_survey_results_slc_pattern_shape</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span>
+    <span class="n">df_survey_results_slc</span><span class="p">,</span> <span class="n">x</span> <span class="o">=</span> <span class="s1">&#39;College&#39;</span><span class="p">,</span> 
+    <span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;Season&#39;</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="s1">&#39;Score&#39;</span><span class="p">,</span> <span class="n">pattern_shape</span> <span class="o">=</span> <span class="s1">&#39;Level&#39;</span><span class="p">,</span> 
+    <span class="n">barmode</span> <span class="o">=</span> <span class="s1">&#39;group&#39;</span><span class="p">,</span> 
+    <span class="n">title</span> <span class="o">=</span> <span class="s1">&#39;Survey Scores by College, Season, and Level&#39;</span><span class="p">,</span> 
+    <span class="n">text_auto</span> <span class="o">=</span> <span class="s1">&#39;.0f&#39;</span><span class="p">)</span>
+
+<span class="n">wadi</span><span class="p">(</span><span class="n">fig</span><span class="o">=</span><span class="n">fig_survey_results_slc_pattern_shape</span><span class="p">,</span>
+     <span class="n">file_path</span><span class="o">=</span><span class="s1">&#39;output/results_slc_pattern_shape&#39;</span><span class="p">,</span>
+     <span class="n">display_type</span><span class="o">=</span><span class="n">display_type</span><span class="p">,</span> <span class="n">height</span> <span class="o">=</span> <span class="mi">450</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="../_images/bf644c59b7590dd8709f57d170837aee729ba189bcfc8ab930b7b2ebeb9e0a11.png"><img alt="../_images/bf644c59b7590dd8709f57d170837aee729ba189bcfc8ab930b7b2ebeb9e0a11.png" src="../_images/bf644c59b7590dd8709f57d170837aee729ba189bcfc8ab930b7b2ebeb9e0a11.png" style="width: 720px;" /></a>
+</div>
+</div>
+<p>This graph, as shown within the image above, is awfully cluttered and difficult to interpret. Your outcomes with <code class="docutils literal notranslate"><span class="pre">pattern_shape</span></code> might be better if you have, say, only two different values to pass to that argument (e.g. Fall and Spring results), but even then, your visualization may not be very intuitive.</p>
+<p>Another option is to combine two fields (such as <code class="docutils literal notranslate"><span class="pre">College</span></code> and <code class="docutils literal notranslate"><span class="pre">Level</span></code>) into one, then pass that combined field to our graphing code:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_survey_results_slc</span><span class="p">[</span><span class="s1">&#39;College and Level&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">df_survey_results_slc</span><span class="p">[</span><span class="s1">&#39;College&#39;</span><span class="p">]</span> 
+    <span class="o">+</span> <span class="s1">&#39; &#39;</span> <span class="o">+</span> <span class="n">df_survey_results_slc</span><span class="p">[</span><span class="s1">&#39;Level&#39;</span><span class="p">])</span>
+<span class="n">df_survey_results_slc</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Starting_Year</th>
+      <th>College</th>
+      <th>Level_For_Sorting</th>
+      <th>Level</th>
+      <th>Season</th>
+      <th>Score</th>
+      <th>Season_For_Sorting</th>
+      <th>College and Level</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2023</td>
+      <td>STB</td>
+      <td>0</td>
+      <td>Fr</td>
+      <td>Fall</td>
+      <td>69.593583</td>
+      <td>0</td>
+      <td>STB Fr</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>2023</td>
+      <td>STC</td>
+      <td>0</td>
+      <td>Fr</td>
+      <td>Fall</td>
+      <td>69.598913</td>
+      <td>0</td>
+      <td>STC Fr</td>
+    </tr>
+    <tr>
+      <th>24</th>
+      <td>2023</td>
+      <td>STL</td>
+      <td>0</td>
+      <td>Fr</td>
+      <td>Fall</td>
+      <td>69.585030</td>
+      <td>0</td>
+      <td>STL Fr</td>
+    </tr>
+    <tr>
+      <th>36</th>
+      <td>2023</td>
+      <td>STM</td>
+      <td>0</td>
+      <td>Fr</td>
+      <td>Fall</td>
+      <td>69.650503</td>
+      <td>0</td>
+      <td>STM Fr</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2023</td>
+      <td>STB</td>
+      <td>1</td>
+      <td>So</td>
+      <td>Fall</td>
+      <td>70.377306</td>
+      <td>0</td>
+      <td>STB So</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Now that we’ve combined College and Level into our <code class="docutils literal notranslate"><span class="pre">x</span></code> variable, we no longer need a <code class="docutils literal notranslate"><span class="pre">pattern_shape</span></code> argument:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig_survey_results_slc_combined_x</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span>
+    <span class="n">df_survey_results_slc</span><span class="p">,</span> <span class="n">x</span> <span class="o">=</span> <span class="s1">&#39;College and Level&#39;</span><span class="p">,</span> 
+    <span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;Season&#39;</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="s1">&#39;Score&#39;</span><span class="p">,</span> <span class="n">barmode</span> <span class="o">=</span> <span class="s1">&#39;group&#39;</span><span class="p">,</span>
+    <span class="n">title</span> <span class="o">=</span> <span class="s1">&#39;Survey Scores by College, Season, and Level&#39;</span><span class="p">,</span>
+<span class="n">text_auto</span> <span class="o">=</span> <span class="s1">&#39;.0f&#39;</span><span class="p">)</span>
+
+<span class="n">wadi</span><span class="p">(</span><span class="n">fig</span><span class="o">=</span><span class="n">fig_survey_results_slc_combined_x</span><span class="p">,</span>
+     <span class="n">file_path</span><span class="o">=</span><span class="s1">&#39;output/results_slc_combined_x&#39;</span><span class="p">,</span>
+     <span class="n">display_type</span><span class="o">=</span><span class="n">display_type</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="../_images/fcbaf049870b31c7ecfd76e5a9abf2a8d5ce8a8952f4381f8d6f8fbb0b4965b2.png"><img alt="../_images/fcbaf049870b31c7ecfd76e5a9abf2a8d5ce8a8952f4381f8d6f8fbb0b4965b2.png" src="../_images/fcbaf049870b31c7ecfd76e5a9abf2a8d5ce8a8952f4381f8d6f8fbb0b4965b2.png" style="width: 720px;" /></a>
+</div>
+</div>
+<p>I find this chart to be somewhat more intuitive, though it’s still quite cluttered. Plotly’s Box Select feature allows you to zoom in on a specific section of the interactive chart, thus making the HTML version more readable.</p>
+<p>If you have four or more variables to display, you could combine them via the same method used to generate the ‘College and Level’ column above. However, you may conclude that limiting your chart to two or three variables is a better option.</p>
+</section>
+</section>
+<section id="creating-line-graphs">
+<h2>Creating line graphs<a class="headerlink" href="#creating-line-graphs" title="Link to this heading">#</a></h2>
+<p>Line graphs are an excellent method for displaying changes in data over time. The following code will provide a basic overview of building line charts within Plotly; for more detailed instructions, recommend referencing the Plotly Express documentation for line charts (<a class="reference external" href="https://plotly.com/python/line-charts/">https://plotly.com/python/line-charts/</a>) and the plotly.express.line reference (<a class="reference external" href="https://plotly.com/python-api-reference/generated/plotly.express.line">https://plotly.com/python-api-reference/generated/plotly.express.line</a>).</p>
+<p>First, here’s a simple line chart that shows how survey scores changed over time. This chart shows the same data as fig_survey_results_by_college_and_season, a bar chart that we created earlier, but makes the divergence in spring scores between STL/STM and STC/STB a bit more apparent.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_survey_results_slc</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Starting_Year</th>
+      <th>College</th>
+      <th>Level_For_Sorting</th>
+      <th>Level</th>
+      <th>Season</th>
+      <th>Score</th>
+      <th>Season_For_Sorting</th>
+      <th>College and Level</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2023</td>
+      <td>STB</td>
+      <td>0</td>
+      <td>Fr</td>
+      <td>Fall</td>
+      <td>69.593583</td>
+      <td>0</td>
+      <td>STB Fr</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>2023</td>
+      <td>STC</td>
+      <td>0</td>
+      <td>Fr</td>
+      <td>Fall</td>
+      <td>69.598913</td>
+      <td>0</td>
+      <td>STC Fr</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>34</th>
+      <td>2023</td>
+      <td>STL</td>
+      <td>3</td>
+      <td>Se</td>
+      <td>Spring</td>
+      <td>77.915984</td>
+      <td>2</td>
+      <td>STL Se</td>
+    </tr>
+    <tr>
+      <th>46</th>
+      <td>2023</td>
+      <td>STM</td>
+      <td>3</td>
+      <td>Se</td>
+      <td>Spring</td>
+      <td>79.309831</td>
+      <td>2</td>
+      <td>STM Se</td>
+    </tr>
+  </tbody>
+</table>
+<p>48 rows × 8 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig_survey_results_by_college_and_season_line</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">line</span><span class="p">(</span>
+    <span class="n">df_survey_results_by_college_long</span><span class="p">,</span> <span class="n">x</span> <span class="o">=</span> <span class="s1">&#39;Season&#39;</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="s1">&#39;Score&#39;</span><span class="p">,</span>
+        <span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;College&#39;</span><span class="p">,</span> <span class="n">title</span> <span class="o">=</span> <span class="s1">&#39;Survey Scores by College and Season&#39;</span><span class="p">)</span>
+<span class="n">wadi</span><span class="p">(</span><span class="n">fig_survey_results_by_college_and_season_line</span><span class="p">,</span>
+     <span class="n">file_path</span> <span class="o">=</span> <span class="s1">&#39;output/results_by_college_and_season_line&#39;</span><span class="p">,</span>
+     <span class="n">display_type</span> <span class="o">=</span> <span class="n">display_type</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="../_images/22bb6e3e3058871d237c0604b0086d3d2e2a409113baba76e1f08dd6fb3d64c8.png"><img alt="../_images/22bb6e3e3058871d237c0604b0086d3d2e2a409113baba76e1f08dd6fb3d64c8.png" src="../_images/22bb6e3e3058871d237c0604b0086d3d2e2a409113baba76e1f08dd6fb3d64c8.png" style="width: 720px;" /></a>
+</div>
+</div>
+<section id="representing-multiple-variables-within-line-charts">
+<h3>Representing multiple variables within line charts<a class="headerlink" href="#representing-multiple-variables-within-line-charts" title="Link to this heading">#</a></h3>
+<p>If you need to represent more than one comparison variable in your line chart, consider assigning one to the <code class="docutils literal notranslate"><span class="pre">color</span></code> argument (as shown in the above chart) and the other one to the <code class="docutils literal notranslate"><span class="pre">line_dash</span></code> argument (as shown in the following chart). However, this approach works better if your total variable count remains quite limited.</p>
+<p>The following chart shows how survey scores changed over time for freshmen and juniors in STC and STM. (I purposefully reduced the number of possible combinations from 16 to 4 so that the chart would remain readable. However, if you’re producing an interactive chart, you could consider showing a larger number of color and dash combinations than you would within a static chart. This is because your viewers can click and double-click within legend entries in order to specify which items to keep, <em>and</em> because they can hover over specific points to verify the variables that it represents.)</p>
+<p>This chart also adds in markers to draw readers’ attention to the actual points being graphed; I often like to include them, but they are of course optional. (You can also vary the marker type for each line (using px.line’s <code class="docutils literal notranslate"><span class="pre">symbol</span></code> argument), rather than the line style, in order to designate which variable is represented by a given line.)</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig_selected_survey_results_line</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">line</span><span class="p">(</span>
+    <span class="n">df_survey_results_slc</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;College in [&#39;STM&#39;, &#39;STC&#39;] and Level </span><span class="se">\</span>
+<span class="s2">in [&#39;Fr&#39;, &#39;Ju&#39;]&quot;</span><span class="p">),</span> <span class="n">x</span> <span class="o">=</span> <span class="s1">&#39;Season&#39;</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="s1">&#39;Score&#39;</span><span class="p">,</span>
+        <span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;College&#39;</span><span class="p">,</span> <span class="n">line_dash</span> <span class="o">=</span> <span class="s1">&#39;Level&#39;</span><span class="p">,</span> <span class="n">markers</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="n">title</span> <span class="o">=</span> <span class="s1">&#39;STM and STC Survey Scores by Season for Freshmen and Juniors&#39;</span><span class="p">)</span>
+<span class="n">wadi</span><span class="p">(</span><span class="n">fig_selected_survey_results_line</span><span class="p">,</span>
+     <span class="n">file_path</span> <span class="o">=</span> <span class="s1">&#39;output/selected_survey_results_line&#39;</span><span class="p">,</span>
+     <span class="n">display_type</span> <span class="o">=</span> <span class="n">display_type</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="../_images/78a5a683536aee218ce213cf239f03a15765947ef64df95dc00882db5f4fd21a.png"><img alt="../_images/78a5a683536aee218ce213cf239f03a15765947ef64df95dc00882db5f4fd21a.png" src="../_images/78a5a683536aee218ce213cf239f03a15765947ef64df95dc00882db5f4fd21a.png" style="width: 720px;" /></a>
+</div>
+</div>
+</section>
+<section id="adding-labels-to-points">
+<h3>Adding labels to points<a class="headerlink" href="#adding-labels-to-points" title="Link to this heading">#</a></h3>
+<p>Adding labels to line charts is relatively straightforward; however, making them readable can be a bit more challenging. For instance, if two lines overlap, their labels will also overlap by default.</p>
+<p>Let’s work on adding labels to a chart that shows changes in survey scores for two schools: STB and STC. First, we’ll create a new ‘Rounded_Score’ field within df_survey_results_by_college_long that we can use as text labels: (using the original ‘Score’ field for our labels would display far more decimal points for each point than we need.)</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_survey_results_by_college_long</span><span class="p">[</span><span class="s1">&#39;Rounded_Score&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">df_survey_results_by_college_long</span><span class="p">[</span><span class="s1">&#39;Score&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
+<span class="n">df_survey_results_by_college_long</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Starting_Year</th>
+      <th>College</th>
+      <th>Season</th>
+      <th>Score</th>
+      <th>Rounded_Score</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2023</td>
+      <td>STB</td>
+      <td>Fall</td>
+      <td>69.797119</td>
+      <td>69.80</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2023</td>
+      <td>STC</td>
+      <td>Fall</td>
+      <td>69.568665</td>
+      <td>69.57</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>2023</td>
+      <td>STL</td>
+      <td>Spring</td>
+      <td>76.727809</td>
+      <td>76.73</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>2023</td>
+      <td>STM</td>
+      <td>Spring</td>
+      <td>76.639004</td>
+      <td>76.64</td>
+    </tr>
+  </tbody>
+</table>
+<p>12 rows × 5 columns</p>
+</div></div></div>
+</div>
+<p>We can add labels to our chart using the ‘text’ argument (rather than ‘text_auto’, which is supported for bar charts but not line charts). By default, these labels will appear directly over each point, which I find makes the chart less readable. Fortunately, we can use the <code class="docutils literal notranslate"><span class="pre">textposition</span></code> argument of <code class="docutils literal notranslate"><span class="pre">update_traces()</span></code> to provide an offset between each point and its corresponding label.</p>
+<p>However, as shown within the first line chart we produced, STM and STC’s fall and winter scores were almost identical. This means that, by default, the labels for these text options will overlap. To avoid this issue, we’ll shift STC’s and STM’s labels <em>above</em> and <em>below</em> their corresponding points, respectively. This can be accomplished by calling <code class="docutils literal notranslate"><span class="pre">update_traces</span></code> twice, once for each line; we can then specify the line whose <code class="docutils literal notranslate"><span class="pre">textposition</span></code> value we wish to update via the <code class="docutils literal notranslate"><span class="pre">selector</span></code> argument of update_traces(). (For more on this argument, visit <a class="reference external" href="https://plotly.com/python/reference/scatter/#scatter">https://plotly.com/python/reference/scatter/#scatter</a> . Special thanks to python-trader, akroma, and adamschroeder in this thread (<a class="reference external" href="https://community.plotly.com/t/need-to-target-a-specific-trace-by-name-when-use-update-traces-s-selector/63151/2">https://community.plotly.com/t/need-to-target-a-specific-trace-by-name-when-use-update-traces-s-selector/63151/2</a>) for helping me figure out this solution.)</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig_stc_stm_survey_results_line</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">line</span><span class="p">(</span>
+    <span class="n">df_survey_results_by_college_long</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;College in [&#39;STM&#39;, &#39;STC&#39;]&quot;</span><span class="p">),</span> 
+    <span class="n">x</span> <span class="o">=</span> <span class="s1">&#39;Season&#39;</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="s1">&#39;Score&#39;</span><span class="p">,</span>
+        <span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;College&#39;</span><span class="p">,</span> <span class="n">markers</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;Rounded_Score&#39;</span><span class="p">,</span>
+    <span class="n">title</span> <span class="o">=</span> <span class="s1">&#39;STM and STC Survey Scores by Season&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">update_traces</span><span class="p">(</span>
+    <span class="n">textposition</span> <span class="o">=</span> <span class="s1">&#39;top center&#39;</span><span class="p">,</span> <span class="n">selector</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span><span class="s1">&#39;STM&#39;</span><span class="p">})</span><span class="o">.</span><span class="n">update_traces</span><span class="p">(</span>
+    <span class="n">textposition</span> <span class="o">=</span> <span class="s1">&#39;bottom center&#39;</span><span class="p">,</span> 
+    <span class="n">selector</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span><span class="s1">&#39;STC&#39;</span><span class="p">})</span><span class="o">.</span><span class="n">update_layout</span><span class="p">(</span><span class="n">yaxis_range</span> <span class="o">=</span> <span class="p">[</span><span class="mi">60</span><span class="p">,</span> <span class="mi">80</span><span class="p">])</span>
+
+<span class="n">wadi</span><span class="p">(</span><span class="n">fig_stc_stm_survey_results_line</span><span class="p">,</span>
+     <span class="n">file_path</span> <span class="o">=</span> <span class="s1">&#39;output/stc_stm_survey_results_line&#39;</span><span class="p">,</span>
+     <span class="n">display_type</span> <span class="o">=</span> <span class="n">display_type</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="../_images/894a0b327c2a0a50a7506464146b4522b5b28375c7041e484122105d4ba777b3.png"><img alt="../_images/894a0b327c2a0a50a7506464146b4522b5b28375c7041e484122105d4ba777b3.png" src="../_images/894a0b327c2a0a50a7506464146b4522b5b28375c7041e484122105d4ba777b3.png" style="width: 720px;" /></a>
+</div>
+</div>
+<p>To figure out what item to pass to the ‘name’ argument (or another argument of your choice) of <code class="docutils literal notranslate"><span class="pre">selector</span></code>, try viewing the <code class="docutils literal notranslate"><span class="pre">.data</span></code> attribute of your image. Note that ‘STC’ and ‘STM’ are listed below as the names of each trace.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig_stc_stm_survey_results_line</span><span class="o">.</span><span class="n">data</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(Scatter({
+     &#39;hovertemplate&#39;: &#39;College=STC&lt;br&gt;Season=%{x}&lt;br&gt;Score=%{y}&lt;br&gt;Rounded_Score=%{text}&lt;extra&gt;&lt;/extra&gt;&#39;,
+     &#39;legendgroup&#39;: &#39;STC&#39;,
+     &#39;line&#39;: {&#39;color&#39;: &#39;#636efa&#39;, &#39;dash&#39;: &#39;solid&#39;},
+     &#39;marker&#39;: {&#39;symbol&#39;: &#39;circle&#39;},
+     &#39;mode&#39;: &#39;lines+markers+text&#39;,
+     &#39;name&#39;: &#39;STC&#39;,
+     &#39;orientation&#39;: &#39;v&#39;,
+     &#39;showlegend&#39;: True,
+     &#39;text&#39;: array([69.57, 64.12, 66.91]),
+     &#39;textposition&#39;: &#39;bottom center&#39;,
+     &#39;x&#39;: array([&#39;Fall&#39;, &#39;Winter&#39;, &#39;Spring&#39;], dtype=object),
+     &#39;xaxis&#39;: &#39;x&#39;,
+     &#39;y&#39;: array([69.56866485, 64.12356322, 66.91144414]),
+     &#39;yaxis&#39;: &#39;y&#39;
+ }),
+ Scatter({
+     &#39;hovertemplate&#39;: &#39;College=STM&lt;br&gt;Season=%{x}&lt;br&gt;Score=%{y}&lt;br&gt;Rounded_Score=%{text}&lt;extra&gt;&lt;/extra&gt;&#39;,
+     &#39;legendgroup&#39;: &#39;STM&#39;,
+     &#39;line&#39;: {&#39;color&#39;: &#39;#EF553B&#39;, &#39;dash&#39;: &#39;solid&#39;},
+     &#39;marker&#39;: {&#39;symbol&#39;: &#39;circle&#39;},
+     &#39;mode&#39;: &#39;lines+markers+text&#39;,
+     &#39;name&#39;: &#39;STM&#39;,
+     &#39;orientation&#39;: &#39;v&#39;,
+     &#39;showlegend&#39;: True,
+     &#39;text&#39;: array([69.74, 64.21, 76.64]),
+     &#39;textposition&#39;: &#39;top center&#39;,
+     &#39;x&#39;: array([&#39;Fall&#39;, &#39;Winter&#39;, &#39;Spring&#39;], dtype=object),
+     &#39;xaxis&#39;: &#39;x&#39;,
+     &#39;y&#39;: array([69.73568465, 64.20907538, 76.63900415]),
+     &#39;yaxis&#39;: &#39;y&#39;
+ }))
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="scatter-plots">
+<h1>Scatter plots<a class="headerlink" href="#scatter-plots" title="Link to this heading">#</a></h1>
+<p>For more on scatter plots, see <a class="reference external" href="https://plotly.com/python/line-and-scatter/">https://plotly.com/python/line-and-scatter/</a> .</p>
+<p>Scatter plots represent relationships between two metrics by visualizing paired copies of those metrics. For instance, if we wanted to see how fall and spring bookstore spending were correlated, we could load in a table of fall and spring sales totals for each student, then create a scatter plot in which each student was a point; each point’s x value represented fall spending; and each point’s y value represented spring spending. That’s exactly what we’ll do in this section!</p>
+<p>First, we’ll load in our sales data:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_bookstore_sales</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_sql</span><span class="p">(</span><span class="s2">&quot;Select * from bookstore_sales&quot;</span><span class="p">,</span> 
+                                        <span class="n">con</span> <span class="o">=</span> <span class="n">e</span><span class="p">)</span>
+<span class="n">df_bookstore_sales</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>student_id</th>
+      <th>gender</th>
+      <th>college</th>
+      <th>level</th>
+      <th>Fall</th>
+      <th>Spring</th>
+      <th>Fall_Spring_Change</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2020-1</td>
+      <td>F</td>
+      <td>STC</td>
+      <td>Se</td>
+      <td>66.80</td>
+      <td>58.24</td>
+      <td>-8.56</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2020-2</td>
+      <td>F</td>
+      <td>STM</td>
+      <td>Se</td>
+      <td>104.67</td>
+      <td>151.90</td>
+      <td>47.23</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2020-3</td>
+      <td>F</td>
+      <td>STC</td>
+      <td>Se</td>
+      <td>46.17</td>
+      <td>16.56</td>
+      <td>-29.61</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2020-4</td>
+      <td>F</td>
+      <td>STC</td>
+      <td>Se</td>
+      <td>58.68</td>
+      <td>73.77</td>
+      <td>15.09</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2020-5</td>
+      <td>F</td>
+      <td>STM</td>
+      <td>Se</td>
+      <td>99.73</td>
+      <td>108.78</td>
+      <td>9.05</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>We’ll now create a scatter plot that compares Fall and Spring spending for each student. We’ll also include a linear trend line that helps make sense of the relationship between these two values. (You can modify the color of this line via the <code class="docutils literal notranslate"><span class="pre">trendline_color_override</span></code> argument as noted at <a class="reference external" href="https://plotly.com/python/linear-fits/">https://plotly.com/python/linear-fits/</a>).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig_scatter</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">df_bookstore_sales</span><span class="p">,</span> 
+           <span class="n">x</span> <span class="o">=</span> <span class="s1">&#39;Fall&#39;</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="s1">&#39;Spring&#39;</span><span class="p">,</span>
+          <span class="n">trendline</span> <span class="o">=</span> <span class="s1">&#39;ols&#39;</span><span class="p">,</span> <span class="n">trendline_color_override</span> <span class="o">=</span> <span class="s1">&#39;red&#39;</span><span class="p">,</span>
+                        <span class="n">title</span> <span class="o">=</span> <span class="s1">&#39;Fall vs. Spring Bookstore Sales&#39;</span><span class="p">)</span>
+<span class="n">wadi</span><span class="p">(</span><span class="n">fig_scatter</span><span class="p">,</span> <span class="s1">&#39;output/sales_scatter&#39;</span><span class="p">,</span> <span class="n">display_type</span><span class="o">=</span><span class="n">display_type</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="../_images/85daf5ccb826bf3c127d7276a31a336576cb8e03e9c4cd89b639afda417c909e.png"><img alt="../_images/85daf5ccb826bf3c127d7276a31a336576cb8e03e9c4cd89b639afda417c909e.png" src="../_images/85daf5ccb826bf3c127d7276a31a336576cb8e03e9c4cd89b639afda417c909e.png" style="width: 720px;" /></a>
+</div>
+</div>
+<p>We can visualize additional categories using the <code class="docutils literal notranslate"><span class="pre">color</span></code> and <code class="docutils literal notranslate"><span class="pre">symbol</span></code> arguments of <code class="docutils literal notranslate"><span class="pre">px.scatter()</span></code>. The following plot uses different colors to represent levels and different symbols to represent different colleges. To be honest, I don’t think that these added elements contribute much to this particular chart; with so many points present, it’s still hard to make out anything but the overall trend (that fall and spring spending are positively correlated). However, if your scatter plot has fewer points, you may find these arguments more useful.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig_scatter_with_color</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">df_bookstore_sales</span><span class="p">,</span> 
+           <span class="n">x</span> <span class="o">=</span> <span class="s1">&#39;Fall&#39;</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="s1">&#39;Spring&#39;</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;level&#39;</span><span class="p">,</span> <span class="n">symbol</span> <span class="o">=</span> <span class="s1">&#39;college&#39;</span><span class="p">,</span>
+                                    <span class="n">opacity</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">,</span>
+          <span class="n">trendline</span> <span class="o">=</span> <span class="s1">&#39;ols&#39;</span><span class="p">,</span> <span class="n">trendline_color_override</span> <span class="o">=</span> <span class="s1">&#39;red&#39;</span><span class="p">,</span>
+                                    <span class="n">trendline_scope</span> <span class="o">=</span> <span class="s1">&#39;overall&#39;</span><span class="p">,</span>
+                        <span class="n">title</span> <span class="o">=</span> <span class="s1">&#39;Fall vs. Spring Bookstore Sales&#39;</span><span class="p">)</span>
+<span class="n">wadi</span><span class="p">(</span><span class="n">fig_scatter_with_color</span><span class="p">,</span> <span class="s1">&#39;output/sales_scatter_with_color&#39;</span><span class="p">,</span> 
+     <span class="n">height</span> <span class="o">=</span> <span class="mi">550</span><span class="p">,</span> <span class="n">display_type</span><span class="o">=</span><span class="n">display_type</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="../_images/06c3170afc8ed561141b3495ef394bcce19b9feea9bdf680ad78070b8144048b.png"><img alt="../_images/06c3170afc8ed561141b3495ef394bcce19b9feea9bdf680ad78070b8144048b.png" src="../_images/06c3170afc8ed561141b3495ef394bcce19b9feea9bdf680ad78070b8144048b.png" style="width: 720px;" /></a>
+</div>
+</div>
+<section id="histograms">
+<h2>Histograms<a class="headerlink" href="#histograms" title="Link to this heading">#</a></h2>
+<p>Histograms allow you to view the number of points in a dataset that fall into a particular range. For instance, the following histogram shows the number of students who accumulated a certain range of bookstore sales during the fall and spring semesters.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig_sales_histogram</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">df_bookstore_sales</span><span class="p">,</span> 
+             <span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Fall&#39;</span><span class="p">,</span> <span class="s1">&#39;Spring&#39;</span><span class="p">],</span> <span class="n">barmode</span> <span class="o">=</span> <span class="s1">&#39;group&#39;</span><span class="p">,</span> <span class="n">nbins</span> <span class="o">=</span> <span class="mi">30</span><span class="p">,</span>
+<span class="n">title</span> <span class="o">=</span> <span class="s1">&#39;Distributions of fall and spring sales&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">update_layout</span><span class="p">(</span>
+    <span class="n">xaxis_title</span> <span class="o">=</span> <span class="s1">&#39;Sales&#39;</span><span class="p">,</span> <span class="n">yaxis_title</span> <span class="o">=</span> <span class="s1">&#39;Students&#39;</span><span class="p">,</span> <span class="n">legend_title</span> <span class="o">=</span> <span class="s1">&#39;Season&#39;</span><span class="p">)</span>
+<span class="n">wadi</span><span class="p">(</span><span class="n">fig_sales_histogram</span><span class="p">,</span> <span class="s1">&#39;output/sales_histogram&#39;</span><span class="p">,</span> <span class="n">display_type</span><span class="o">=</span><span class="s1">&#39;png&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="../_images/77dcc9cd48f22287b87f8d516e972de1dbaec26cf481745de303d691220ec0e9.png"><img alt="../_images/77dcc9cd48f22287b87f8d516e972de1dbaec26cf481745de303d691220ec0e9.png" src="../_images/77dcc9cd48f22287b87f8d516e972de1dbaec26cf481745de303d691220ec0e9.png" style="width: 720px;" /></a>
+</div>
+</div>
+<p>This histogram indicates that students’ spring spending varied more than their fall spending. It also looks like students spent more during the spring, on average, than they did during the fall.</p>
+<p>We can confirm these hunches by calling <code class="docutils literal notranslate"><span class="pre">describe</span></code> on our underlying dataset: (‘std’ here stands for ‘standard deviation’, a measure of how dispersed a given set of values is.)</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_bookstore_sales</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span><span class="o">.</span><span class="n">loc</span><span class="p">[[</span><span class="s1">&#39;count&#39;</span><span class="p">,</span> <span class="s1">&#39;mean&#39;</span><span class="p">,</span> <span class="s1">&#39;std&#39;</span><span class="p">]]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Fall</th>
+      <th>Spring</th>
+      <th>Fall_Spring_Change</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>count</th>
+      <td>16384.000000</td>
+      <td>16384.000000</td>
+      <td>16384.000000</td>
+    </tr>
+    <tr>
+      <th>mean</th>
+      <td>80.091662</td>
+      <td>83.644286</td>
+      <td>3.552625</td>
+    </tr>
+    <tr>
+      <th>std</th>
+      <td>25.023476</td>
+      <td>37.297291</td>
+      <td>27.534548</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>To see whether these distributions varied by level, we can pass that variable as an argument to the <code class="docutils literal notranslate"><span class="pre">facet_row</span></code> parameter. This handy feature of <code class="docutils literal notranslate"><span class="pre">px.histogram()</span></code> allows us to create separate histograms for each level, thus making it easier to evaluate differences in spending between them.)</p>
+<p>(<code class="docutils literal notranslate"><span class="pre">facet_row</span></code>, like its sister <code class="docutils literal notranslate"><span class="pre">facet_col</span></code>, are available in many Plotly express chart types, not just histograms. They can prove especially useful when you need to differentiate chart elements by more than one variable (e.g. by both season and level).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig_sales_by_level</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">df_bookstore_sales</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span>
+    <span class="s1">&#39;level&#39;</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">col</span><span class="p">:</span> <span class="n">col</span><span class="o">.</span><span class="n">map</span><span class="p">({</span><span class="s1">&#39;Fr&#39;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="s1">&#39;So&#39;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="s1">&#39;Ju&#39;</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;Se&#39;</span><span class="p">:</span><span class="mi">3</span><span class="p">})),</span> 
+             <span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Fall&#39;</span><span class="p">,</span> <span class="s1">&#39;Spring&#39;</span><span class="p">],</span> <span class="n">barmode</span> <span class="o">=</span> <span class="s1">&#39;group&#39;</span><span class="p">,</span> <span class="n">nbins</span> <span class="o">=</span> <span class="mi">30</span><span class="p">,</span>
+            <span class="n">facet_row</span> <span class="o">=</span> <span class="s1">&#39;level&#39;</span><span class="p">,</span>
+            <span class="n">title</span> <span class="o">=</span> <span class="s1">&#39;Fall/spring sales distributions </span><span class="se">\</span>
+<span class="s1">by level&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">update_layout</span><span class="p">(</span>
+    <span class="n">xaxis_title</span> <span class="o">=</span> <span class="s1">&#39;Sales&#39;</span><span class="p">,</span> <span class="n">legend_title</span> <span class="o">=</span> <span class="s1">&#39;Season&#39;</span><span class="p">)</span>
+<span class="n">wadi</span><span class="p">(</span><span class="n">fig_sales_by_level</span><span class="p">,</span> <span class="s1">&#39;output/sales_by_level_histogram&#39;</span><span class="p">,</span>
+     <span class="n">display_type</span><span class="o">=</span><span class="n">display_type</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="../_images/cd63162b606c60dc014980bc08b426bed9c58789d89405d2c1d61bb27cb95877.png"><img alt="../_images/cd63162b606c60dc014980bc08b426bed9c58789d89405d2c1d61bb27cb95877.png" src="../_images/cd63162b606c60dc014980bc08b426bed9c58789d89405d2c1d61bb27cb95877.png" style="width: 720px;" /></a>
+</div>
+</div>
+<p>Note that, in the output above, the spring bars appear to be shifted to the right of the fall bars for juniors and seniors, but not for freshmen and sophomores. This suggests that fall-to-spring spending growth was stronger for upperclassmen than it was for underclassmen.</p>
+<p>If we wanted to show fall and spring spending distributions for each level/college combination, we could update our previous chart by assigning ‘college’ to the <code class="docutils literal notranslate"><span class="pre">facet_col</span></code> parameter:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig_sales_by_college_and_level</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span>
+    <span class="n">df_bookstore_sales</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span>
+    <span class="s1">&#39;level&#39;</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">col</span><span class="p">:</span> <span class="n">col</span><span class="o">.</span><span class="n">map</span><span class="p">({</span><span class="s1">&#39;Fr&#39;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="s1">&#39;So&#39;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="s1">&#39;Ju&#39;</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;Se&#39;</span><span class="p">:</span><span class="mi">3</span><span class="p">})),</span> 
+             <span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Fall&#39;</span><span class="p">,</span> <span class="s1">&#39;Spring&#39;</span><span class="p">],</span> <span class="n">barmode</span> <span class="o">=</span> <span class="s1">&#39;group&#39;</span><span class="p">,</span> <span class="n">nbins</span> <span class="o">=</span> <span class="mi">30</span><span class="p">,</span>
+            <span class="n">facet_row</span> <span class="o">=</span> <span class="s1">&#39;level&#39;</span><span class="p">,</span>
+            <span class="n">facet_col</span> <span class="o">=</span> <span class="s1">&#39;college&#39;</span><span class="p">,</span>
+<span class="n">title</span> <span class="o">=</span> <span class="s1">&#39;Fall/Spring Sales Distributions by College and Level&#39;</span><span class="p">)</span>
+<span class="n">wadi</span><span class="p">(</span><span class="n">fig_sales_by_college_and_level</span><span class="p">,</span> 
+     <span class="s1">&#39;output/sales_by_college_and_level_histogram&#39;</span><span class="p">,</span> 
+     <span class="n">display_type</span><span class="o">=</span><span class="n">display_type</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="../_images/045631b76706c6b43996536c218555edb4f94bc1937c0ef76a56c222179baaa1.png"><img alt="../_images/045631b76706c6b43996536c218555edb4f94bc1937c0ef76a56c222179baaa1.png" src="../_images/045631b76706c6b43996536c218555edb4f94bc1937c0ef76a56c222179baaa1.png" style="width: 720px;" /></a>
+</div>
+</div>
+<p>However, this type of chart can be challenging to interpret by a relative newcomer to your dataset. As the saying goes, <em>Just because you can doesn’t mean you should.</em></p>
+<p>What would be a simpler way to visualize these trends? In the Regressions section of PFN, we’ll create a grouped bar chart that compares average fall/spring sales growth by college and level. By replacing individual fall and spring distributions with a single metric (fall/spring sales growth), we can display all 16 level and college combinations within the same graphic.</p>
+<p>Once you make it to the Regressions section, compare that chart (titled ‘Average Fall-Spring Sales Growth by College and Level’ to this one; I think you’ll agree that the latter is more useful than the matrix of histograms shown below.)</p>
+</section>
+<section id="treemaps">
+<h2>Treemaps<a class="headerlink" href="#treemaps" title="Link to this heading">#</a></h2>
+<p>You might have expected to see pie charts covered in this section, and Plotly certainly supports them (<a class="reference external" href="https://plotly.com/python/pie-charts/">https://plotly.com/python/pie-charts/</a>). However, I would like to humbly suggest that you use <em>treemaps</em> as opposed to pie charts. Why? As Joel Abrams notes at <a class="reference external" href="https://theconversation.com/heres-why-you-should-almost-never-use-a-pie-chart-for-your-data-214576">https://theconversation.com/heres-why-you-should-almost-never-use-a-pie-chart-for-your-data-214576</a> , it can be hard to estimate area within pie charts alone; in addition, when many different categories are present, it can be quite hard to figure out the value corresponding to one specific category.</p>
+<p>Abrams suggests that you consider using bar charts instead, which is perfectly fine; however, treemaps are a worthy alternative to consider as well. Because they show data in rectangular (rather than wedge-shaped form), they’re much easier to interpret; in addition, they do a good job of displaying hierarchical data. (I’ll also add a bar chart in this section that shows equivalent data as the tree chart, thus allowing you to compare the two.)</p>
+<p>Loading our NVCU current enrollment table into the script:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_curr_enrollment</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_sql</span><span class="p">(</span><span class="s2">&quot;Select * from curr_enrollment&quot;</span><span class="p">,</span> <span class="n">con</span> <span class="o">=</span> <span class="n">e</span><span class="p">)</span>
+<span class="n">df_curr_enrollment</span><span class="p">[</span><span class="s1">&#39;Count&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_curr_enrollment</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>first_name</th>
+      <th>last_name</th>
+      <th>gender</th>
+      <th>matriculation_year</th>
+      <th>...</th>
+      <th>class_of</th>
+      <th>level</th>
+      <th>level_for_sorting</th>
+      <th>Count</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Brandy</td>
+      <td>Wang</td>
+      <td>F</td>
+      <td>2020</td>
+      <td>...</td>
+      <td>2024</td>
+      <td>Se</td>
+      <td>3</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Cynthia</td>
+      <td>Whitaker</td>
+      <td>F</td>
+      <td>2020</td>
+      <td>...</td>
+      <td>2024</td>
+      <td>Se</td>
+      <td>3</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Kathryn</td>
+      <td>Romero</td>
+      <td>F</td>
+      <td>2020</td>
+      <td>...</td>
+      <td>2024</td>
+      <td>Se</td>
+      <td>3</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Paige</td>
+      <td>Martinez</td>
+      <td>F</td>
+      <td>2020</td>
+      <td>...</td>
+      <td>2024</td>
+      <td>Se</td>
+      <td>3</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Christine</td>
+      <td>Rios</td>
+      <td>F</td>
+      <td>2020</td>
+      <td>...</td>
+      <td>2024</td>
+      <td>Se</td>
+      <td>3</td>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 12 columns</p>
+</div></div></div>
+</div>
+<p>I’ll now create a ‘college/level’ field that will prove useful for one of our treemaps.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_curr_enrollment</span><span class="p">[</span><span class="s1">&#39;college/level&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">df_curr_enrollment</span><span class="p">[</span><span class="s1">&#39;college&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39; (&#39;</span> 
+    <span class="o">+</span>  <span class="n">df_curr_enrollment</span><span class="p">[</span><span class="s1">&#39;level&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;)&#39;</span><span class="p">)</span>
+
+<span class="c1"># Now that I&#39;ve created this field, I&#39;ll replace the original &#39;level&#39;</span>
+<span class="c1"># values with their non-abbreviated equivalents. (I waited until after</span>
+<span class="c1"># creating the &#39;college/level&#39; field because the abbreviated versions</span>
+<span class="c1"># of these names will fit better within some of our treemap rectangles.)</span>
+<span class="n">df_curr_enrollment</span><span class="p">[</span><span class="s1">&#39;level&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_curr_enrollment</span><span class="p">[</span><span class="s1">&#39;level&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span>
+    <span class="p">{</span><span class="s1">&#39;Fr&#39;</span><span class="p">:</span><span class="s1">&#39;Freshman&#39;</span><span class="p">,</span> <span class="s1">&#39;So&#39;</span><span class="p">:</span><span class="s1">&#39;Sophomore&#39;</span><span class="p">,</span> <span class="s1">&#39;Ju&#39;</span><span class="p">:</span><span class="s1">&#39;Junior&#39;</span><span class="p">,</span><span class="s1">&#39;Se&#39;</span><span class="p">:</span><span class="s1">&#39;Senior&#39;</span><span class="p">})</span>
+
+<span class="n">df_curr_enrollment</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>first_name</th>
+      <th>last_name</th>
+      <th>gender</th>
+      <th>matriculation_year</th>
+      <th>...</th>
+      <th>level</th>
+      <th>level_for_sorting</th>
+      <th>Count</th>
+      <th>college/level</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Brandy</td>
+      <td>Wang</td>
+      <td>F</td>
+      <td>2020</td>
+      <td>...</td>
+      <td>Senior</td>
+      <td>3</td>
+      <td>1</td>
+      <td>STC (Se)</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Cynthia</td>
+      <td>Whitaker</td>
+      <td>F</td>
+      <td>2020</td>
+      <td>...</td>
+      <td>Senior</td>
+      <td>3</td>
+      <td>1</td>
+      <td>STM (Se)</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>16382</th>
+      <td>Joseph</td>
+      <td>Campbell</td>
+      <td>M</td>
+      <td>2023</td>
+      <td>...</td>
+      <td>Freshman</td>
+      <td>0</td>
+      <td>1</td>
+      <td>STB (Fr)</td>
+    </tr>
+    <tr>
+      <th>16383</th>
+      <td>Austin</td>
+      <td>Davis</td>
+      <td>M</td>
+      <td>2023</td>
+      <td>...</td>
+      <td>Freshman</td>
+      <td>0</td>
+      <td>1</td>
+      <td>STM (Fr)</td>
+    </tr>
+  </tbody>
+</table>
+<p>16384 rows × 13 columns</p>
+</div></div></div>
+</div>
+<p>The following treemap shows NVCU’s current enrollment by level and by college. The outer rectangles show the total enrollment for each level whereas the inner rectangles show the enrollment distribution, by college, for all students within that level.</p>
+<p>Note that the Freshman rectangle has the largest area and that the Senior rectangle has the smallest; this suggests that NVCU’s enrollment is growing (though it could also indicate an attrition problem–which, fortunately for NVCU, isn’t the case.) Also note that, while STL’s rectangle within the Senior field is relatively small relative to those for the other schools, its relative size within the Freshman rectangle is much larger. This indicates that STL has become more popular (relative to other colleges) over time, though it could also indicate that students tend to transfer out of it between their first and last years at NVCU.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig_level_college_treemap</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">treemap</span><span class="p">(</span>
+    <span class="n">df_curr_enrollment</span><span class="p">,</span> <span class="n">path</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;level&#39;</span><span class="p">,</span> <span class="s1">&#39;college&#39;</span><span class="p">],</span> 
+    <span class="n">values</span> <span class="o">=</span> <span class="s1">&#39;Count&#39;</span><span class="p">,</span> <span class="n">branchvalues</span> <span class="o">=</span> <span class="s1">&#39;total&#39;</span><span class="p">,</span>
+<span class="n">title</span> <span class="o">=</span> <span class="s1">&#39;Enrollment by Level and College&#39;</span><span class="p">)</span>
+
+<span class="c1"># In the following wadi() call, setting aspect ratio to 1 makes our</span>
+<span class="c1"># chart square and thus a bitmore compact. (I&#39;ll use this same ratio for </span>
+<span class="c1"># the other treemaps in this script.)</span>
+<span class="n">wadi</span><span class="p">(</span><span class="n">fig_level_college_treemap</span><span class="p">,</span> <span class="s1">&#39;output/treemap_level_college&#39;</span><span class="p">,</span> 
+     <span class="n">height</span> <span class="o">=</span> <span class="mi">500</span><span class="p">,</span> <span class="n">aspect_ratio</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+     <span class="n">display_type</span><span class="o">=</span><span class="n">display_type</span><span class="p">,</span> <span class="n">display_width</span> <span class="o">=</span> <span class="mi">500</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="../_images/29b34d21d64b631f7d800eadb579caa458807a0adf3089f5310198b2c6fda2c5.png"><img alt="../_images/29b34d21d64b631f7d800eadb579caa458807a0adf3089f5310198b2c6fda2c5.png" src="../_images/29b34d21d64b631f7d800eadb579caa458807a0adf3089f5310198b2c6fda2c5.png" style="width: 500px;" /></a>
+</div>
+</div>
+<p>In this treemap, college enrollments are nested within level-wide enrollments. However, as shown below, we can use the ‘college/level’ field within df_curr_enrollment to create an ‘ungrouped’ equivalent of this chart. We’ll color the rectangles within this chart by college to make our output somewhat more intuitive.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig_level_college_treemap_ungrouped</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">treemap</span><span class="p">(</span>
+    <span class="n">df_curr_enrollment</span><span class="p">,</span> <span class="n">path</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;college/level&#39;</span><span class="p">],</span> 
+    <span class="n">values</span> <span class="o">=</span> <span class="s1">&#39;Count&#39;</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;college&#39;</span><span class="p">,</span>
+<span class="n">width</span> <span class="o">=</span> <span class="mi">600</span><span class="p">,</span> <span class="n">height</span> <span class="o">=</span> <span class="mi">600</span><span class="p">,</span> 
+<span class="n">title</span> <span class="o">=</span> <span class="s1">&#39;Enrollment by College and Level&#39;</span><span class="p">)</span>
+<span class="n">wadi</span><span class="p">(</span><span class="n">fig_level_college_treemap_ungrouped</span><span class="p">,</span> 
+     <span class="s1">&#39;output/treemap_level_college_ungrouped&#39;</span><span class="p">,</span>
+     <span class="n">height</span> <span class="o">=</span> <span class="mi">500</span><span class="p">,</span> <span class="n">aspect_ratio</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+     <span class="n">display_type</span><span class="o">=</span><span class="n">display_type</span><span class="p">,</span> <span class="n">display_width</span> <span class="o">=</span> <span class="mi">500</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="../_images/07d01221e673acdee2b06d708a12cb7a670c2d3684eac34bb37f8ec15c5cfeba.png"><img alt="../_images/07d01221e673acdee2b06d708a12cb7a670c2d3684eac34bb37f8ec15c5cfeba.png" src="../_images/07d01221e673acdee2b06d708a12cb7a670c2d3684eac34bb37f8ec15c5cfeba.png" style="width: 500px;" /></a>
+</div>
+</div>
+<p>We can view the relative size of our enrollments for each level a bit more clearly within the following treemap, which groups students by level only.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig_level_treemap</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">treemap</span><span class="p">(</span>
+    <span class="n">df_curr_enrollment</span><span class="p">,</span> <span class="n">path</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;level&#39;</span><span class="p">],</span> 
+    <span class="n">values</span> <span class="o">=</span> <span class="s1">&#39;Count&#39;</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;level&#39;</span><span class="p">,</span>
+<span class="n">title</span> <span class="o">=</span> <span class="s1">&#39;Enrollment by Level&#39;</span><span class="p">)</span>
+<span class="n">wadi</span><span class="p">(</span><span class="n">fig_level_treemap</span><span class="p">,</span> <span class="s1">&#39;output/treemap_level&#39;</span><span class="p">,</span>
+     <span class="n">height</span> <span class="o">=</span> <span class="mi">500</span><span class="p">,</span> <span class="n">aspect_ratio</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+     <span class="n">display_type</span><span class="o">=</span><span class="n">display_type</span><span class="p">,</span> <span class="n">display_width</span> <span class="o">=</span> <span class="mi">500</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="../_images/d597340000ba87ab3f3218fffa76986f9c3c628ad617189797d0a5c0ef077693.png"><img alt="../_images/d597340000ba87ab3f3218fffa76986f9c3c628ad617189797d0a5c0ef077693.png" src="../_images/d597340000ba87ab3f3218fffa76986f9c3c628ad617189797d0a5c0ef077693.png" style="width: 500px;" /></a>
+</div>
+</div>
+<p>Getting data labels inserted into treemaps created with Plotly Express is trickier than it is for bar charts, as there’s no ‘text_auto’ or ‘text’ argument within the <code class="docutils literal notranslate"><span class="pre">px.treemap()</span></code> function. (See <a class="reference external" href="https://plotly.com/python-api-reference/generated/plotly.express.treemap">https://plotly.com/python-api-reference/generated/plotly.express.treemap</a> for reference.)</p>
+<p>If your chart is HTML-based (i.e. interactive), users will still be able to view the actual values corresponding to a rectangle when they hover over it. However, if you need these labels to show up within a static chart, you could create a new field that shows both categories <em>and</em> their values, then pass <em>that</em> field to the <code class="docutils literal notranslate"><span class="pre">path</span></code> argument of <code class="docutils literal notranslate"><span class="pre">px.treemap()</span></code>. The following cells provide an example of this approach.</p>
+<p>First, let’s create a new pivot table that shows enrollment by level–as well as a new field that contains both level names and enrollment totals.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_enrollment_by_level</span> <span class="o">=</span> <span class="n">df_curr_enrollment</span><span class="o">.</span><span class="n">pivot_table</span><span class="p">(</span>
+    <span class="n">index</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;level_for_sorting&#39;</span><span class="p">,</span> <span class="s1">&#39;level&#39;</span><span class="p">],</span> <span class="n">values</span> <span class="o">=</span> <span class="s1">&#39;Count&#39;</span><span class="p">,</span> 
+    <span class="n">aggfunc</span> <span class="o">=</span> <span class="s1">&#39;sum&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span>
+    <span class="n">columns</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Count&#39;</span><span class="p">:</span><span class="s1">&#39;Enrollment&#39;</span><span class="p">,</span> <span class="s1">&#39;level&#39;</span><span class="p">:</span><span class="s1">&#39;Level&#39;</span><span class="p">})</span>
+
+<span class="c1"># Creating a column that contains both enrollment totals by level</span>
+<span class="c1"># and the name of that level: </span>
+<span class="c1"># (These levels will be converted to plural forms by appending &#39;s&#39; to</span>
+<span class="c1"># them. The script will also add in a correction for the plural version</span>
+<span class="c1"># of &#39;freshman.&#39;)</span>
+<span class="n">df_enrollment_by_level</span><span class="p">[</span><span class="s1">&#39;Labeled Enrollment&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+<span class="n">df_enrollment_by_level</span><span class="p">[</span><span class="s1">&#39;Enrollment&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;str&#39;</span><span class="p">)</span> 
+<span class="o">+</span> <span class="s1">&#39; &#39;</span> <span class="o">+</span> <span class="n">df_enrollment_by_level</span><span class="p">[</span><span class="s1">&#39;Level&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;s&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span>
+    <span class="s1">&#39;Freshmans&#39;</span><span class="p">,</span><span class="s1">&#39;Freshmen&#39;</span><span class="p">)</span>
+
+<span class="n">df_enrollment_by_level</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>level_for_sorting</th>
+      <th>Level</th>
+      <th>Enrollment</th>
+      <th>Labeled Enrollment</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0</td>
+      <td>Freshman</td>
+      <td>5443</td>
+      <td>5443 Freshmen</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1</td>
+      <td>Sophomore</td>
+      <td>3999</td>
+      <td>3999 Sophomores</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2</td>
+      <td>Junior</td>
+      <td>3653</td>
+      <td>3653 Juniors</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>3</td>
+      <td>Senior</td>
+      <td>3289</td>
+      <td>3289 Seniors</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Next, we’ll incorporate this ‘Labeled Enrollment’ field into a new treemap:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig_labeled_level_treemap</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">treemap</span><span class="p">(</span>
+    <span class="n">df_enrollment_by_level</span><span class="p">,</span> <span class="n">path</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Labeled Enrollment&#39;</span><span class="p">],</span> 
+    <span class="n">values</span> <span class="o">=</span> <span class="s1">&#39;Enrollment&#39;</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;Level&#39;</span><span class="p">,</span>
+<span class="n">title</span> <span class="o">=</span> <span class="s1">&#39;Enrollment by Level&#39;</span><span class="p">)</span>
+<span class="n">wadi</span><span class="p">(</span><span class="n">fig_labeled_level_treemap</span><span class="p">,</span> <span class="s1">&#39;output/treemap_labeled_levels&#39;</span><span class="p">,</span>
+     <span class="n">height</span> <span class="o">=</span> <span class="mi">500</span><span class="p">,</span> <span class="n">aspect_ratio</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+     <span class="n">display_type</span><span class="o">=</span><span class="n">display_type</span><span class="p">,</span> <span class="n">display_width</span> <span class="o">=</span> <span class="mi">500</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="../_images/59a563ddcc6733cc7bc03c7b9ef3f3a57a289beb049c23526308376c1c197f83.png"><img alt="../_images/59a563ddcc6733cc7bc03c7b9ef3f3a57a289beb049c23526308376c1c197f83.png" src="../_images/59a563ddcc6733cc7bc03c7b9ef3f3a57a289beb049c23526308376c1c197f83.png" style="width: 500px;" /></a>
+</div>
+</div>
+</section>
+<section id="comparing-these-treemaps-to-bar-charts">
+<h2>Comparing these treemaps to bar charts<a class="headerlink" href="#comparing-these-treemaps-to-bar-charts" title="Link to this heading">#</a></h2>
+<p>As Joel Abrams pointed out, you can use bar charts to display totals as well. Let’s create a bar-chart equivalent of our ‘Enrollment by Level and College’ treemap so that you can more easily compare these two visualization types.</p>
+<p>First, we’ll create a pivot table that can serve as the basis for this chart:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_enroll_pivot</span> <span class="o">=</span> <span class="n">df_curr_enrollment</span><span class="o">.</span><span class="n">pivot_table</span><span class="p">(</span>
+    <span class="n">index</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;level_for_sorting&#39;</span><span class="p">,</span> <span class="s1">&#39;level&#39;</span><span class="p">,</span> <span class="s1">&#39;matriculation_year&#39;</span><span class="p">,</span> 
+             <span class="s1">&#39;college&#39;</span><span class="p">],</span> <span class="n">values</span> <span class="o">=</span> <span class="s1">&#39;Count&#39;</span><span class="p">,</span> 
+    <span class="n">aggfunc</span> <span class="o">=</span> <span class="s1">&#39;sum&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+<span class="n">df_enroll_pivot</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;matriculation_year&#39;</span><span class="p">:</span>
+                                   <span class="s1">&#39;Matriculation Year&#39;</span><span class="p">,</span>
+                                   <span class="s1">&#39;college&#39;</span><span class="p">:</span><span class="s1">&#39;College&#39;</span><span class="p">,</span>
+                                   <span class="s1">&#39;Count&#39;</span><span class="p">:</span><span class="s1">&#39;Enrollment&#39;</span><span class="p">,</span>
+                                  <span class="s1">&#39;level&#39;</span><span class="p">:</span><span class="s1">&#39;Level&#39;</span><span class="p">},</span> <span class="n">inplace</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># Converting the Matriculation Year to a string will ensure that these </span>
+<span class="c1"># values, when used as x axis labels within an upcoming line chart,</span>
+<span class="c1"># will appear as distinct items rather than a range. We could also</span>
+<span class="c1"># achieve this outcome after creating a chart by applying</span>
+<span class="c1"># the following code:</span>
+<span class="c1"># fig.update_layout(xaxis_type = &#39;category&#39;)</span>
+
+<span class="n">df_enroll_pivot</span><span class="p">[</span><span class="s1">&#39;Matriculation Year&#39;</span><span class="p">]</span>
+<span class="n">df_enroll_pivot</span><span class="p">[</span><span class="s1">&#39;Matriculation Year&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">df_enroll_pivot</span><span class="p">[</span><span class="s1">&#39;Matriculation Year&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;str&#39;</span><span class="p">))</span>
+<span class="n">df_enroll_pivot</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>level_for_sorting</th>
+      <th>Level</th>
+      <th>Matriculation Year</th>
+      <th>College</th>
+      <th>Enrollment</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0</td>
+      <td>Freshman</td>
+      <td>2023</td>
+      <td>STB</td>
+      <td>1309</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0</td>
+      <td>Freshman</td>
+      <td>2023</td>
+      <td>STC</td>
+      <td>920</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>3</td>
+      <td>Senior</td>
+      <td>2020</td>
+      <td>STL</td>
+      <td>488</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>3</td>
+      <td>Senior</td>
+      <td>2020</td>
+      <td>STM</td>
+      <td>1007</td>
+    </tr>
+  </tbody>
+</table>
+<p>16 rows × 5 columns</p>
+</div></div></div>
+</div>
+<p>Next, we’ll create our bar chart. Note that the output shows the same values as our earlier ‘Enrollment by Level and College’ treemap; these values are simply arranged differently.</p>
+<p>To be honest, I <em>do</em> prefer this bar chart over its corresponding treemap in this case, as it does a better job of highlighting the differences in enrollment totals between each level.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig_enroll_bar</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span>
+    <span class="n">df_enroll_pivot</span><span class="p">,</span> 
+        <span class="n">x</span> <span class="o">=</span> <span class="s1">&#39;Level&#39;</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="s1">&#39;Enrollment&#39;</span><span class="p">,</span> 
+       <span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;College&#39;</span><span class="p">,</span> <span class="n">text_auto</span> <span class="o">=</span> <span class="s1">&#39;.0f&#39;</span><span class="p">,</span>
+<span class="n">title</span> <span class="o">=</span> <span class="s1">&#39;Enrollment by Level and College&#39;</span><span class="p">)</span>
+<span class="n">wadi</span><span class="p">(</span><span class="n">fig_enroll_bar</span><span class="p">,</span> <span class="s1">&#39;output/enroll_bar&#39;</span><span class="p">,</span> <span class="n">display_type</span><span class="o">=</span><span class="n">display_type</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="../_images/9fd347f19a55723c99e6a2a8167336b2ef2d15bc7a778353704a9e2f2a24314c.png"><img alt="../_images/9fd347f19a55723c99e6a2a8167336b2ef2d15bc7a778353704a9e2f2a24314c.png" src="../_images/9fd347f19a55723c99e6a2a8167336b2ef2d15bc7a778353704a9e2f2a24314c.png" style="width: 720px;" /></a>
+</div>
+</div>
+<p>If we replace Level as our x-axis value with Matriculation Year, we can also create a line graph that indicates how freshman enrollment at each college has grown over time. (Most of the seniors in our current enrollment dataset matriculated in 2020, and would thus be considered freshmen in that year; juniors matriculated in 2021; sophomores matriculated in 2022; and freshmen matriculated in 2023.)</p>
+<p>*<em>(I say ‘indicates’ here because we’re working off a <em>current</em> enrollment dataset that does not take transfers or attrition into account; if NVCU had lots of attrition for a given year, or many transfers, this chart would thus underestimate or overestimate freshman enrollment for that year, respectively.)</em></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig_enroll_line</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">line</span><span class="p">(</span><span class="n">df_enroll_pivot</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;Matriculation Year&#39;</span><span class="p">),</span> 
+        <span class="n">x</span> <span class="o">=</span> <span class="s1">&#39;Matriculation Year&#39;</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="s1">&#39;Enrollment&#39;</span><span class="p">,</span>
+       <span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;College&#39;</span><span class="p">,</span>
+       <span class="n">title</span> <span class="o">=</span> <span class="s1">&#39;Enrollment by Matriculation Year and College&#39;</span><span class="p">,</span>
+                          <span class="n">markers</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+<span class="n">wadi</span><span class="p">(</span><span class="n">fig_enroll_line</span><span class="p">,</span> <span class="s1">&#39;output/enroll_line&#39;</span><span class="p">,</span> <span class="n">display_type</span><span class="o">=</span><span class="n">display_type</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="../_images/89fcd3ec1503ce47959def6638897e95e66e44952b562a2e095325bca2240862.png"><img alt="../_images/89fcd3ec1503ce47959def6638897e95e66e44952b562a2e095325bca2240862.png" src="../_images/89fcd3ec1503ce47959def6638897e95e66e44952b562a2e095325bca2240862.png" style="width: 720px;" /></a>
+</div>
+</div>
+<p>This chart shows some intriguing patterns. First, it’s evident that freshman enrollment has grown over time (barring the caveats about this dataset that I explained earlier). However, this growth is not uniform across colleges: while STL has had particularly strong growth in freshman enrollment, STC’s numbers are actually lower now than they were back in 2020.</p>
+<p>That does it for the first part of the Graphing section. In the next notebook, you’ll learn how to speed up the process of creating pivot tables and charts–a skill that will prove useful when we begin creating interactive online visualizations.</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./Graphing"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../Book_Specific_Materials/census_import_scripts_py_nb.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">census_import_scripts.py</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="pivot_and_graph_functions.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Pivot and Graph Functions</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Creating Interactive and Static Charts with Plotly</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-bar-graphs">Creating bar graphs</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#simple-bar-graphs">Simple bar graphs</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#importing-a-function-to-simplify-the-process-of-saving-and-displaying-charts">Importing a function to simplify the process of saving and displaying charts</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#more-detailed-bar-graphs">More detailed bar graphs</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sorting-dataframes-using-a-custom-key">Sorting DataFrames using a custom key</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#graphing-wide-data">Graphing wide data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bar-charts-with-3-or-more-variables">Bar charts with 3 or more variables</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#graphing-results-by-college-level-and-season">Graphing results by college, level, and season:</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-line-graphs">Creating line graphs</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#representing-multiple-variables-within-line-charts">Representing multiple variables within line charts</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#adding-labels-to-points">Adding labels to points</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#scatter-plots">Scatter plots</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#histograms">Histograms</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#treemaps">Treemaps</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#comparing-these-treemaps-to-bar-charts">Comparing these treemaps to bar charts</a></li>
+</ul>
+</li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Kenneth Burchfiel
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

@@ -1,0 +1,1135 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Updating Online Spreadsheets &#8212; Python for Nonprofits</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Updating_Online_Spreadsheets/updating_online_spreadsheets';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="weather_import.py" href="../Book_Specific_Materials/weather_import_py_nb.html" />
+    <link rel="prev" title="Creating a Simple Static Webpage" href="../Static_Sites/simple_static_site.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../front_matter_for_book.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Python for Nonprofits</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../front_matter_for_book.html">
+                    Wecome to Python for Nonprofits!
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Introduction</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Introduction/introduction.html">An Introduction to Python for Nonprofits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Introduction/the_case_for_python_at_nonprofits.html">The Case for Using Python at Nonprofits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Book_Specific_Materials/getting_started_for_book.html">Getting Started</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Importing and Prepping Data</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Data_Retrieval/data_retrieval.html">Data Retrieval</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Data_Prep/data_prep.html">Data Prep</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Analyzing Data</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Descriptive_Stats/descriptive_stats.html">Descriptive Stats</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Descriptive_Stats/descriptive_stats_part_2.html">Descriptive Stats: Part 2</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Census_Data_Imports/census_data_imports.html">Census Data Imports</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Book_Specific_Materials/census_import_scripts_py_nb.html">census_import_scripts.py</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Visualizing Data</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Graphing/graphing.html">Creating Interactive and Static Charts with Plotly</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../Graphing/pivot_and_graph_functions.html">Pivot and Graph Functions</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Mapping/choropleth_maps.html">Mapping Census Data using Plotly (Work in progress)</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Book_Specific_Materials/plotly_choropleth_map_functions_py_nb.html">plotly_choropleth_map_functions.py</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Mapping/choropleth_maps_with_folium.html">Creating Choropleth Maps with Folium</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Book_Specific_Materials/folium_choropleth_map_functions_py_nb.html">folium_choropleth_map_functions.py</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Regressions</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Regressions/regression_analyses.html">Regression Analyses</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Publishing Analyses Online</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Static_Sites/simple_static_site.html">Creating a Simple Static Webpage</a></li>
+<li class="toctree-l1 current active has-children"><a class="current reference internal" href="#">Updating Online Spreadsheets</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Book_Specific_Materials/weather_import_py_nb.html">weather_import.py</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Online_Visualizations/Simple_App_Without_Login/readme.html">Simple Dash App Without Login</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Book_Specific_Materials/Simple_App_Without_Login_py_nb.html">Source code for Simple App Without Login</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Online_Visualizations/PFN_Dash_App_Demo/readme.html">PFN Dash App Demo</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Book_Specific_Materials/PFN_Dash_App_Demo_py_nb.html">Source code for PFN Dash App Demo</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendix</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Appendix/nvcu_db_gen.html">NVCU Database Generator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Book_Specific_Materials/helper_funcs_py_nb.html">helper_funcs.py</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/Updating_Online_Spreadsheets/updating_online_spreadsheets.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Updating Online Spreadsheets</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prerequisites">Prerequisites</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#importing-weather-data">Importing weather data</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#importing-weather-data-for-charlottesville">Importing weather data for Charlottesville</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#importing-weather-data-for-dulles-international-airport">Importing weather data for Dulles International Airport</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#importing-weather-data-for-winchester">Importing weather data for Winchester</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reading-these-datasets-into-dataframes">Reading these datasets into DataFrames</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#importing-these-dataframes-into-a-google-sheets-workbook">Importing these DataFrames into a Google Sheets workbook</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#performing-the-same-data-export-steps-for-kiad-and-kokv-data">Performing the same data export steps for KIAD and KOKV data</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#appendix-a-shell-script-and-crontab-entry-for-running-this-notebook-automatically">Appendix: A shell script and crontab entry for running this notebook automatically</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="updating-online-spreadsheets">
+<h1>Updating Online Spreadsheets<a class="headerlink" href="#updating-online-spreadsheets" title="Link to this heading">#</a></h1>
+<p>This script will demonstrate how to upload the contents of a DataFrame into a Google Sheets file using Python’s <code class="docutils literal notranslate"><span class="pre">gspread</span></code> and <code class="docutils literal notranslate"><span class="pre">gspread-dataframe</span></code> libraries. This is a convenient option for sharing your output with others, especially if you need to update that output on a regular basis.</p>
+<p>The Google Sheets worksheet that this script will update can be found at <a class="reference external" href="https://docs.google.com/spreadsheets/d/17aDJ3mg49-n0IEnDgN7ZB85pO87fiUpkZPULYDB8dmo/edit?usp=sharing">https://docs.google.com/spreadsheets/d/17aDJ3mg49-n0IEnDgN7ZB85pO87fiUpkZPULYDB8dmo/edit?usp=sharing</a> .</p>
+<p>Since the NWS weather data accessed by this script generally gets updated on an hourly basis, it makes sense to have this script run automatically every hour. That way, your Google Sheets data, along with your local .csv copies of historical weather data, will always be relatively up to date. To automate this script, I recommend saving it as a .py file (which is easy to do within JupyterLab Desktop); setting up a script that will run this file; and then having your computer run this script on an hourly basis. (More information on accomplishing these steps within Linux can be found at the end of this notebook.)</p>
+<section id="prerequisites">
+<h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Link to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p>Python’s gspread library provides a very helpful overview of connecting to Google Sheets workbooks via a service account at <a class="reference external" href="https://docs.gspread.org/en/latest/oauth2.html#for-bots-using-service-account">https://docs.gspread.org/en/latest/oauth2.html#for-bots-using-service-account</a> . (There are multiple ways to connect to workbooks, but I find the service account approach to be pretty straightforward.) Go ahead and complete these steps if you haven’t already. (Note: I chose to save my service account key to a custom path rather than the default one specified in the documentation; that way, I could more easily work with multiple account keys on my computer.) Also make sure that, prior to enabling the Google Sheets and Google Drive APIs, the Google Cloud project that you want to use for this script has been selected.</p></li>
+<li><p>If you also specified a custom path, you’ll need to create a file called ‘service_key_path.txt’ within this folder that points to it. That way, the following cell will be able to read in its location for use within gspread functions. (Alternatively, you could simply replace the following cell’s code with <code class="docutils literal notranslate"><span class="pre">service_key_path</span> <span class="pre">=</span> <span class="pre">(path_to_your_key)</span></code>. Or, if you’re using the default key location, you can comment out this cell altogether.)</p></li>
+<li><p>As noted in the gspread service account documentation, you’ll need to give the email associated with your service account editor access to the Google Sheets workbook that you’d like your script to update. (This email is <em>not</em> the same as your regular Google Email; it will likely look something like <a class="reference external" href="mailto:accountname&#37;&#52;&#48;cloudprojectname&#46;iam&#46;gserviceaccount&#46;com">accountname<span>&#64;</span>cloudprojectname<span>&#46;</span>iam<span>&#46;</span>gserviceaccount<span>&#46;</span>com</a>. You can find it within your service account file.</p></li>
+</ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;../Appendix&#39;</span><span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">helper_funcs</span><span class="w"> </span><span class="kn">import</span> <span class="n">config_notebook</span><span class="p">,</span> <span class="n">wadi</span>
+<span class="n">display_type</span> <span class="o">=</span> <span class="n">config_notebook</span><span class="p">(</span><span class="n">display_max_columns</span> <span class="o">=</span> <span class="mi">5</span><span class="p">)</span>
+<span class="c1"># Specifying which columns to render within the output:</span>
+<span class="n">display_cols</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Station&#39;</span><span class="p">,</span> <span class="s1">&#39;Date/Time&#39;</span><span class="p">,</span> <span class="s1">&#39;Temp&#39;</span><span class="p">,</span> 
+                <span class="s1">&#39;1-Hour Precip&#39;</span><span class="p">,</span> <span class="s1">&#39;Rolling 24-Hour Precip&#39;</span><span class="p">]</span>
+
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;service_key_path.txt&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+    <span class="n">service_key_path</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">gspread</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">gspread_dataframe</span><span class="w"> </span><span class="kn">import</span> <span class="n">set_with_dataframe</span><span class="p">,</span> <span class="n">get_as_dataframe</span>
+<span class="c1"># From https://pypi.org/project/gspread-dataframe/</span>
+<span class="c1"># gspread_dataframe isn&#39;t available within conda-forge as of 2025-02-20;</span>
+<span class="c1"># therefore, you&#39;ll need to install it via the following pip command:</span>
+<span class="c1"># pip install gspread-dataframe</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>(If you’re using gspread’s default path, you can comment out the first line and then uncomment the following one.)</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">gc</span> <span class="o">=</span> <span class="n">gspread</span><span class="o">.</span><span class="n">service_account</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="n">service_key_path</span><span class="p">)</span>
+
+<span class="c1"># gc = gspread.service_account()</span>
+
+<span class="c1"># (This code comes from</span>
+<span class="c1"># # From https://docs.gspread.org/en/latest/index.html)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Importing additional libraries:</p>
+<p>(Note: the weather_import.py file imported below derives from recent_weather_data.ipynb within the Automated_Notebooks section of Python for Nonprofits.)</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">weather_import</span><span class="w"> </span><span class="kn">import</span> <span class="n">weather_import</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="importing-weather-data">
+<h2>Importing weather data<a class="headerlink" href="#importing-weather-data" title="Link to this heading">#</a></h2>
+<p>The following cells will import weather data for three Virginia weather stations; combine it with pre-existing data; and then save a revised copy of this table to a .csv file.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data_folder</span> <span class="o">=</span> <span class="s1">&#39;weather_data&#39;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="importing-weather-data-for-charlottesville">
+<h3>Importing weather data for Charlottesville<a class="headerlink" href="#importing-weather-data-for-charlottesville" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Downloading KCHO data.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Downloading KCHO data.
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">weather_import</span><span class="p">(</span>
+    <span class="n">station_code</span> <span class="o">=</span> <span class="s1">&#39;KCHO&#39;</span><span class="p">,</span>
+    <span class="n">data_folder</span> <span class="o">=</span> <span class="n">data_folder</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Original length of historical data file: 3040
+New length of historical data file: 3040
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="importing-weather-data-for-dulles-international-airport">
+<h3>Importing weather data for Dulles International Airport<a class="headerlink" href="#importing-weather-data-for-dulles-international-airport" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Downloading KIAD data.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Downloading KIAD data.
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">weather_import</span><span class="p">(</span>
+    <span class="n">station_code</span> <span class="o">=</span> <span class="s1">&#39;KIAD&#39;</span><span class="p">,</span>
+    <span class="n">data_folder</span> <span class="o">=</span> <span class="n">data_folder</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Original length of historical data file: 2619
+New length of historical data file: 2619
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="importing-weather-data-for-winchester">
+<h3>Importing weather data for Winchester<a class="headerlink" href="#importing-weather-data-for-winchester" title="Link to this heading">#</a></h3>
+<p>(This data appears to be recorded at 20-minute intervals rather than hourly ones.)</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Downloading KOKV data.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Downloading KOKV data.
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">test_df</span> <span class="o">=</span> <span class="n">weather_import</span><span class="p">(</span>
+    <span class="n">station_code</span> <span class="o">=</span> <span class="s1">&#39;KOKV&#39;</span><span class="p">,</span>
+    <span class="n">data_folder</span> <span class="o">=</span> <span class="n">data_folder</span><span class="p">)</span>
+<span class="n">test_df</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Original length of historical data file: 2596
+New length of historical data file: 2597
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="reading-these-datasets-into-dataframes">
+<h2>Reading these datasets into DataFrames<a class="headerlink" href="#reading-these-datasets-into-dataframes" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_weather_kcho</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span>
+    <span class="n">data_folder</span><span class="o">+</span><span class="s1">&#39;/&#39;</span><span class="o">+</span><span class="s1">&#39;KCHO&#39;</span><span class="o">+</span><span class="s1">&#39;_&#39;</span>
+    <span class="o">+</span><span class="s1">&#39;historical_hourly_data_updated.csv&#39;</span><span class="p">)</span>
+<span class="n">df_weather_kcho</span><span class="p">[</span><span class="n">display_cols</span><span class="p">]</span><span class="o">.</span><span class="n">tail</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Station</th>
+      <th>Date/Time</th>
+      <th>Temp</th>
+      <th>1-Hour Precip</th>
+      <th>Rolling 24-Hour Precip</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>3035</th>
+      <td>KCHO</td>
+      <td>2025-03-17 18:53</td>
+      <td>50.0</td>
+      <td>0.0</td>
+      <td>0.16</td>
+    </tr>
+    <tr>
+      <th>3036</th>
+      <td>KCHO</td>
+      <td>2025-03-17 19:53</td>
+      <td>48.9</td>
+      <td>0.0</td>
+      <td>0.16</td>
+    </tr>
+    <tr>
+      <th>3037</th>
+      <td>KCHO</td>
+      <td>2025-03-17 20:53</td>
+      <td>46.9</td>
+      <td>0.0</td>
+      <td>0.16</td>
+    </tr>
+    <tr>
+      <th>3038</th>
+      <td>KCHO</td>
+      <td>2025-03-17 21:53</td>
+      <td>46.0</td>
+      <td>0.0</td>
+      <td>0.10</td>
+    </tr>
+    <tr>
+      <th>3039</th>
+      <td>KCHO</td>
+      <td>2025-03-17 22:53</td>
+      <td>46.0</td>
+      <td>0.0</td>
+      <td>0.00</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_weather_kiad</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span>
+    <span class="n">data_folder</span><span class="o">+</span><span class="s1">&#39;/&#39;</span><span class="o">+</span><span class="s1">&#39;KIAD&#39;</span><span class="o">+</span><span class="s1">&#39;_&#39;</span>
+    <span class="o">+</span><span class="s1">&#39;historical_hourly_data_updated.csv&#39;</span><span class="p">)</span>
+<span class="n">df_weather_kiad</span><span class="p">[</span><span class="n">display_cols</span><span class="p">]</span><span class="o">.</span><span class="n">tail</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Station</th>
+      <th>Date/Time</th>
+      <th>Temp</th>
+      <th>1-Hour Precip</th>
+      <th>Rolling 24-Hour Precip</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2614</th>
+      <td>KIAD</td>
+      <td>2025-03-17 17:52</td>
+      <td>50.0</td>
+      <td>0.0</td>
+      <td>0.15</td>
+    </tr>
+    <tr>
+      <th>2615</th>
+      <td>KIAD</td>
+      <td>2025-03-17 18:52</td>
+      <td>46.9</td>
+      <td>0.0</td>
+      <td>0.15</td>
+    </tr>
+    <tr>
+      <th>2616</th>
+      <td>KIAD</td>
+      <td>2025-03-17 19:52</td>
+      <td>45.0</td>
+      <td>0.0</td>
+      <td>0.15</td>
+    </tr>
+    <tr>
+      <th>2617</th>
+      <td>KIAD</td>
+      <td>2025-03-17 20:52</td>
+      <td>44.1</td>
+      <td>0.0</td>
+      <td>0.15</td>
+    </tr>
+    <tr>
+      <th>2618</th>
+      <td>KIAD</td>
+      <td>2025-03-17 22:52</td>
+      <td>41.0</td>
+      <td>0.0</td>
+      <td>0.15</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_weather_kokv</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span>
+    <span class="n">data_folder</span><span class="o">+</span><span class="s1">&#39;/&#39;</span><span class="o">+</span><span class="s1">&#39;KOKV&#39;</span><span class="o">+</span><span class="s1">&#39;_&#39;</span>
+    <span class="o">+</span><span class="s1">&#39;historical_hourly_data_updated.csv&#39;</span><span class="p">)</span>
+<span class="n">df_weather_kokv</span><span class="p">[</span><span class="n">display_cols</span><span class="p">]</span><span class="o">.</span><span class="n">tail</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Station</th>
+      <th>Date/Time</th>
+      <th>Temp</th>
+      <th>1-Hour Precip</th>
+      <th>Rolling 24-Hour Precip</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2592</th>
+      <td>KOKV</td>
+      <td>2025-03-17 19:55</td>
+      <td>41.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>2593</th>
+      <td>KOKV</td>
+      <td>2025-03-17 20:55</td>
+      <td>39.2</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>2594</th>
+      <td>KOKV</td>
+      <td>2025-03-17 21:55</td>
+      <td>37.4</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>2595</th>
+      <td>KOKV</td>
+      <td>2025-03-17 22:55</td>
+      <td>37.4</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>2596</th>
+      <td>KOKV</td>
+      <td>2025-03-17 23:15</td>
+      <td>35.6</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="importing-these-dataframes-into-a-google-sheets-workbook">
+<h2>Importing these DataFrames into a Google Sheets workbook<a class="headerlink" href="#importing-these-dataframes-into-a-google-sheets-workbook" title="Link to this heading">#</a></h2>
+<p>In order to export these datasets to a Google Sheets workbook, we’ll first need to open that workbook with gspread. There are a few ways to do this (see <a class="reference external" href="https://docs.gspread.org/en/latest/user-guide.html#opening-a-spreadsheet">https://docs.gspread.org/en/latest/user-guide.html#opening-a-spreadsheet</a> for reference), but I like the <code class="docutils literal notranslate"><span class="pre">open_by_key()</span></code> option, which allows you–as the function’s name suggests–to open a workbook using its key.</p>
+<p>These keys are located within the center of each workbook URL. For instance, the full URL of the workbook I’ll be updating is <code class="docutils literal notranslate"><span class="pre">https://docs.google.com/spreadsheets/d/17aDJ3mg49-n0IEnDgN7ZB85pO87fiUpkZPULYDB8dmo/edit?usp=sharing</span></code>, so the key–located in between the <code class="docutils literal notranslate"><span class="pre">/d/</span></code> component of that URL and the following <code class="docutils literal notranslate"><span class="pre">/</span></code>–is <code class="docutils literal notranslate"><span class="pre">17aDJ3mg49-n0IEnDgN7ZB85pO87fiUpkZPULYDB8dmo</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wb</span> <span class="o">=</span> <span class="n">gc</span><span class="o">.</span><span class="n">open_by_key</span><span class="p">(</span><span class="s1">&#39;17aDJ3mg49-n0IEnDgN7ZB85pO87fiUpkZPULYDB8dmo&#39;</span><span class="p">)</span>
+<span class="c1"># Based on </span>
+<span class="c1"># https://docs.gspread.org/en/latest/user-guide.html#opening-a-spreadsheet</span>
+<span class="n">wb</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Spreadsheet &#39;Hourly VA Weather Data&#39; id:17aDJ3mg49-n0IEnDgN7ZB85pO87fiUpkZPULYDB8dmo&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<p>Next, I’ll select the ‘KCHO’ worksheet within this workbook, as that’s the first one I’d like to update. I’ll also clear out the current contents using <code class="docutils literal notranslate"><span class="pre">ws.clear()</span></code>; that way, only the latest DataFrame contents will appear within the spreadsheet after I call <code class="docutils literal notranslate"><span class="pre">set_with_dataframe</span></code> below. (If the most recent DataFrame is smaller than the previous version, parts of the previous one would still appear unless <code class="docutils literal notranslate"><span class="pre">ws.clear()</span></code> is called.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ws</span> <span class="o">=</span> <span class="n">wb</span><span class="o">.</span><span class="n">worksheet</span><span class="p">(</span><span class="s1">&#39;KCHO&#39;</span><span class="p">)</span>
+<span class="c1"># https://docs.gspread.org/en/latest/user-guide.html#opening-a-spreadsheet</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ws</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span> 
+<span class="n">ws</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Worksheet &#39;KCHO&#39; id:0&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<p>Finally, I’ll call <code class="docutils literal notranslate"><span class="pre">set_with_dataframe</span></code> to export this DataFrame to df_weather.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Only the most recent 960 rows (representing 40 days&#39; worth of data if</span>
+<span class="c1"># no entries were missing) will get exported to Google Sheets. This will</span>
+<span class="c1"># limit the time (and potentially money) needed to import this data</span>
+<span class="c1"># into a Dash app (https://github.com/kburchfiel/pfn/tree/</span>
+<span class="c1"># main/Online_Visualizations/Simple_App_Without_Login)</span>
+<span class="c1"># that utilizes it.</span>
+<span class="n">set_with_dataframe</span><span class="p">(</span><span class="n">ws</span><span class="p">,</span> <span class="n">df_weather_kcho</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="o">-</span><span class="mi">960</span><span class="p">:])</span>
+<span class="c1"># Source: https://pypi.org/project/gspread-dataframe/</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>In order to confirm that this upload was successful, we can call <code class="docutils literal notranslate"><span class="pre">get_as_dataframe</span></code> to import the contents of the worksheet into a new DataFrame:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_weather_from_ws</span> <span class="o">=</span> <span class="n">get_as_dataframe</span><span class="p">(</span><span class="n">ws</span><span class="p">)</span>
+<span class="n">df_weather_from_ws</span><span class="p">[</span><span class="n">display_cols</span><span class="p">]</span><span class="o">.</span><span class="n">tail</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Station</th>
+      <th>Date/Time</th>
+      <th>Temp</th>
+      <th>1-Hour Precip</th>
+      <th>Rolling 24-Hour Precip</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>955</th>
+      <td>KCHO</td>
+      <td>2025-03-17 18:53</td>
+      <td>50.0</td>
+      <td>0.0</td>
+      <td>0.16</td>
+    </tr>
+    <tr>
+      <th>956</th>
+      <td>KCHO</td>
+      <td>2025-03-17 19:53</td>
+      <td>48.9</td>
+      <td>0.0</td>
+      <td>0.16</td>
+    </tr>
+    <tr>
+      <th>957</th>
+      <td>KCHO</td>
+      <td>2025-03-17 20:53</td>
+      <td>46.9</td>
+      <td>0.0</td>
+      <td>0.16</td>
+    </tr>
+    <tr>
+      <th>958</th>
+      <td>KCHO</td>
+      <td>2025-03-17 21:53</td>
+      <td>46.0</td>
+      <td>0.0</td>
+      <td>0.10</td>
+    </tr>
+    <tr>
+      <th>959</th>
+      <td>KCHO</td>
+      <td>2025-03-17 22:53</td>
+      <td>46.0</td>
+      <td>0.0</td>
+      <td>0.00</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<section id="performing-the-same-data-export-steps-for-kiad-and-kokv-data">
+<h3>Performing the same data export steps for KIAD and KOKV data<a class="headerlink" href="#performing-the-same-data-export-steps-for-kiad-and-kokv-data" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ws</span> <span class="o">=</span> <span class="n">wb</span><span class="o">.</span><span class="n">worksheet</span><span class="p">(</span><span class="s1">&#39;KIAD&#39;</span><span class="p">)</span>
+<span class="n">ws</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span> 
+<span class="n">set_with_dataframe</span><span class="p">(</span><span class="n">ws</span><span class="p">,</span> <span class="n">df_weather_kiad</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="o">-</span><span class="mi">960</span><span class="p">:])</span>
+
+<span class="n">ws</span> <span class="o">=</span> <span class="n">wb</span><span class="o">.</span><span class="n">worksheet</span><span class="p">(</span><span class="s1">&#39;KOKV&#39;</span><span class="p">)</span>
+<span class="n">ws</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span> 
+<span class="n">set_with_dataframe</span><span class="p">(</span><span class="n">ws</span><span class="p">,</span> <span class="n">df_weather_kokv</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="o">-</span><span class="mi">960</span><span class="p">:])</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="appendix-a-shell-script-and-crontab-entry-for-running-this-notebook-automatically">
+<h2>Appendix: A shell script and crontab entry for running this notebook automatically<a class="headerlink" href="#appendix-a-shell-script-and-crontab-entry-for-running-this-notebook-automatically" title="Link to this heading">#</a></h2>
+<p>(These steps were written for Linux environments, but Windows also supports automated script operation; you’d just need to write a batch script rather than a shell script and use Windows Task Scheduler instead of your cron editor.)</p>
+<p>Your computer is more than happy to run a .py equivalent of this script, rain or shine, every hour of the day (as long as it’s powered on, of course). How can you tell it to do so? First, you’ll need to create a shell script that activates your Python environment; navigates to the folder containing the .py version of this notebook*; and then runs that file.</p>
+<p>Here’s what this script looks like on my computer: (I gave it the imaginative name <em>online_spreadsheet_update.sh.</em>)</p>
+<p>* <em>(To create a .py version of this notebook, open it within JupyterLab Desktop; navigate to File –&gt; Save and Export Notebook As –&gt; Executable Script; and then save it (preferably within the same folder as updating_online_spreadsheets.ipynb) as updating_online_spreadsheets.py. You could also just run the .ipynb file directly if you’d prefer; see the comments within the following script for more details.)</em></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
+
+<span class="c1"># It appears that the line above needs to be the first entry within this script.</span>
+
+<span class="c1"># For a discussion of the above line,</span>
+<span class="c1"># see: https://stackoverflow.com/questions/8967902/why-do-you-need-to-put-bin-bash-st-the-beginning-of-a-script-file</span>
+
+<span class="n">echo</span> <span class="s2">&quot;Activating Python environment:&quot;</span>
+
+<span class="c1"># Activating my custom Python for Nonprofits environment:</span>
+<span class="c1"># (You may be able to delete the following two lines if you&#39;re planning</span>
+<span class="c1"># to execute the notebook within your base environment.)</span>
+<span class="c1"># These lines are based on Lamma&#39;s post at:</span>
+<span class="c1"># https://stackoverflow.com/a/60523131/13097194</span>
+
+<span class="n">source</span> <span class="o">~/</span><span class="n">miniforge3</span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">profile</span><span class="o">.</span><span class="n">d</span><span class="o">/</span><span class="n">conda</span><span class="o">.</span><span class="n">sh</span>
+<span class="n">conda</span> <span class="n">activate</span> <span class="n">kjb3server</span>
+
+<span class="c1"># Navigating to the folder that hosts this script:</span>
+
+<span class="n">cd</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">kjb3lxms</span><span class="o">/</span><span class="n">kjb3python</span><span class="o">/</span><span class="n">Updating_Online_Spreadsheets</span>
+
+<span class="c1"># Executing the Python script:</span>
+
+<span class="n">python</span> <span class="n">updating_online_spreadsheets</span><span class="o">.</span><span class="n">py</span>
+
+<span class="c1"># To instead execute the original Jupyter notebook, run:</span>
+<span class="c1"># ipython updating_online_spreadsheets.ipynb</span>
+
+<span class="n">echo</span> <span class="s2">&quot;Finished running script.&quot;</span>
+<span class="n">sleep</span> <span class="mi">2</span>
+</pre></div>
+</div>
+<p>In order to instruct your computer to run this script 10 minutes after each hour, you can then run <code class="docutils literal notranslate"><span class="pre">crontab</span> <span class="pre">-e</span></code> within your terminal and paste the following line at the bottom of the page: (You’ll of course need to replace my path with your own path to this file.)</p>
+<p><em>(If you’re new to crontabs, make sure to review the documentation that appears at the top of your crontab file. Also, if you’re working within the Nano editor, make sure to hit Ctrl + X to exit out of the editor after your updates have been saved; if you instead close the window, your changes won’t be saved.)</em></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">10</span> <span class="o">*</span> <span class="o">*</span> <span class="o">*</span> <span class="o">*</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">kjb3lxms</span><span class="o">/</span><span class="n">kjb3python</span><span class="o">/</span><span class="n">Updating_Online_Spreadsheets</span><span class="o">/</span><span class="n">online_spreadsheet_update</span><span class="o">.</span><span class="n">sh</span>
+</pre></div>
+</div>
+</section>
+<div class="toctree-wrapper compound">
+</div>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./Updating_Online_Spreadsheets"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../Static_Sites/simple_static_site.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Creating a Simple Static Webpage</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../Book_Specific_Materials/weather_import_py_nb.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">weather_import.py</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prerequisites">Prerequisites</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#importing-weather-data">Importing weather data</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#importing-weather-data-for-charlottesville">Importing weather data for Charlottesville</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#importing-weather-data-for-dulles-international-airport">Importing weather data for Dulles International Airport</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#importing-weather-data-for-winchester">Importing weather data for Winchester</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reading-these-datasets-into-dataframes">Reading these datasets into DataFrames</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#importing-these-dataframes-into-a-google-sheets-workbook">Importing these DataFrames into a Google Sheets workbook</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#performing-the-same-data-export-steps-for-kiad-and-kokv-data">Performing the same data export steps for KIAD and KOKV data</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#appendix-a-shell-script-and-crontab-entry-for-running-this-notebook-automatically">Appendix: A shell script and crontab entry for running this notebook automatically</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Kenneth Burchfiel
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

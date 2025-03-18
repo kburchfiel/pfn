@@ -1,0 +1,2266 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Descriptive Stats: Part 2 &#8212; Python for Nonprofits</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Descriptive_Stats/descriptive_stats_part_2';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Census Data Imports" href="../Census_Data_Imports/census_data_imports.html" />
+    <link rel="prev" title="Descriptive Stats" href="descriptive_stats.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../front_matter_for_book.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Python for Nonprofits</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../front_matter_for_book.html">
+                    Wecome to Python for Nonprofits!
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Introduction</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Introduction/introduction.html">An Introduction to Python for Nonprofits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Introduction/the_case_for_python_at_nonprofits.html">The Case for Using Python at Nonprofits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Book_Specific_Materials/getting_started_for_book.html">Getting Started</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Importing and Prepping Data</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Data_Retrieval/data_retrieval.html">Data Retrieval</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Data_Prep/data_prep.html">Data Prep</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Analyzing Data</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="descriptive_stats.html">Descriptive Stats</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Descriptive Stats: Part 2</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Census_Data_Imports/census_data_imports.html">Census Data Imports</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Book_Specific_Materials/census_import_scripts_py_nb.html">census_import_scripts.py</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Visualizing Data</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Graphing/graphing.html">Creating Interactive and Static Charts with Plotly</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../Graphing/pivot_and_graph_functions.html">Pivot and Graph Functions</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Mapping/choropleth_maps.html">Mapping Census Data using Plotly (Work in progress)</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Book_Specific_Materials/plotly_choropleth_map_functions_py_nb.html">plotly_choropleth_map_functions.py</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Mapping/choropleth_maps_with_folium.html">Creating Choropleth Maps with Folium</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Book_Specific_Materials/folium_choropleth_map_functions_py_nb.html">folium_choropleth_map_functions.py</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Regressions</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Regressions/regression_analyses.html">Regression Analyses</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Publishing Analyses Online</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Static_Sites/simple_static_site.html">Creating a Simple Static Webpage</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Updating_Online_Spreadsheets/updating_online_spreadsheets.html">Updating Online Spreadsheets</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Book_Specific_Materials/weather_import_py_nb.html">weather_import.py</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Online_Visualizations/Simple_App_Without_Login/readme.html">Simple Dash App Without Login</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Book_Specific_Materials/Simple_App_Without_Login_py_nb.html">Source code for Simple App Without Login</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Online_Visualizations/PFN_Dash_App_Demo/readme.html">PFN Dash App Demo</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Book_Specific_Materials/PFN_Dash_App_Demo_py_nb.html">Source code for PFN Dash App Demo</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendix</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Appendix/nvcu_db_gen.html">NVCU Database Generator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Book_Specific_Materials/helper_funcs_py_nb.html">helper_funcs.py</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/Descriptive_Stats/descriptive_stats_part_2.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Descriptive Stats: Part 2</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#microdata-pre-baked-data-and-the-average-of-averages-problem">Microdata, pre-baked data, and the ‘average of averages’ problem</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#handling-missing-data-when-creating-pivot-tables">Handling missing data when creating pivot tables</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-advantages-of-map-and-np-select-over-np-where-when-missing-data-are-present">The advantages of map() and np.select() over np.where() when missing data are present</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="descriptive-stats-part-2">
+<h1>Descriptive Stats: Part 2<a class="headerlink" href="#descriptive-stats-part-2" title="Link to this heading">#</a></h1>
+<p>By Kenneth Burchfiel</p>
+<p>Released under the MIT license</p>
+<p>This second part of Python for Nonprofits’ descriptive stats section covers several potential data analysis pitfalls. Specifically, it will explore:</p>
+<ol class="arabic simple">
+<li><p>Challenges with finding average values for tables whose rows are themselves averages</p></li>
+<li><p>Methods of accounting for missing data when creating pivot tables</p></li>
+<li><p>Issues with using <code class="docutils literal notranslate"><span class="pre">np.where()</span></code> to create derivatives of columns with missing data (and why <code class="docutils literal notranslate"><span class="pre">map()</span></code> and <code class="docutils literal notranslate"><span class="pre">np.select()</span></code> are better fits)</p></li>
+</ol>
+<p>I have to admit that, even by programming textbook standards, you may not find this to be the most exciting chapter. You may well be anxious to get ahead to the graphing, mapping, and online dashboard sections of PFN (which are just around the corner).</p>
+<p>However, in order to be confident that your graphs, maps, and dashboards will provide an accurate view of your underlying data, it’s crucial to exercise caution when pivoting and transforming tables. This chapter is meant to help you be more cautious–and thus more successful–in your data analysis adventures.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sqlalchemy</span><span class="w"> </span><span class="kn">import</span> <span class="n">create_engine</span>
+<span class="n">e</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="s1">&#39;sqlite:///../Appendix/nvcu_db.db&#39;</span><span class="p">)</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;../Appendix&#39;</span><span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">helper_funcs</span><span class="w"> </span><span class="kn">import</span> <span class="n">config_notebook</span>
+<span class="n">display_type</span> <span class="o">=</span> <span class="n">config_notebook</span><span class="p">(</span><span class="n">display_max_columns</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span>
+                              <span class="n">display_max_rows</span> <span class="o">=</span> <span class="mi">8</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="microdata-pre-baked-data-and-the-average-of-averages-problem">
+<h2>Microdata, pre-baked data, and the ‘average of averages’ problem<a class="headerlink" href="#microdata-pre-baked-data-and-the-average-of-averages-problem" title="Link to this heading">#</a></h2>
+<p>df_transactions, a table of dining hall transactions shown below, is an excellent candidate for creating a diverse set of pivot tables and charts because each transaction has its own row. (In other words, the table contains <em>microdata</em>; for more on this subject, reference <a class="reference external" href="https://en.wikipedia.org/wiki/Microdata_(statistics).">https://en.wikipedia.org/wiki/Microdata_(statistics).</a>) This allows you to calculate statistics for an arbitrary set of comparison variables by applying an aggregate function to all rows contained within those groups in the table.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_transactions</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_sql</span><span class="p">(</span>
+    <span class="s1">&#39;select * from dining_transactions&#39;</span><span class="p">,</span> <span class="n">con</span> <span class="o">=</span> <span class="n">e</span><span class="p">)</span>
+<span class="n">df_transactions</span><span class="p">[</span><span class="s1">&#39;transactions&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">df_transactions</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>starting_year</th>
+      <th>weekday</th>
+      <th>level</th>
+      <th>amount</th>
+      <th>transactions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2023</td>
+      <td>We</td>
+      <td>Fr</td>
+      <td>13.36</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2023</td>
+      <td>Tu</td>
+      <td>Se</td>
+      <td>12.22</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2023</td>
+      <td>We</td>
+      <td>Se</td>
+      <td>23.10</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2023</td>
+      <td>Su</td>
+      <td>Fr</td>
+      <td>18.78</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2023</td>
+      <td>Tu</td>
+      <td>Fr</td>
+      <td>11.36</td>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>If you wanted to calculate the average dining hall transaction amount, you could simply find the mean of all items within this table:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_transactions</span><span class="p">[</span><span class="s1">&#39;amount&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(12.65563577250256)
+</pre></div>
+</div>
+</div>
+</div>
+<p>If you instead wanted to find the average amount spent by <em>weekday and level</em>, you could easily do so via pandas’ <code class="docutils literal notranslate"><span class="pre">pivot_table()</span></code> function:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_transactions</span><span class="o">.</span><span class="n">pivot_table</span><span class="p">(</span>
+    <span class="n">index</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;weekday&#39;</span><span class="p">,</span> <span class="s1">&#39;level&#39;</span><span class="p">],</span> <span class="n">values</span> <span class="o">=</span> <span class="s1">&#39;amount&#39;</span><span class="p">,</span> 
+    <span class="n">aggfunc</span> <span class="o">=</span> <span class="s1">&#39;mean&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span>
+    <span class="n">by</span> <span class="o">=</span> <span class="s1">&#39;amount&#39;</span><span class="p">,</span> <span class="n">ascending</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>weekday</th>
+      <th>level</th>
+      <th>amount</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>14</th>
+      <td>Su</td>
+      <td>Se</td>
+      <td>22.426887</td>
+    </tr>
+    <tr>
+      <th>26</th>
+      <td>We</td>
+      <td>Se</td>
+      <td>21.550155</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>Mo</td>
+      <td>Se</td>
+      <td>21.346364</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>Tu</td>
+      <td>Se</td>
+      <td>21.268938</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>24</th>
+      <td>We</td>
+      <td>Fr</td>
+      <td>9.916478</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>Tu</td>
+      <td>Fr</td>
+      <td>9.835650</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>Su</td>
+      <td>Fr</td>
+      <td>9.812551</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>Sa</td>
+      <td>Fr</td>
+      <td>9.467975</td>
+    </tr>
+  </tbody>
+</table>
+<p>28 rows × 3 columns</p>
+</div></div></div>
+</div>
+<p>However, you may not always have access to this type of data. Instead, you might receive an <em>aggregated</em> dataset in which averages by different groups are <em>pre-baked</em>–e.g. already present in the output. As you’ll soon see, this makes the table much less flexible.</p>
+<p>‘pre-baked’ is not, to my knowledge, a common statistical term, but I find that it works pretty well for describing this type of data. For instance, once you’ve <em>baked</em> apples, wheat, and sugar (or whatever goes into a pie–I’m not a baker!) into a pie, it’s pretty hard to convert that dish into a caramelized apple. Similarly, as the following examples will show, once you’ve ‘baked’ a list of transactions into separate sets of averages by level and by weekday, it will be impossible to use that data to calculate total spending amounts by level <em>and</em> weekday–as we no longer know how each level value relates to each weekday value.</p>
+<p>To illustrate this issues caused by pre-baked datasets, let’s generate two DataFrames, the first of which will show average transaction amounts by level, and the second of which will show average amounts by weekday.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_average_spending_by_level</span> <span class="o">=</span> <span class="n">df_transactions</span><span class="o">.</span><span class="n">pivot_table</span><span class="p">(</span>
+    <span class="n">index</span> <span class="o">=</span> <span class="s1">&#39;level&#39;</span><span class="p">,</span> <span class="n">values</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;amount&#39;</span><span class="p">,</span> <span class="s1">&#39;transactions&#39;</span><span class="p">],</span> <span class="n">aggfunc</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;amount&#39;</span><span class="p">:</span><span class="s1">&#39;mean&#39;</span><span class="p">,</span> <span class="s1">&#39;transactions&#39;</span><span class="p">:</span><span class="s1">&#39;count&#39;</span><span class="p">})</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+<span class="n">df_average_spending_by_level</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>level</th>
+      <th>amount</th>
+      <th>transactions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Fr</td>
+      <td>9.911620</td>
+      <td>12410</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Ju</td>
+      <td>17.133287</td>
+      <td>3289</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Se</td>
+      <td>21.294252</td>
+      <td>2046</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>So</td>
+      <td>13.006451</td>
+      <td>4708</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_average_spending_by_weekday</span> <span class="o">=</span> <span class="n">df_transactions</span><span class="o">.</span><span class="n">pivot_table</span><span class="p">(</span>
+    <span class="n">index</span> <span class="o">=</span> <span class="s1">&#39;weekday&#39;</span><span class="p">,</span> <span class="n">values</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;amount&#39;</span><span class="p">,</span> <span class="s1">&#39;transactions&#39;</span><span class="p">],</span> <span class="n">aggfunc</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;amount&#39;</span><span class="p">:</span><span class="s1">&#39;mean&#39;</span><span class="p">,</span> <span class="s1">&#39;transactions&#39;</span><span class="p">:</span><span class="s1">&#39;count&#39;</span><span class="p">})</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+<span class="n">df_average_spending_by_weekday</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>weekday</th>
+      <th>amount</th>
+      <th>transactions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Fr</td>
+      <td>12.721265</td>
+      <td>2466</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Mo</td>
+      <td>12.632190</td>
+      <td>3608</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Sa</td>
+      <td>12.253912</td>
+      <td>708</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Su</td>
+      <td>12.775699</td>
+      <td>1123</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Th</td>
+      <td>12.592931</td>
+      <td>3964</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>Tu</td>
+      <td>12.747500</td>
+      <td>5267</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>We</td>
+      <td>12.624990</td>
+      <td>5317</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>We can see that lower levels (e.g. freshmen and sophomores) tend to spend more per dining hall visit than upper levels; in addition, we can see that spending is relatively constant across weekdays. However, because these tables are pre-baked, we don’t have any way of calculating average spending by level <em>and</em> weekday like we could with df_transactions.</p>
+<p>In addition, let’s say that we wanted to calculate average dining hall spending using df_average_spending_by_level. A naive approach would be to simply calculate the average of each row:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># The following approach is incorrect!</span>
+
+<span class="n">df_average_spending_by_level</span><span class="p">[</span><span class="s1">&#39;amount&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(15.336402324109617)
+</pre></div>
+</div>
+</div>
+</div>
+<p>This average is way off the actual average, which we calculated earlier in this code using df_transactions. Why is this the case? As df_average_spending_by_level shows, seniors and juniors spend much more than freshmen and sophomores, yet they also use the dining hall less (as shown by their smaller transaction counts). As a result, if we simply average the mean transaction amounts for each level, we’ll overrepresent upperclassmen and thus skew our average transaction amount upward.</p>
+<p>In order to avoid this ‘average of averages’ issue, which arises whenever differences in group sizes skew an average that’s in turn based on averages for those groups, we’ll need to create a <em>weighted</em> average. We can do so by multiplying each row’s ‘amount’ column by its ‘transaction’ column; adding these products together; and then dividing them by the ‘transaction’ column.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_average_spending_by_level</span><span class="p">[</span><span class="s1">&#39;amount_x_transactions&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">df_average_spending_by_level</span><span class="p">[</span><span class="s1">&#39;amount&#39;</span><span class="p">]</span> 
+    <span class="o">*</span> <span class="n">df_average_spending_by_level</span><span class="p">[</span><span class="s1">&#39;transactions&#39;</span><span class="p">])</span>
+<span class="n">df_average_spending_by_level</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>level</th>
+      <th>amount</th>
+      <th>transactions</th>
+      <th>amount_x_transactions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Fr</td>
+      <td>9.911620</td>
+      <td>12410</td>
+      <td>123003.20</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Ju</td>
+      <td>17.133287</td>
+      <td>3289</td>
+      <td>56351.38</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Se</td>
+      <td>21.294252</td>
+      <td>2046</td>
+      <td>43568.04</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>So</td>
+      <td>13.006451</td>
+      <td>4708</td>
+      <td>61234.37</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Here’s our weighted average, which matches the average calculated earlier:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">df_average_spending_by_level</span><span class="p">[</span><span class="s1">&#39;amount_x_transactions&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> 
+ <span class="o">/</span> <span class="n">df_average_spending_by_level</span><span class="p">[</span><span class="s1">&#39;transactions&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(12.65563577250256)
+</pre></div>
+</div>
+</div>
+</div>
+<p>The following function can be used to calculate weighted means for other datasets:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">weighted_mean</span><span class="p">(</span><span class="n">original_df</span><span class="p">,</span> <span class="n">metric_col</span><span class="p">,</span> <span class="n">weight_col</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;This function calculates, then returns, a weighted mean for</span>
+<span class="sd">    the DataFrame passed to original_df.</span>
+<span class="sd">    metric_col: the column storing the variable for which to calculate</span>
+<span class="sd">    a mean.</span>
+<span class="sd">    weight_col: the column storing weight values that will be incorporated</span>
+<span class="sd">    into this weighted mean.    </span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">original_df</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span> <span class="c1"># Prevents the function from modifying</span>
+    <span class="c1"># the original DataFrame</span>
+    <span class="n">df</span><span class="p">[</span><span class="s1">&#39;metric_x_weight&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">metric_col</span><span class="p">]</span> <span class="o">*</span> <span class="n">df</span><span class="p">[</span><span class="n">weight_col</span><span class="p">]</span>
+    <span class="n">weighted_mean</span> <span class="o">=</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;metric_x_weight&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">/</span> 
+    <span class="n">df</span><span class="p">[</span><span class="n">weight_col</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
+    <span class="k">return</span> <span class="n">weighted_mean</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s try putting this function into action by calculating the average transaction amount using df_average_spending_by_weekday:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">weighted_mean</span><span class="p">(</span><span class="n">df_average_spending_by_weekday</span><span class="p">,</span> 
+                 <span class="n">metric_col</span> <span class="o">=</span> <span class="s1">&#39;amount&#39;</span><span class="p">,</span>
+                 <span class="n">weight_col</span> <span class="o">=</span> <span class="s1">&#39;transactions&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(12.65563577250256)
+</pre></div>
+</div>
+</div>
+</div>
+<p>This average matches the weighted average that we calculated within df_average_spending_by_level.</p>
+<p>Incidentally, because average transaction amounts are relatively constant across weekdays, simply averaging all ‘amount’ values within df_average_spending_by_weekday will get us very close to the actual average (despite the considerable variation in transaction counts by weekday). These kinds of ‘believable’, yet incorrect values are particularly insidious: they may go unnoticed for quite a while, whereas an obviously incorrect value (e.g. a calculated mean transaction of -5, or 83,000) would get caught right away.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_average_spending_by_weekday</span><span class="p">[</span><span class="s1">&#39;amount&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(12.621212399856491)
+</pre></div>
+</div>
+</div>
+</div>
+<p>We were able to calculate correct averages within these pre-baked tables because we also knew the number of transactions within each row. In the real world, though, such sample size information may not be available.</p>
+<p>From a data analysis perspective, it would be ideal to have all of your source data in microdata (rather than pre-baked) form. However, the microdata approach has its own drawbacks.</p>
+<p>First, data privacy needs may preclude the issuance of microdata. Imagine, for instance, that NVCU released a dataset that contained individual course grades for each student along with those students’ ages and majors. If you happened to be the only 18-year-old music major who took a course, anyone with that knowledge could find out how you performed in the class.</p>
+<p>A more private approach, in this case, would be to release separate ‘pre-baked’ tables that showed average grades by age and by major. (Even with this strategy, if a given pre-baked average was based on only a few students, it might be best to remove that row’s data so as to protect those students’ privacy.)</p>
+<p>Second, microdata can take up much more storage size than pre-baked data. To illustrate this, let’s compare the amount of memory, in kilobytes, used by df_transactions (a microdata-based table) with that used by our two pre-baked tables:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">microdata_kb</span> <span class="o">=</span> <span class="n">df_transactions</span><span class="o">.</span><span class="n">memory_usage</span><span class="p">(</span>
+    <span class="n">index</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">deep</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">/</span> <span class="mi">1000</span>
+<span class="n">microdata_kb</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(2829.21)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pre_baked_kb</span> <span class="o">=</span> <span class="p">(</span><span class="n">df_average_spending_by_level</span><span class="o">.</span><span class="n">memory_usage</span><span class="p">(</span>
+    <span class="n">index</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">deep</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">+</span> 
+ <span class="n">df_average_spending_by_weekday</span><span class="o">.</span><span class="n">memory_usage</span><span class="p">(</span>
+    <span class="n">index</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">deep</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span> <span class="o">/</span> <span class="mi">1000</span>
+<span class="n">pre_baked_kb</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(1.033)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">microdata_kb</span> <span class="o">/</span> <span class="n">pre_baked_kb</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(2738.828654404647)
+</pre></div>
+</div>
+</div>
+</div>
+<p>The microdata table takes up over 2,700 times more memory than our two pre-baked tables! Therefore, it’s understandable that data providers may prefer to share pre-calculated averages as opposed to original datasets.</p>
+</section>
+<section id="handling-missing-data-when-creating-pivot-tables">
+<h2>Handling missing data when creating pivot tables<a class="headerlink" href="#handling-missing-data-when-creating-pivot-tables" title="Link to this heading">#</a></h2>
+<p>If a field passed to the <code class="docutils literal notranslate"><span class="pre">index</span></code> or <code class="docutils literal notranslate"><span class="pre">columns</span></code> argument of a pivot_table() call has a missing value, that missing value won’t get incorporated into the final table. This can cause calculation errors if you end up using the pivot table for further analyses. However, mitigating this issue isn’t too difficult.</p>
+<p>To demonstrate this issue, I’ll create a ‘faulty’ version of df_transactions in the following cell that has <code class="docutils literal notranslate"><span class="pre">np.nan</span></code> (e.g. missing) entries for all ‘Wednesday’ weekday values and all ‘So’ level values. As you’ll see, these missing values will cause issues when we (1) create a pivot table of this data, then (2) attempt to use that pivot table to determine the sum of all transactions in our dataset.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_transactions_faulty</span> <span class="o">=</span> <span class="n">df_transactions</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">df_transactions_faulty</span><span class="p">[</span><span class="s1">&#39;weekday&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span>
+    <span class="n">df_transactions_faulty</span><span class="p">[</span><span class="s1">&#39;weekday&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;We&#39;</span><span class="p">,</span> 
+<span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="n">df_transactions_faulty</span><span class="p">[</span><span class="s1">&#39;weekday&#39;</span><span class="p">])</span> 
+<span class="n">df_transactions_faulty</span><span class="p">[</span><span class="s1">&#39;level&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span>
+    <span class="n">df_transactions_faulty</span><span class="p">[</span><span class="s1">&#39;level&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;So&#39;</span><span class="p">,</span> 
+<span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="n">df_transactions_faulty</span><span class="p">[</span><span class="s1">&#39;level&#39;</span><span class="p">])</span> 
+
+<span class="n">df_transactions_faulty</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>starting_year</th>
+      <th>weekday</th>
+      <th>level</th>
+      <th>amount</th>
+      <th>transactions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2023</td>
+      <td>NaN</td>
+      <td>Fr</td>
+      <td>13.36</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2023</td>
+      <td>Tu</td>
+      <td>Se</td>
+      <td>12.22</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2023</td>
+      <td>NaN</td>
+      <td>Se</td>
+      <td>23.10</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2023</td>
+      <td>Su</td>
+      <td>Fr</td>
+      <td>18.78</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>22449</th>
+      <td>2023</td>
+      <td>Tu</td>
+      <td>Fr</td>
+      <td>5.98</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>22450</th>
+      <td>2023</td>
+      <td>Fr</td>
+      <td>NaN</td>
+      <td>7.39</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>22451</th>
+      <td>2023</td>
+      <td>Sa</td>
+      <td>Fr</td>
+      <td>13.25</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>22452</th>
+      <td>2023</td>
+      <td>Mo</td>
+      <td>Fr</td>
+      <td>1.95</td>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+<p>22453 rows × 5 columns</p>
+</div></div></div>
+</div>
+<p>First, let’s try converting this dataset into a pivot table that shows total transaction amounts by week.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_transactions_faulty_pivot</span> <span class="o">=</span> <span class="n">df_transactions_faulty</span><span class="o">.</span><span class="n">pivot_table</span><span class="p">(</span>
+    <span class="n">index</span> <span class="o">=</span> <span class="s1">&#39;weekday&#39;</span><span class="p">,</span> <span class="n">values</span> <span class="o">=</span> <span class="s1">&#39;amount&#39;</span><span class="p">,</span> 
+    <span class="n">aggfunc</span> <span class="o">=</span> <span class="s1">&#39;sum&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+<span class="n">df_transactions_faulty_pivot</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>weekday</th>
+      <th>amount</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Fr</td>
+      <td>31370.64</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Mo</td>
+      <td>45576.94</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Sa</td>
+      <td>8675.77</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Su</td>
+      <td>14347.11</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Th</td>
+      <td>49918.38</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>Tu</td>
+      <td>67141.08</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>There’s no sign whatsoever of the ‘Wednesday’ rows. This shouldn’t be too surprising (since we removed those ‘We’ values), but it’s worth highlighting that no ‘Missing’ or ‘N/A’ row gets returned by the pivot table function.</p>
+<p>The complete absence of the ‘Wednesday’ row makes this this missing data issue easier to identify. However, many cases of missing data are far more insidious. For instance, suppose only a handful of ‘Wednesday’ entries were missing. We’d see a ‘Wednesday’ row within the pivot table, but we might not realize that its ‘amount’ sum was incorrect. (For this reason, it’s often a good idea to check for missing entries within any fields that you pass to the <code class="docutils literal notranslate"><span class="pre">index</span></code> or <code class="docutils literal notranslate"><span class="pre">column</span></code> arguments of a <code class="docutils literal notranslate"><span class="pre">pivot_table()</span></code> call.)</p>
+<p>If we try to use this pivot table to calculate the sum of all our transactions, we’ll end up with an incorrect result, since rows with missing ‘weekday’ values won’t factor into the calculation.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_transactions_faulty_pivot</span><span class="p">[</span><span class="s1">&#39;amount&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(217029.91999999998)
+</pre></div>
+</div>
+</div>
+</div>
+<p>For reference, here’s the correct sum:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_transactions</span><span class="p">[</span><span class="s1">&#39;amount&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(284156.99)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Thankfully, it’s not too hard to prevent this issue. We simply need to fill in missing values within any fields fields passed to the <code class="docutils literal notranslate"><span class="pre">index</span></code> or <code class="docutils literal notranslate"><span class="pre">columns</span></code> arguments of the <code class="docutils literal notranslate"><span class="pre">pivot_table()</span></code> call.</p>
+<p>I’ll demonstrate two ways to replace these values with a ‘Missing’ string. First, if you don’t wish to permanently modify your original DataFrame, you can call <code class="docutils literal notranslate"><span class="pre">.fillna()</span></code> on the DataFrame being passed to the <code class="docutils literal notranslate"><span class="pre">pivot_table()</span></code> function. This ensures that rows with missing data get incorporated into the pivot table but leaves the original DataFrame untouched.</p>
+<p>The following code implements this approach via a <em>dict comprehension</em>. (For more on this valuable tool, see <a class="reference external" href="https://docs.python.org/3/tutorial/datastructures.html#dictionaries">https://docs.python.org/3/tutorial/datastructures.html#dictionaries</a> .) This approach allows me to use the same list of <code class="docutils literal notranslate"><span class="pre">index</span></code> values that I’ll pass to <code class="docutils literal notranslate"><span class="pre">pivot_table()</span></code> to specify which columns’ missing entries should get filled in. This results in cleaner and less error-prone code, as if I needed to update my index values twice, once for <code class="docutils literal notranslate"><span class="pre">pivot_table()</span></code> and once for <code class="docutils literal notranslate"><span class="pre">fillna()</span></code>, the two lists could easily get out of sync.</p>
+<p>(Another option, by the way, would be to fill missing entries within <em>all</em> columns with a ‘Missing’ string; this could be accomplished via <code class="docutils literal notranslate"><span class="pre">df_transactions_faulty.fillna('Missing')</span></code>. However, if some columns with missing data use float or integer types, this approach could either raise a warning or an error–as you’d be attempting to pass a string into a list of missing values. Thus, I recommend using the more precise solution shown below.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">index</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;level&#39;</span><span class="p">,</span> <span class="s1">&#39;weekday&#39;</span><span class="p">]</span> <span class="c1"># These values will get passed to the</span>
+<span class="c1"># index argument of our pivot_table() call.</span>
+<span class="c1"># The following dict comprehension will produce the dictionary</span>
+<span class="c1"># {&#39;level&#39;: &#39;Missing&#39;, &#39;weekday&#39;: &#39;Missing&#39;}--which, when passed to</span>
+<span class="c1"># fillna(), will instruct Pandas to fill in missing data with &#39;Missing&#39; </span>
+<span class="c1"># only within those two fields.</span>
+<span class="c1"># (For more on this argument, see</span>
+<span class="c1"># https://pandas.pydata.org/pandas-docs/stable/reference/</span>
+<span class="c1"># api/pandas.DataFrame.fillna.html )</span>
+<span class="n">df_transactions_corrected_pivot</span> <span class="o">=</span> <span class="n">df_transactions_faulty</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span>
+    <span class="p">{</span><span class="n">field</span><span class="p">:</span><span class="s1">&#39;Missing&#39;</span> <span class="k">for</span> <span class="n">field</span> <span class="ow">in</span> <span class="n">index</span><span class="p">})</span><span class="o">.</span><span class="n">pivot_table</span><span class="p">(</span>
+    <span class="n">index</span> <span class="o">=</span> <span class="n">index</span><span class="p">,</span> <span class="n">values</span> <span class="o">=</span> <span class="s1">&#39;amount&#39;</span><span class="p">,</span>
+    <span class="n">aggfunc</span> <span class="o">=</span> <span class="s1">&#39;sum&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+<span class="n">df_transactions_corrected_pivot</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>level</th>
+      <th>weekday</th>
+      <th>amount</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Fr</td>
+      <td>Fr</td>
+      <td>13183.14</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Fr</td>
+      <td>Missing</td>
+      <td>28856.95</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Fr</td>
+      <td>Mo</td>
+      <td>20214.29</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Fr</td>
+      <td>Sa</td>
+      <td>3739.85</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>24</th>
+      <td>Se</td>
+      <td>Sa</td>
+      <td>1260.53</td>
+    </tr>
+    <tr>
+      <th>25</th>
+      <td>Se</td>
+      <td>Su</td>
+      <td>2377.25</td>
+    </tr>
+    <tr>
+      <th>26</th>
+      <td>Se</td>
+      <td>Th</td>
+      <td>7017.18</td>
+    </tr>
+    <tr>
+      <th>27</th>
+      <td>Se</td>
+      <td>Tu</td>
+      <td>10613.20</td>
+    </tr>
+  </tbody>
+</table>
+<p>28 rows × 3 columns</p>
+</div></div></div>
+</div>
+<p>Filling in missing ‘level’ and ‘weekday’ rows with ‘Missing’ allowed them to appear within our updated pivot table. As a result, we can now produce an accurate sum of all transactions by adding up the ‘amount’ rows within this table:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_transactions_corrected_pivot</span><span class="p">[</span><span class="s1">&#39;amount&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(284156.99)
+</pre></div>
+</div>
+</div>
+</div>
+<p>The following approach permanently replaces missing weekday and level values with ‘Missing’, thus saving you the trouble of repeating this step later in your code. It also iterates through each field in the <code class="docutils literal notranslate"><span class="pre">index</span></code> list via a for loop in order to inform you which columns, in particular, have missing data.</p>
+<p>In some cases, it may be preferable for your code to halt upon finding missing data; this halt serves as an alert that missing data exists, thus prompting you to fill in those missing entries with their actual values. The commented-out code above the first print statement in the following cell would stop this script’s operation (by raising a ValueError) if it came across any missing data.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">index</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">df_transactions_faulty</span><span class="p">[</span><span class="n">val</span><span class="p">]</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+<span class="c1">#         raise ValueError(f&quot;{val} has NaN values; address these before \</span>
+<span class="c1"># running the following pivot table operation.&quot;)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">val</span><span class="si">}</span><span class="s2"> has NaN values; these will be filled with &#39;Missing&#39; </span><span class="se">\</span>
+<span class="s2">so that their rows&#39; data can still get incorporated into the following </span><span class="se">\</span>
+<span class="s2">pivot table.&quot;</span><span class="p">)</span>
+        <span class="n">df_transactions_faulty</span><span class="p">[</span><span class="n">val</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_transactions_faulty</span><span class="p">[</span><span class="n">val</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span>
+            <span class="s1">&#39;Missing&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        
+<span class="n">df_transactions_corrected_pivot</span> <span class="o">=</span> <span class="n">df_transactions_faulty</span><span class="o">.</span><span class="n">pivot_table</span><span class="p">(</span>
+    <span class="n">index</span> <span class="o">=</span> <span class="n">index</span><span class="p">,</span> <span class="n">values</span> <span class="o">=</span> <span class="s1">&#39;amount&#39;</span><span class="p">,</span>
+    <span class="n">aggfunc</span> <span class="o">=</span> <span class="s1">&#39;sum&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+<span class="n">df_transactions_corrected_pivot</span>
+                         
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>level has NaN values; these will be filled with &#39;Missing&#39; so that their rows&#39; data can still get incorporated into the following pivot table.
+weekday has NaN values; these will be filled with &#39;Missing&#39; so that their rows&#39; data can still get incorporated into the following pivot table.
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>level</th>
+      <th>weekday</th>
+      <th>amount</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Fr</td>
+      <td>Fr</td>
+      <td>13183.14</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Fr</td>
+      <td>Missing</td>
+      <td>28856.95</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Fr</td>
+      <td>Mo</td>
+      <td>20214.29</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Fr</td>
+      <td>Sa</td>
+      <td>3739.85</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>24</th>
+      <td>Se</td>
+      <td>Sa</td>
+      <td>1260.53</td>
+    </tr>
+    <tr>
+      <th>25</th>
+      <td>Se</td>
+      <td>Su</td>
+      <td>2377.25</td>
+    </tr>
+    <tr>
+      <th>26</th>
+      <td>Se</td>
+      <td>Th</td>
+      <td>7017.18</td>
+    </tr>
+    <tr>
+      <th>27</th>
+      <td>Se</td>
+      <td>Tu</td>
+      <td>10613.20</td>
+    </tr>
+  </tbody>
+</table>
+<p>28 rows × 3 columns</p>
+</div></div></div>
+</div>
+<p>This new version of <code class="docutils literal notranslate"><span class="pre">df_transactions_corrected_pivot</span></code> also lets us calculate an accurate sum of all transactions within the original dataset:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_transactions_faulty_pivot</span><span class="p">[</span><span class="s1">&#39;amount&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(217029.91999999998)
+</pre></div>
+</div>
+</div>
+</div>
+<p>By the way, the following code would also have allowed us to permanently fill in all missing values within the columns in our <code class="docutils literal notranslate"><span class="pre">index</span></code> list. This code is similar to that used in the first approach, except that it saves its updates back to df_transactions_faulty, thus making them persistent.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_transactions_faulty</span> <span class="o">=</span> <span class="n">df_transactions_faulty</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span>
+    <span class="p">{</span><span class="n">field</span><span class="p">:</span><span class="s1">&#39;Missing&#39;</span> <span class="k">for</span> <span class="n">field</span> <span class="ow">in</span> <span class="n">index</span><span class="p">})</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>I’ll now undo my corrections to df_transactions_faulty in order to prepare the dataset for the following section.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Undoing my corrections to df_transactions_faulty:</span>
+<span class="n">df_transactions_faulty</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span>
+    <span class="s1">&#39;Missing&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="n">inplace</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+<span class="n">df_transactions_faulty</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>starting_year</th>
+      <th>weekday</th>
+      <th>level</th>
+      <th>amount</th>
+      <th>transactions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2023</td>
+      <td>NaN</td>
+      <td>Fr</td>
+      <td>13.36</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2023</td>
+      <td>Tu</td>
+      <td>Se</td>
+      <td>12.22</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2023</td>
+      <td>NaN</td>
+      <td>Se</td>
+      <td>23.10</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2023</td>
+      <td>Su</td>
+      <td>Fr</td>
+      <td>18.78</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>22449</th>
+      <td>2023</td>
+      <td>Tu</td>
+      <td>Fr</td>
+      <td>5.98</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>22450</th>
+      <td>2023</td>
+      <td>Fr</td>
+      <td>NaN</td>
+      <td>7.39</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>22451</th>
+      <td>2023</td>
+      <td>Sa</td>
+      <td>Fr</td>
+      <td>13.25</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>22452</th>
+      <td>2023</td>
+      <td>Mo</td>
+      <td>Fr</td>
+      <td>1.95</td>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+<p>22453 rows × 5 columns</p>
+</div></div></div>
+</div>
+</section>
+<section id="the-advantages-of-map-and-np-select-over-np-where-when-missing-data-are-present">
+<h2>The advantages of map() and np.select() over np.where() when missing data are present<a class="headerlink" href="#the-advantages-of-map-and-np-select-over-np-where-when-missing-data-are-present" title="Link to this heading">#</a></h2>
+<p>Suppose we’d like to find the total number of dining hall transactions that took place on the weekend versus those that didn’t. To make this calculation easier, we can add a ‘weekday’ column that will store a value of 1 if a transaction fell on Saturday or Sunday and 0 otherwise.</p>
+<p>We could try initializing this column via np.where(). The following cell uses this function to assign a ‘weekend’ value of 0 to all transactions whose ‘weekday’ value corresponds to Monday, Tuesday, Wednesday, Thursday, or Friday. Transactions that don’t have one of these weekday values are classified as weekend sales.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_transactions_faulty</span><span class="p">[</span><span class="s1">&#39;weekend&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span>
+    <span class="n">df_transactions_faulty</span><span class="p">[</span><span class="s1">&#39;weekday&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span>
+        <span class="p">[</span><span class="s1">&#39;Mo&#39;</span><span class="p">,</span> <span class="s1">&#39;Tu&#39;</span><span class="p">,</span> <span class="s1">&#39;We&#39;</span><span class="p">,</span> <span class="s1">&#39;Th&#39;</span><span class="p">,</span> <span class="s1">&#39;Fr&#39;</span><span class="p">]),</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">df_transactions_faulty</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>starting_year</th>
+      <th>weekday</th>
+      <th>...</th>
+      <th>transactions</th>
+      <th>weekend</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2023</td>
+      <td>NaN</td>
+      <td>...</td>
+      <td>1</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2023</td>
+      <td>Tu</td>
+      <td>...</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2023</td>
+      <td>NaN</td>
+      <td>...</td>
+      <td>1</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2023</td>
+      <td>Su</td>
+      <td>...</td>
+      <td>1</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>22449</th>
+      <td>2023</td>
+      <td>Tu</td>
+      <td>...</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>22450</th>
+      <td>2023</td>
+      <td>Fr</td>
+      <td>...</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>22451</th>
+      <td>2023</td>
+      <td>Sa</td>
+      <td>...</td>
+      <td>1</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>22452</th>
+      <td>2023</td>
+      <td>Mo</td>
+      <td>...</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+<p>22453 rows × 6 columns</p>
+</div></div></div>
+</div>
+<p>The issue with this approach, as you might have recognized already, is that it classifies all transactions with missing ‘weekday’ values as taking place during the weekend. We know that this is inaccurate: the transactions with missing weekday entries actually took place on Wednesday. (In real life, of course, we wouldn’t know this to be the case–but we still wouldn’t want to assume that they fell on the weekend.)</p>
+<p>Here is the total number of Saturday and Sunday dining hall transactions according to our ‘weekend’ column:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">len</span><span class="p">(</span><span class="n">df_transactions_faulty</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;weekend == 1&quot;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>7148
+</pre></div>
+</div>
+</div>
+</div>
+<p>As it turns out, this sum much higher than the correct value (which we can calculate using our original transactions table):</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">len</span><span class="p">(</span><span class="n">df_transactions</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;weekday in [&#39;Sa&#39;, &#39;Su&#39;]&quot;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1831
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s now overwrite this faulty ‘weekend’ column by using <code class="docutils literal notranslate"><span class="pre">map()</span></code> instead. This function will allow us to map each individual weekday value to either 1 (for weekend) entries or 0 (for non-weekend values). Importantly, it also lets us map np.nan (i.e. missing) entries to a third number, -1: this number represents neither weekend nor non-weekend entries.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_transactions_faulty</span><span class="p">[</span><span class="s1">&#39;weekend&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">df_transactions_faulty</span><span class="p">[</span><span class="s1">&#39;weekday&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span>
+    <span class="p">{</span><span class="s1">&#39;Su&#39;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;Mo&#39;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;Tu&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;We&#39;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;Th&#39;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;Fr&#39;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;Sa&#39;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;Su&#39;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span>
+     <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">}))</span>
+<span class="n">df_transactions_faulty</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>starting_year</th>
+      <th>weekday</th>
+      <th>...</th>
+      <th>transactions</th>
+      <th>weekend</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2023</td>
+      <td>NaN</td>
+      <td>...</td>
+      <td>1</td>
+      <td>-1</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2023</td>
+      <td>Tu</td>
+      <td>...</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2023</td>
+      <td>NaN</td>
+      <td>...</td>
+      <td>1</td>
+      <td>-1</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2023</td>
+      <td>Su</td>
+      <td>...</td>
+      <td>1</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>22449</th>
+      <td>2023</td>
+      <td>Tu</td>
+      <td>...</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>22450</th>
+      <td>2023</td>
+      <td>Fr</td>
+      <td>...</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>22451</th>
+      <td>2023</td>
+      <td>Sa</td>
+      <td>...</td>
+      <td>1</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>22452</th>
+      <td>2023</td>
+      <td>Mo</td>
+      <td>...</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+<p>22453 rows × 6 columns</p>
+</div></div></div>
+</div>
+<p>If we apply value_counts() to this column, we’ll find that our weekend transactions count matches that shown above. The sum for the -1 entry shows the number of transactions that are missing</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_transactions_faulty</span><span class="p">[</span><span class="s1">&#39;weekend&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>weekend
+ 0    15305
+-1     5317
+ 1     1831
+Name: count, dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+<p>I could have also chosen to use ‘Missing’ as my marker for invalid data; however, since the other values output by <code class="docutils literal notranslate"><span class="pre">map()</span></code> were integers, I wanted to make the missing data code an integer also.</p>
+<p>As an aside, the use of 1 for weekend transactions and 0 for work-week ones makes it easy to determine the percentage of transactions that took place over the weekend:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span>
+<span class="nb">round</span><span class="p">(</span><span class="mi">100</span><span class="o">*</span><span class="n">df_transactions_faulty</span><span class="o">.</span><span class="n">query</span><span class="p">(</span>
+<span class="w">    </span><span class="s2">&quot;weekend != -1&quot;</span><span class="p">)[</span><span class="s1">&#39;weekend&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="si">}</span><span class="s2">% of transactions with valid </span><span class="se">\</span>
+<span class="s2">weekday entries took place on a Saturday or Sunday.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>10.69% of transactions with valid weekday entries took place on a Saturday or Sunday.
+</pre></div>
+</div>
+</div>
+</div>
+<p>Note the ‘with valid weekday entries’ caveat in the above print statement. Since we wouldn’t know for sure on which weekdays the missing transactions took place, we wouldn’t want our statement to make any assertionss about them.</p>
+<p>It was also crucial to exclude rows with weekend values of -1 from our above calculation. If we had kept them in, we would have ended up with a nonsensical percentage of weekend transactions:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="mi">100</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">df_transactions_faulty</span><span class="p">[</span><span class="s1">&#39;weekend&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="si">}</span><span class="s2">% </span><span class="se">\</span>
+<span class="s2">of transactions took place on a Saturday or Sunday . . . wait, really? </span><span class="se">\</span>
+<span class="s2">I think I need to double-check these numbers . . . &quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-15.53% of transactions took place on a Saturday or Sunday . . . wait, really? I think I need to double-check these numbers . . . 
+</pre></div>
+</div>
+</div>
+</div>
+<p>If you’re categorizing continuous rather than categorical data, the <code class="docutils literal notranslate"><span class="pre">map()</span></code> approach above will be hard to implement–as you might end up having to code a ton of values. Therefore, you should use <code class="docutils literal notranslate"><span class="pre">np.select()</span></code> instead. This function generally involves a bit more code than <code class="docutils literal notranslate"><span class="pre">map()</span></code> for categorical data, but it easily accommodates continuous values as well.</p>
+<p>Let’s say that we want to add a ‘large_purchase’ flag to each row that will be 1 if the amount was at or above the 90th percentile and 0 otherwise. We could then use this flag to determine each level’s likelihood of making such a large purchase.</p>
+<p>The 90th percentile can be calculated as follows:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">large_purchase_threshold</span> <span class="o">=</span> <span class="n">df_transactions</span><span class="p">[</span><span class="s1">&#39;amount&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="mf">0.9</span><span class="p">)</span>
+<span class="c1"># See https://pandas.pydata.org/docs/reference/api/</span>
+<span class="c1"># pandas.DataFrame.quantile.html</span>
+<span class="n">large_purchase_threshold</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(24.067999999999994)
+</pre></div>
+</div>
+</div>
+</div>
+<p>The following code will simplify df_transactions_faulty by removing some columns that won’t be needed for the following section. It will also introduce missing numerical data by replacing all transactions whose final digit is a 6 with np.nan.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_transactions_faulty</span> <span class="o">=</span> <span class="n">df_transactions</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span>
+    <span class="p">[</span><span class="s1">&#39;weekday&#39;</span><span class="p">,</span> <span class="s1">&#39;transactions&#39;</span><span class="p">],</span> 
+    <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
+
+<span class="n">df_transactions_faulty</span><span class="p">[</span><span class="s1">&#39;amount&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span>
+    <span class="n">df_transactions_faulty</span><span class="p">[</span><span class="s1">&#39;amount&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;str&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">str</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;6&#39;</span><span class="p">,</span> 
+    <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="n">df_transactions_faulty</span><span class="p">[</span><span class="s1">&#39;amount&#39;</span><span class="p">])</span>
+
+<span class="n">df_transactions_faulty</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>starting_year</th>
+      <th>level</th>
+      <th>amount</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2023</td>
+      <td>Fr</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2023</td>
+      <td>Se</td>
+      <td>12.22</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2023</td>
+      <td>Se</td>
+      <td>23.10</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2023</td>
+      <td>Fr</td>
+      <td>18.78</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>22449</th>
+      <td>2023</td>
+      <td>Fr</td>
+      <td>5.98</td>
+    </tr>
+    <tr>
+      <th>22450</th>
+      <td>2023</td>
+      <td>So</td>
+      <td>7.39</td>
+    </tr>
+    <tr>
+      <th>22451</th>
+      <td>2023</td>
+      <td>Fr</td>
+      <td>13.25</td>
+    </tr>
+    <tr>
+      <th>22452</th>
+      <td>2023</td>
+      <td>Fr</td>
+      <td>1.95</td>
+    </tr>
+  </tbody>
+</table>
+<p>22453 rows × 3 columns</p>
+</div></div></div>
+</div>
+<p>We wouldn’t want to use <code class="docutils literal notranslate"><span class="pre">np.where()</span></code> to initialize our ‘large_purchase’ column, as we would inadvertently group missing transactions as large or non-large. In addition, <code class="docutils literal notranslate"><span class="pre">map()</span></code> would be a poor solution, as we now have thousands of unique values to code rather than just a few:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">len</span><span class="p">(</span><span class="n">df_transactions_faulty</span><span class="p">[</span><span class="s1">&#39;amount&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>3131
+</pre></div>
+</div>
+</div>
+</div>
+<p>Therefore, we’ll instead use <code class="docutils literal notranslate"><span class="pre">np.select()</span></code>. This function applies a <code class="docutils literal notranslate"><span class="pre">condlist</span></code> (a list of possible conditions) and a <code class="docutils literal notranslate"><span class="pre">choicelist</span></code> (a list of values to apply for each of those conditions) in order to initialize or update a given column. (You don’t have to name these items <code class="docutils literal notranslate"><span class="pre">condlist</span></code> and <code class="docutils literal notranslate"><span class="pre">choicelist</span></code>, but those are their corresponding parameter names; see <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.select.html">https://numpy.org/doc/stable/reference/generated/numpy.select.html</a> ). Importantly, this function also has a <code class="docutils literal notranslate"><span class="pre">default</span></code> argument that lets you determine what value to enter if none of the conditions were met.</p>
+<p>The following code applies <code class="docutils literal notranslate"><span class="pre">np.select()</span></code> by defining two possible conditions (e.g. a transaction is above the threshold or it isn’t) and two corresponding values to enter within our ‘large_purchase’ column (1 or 0). It also adds a ‘default’ value of -1; this value will get added to the large_purchase column when a given transaction amount is missing. (Note that, if no default value is specified, numpy will add values of 0–which would easily get mistaken for the ‘not a large purchase’ condition.)</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">condlist</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">df_transactions_faulty</span><span class="p">[</span><span class="s1">&#39;amount&#39;</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">large_purchase_threshold</span><span class="p">,</span>
+    <span class="n">df_transactions_faulty</span><span class="p">[</span><span class="s1">&#39;amount&#39;</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">large_purchase_threshold</span>
+<span class="p">]</span>
+
+<span class="n">choicelist</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span>
+              <span class="mi">0</span><span class="p">]</span> <span class="c1"># Make sure that the order of these entries matches</span>
+<span class="c1"># the order of your condlist entries!</span>
+
+<span class="n">df_transactions_faulty</span><span class="p">[</span><span class="s1">&#39;large_purchase&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">select</span><span class="p">(</span>
+    <span class="n">condlist</span><span class="p">,</span> <span class="n">choicelist</span><span class="p">,</span> <span class="n">default</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">df_transactions_faulty</span>   
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>starting_year</th>
+      <th>level</th>
+      <th>amount</th>
+      <th>large_purchase</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2023</td>
+      <td>Fr</td>
+      <td>NaN</td>
+      <td>-1</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2023</td>
+      <td>Se</td>
+      <td>12.22</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2023</td>
+      <td>Se</td>
+      <td>23.10</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2023</td>
+      <td>Fr</td>
+      <td>18.78</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>22449</th>
+      <td>2023</td>
+      <td>Fr</td>
+      <td>5.98</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>22450</th>
+      <td>2023</td>
+      <td>So</td>
+      <td>7.39</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>22451</th>
+      <td>2023</td>
+      <td>Fr</td>
+      <td>13.25</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>22452</th>
+      <td>2023</td>
+      <td>Fr</td>
+      <td>1.95</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+<p>22453 rows × 4 columns</p>
+</div></div></div>
+</div>
+<p>Now that we’ve added in this column, we can create a pivot table that shows the likelihood, for each level, that a given transaction was at or above the 90th percentile:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_transactions_faulty</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;large_purchase != -1&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">pivot_table</span><span class="p">(</span>
+    <span class="n">index</span> <span class="o">=</span> <span class="s1">&#39;level&#39;</span><span class="p">,</span> 
+    <span class="n">values</span> <span class="o">=</span> <span class="s1">&#39;large_purchase&#39;</span><span class="p">,</span> <span class="n">aggfunc</span> <span class="o">=</span> <span class="s1">&#39;mean&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+                                   
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>level</th>
+      <th>large_purchase</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Fr</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Ju</td>
+      <td>0.297705</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Se</td>
+      <td>0.434444</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>So</td>
+      <td>0.081307</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>This likelihood is evidently much higher for upperclassmen (juniors and seniors) than for underclassmen (freshmen and sophomores). Of course, this analysis isn’t perfect, as it’s limited to the rows for which we have valid transaction amounts.</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./Descriptive_Stats"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="descriptive_stats.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Descriptive Stats</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../Census_Data_Imports/census_data_imports.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Census Data Imports</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#microdata-pre-baked-data-and-the-average-of-averages-problem">Microdata, pre-baked data, and the ‘average of averages’ problem</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#handling-missing-data-when-creating-pivot-tables">Handling missing data when creating pivot tables</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-advantages-of-map-and-np-select-over-np-where-when-missing-data-are-present">The advantages of map() and np.select() over np.where() when missing data are present</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Kenneth Burchfiel
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

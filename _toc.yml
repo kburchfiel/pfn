@@ -1,0 +1,64 @@
+# Table of contents
+# Learn more at https://jupyterbook.org/customize/toc.html
+# (The code at 
+# https://jupyterbook.org/en/stable/structure/toc.html also proved
+# helpful in creating this file.)
+
+# Note: this file was based on the documentation for Jupyter Book (https://jupyterbook.org/).
+# Jupyter Book has been released under the BSD-3-Clause License.
+
+format: jb-book
+
+# The following paths refer to files within the folder:
+root: 'front_matter_for_book'
+parts:
+  - caption: 'Introduction'
+    chapters:
+    - file: 'Introduction/introduction'
+    - file: 'Introduction/the_case_for_python_at_nonprofits'
+    - file: 'Book_Specific_Materials/getting_started_for_book'
+  - caption: 'Importing and Prepping Data'
+    chapters: 
+    - file: 'Data_Retrieval/data_retrieval'
+    - file: 'Data_Prep/data_prep'
+  - caption: 'Analyzing Data'
+    chapters:
+    - file: 'Descriptive_Stats/descriptive_stats'
+    - file: 'Descriptive_Stats/descriptive_stats_part_2'
+    - file: 'Census_Data_Imports/census_data_imports'
+      sections:
+      - file: 'Book_Specific_Materials/census_import_scripts_py_nb'
+  - caption: 'Visualizing Data'
+    chapters:
+    - file: 'Graphing/graphing'
+    - file: 'Graphing/pivot_and_graph_functions'
+    - file: 'Mapping/choropleth_maps'
+      sections:
+      - file: 'Book_Specific_Materials/plotly_choropleth_map_functions_py_nb'
+    - file: 'Mapping/choropleth_maps_with_folium'
+      sections:
+      - file: 'Book_Specific_Materials/folium_choropleth_map_functions_py_nb'
+  - caption: 'Regressions'
+    chapters:
+    - file: 'Regressions/regression_analyses'
+  - caption: 'Publishing Analyses Online'
+    chapters:
+    - file: 'Static_Sites/simple_static_site'
+    - file: 'Updating_Online_Spreadsheets/updating_online_spreadsheets'
+      sections:
+        - file: 'Book_Specific_Materials/weather_import_py_nb'
+    - file: 'Online_Visualizations/Simple_App_Without_Login/readme'
+      sections: 
+        - file: 'Book_Specific_Materials/Simple_App_Without_Login_py_nb'
+    - file: 'Online_Visualizations/PFN_Dash_App_Demo/readme'
+      sections: 
+        - file: 'Book_Specific_Materials/PFN_Dash_App_Demo_py_nb'
+  - caption: 'Appendix'
+    chapters:
+    - file: 'Appendix/nvcu_db_gen'
+    - file: 'Book_Specific_Materials/helper_funcs_py_nb'
+
+# Note: two spaces should be used for indentation rather than four;
+# in addition, the indentation patterns should match those found in
+# this example:
+# https://jupyterbook.org/en/stable/structure/toc.html#use-parts-to-organize-chapters

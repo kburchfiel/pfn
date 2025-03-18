@@ -1,0 +1,1397 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Pivot and Graph Functions &#8212; Python for Nonprofits</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Graphing/pivot_and_graph_functions';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Mapping Census Data using Plotly (Work in progress)" href="../Mapping/choropleth_maps.html" />
+    <link rel="prev" title="Creating Interactive and Static Charts with Plotly" href="graphing.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../front_matter_for_book.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Python for Nonprofits</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../front_matter_for_book.html">
+                    Wecome to Python for Nonprofits!
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Introduction</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Introduction/introduction.html">An Introduction to Python for Nonprofits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Introduction/the_case_for_python_at_nonprofits.html">The Case for Using Python at Nonprofits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Book_Specific_Materials/getting_started_for_book.html">Getting Started</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Importing and Prepping Data</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Data_Retrieval/data_retrieval.html">Data Retrieval</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Data_Prep/data_prep.html">Data Prep</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Analyzing Data</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Descriptive_Stats/descriptive_stats.html">Descriptive Stats</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Descriptive_Stats/descriptive_stats_part_2.html">Descriptive Stats: Part 2</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Census_Data_Imports/census_data_imports.html">Census Data Imports</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Book_Specific_Materials/census_import_scripts_py_nb.html">census_import_scripts.py</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Visualizing Data</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="graphing.html">Creating Interactive and Static Charts with Plotly</a></li>
+
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Pivot and Graph Functions</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Mapping/choropleth_maps.html">Mapping Census Data using Plotly (Work in progress)</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Book_Specific_Materials/plotly_choropleth_map_functions_py_nb.html">plotly_choropleth_map_functions.py</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Mapping/choropleth_maps_with_folium.html">Creating Choropleth Maps with Folium</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Book_Specific_Materials/folium_choropleth_map_functions_py_nb.html">folium_choropleth_map_functions.py</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Regressions</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Regressions/regression_analyses.html">Regression Analyses</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Publishing Analyses Online</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Static_Sites/simple_static_site.html">Creating a Simple Static Webpage</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Updating_Online_Spreadsheets/updating_online_spreadsheets.html">Updating Online Spreadsheets</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Book_Specific_Materials/weather_import_py_nb.html">weather_import.py</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Online_Visualizations/Simple_App_Without_Login/readme.html">Simple Dash App Without Login</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Book_Specific_Materials/Simple_App_Without_Login_py_nb.html">Source code for Simple App Without Login</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Online_Visualizations/PFN_Dash_App_Demo/readme.html">PFN Dash App Demo</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Book_Specific_Materials/PFN_Dash_App_Demo_py_nb.html">Source code for PFN Dash App Demo</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendix</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Appendix/nvcu_db_gen.html">NVCU Database Generator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Book_Specific_Materials/helper_funcs_py_nb.html">helper_funcs.py</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/Graphing/pivot_and_graph_functions.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Pivot and Graph Functions</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-a-detailed-survey-results-dataset">Creating a detailed survey results dataset</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#importing-each-dataset">Importing each dataset:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#merging-these-datasets-together">Merging these datasets together:</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-basic-autopivot-function">A basic autopivot function</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-basic-autobar-function">A basic autobar function</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#testing-out-autopivot-simple-and-autobar-simple">Testing out autopivot_simple and autobar_simple:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#importing-autopivot-and-autobar-functions">Importing autopivot and autobar functions</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#demonstrating-these-functions">Demonstrating these functions</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="pivot-and-graph-functions">
+<h1>Pivot and Graph Functions<a class="headerlink" href="#pivot-and-graph-functions" title="Link to this heading">#</a></h1>
+<p>By Kenneth Burchfiel</p>
+<p>Released under the MIT License</p>
+<p>This notebook will demonstrate how to use functions to simplify the Plotly graphing process. These functions will also prove useful within the online visualizations section of Python for Nonprofits.</p>
+<p>As shown in the graphing.ipynb notebook within this section, pivot tables play a crucial role in generating Plotly charts. They allow you to turn a raw dataset into a table of aggregate values that can easily be rendered as a bar graph, line graph, or alternative plot type. Thanks to the powerful pandas library, these tables are easy to produce within Python.</p>
+<p>However, creating separate pivot tables for each graph still requires a decent amount of work. In addition, there are times when coding these pivot tables would be impractical. Suppose, for instance, that you’re putting together an online dashboard that visualizes mean survey result scores in bar chart form. You would like to allow users to compare these scores by up to 6 potential variables: Starting Year, Season, Gender, Graduation Year, College, and Level. (In other words, they should be able to view these results by Season and College; College, Level, and Season; all 6 variables; and even no variables at all–in which case all results will be grouped into a single bar.)</p>
+<p>If you wanted to create a pivot table for each of these comparison options, you’d end up having to construct <em>at least</em> 64 pivot tables. (There are 6 comparison options, each of which can either be present or absent–resulting in a total of 2^6 = 64 tables.) However, when you take the color variable option into account, you might need to produce up to 256 tables. In addition, if we consider x variable order to matter, the number of tables that must be created <strong>will easily exceed 1,000</strong>.*</p>
+<p>In order to avoid creating hundreds or even thousands of pivot tables for this online dashboard, we’ll need to create <strong>an ‘autopivot’ function that, given a list of comparison variables, a y variable, and a color variable, returns a pivot table, x and y variables, and a color variable.</strong> We will demonstrate such a function within this notebook.</p>
+<p>Although this pivot table function will play a pivotal (pun intended) role in our final graph, we’ll also need to create a corresponding <strong>‘autobar’ function that converts the output of the autopivot function into a graph.</strong> (We could add this code into our main pivot table function, but separating the two allows other graph types–such as line charts–to be created rather than bar charts, thus making the code more versatile.)</p>
+<p>*The spreadsheet I used for these calculations can be found within this section’s folder as color_combination_possibilities.xlsx. These can be analyzed as combination and permutation problems, although the presence of a color variable adds a bit more complexity. To be honest, I’m not certain about these calculations, but it’s fair to say that the number of possible pivot tables (and charts) that could be created with up to 6 comparison options is … <em>a lot.</em></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">plotly.express</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">px</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sqlalchemy</span><span class="w"> </span><span class="kn">import</span> <span class="n">create_engine</span>
+<span class="n">e</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="s1">&#39;sqlite:///../Appendix/nvcu_db.db&#39;</span><span class="p">)</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;../Appendix&#39;</span><span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">helper_funcs</span><span class="w"> </span><span class="kn">import</span> <span class="n">config_notebook</span><span class="p">,</span> <span class="n">wadi</span>
+<span class="n">display_type</span> <span class="o">=</span> <span class="n">config_notebook</span><span class="p">(</span><span class="n">display_max_columns</span> <span class="o">=</span> <span class="mi">5</span><span class="p">)</span>
+        
+</pre></div>
+</div>
+</div>
+</div>
+<section id="creating-a-detailed-survey-results-dataset">
+<h2>Creating a detailed survey results dataset<a class="headerlink" href="#creating-a-detailed-survey-results-dataset" title="Link to this heading">#</a></h2>
+<p>This dataset will include data from both our survey results <em>and</em> enrollment tables, thus allowing for additional comparison options.</p>
+<section id="importing-each-dataset">
+<h3>Importing each dataset:<a class="headerlink" href="#importing-each-dataset" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_enrollment</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_sql</span><span class="p">(</span>
+    <span class="s1">&#39;select * from curr_enrollment&#39;</span><span class="p">,</span> <span class="n">con</span> <span class="o">=</span> <span class="n">e</span><span class="p">)</span>
+<span class="n">df_enrollment</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>first_name</th>
+      <th>last_name</th>
+      <th>...</th>
+      <th>level</th>
+      <th>level_for_sorting</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Brandy</td>
+      <td>Wang</td>
+      <td>...</td>
+      <td>Se</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Cynthia</td>
+      <td>Whitaker</td>
+      <td>...</td>
+      <td>Se</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>16382</th>
+      <td>Joseph</td>
+      <td>Campbell</td>
+      <td>...</td>
+      <td>Fr</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>16383</th>
+      <td>Austin</td>
+      <td>Davis</td>
+      <td>...</td>
+      <td>Fr</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+<p>16384 rows × 11 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_survey_results</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_sql</span><span class="p">(</span>
+    <span class="s1">&#39;select * from survey_results&#39;</span><span class="p">,</span> <span class="n">con</span> <span class="o">=</span> <span class="n">e</span><span class="p">)</span>
+<span class="n">df_survey_results</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>student_id</th>
+      <th>starting_year</th>
+      <th>season</th>
+      <th>score</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2020-1</td>
+      <td>2023</td>
+      <td>Fall</td>
+      <td>88</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2020-2</td>
+      <td>2023</td>
+      <td>Fall</td>
+      <td>37</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>32766</th>
+      <td>2023-5442</td>
+      <td>2023</td>
+      <td>Spring</td>
+      <td>64</td>
+    </tr>
+    <tr>
+      <th>32767</th>
+      <td>2023-5443</td>
+      <td>2023</td>
+      <td>Spring</td>
+      <td>77</td>
+    </tr>
+  </tbody>
+</table>
+<p>32768 rows × 4 columns</p>
+</div></div></div>
+</div>
+</section>
+<section id="merging-these-datasets-together">
+<h3>Merging these datasets together:<a class="headerlink" href="#merging-these-datasets-together" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_se</span> <span class="o">=</span> <span class="n">df_survey_results</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span>
+    <span class="n">df_enrollment</span><span class="p">,</span> <span class="n">on</span> <span class="o">=</span> <span class="s1">&#39;student_id&#39;</span><span class="p">,</span> <span class="n">how</span> <span class="o">=</span> <span class="s1">&#39;left&#39;</span><span class="p">)</span>
+<span class="c1"># The &#39;se&#39; in df_se stands for &#39;survey and enrollment.&#39;</span>
+
+<span class="c1"># Removing columns that we&#39;re not interested in using for our </span>
+<span class="c1"># comparisons:</span>
+<span class="n">df_se</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span>
+    <span class="p">[</span><span class="s1">&#39;student_id&#39;</span><span class="p">,</span> <span class="s1">&#39;first_name&#39;</span><span class="p">,</span> <span class="s1">&#39;last_name&#39;</span><span class="p">,</span>
+     <span class="s1">&#39;date_of_birth&#39;</span><span class="p">,</span> <span class="s1">&#39;matriculation_number&#39;</span><span class="p">],</span> 
+    <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># Reformatting our column names so that they&#39;ll show up better</span>
+<span class="c1"># within graphs):</span>
+
+<span class="n">df_se</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">column</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="p">)</span><span class="o">.</span><span class="n">title</span><span class="p">()</span> 
+    <span class="k">for</span> <span class="n">column</span> <span class="ow">in</span> <span class="n">df_se</span><span class="o">.</span><span class="n">columns</span><span class="p">]</span>
+
+<span class="n">df_se</span><span class="p">[</span><span class="s1">&#39;Season For Sorting&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">df_se</span><span class="p">[</span>
+<span class="s1">&#39;Season&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">({</span><span class="s1">&#39;Fall&#39;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="s1">&#39;Winter&#39;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="s1">&#39;Spring&#39;</span><span class="p">:</span><span class="mi">2</span><span class="p">}))</span>
+<span class="n">df_se</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span>
+    <span class="p">[</span><span class="s1">&#39;Season For Sorting&#39;</span><span class="p">,</span> <span class="s1">&#39;Level For Sorting&#39;</span><span class="p">],</span>
+    <span class="n">inplace</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+
+<span class="n">df_se</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Starting Year</th>
+      <th>Season</th>
+      <th>...</th>
+      <th>Level For Sorting</th>
+      <th>Season For Sorting</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>10941</th>
+      <td>2023</td>
+      <td>Fall</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>10942</th>
+      <td>2023</td>
+      <td>Fall</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>10943</th>
+      <td>2023</td>
+      <td>Fall</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>10944</th>
+      <td>2023</td>
+      <td>Fall</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>10945</th>
+      <td>2023</td>
+      <td>Fall</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 10 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_se</span><span class="p">[</span><span class="s1">&#39;Responses&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">df_se_pivot</span> <span class="o">=</span> <span class="n">df_se</span><span class="o">.</span><span class="n">pivot_table</span><span class="p">(</span>
+    <span class="n">index</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Starting Year&#39;</span><span class="p">,</span> <span class="s1">&#39;Season&#39;</span><span class="p">,</span> <span class="s1">&#39;Gender&#39;</span><span class="p">,</span> 
+             <span class="s1">&#39;Matriculation Year&#39;</span><span class="p">,</span> <span class="s1">&#39;College&#39;</span><span class="p">,</span> <span class="s1">&#39;Class Of&#39;</span><span class="p">,</span>
+             <span class="s1">&#39;Level&#39;</span><span class="p">,</span> <span class="s1">&#39;Level For Sorting&#39;</span><span class="p">,</span> <span class="s1">&#39;Season For Sorting&#39;</span><span class="p">],</span>
+    <span class="n">values</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Score&#39;</span><span class="p">,</span> <span class="s1">&#39;Responses&#39;</span><span class="p">],</span>
+    <span class="n">aggfunc</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Score&#39;</span><span class="p">:</span><span class="s1">&#39;mean&#39;</span><span class="p">,</span> <span class="s1">&#39;Responses&#39;</span><span class="p">:</span><span class="s1">&#39;sum&#39;</span><span class="p">})</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+<span class="n">df_se_pivot</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Starting Year</th>
+      <th>Season</th>
+      <th>...</th>
+      <th>Responses</th>
+      <th>Score</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2023</td>
+      <td>Fall</td>
+      <td>...</td>
+      <td>408</td>
+      <td>69.583333</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2023</td>
+      <td>Fall</td>
+      <td>...</td>
+      <td>519</td>
+      <td>69.697495</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>62</th>
+      <td>2023</td>
+      <td>Spring</td>
+      <td>...</td>
+      <td>756</td>
+      <td>79.120370</td>
+    </tr>
+    <tr>
+      <th>63</th>
+      <td>2023</td>
+      <td>Spring</td>
+      <td>...</td>
+      <td>858</td>
+      <td>78.083916</td>
+    </tr>
+  </tbody>
+</table>
+<p>64 rows × 11 columns</p>
+</div></div></div>
+</div>
+</section>
+</section>
+<section id="a-basic-autopivot-function">
+<h2>A basic autopivot function<a class="headerlink" href="#a-basic-autopivot-function" title="Link to this heading">#</a></h2>
+<p>The following code shows a simple version of an ‘autopivot’ function that can automatically create both pivot tables to be graphed and corresponding graphing variables. One key variable generated by this function is a field that groups together all of the individual comparison values passed to x_vars[] and can thus serve as the ‘x’ argument within a Plotly graph call.</p>
+<p>This function has a number of limitations: for instance, it doesn’t take color options into account, and it also can’t accommodate variables that should be included in the <em>pivot table</em> function (e.g. for sorting purposes) but excluded from the <em>x variable column</em>. However, I chose to include it here in order to highlight the core concepts of this ‘autopivot’ function clearer. (The final autopivot function, shown later in this notebook, gets a bit more complicated.)</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">autopivot_simple</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">aggfunc</span><span class="p">,</span> <span class="n">x_vars</span> <span class="o">=</span> <span class="p">[],</span>
+                    <span class="n">overall_data_name</span> <span class="o">=</span> <span class="s1">&#39;All Data&#39;</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;This is a simple version of an &#39;autopivot&#39; chart. Given a </span>
+<span class="sd">    DataFrame, a y variable, an aggregate function, and an arbitrary list </span>
+<span class="sd">    of variables, it will return a pivot table, an x variable, </span>
+<span class="sd">    and a y variable that can then get fed into a graphing function.</span>
+
+<span class="sd">    For more documentation on these steps, </span>
+<span class="sd">    see the full autopivot function below. (I excluded that documentation</span>
+<span class="sd">    from this code in order to prevent redundancy.)</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="n">df_for_pivot</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">df_for_pivot</span>
+
+    <span class="c1"># Handling a situation in which no comparion variables were provided:</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">x_vars</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span> 
+        <span class="n">df_for_pivot</span><span class="p">[</span><span class="n">overall_data_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">overall_data_name</span>
+        <span class="n">df_pivot</span> <span class="o">=</span> <span class="n">df_for_pivot</span><span class="o">.</span><span class="n">pivot_table</span><span class="p">(</span>
+            <span class="n">index</span> <span class="o">=</span> <span class="n">overall_data_name</span><span class="p">,</span> <span class="n">values</span> <span class="o">=</span> <span class="n">y</span><span class="p">,</span> 
+            <span class="n">aggfunc</span> <span class="o">=</span> <span class="n">aggfunc</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+        <span class="n">x_val_name</span> <span class="o">=</span> <span class="n">overall_data_name</span>
+        <span class="n">color</span> <span class="o">=</span> <span class="n">overall_data_name</span>
+        <span class="n">barmode</span> <span class="o">=</span> <span class="s1">&#39;relative&#39;</span>
+        <span class="n">index</span> <span class="o">=</span> <span class="p">[</span><span class="n">overall_data_name</span><span class="p">]</span>         
+       
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;x_vars:&quot;</span><span class="p">,</span><span class="n">x_vars</span><span class="p">)</span>    
+
+        <span class="c1"># Creating a pivot table using the arguments provided:</span>
+        <span class="n">df_pivot</span> <span class="o">=</span> <span class="n">df_for_pivot</span><span class="o">.</span><span class="n">pivot_table</span><span class="p">(</span>
+            <span class="n">index</span> <span class="o">=</span> <span class="n">x_vars</span><span class="p">,</span> <span class="n">values</span> <span class="o">=</span> <span class="n">y</span><span class="p">,</span> <span class="n">aggfunc</span> <span class="o">=</span> <span class="n">aggfunc</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+        
+        <span class="c1"># Creating the x variable&#39;s column name:</span>
+        <span class="c1"># (This name can then get fed into a graphing function.)</span>
+        <span class="n">x_val_name</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">x_vars</span><span class="p">)</span>
+
+        <span class="c1"># Creating the values for this column:</span>
+        <span class="c1"># (The function does so by combining each row&#39;s values for </span>
+        <span class="c1"># the fields represented in x_vars into a single string.)</span>
+        <span class="n">df_pivot</span><span class="p">[</span><span class="n">x_val_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_pivot</span><span class="p">[</span><span class="n">x_vars</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;str&#39;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">x_vars</span><span class="p">)):</span>
+            <span class="n">df_pivot</span><span class="p">[</span><span class="n">x_val_name</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="n">df_pivot</span><span class="p">[</span><span class="n">x_val_name</span><span class="p">]</span> 
+                <span class="o">+</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="n">df_pivot</span><span class="p">[</span><span class="n">x_vars</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;str&#39;</span><span class="p">))</span>
+            
+    <span class="k">return</span> <span class="n">df_pivot</span><span class="p">,</span> <span class="n">x_val_name</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">aggfunc</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="a-basic-autobar-function">
+<h2>A basic autobar function<a class="headerlink" href="#a-basic-autobar-function" title="Link to this heading">#</a></h2>
+<p>The following function uses the output of autopivot_simple as inputs for a bar chart. It’s quite limited relative to the final autobar function that will be shown later in this code, but it still demonstrates the utility of the autobar_simple function.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">autobar_simple</span><span class="p">(</span><span class="n">df_pivot</span><span class="p">,</span> <span class="n">x_val_name</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">aggfunc</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;This function creates a bar graph of a pivot table (such as one</span>
+<span class="sd">    created by autopivot_simple.</span>
+<span class="sd">    For more documentation on this function, view the full autobar()</span>
+<span class="sd">    function, which will be defined below.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    
+    <span class="n">fig</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">df_pivot</span><span class="p">,</span> <span class="n">x</span> <span class="o">=</span> <span class="n">x_val_name</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">y</span><span class="p">,</span> <span class="n">text_auto</span> <span class="o">=</span> <span class="s1">&#39;.0f&#39;</span><span class="p">,</span>
+                <span class="n">title</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">aggfunc</span><span class="o">.</span><span class="n">title</span><span class="p">()</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">y</span><span class="si">}</span><span class="s2"> by </span><span class="si">{</span><span class="n">x_val_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span> 
+    <span class="k">return</span> <span class="n">fig</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="testing-out-autopivot-simple-and-autobar-simple">
+<h2>Testing out autopivot_simple and autobar_simple:<a class="headerlink" href="#testing-out-autopivot-simple-and-autobar-simple" title="Link to this heading">#</a></h2>
+<p>We’ll first use these functions to graph average survey results by level and season:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_pivot</span><span class="p">,</span> <span class="n">x_val_name</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">aggfunc</span> <span class="o">=</span> <span class="n">autopivot_simple</span><span class="p">(</span>
+    <span class="n">df_se</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="s1">&#39;Score&#39;</span><span class="p">,</span> <span class="n">aggfunc</span> <span class="o">=</span> <span class="s1">&#39;mean&#39;</span><span class="p">,</span> <span class="n">x_vars</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Level&#39;</span><span class="p">,</span> <span class="s1">&#39;Season&#39;</span><span class="p">])</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">x_val_name</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">df_pivot</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">autobar_simple</span><span class="p">(</span>
+    <span class="n">df_pivot</span> <span class="o">=</span> <span class="n">df_pivot</span><span class="p">,</span> <span class="n">x_val_name</span> <span class="o">=</span> <span class="n">x_val_name</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">y</span><span class="p">,</span>
+<span class="n">aggfunc</span> <span class="o">=</span> <span class="n">aggfunc</span><span class="p">)</span>                      
+
+<span class="n">wadi</span><span class="p">(</span><span class="n">fig</span><span class="o">=</span><span class="n">fig</span><span class="p">,</span> <span class="n">file_path</span><span class="o">=</span><span class="s1">&#39;output/mean_score_by_level_and_season&#39;</span><span class="p">,</span>
+    <span class="n">display_type</span><span class="o">=</span><span class="n">display_type</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>x_vars: [&#39;Level&#39;, &#39;Season&#39;]
+Level/Season Score   Level  Season      Score Level/Season
+0    Fr    Fall  69.609774      Fr/Fall
+1    Fr  Spring  74.833180    Fr/Spring
+2    Ju    Fall  69.768957      Ju/Fall
+3    Ju  Spring  69.350671    Ju/Spring
+4    Se    Fall  69.698085      Se/Fall
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="../_images/4ca3d0d2dc06a31e177555f8f5375434c2b142134b2aaa2d612771990545bd0c.png"><img alt="../_images/4ca3d0d2dc06a31e177555f8f5375434c2b142134b2aaa2d612771990545bd0c.png" src="../_images/4ca3d0d2dc06a31e177555f8f5375434c2b142134b2aaa2d612771990545bd0c.png" style="width: 720px;" /></a>
+</div>
+</div>
+<p>Next, we’ll display these averages by season, college, and level:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_pivot</span><span class="p">,</span> <span class="n">x_val_name</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">aggfunc</span> <span class="o">=</span> <span class="n">autopivot_simple</span><span class="p">(</span>
+    <span class="n">df_se</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="s1">&#39;Score&#39;</span><span class="p">,</span> <span class="n">aggfunc</span> <span class="o">=</span> <span class="s1">&#39;mean&#39;</span><span class="p">,</span> <span class="n">x_vars</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s1">&#39;Season&#39;</span><span class="p">,</span> <span class="s1">&#39;College&#39;</span><span class="p">,</span> <span class="s1">&#39;Level&#39;</span><span class="p">])</span>
+
+<span class="n">fig</span> <span class="o">=</span> <span class="n">autobar_simple</span><span class="p">(</span>
+    <span class="n">df_pivot</span> <span class="o">=</span> <span class="n">df_pivot</span><span class="p">,</span> <span class="n">x_val_name</span> <span class="o">=</span> <span class="n">x_val_name</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">y</span><span class="p">,</span>
+    <span class="n">aggfunc</span> <span class="o">=</span> <span class="n">aggfunc</span>
+    <span class="p">)</span>                      
+
+<span class="n">wadi</span><span class="p">(</span><span class="n">fig</span><span class="o">=</span><span class="n">fig</span><span class="p">,</span> <span class="n">file_path</span><span class="o">=</span><span class="s1">&#39;output/mean_score_by_season_college_and_level&#39;</span><span class="p">,</span>
+    <span class="n">display_type</span><span class="o">=</span><span class="n">display_type</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>x_vars: [&#39;Season&#39;, &#39;College&#39;, &#39;Level&#39;]
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="../_images/4c2dc1848fefe0632c3fa4c206398823891c564d8172798dd3e1bda914220a93.png"><img alt="../_images/4c2dc1848fefe0632c3fa4c206398823891c564d8172798dd3e1bda914220a93.png" src="../_images/4c2dc1848fefe0632c3fa4c206398823891c564d8172798dd3e1bda914220a93.png" style="width: 720px;" /></a>
+</div>
+</div>
+<p>Finally, we’ll create a chart that groups all data together:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_pivot</span><span class="p">,</span> <span class="n">x_val_name</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">aggfunc</span> <span class="o">=</span> <span class="n">autopivot_simple</span><span class="p">(</span>
+    <span class="n">df_se</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="s1">&#39;Score&#39;</span><span class="p">,</span> <span class="n">aggfunc</span> <span class="o">=</span> <span class="s1">&#39;mean&#39;</span><span class="p">,</span> <span class="n">x_vars</span> <span class="o">=</span> <span class="p">[])</span>
+
+<span class="n">fig</span> <span class="o">=</span> <span class="n">autobar_simple</span><span class="p">(</span>
+    <span class="n">df_pivot</span> <span class="o">=</span> <span class="n">df_pivot</span><span class="p">,</span> <span class="n">x_val_name</span> <span class="o">=</span> <span class="n">x_val_name</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">y</span><span class="p">,</span> <span class="n">aggfunc</span> <span class="o">=</span> <span class="n">aggfunc</span>
+    <span class="p">)</span>                      
+
+<span class="n">wadi</span><span class="p">(</span><span class="n">fig</span><span class="o">=</span><span class="n">fig</span><span class="p">,</span> <span class="n">file_path</span><span class="o">=</span><span class="s1">&#39;output/mean_score_by_all_data&#39;</span><span class="p">,</span>
+    <span class="n">display_type</span><span class="o">=</span><span class="n">display_type</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="../_images/1a8b2ea9fb22a220e7f7e6b1ea6745ff9bf93442c726af4665425d05f626ed4b.png"><img alt="../_images/1a8b2ea9fb22a220e7f7e6b1ea6745ff9bf93442c726af4665425d05f626ed4b.png" src="../_images/1a8b2ea9fb22a220e7f7e6b1ea6745ff9bf93442c726af4665425d05f626ed4b.png" style="width: 720px;" /></a>
+</div>
+</div>
+<p>The above examples demonstrate how the autopivot_simple and autobar_simple functions can work together to generate all sorts of different table and chart combinations, thus eliminating the need to write pivot table and bar chart code for each set of comparison variables a user might want to analyze.</p>
+<p>However, the charts they work together to produce leave much to be desired. There are no colors: the titles could use some work; and levels are sorted alphabetically rather than chronologically. Therefore, we’ll now import more robust versions of these functions.</p>
+</section>
+<section id="importing-autopivot-and-autobar-functions">
+<h2>Importing autopivot and autobar functions<a class="headerlink" href="#importing-autopivot-and-autobar-functions" title="Link to this heading">#</a></h2>
+<p>These functions are stored within the auto_pivot_and_graph.py file within the PFN_Dash_App_Demo component of PFN’s Online Visualizations section. The Dash App Demo project applies them to automatically create new pivot tables–and corresponding charts–based on the input variables requested by dashboard visitors.</p>
+<p>I had originally kept a copy of these functions within this section as well, but that resulted in two redundant Python files that I would need to manually synchronize. Therefore, I decided to delete this section’s copy and instead direct users to the Online Visualizations section if they needed to reference the code.</p>
+<p>At this point, I <em>do</em> suggest that you take some time to look through the auto_pivot_and_graph.py file (see the following cell for assistance with locating it); it contains detailed commentary to help you understand what’s going on within each step.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;../Online_Visualizations/PFN_Dash_App_Demo&#39;</span><span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">auto_pivot_and_graph</span><span class="w"> </span><span class="kn">import</span> <span class="n">autopivot</span><span class="p">,</span> <span class="n">autobar</span><span class="p">,</span> <span class="n">autopivot_plus_bar</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="demonstrating-these-functions">
+<h3>Demonstrating these functions<a class="headerlink" href="#demonstrating-these-functions" title="Link to this heading">#</a></h3>
+<p>First, here’s a look at the output of autopivot() on its own:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">df_pivot</span><span class="p">,</span> <span class="n">x_val_name</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">color</span><span class="p">,</span> <span class="n">barmode</span><span class="p">,</span> 
+ <span class="n">x_var_count</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">aggfunc</span><span class="p">)</span> <span class="o">=</span> <span class="n">autopivot</span><span class="p">(</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">df_se</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="s1">&#39;Score&#39;</span><span class="p">,</span> 
+    <span class="n">x_vars</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;College&#39;</span><span class="p">,</span> <span class="s1">&#39;Level For Sorting&#39;</span><span class="p">,</span> <span class="s1">&#39;Level&#39;</span><span class="p">],</span> 
+    <span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;Season&#39;</span><span class="p">,</span> 
+    <span class="n">x_vars_to_exclude</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Level For Sorting&#39;</span><span class="p">,</span> <span class="s1">&#39;Season For Sorting&#39;</span><span class="p">],</span>
+    <span class="n">aggfunc</span> <span class="o">=</span> <span class="s1">&#39;mean&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">x_val_name</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">color</span><span class="p">,</span> <span class="n">barmode</span><span class="p">)</span>
+<span class="n">df_pivot</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>x_vars: [&#39;College&#39;, &#39;Level For Sorting&#39;, &#39;Level&#39;]
+index prior to pivot_table() call: [&#39;College&#39;, &#39;Level For Sorting&#39;, &#39;Level&#39;, &#39;Season&#39;]
+College/Level Score Season group
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>College</th>
+      <th>Level For Sorting</th>
+      <th>...</th>
+      <th>Score</th>
+      <th>College/Level</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>STB</td>
+      <td>0</td>
+      <td>...</td>
+      <td>69.593583</td>
+      <td>STB/Fr</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>STB</td>
+      <td>0</td>
+      <td>...</td>
+      <td>69.177235</td>
+      <td>STB/Fr</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>STB</td>
+      <td>1</td>
+      <td>...</td>
+      <td>70.377306</td>
+      <td>STB/So</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>STB</td>
+      <td>1</td>
+      <td>...</td>
+      <td>65.377306</td>
+      <td>STB/So</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>STB</td>
+      <td>2</td>
+      <td>...</td>
+      <td>69.950769</td>
+      <td>STB/Ju</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 6 columns</p>
+</div></div></div>
+</div>
+<p>And here’s what autobar() produces when the above autopivot() output serves as its arguments:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">autobar</span><span class="p">(</span>
+    <span class="n">df_pivot</span> <span class="o">=</span> <span class="n">df_pivot</span><span class="p">,</span>
+    <span class="n">x_val_name</span> <span class="o">=</span> <span class="n">x_val_name</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">y</span><span class="p">,</span>
+    <span class="n">color</span> <span class="o">=</span> <span class="n">color</span><span class="p">,</span> <span class="n">barmode</span> <span class="o">=</span> <span class="n">barmode</span><span class="p">,</span> 
+    <span class="n">x_var_count</span> <span class="o">=</span> <span class="n">x_var_count</span><span class="p">,</span> <span class="n">index</span> <span class="o">=</span> <span class="n">index</span><span class="p">,</span>
+    <span class="n">aggfunc</span> <span class="o">=</span> <span class="n">aggfunc</span><span class="p">)</span>
+
+<span class="n">wadi</span><span class="p">(</span><span class="n">fig</span><span class="o">=</span><span class="n">fig</span><span class="p">,</span> 
+     <span class="n">file_path</span><span class="o">=</span><span class="s1">&#39;output/mean_score_by_college_level_and_season_autopivot&#39;</span><span class="p">,</span>
+     <span class="n">display_type</span><span class="o">=</span><span class="n">display_type</span><span class="p">)</span>
+                               
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="../_images/0bd48db31bd855df16b43db0b176eb734a4f75ada2f18f3f6462cbbaaefab62e.png"><img alt="../_images/0bd48db31bd855df16b43db0b176eb734a4f75ada2f18f3f6462cbbaaefab62e.png" src="../_images/0bd48db31bd855df16b43db0b176eb734a4f75ada2f18f3f6462cbbaaefab62e.png" style="width: 720px;" /></a>
+</div>
+</div>
+<p>We can simplify this code even further by calling autopivot_plus_bar():</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">autopivot_plus_bar</span><span class="p">(</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">df_se</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="s1">&#39;Score&#39;</span><span class="p">,</span> 
+    <span class="n">x_vars</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;College&#39;</span><span class="p">,</span> <span class="s1">&#39;Level For Sorting&#39;</span><span class="p">,</span> <span class="s1">&#39;Level&#39;</span><span class="p">],</span> 
+    <span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;Season&#39;</span><span class="p">,</span> 
+    <span class="n">x_vars_to_exclude</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Level For Sorting&#39;</span><span class="p">,</span> <span class="s1">&#39;Season For Sorting&#39;</span><span class="p">],</span>
+    <span class="n">aggfunc</span> <span class="o">=</span> <span class="s1">&#39;mean&#39;</span><span class="p">)</span>
+
+<span class="n">wadi</span><span class="p">(</span><span class="n">fig</span><span class="o">=</span><span class="n">fig</span><span class="p">,</span> 
+     <span class="n">file_path</span><span class="o">=</span><span class="s1">&#39;output/mean_score_by_college_level_and_</span><span class="se">\</span>
+<span class="s1">season_autopivot_v2&#39;</span><span class="p">,</span> <span class="n">display_type</span><span class="o">=</span><span class="n">display_type</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>x_vars: [&#39;College&#39;, &#39;Level For Sorting&#39;, &#39;Level&#39;]
+index prior to pivot_table() call: [&#39;College&#39;, &#39;Level For Sorting&#39;, &#39;Level&#39;, &#39;Season&#39;]
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="../_images/0bd48db31bd855df16b43db0b176eb734a4f75ada2f18f3f6462cbbaaefab62e.png"><img alt="../_images/0bd48db31bd855df16b43db0b176eb734a4f75ada2f18f3f6462cbbaaefab62e.png" src="../_images/0bd48db31bd855df16b43db0b176eb734a4f75ada2f18f3f6462cbbaaefab62e.png" style="width: 720px;" /></a>
+</div>
+</div>
+<p>Here’s what the output looks like with 3 comparison variables:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">df_pivot</span><span class="p">,</span> <span class="n">x_val_name</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">color</span><span class="p">,</span> <span class="n">barmode</span><span class="p">,</span> 
+ <span class="n">x_var_count</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">aggfunc</span><span class="p">)</span> <span class="o">=</span> <span class="n">autopivot</span><span class="p">(</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">df_se_pivot</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="s1">&#39;Score&#39;</span><span class="p">,</span> 
+    <span class="n">x_vars</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;College&#39;</span><span class="p">,</span> <span class="s1">&#39;Level For Sorting&#39;</span><span class="p">,</span> <span class="s1">&#39;Level&#39;</span><span class="p">],</span> 
+    <span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;Season&#39;</span><span class="p">,</span> 
+    <span class="n">x_vars_to_exclude</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Level For Sorting&#39;</span><span class="p">,</span> <span class="s1">&#39;Season For Sorting&#39;</span><span class="p">],</span>
+    <span class="n">aggfunc</span> <span class="o">=</span> <span class="s1">&#39;mean&#39;</span><span class="p">,</span> <span class="n">weight_col</span> <span class="o">=</span> <span class="s1">&#39;Responses&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">x_val_name</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">color</span><span class="p">,</span> <span class="n">barmode</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df_pivot</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span>
+
+<span class="n">fig</span> <span class="o">=</span> <span class="n">autobar</span><span class="p">(</span>
+    <span class="n">df_pivot</span> <span class="o">=</span> <span class="n">df_pivot</span><span class="p">,</span>
+    <span class="n">x_val_name</span> <span class="o">=</span> <span class="n">x_val_name</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">y</span><span class="p">,</span>
+    <span class="n">color</span> <span class="o">=</span> <span class="n">color</span><span class="p">,</span> <span class="n">barmode</span> <span class="o">=</span> <span class="n">barmode</span><span class="p">,</span> 
+    <span class="n">x_var_count</span> <span class="o">=</span> <span class="n">x_var_count</span><span class="p">,</span> <span class="n">index</span> <span class="o">=</span> <span class="n">index</span><span class="p">,</span>
+    <span class="n">aggfunc</span> <span class="o">=</span> <span class="n">aggfunc</span><span class="p">)</span>
+
+<span class="n">wadi</span><span class="p">(</span><span class="n">fig</span><span class="o">=</span><span class="n">fig</span><span class="p">,</span> 
+     <span class="n">file_path</span><span class="o">=</span><span class="s1">&#39;output/mean_score_by_college_level_and_</span><span class="se">\</span>
+<span class="s1">season_autopivot_v3&#39;</span><span class="p">,</span> <span class="n">display_type</span><span class="o">=</span><span class="n">display_type</span><span class="p">)</span>
+                               
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>x_vars: [&#39;College&#39;, &#39;Level For Sorting&#39;, &#39;Level&#39;]
+index prior to pivot_table() call: [&#39;College&#39;, &#39;Level For Sorting&#39;, &#39;Level&#39;, &#39;Season&#39;]
+College/Level Score Season group
+  College  Level For Sorting  ...      Score College/Level
+0     STB                  0  ...  69.593583        STB/Fr
+1     STB                  0  ...  69.177235        STB/Fr
+2     STB                  1  ...  70.377306        STB/So
+3     STB                  1  ...  65.377306        STB/So
+4     STB                  2  ...  69.950769        STB/Ju
+
+[5 rows x 8 columns]
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="../_images/0bd48db31bd855df16b43db0b176eb734a4f75ada2f18f3f6462cbbaaefab62e.png"><img alt="../_images/0bd48db31bd855df16b43db0b176eb734a4f75ada2f18f3f6462cbbaaefab62e.png" src="../_images/0bd48db31bd855df16b43db0b176eb734a4f75ada2f18f3f6462cbbaaefab62e.png" style="width: 720px;" /></a>
+</div>
+</div>
+<p>Here’s a chart with just 2 comparison variables:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">autopivot_plus_bar</span><span class="p">(</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">df_se</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="s1">&#39;Score&#39;</span><span class="p">,</span> 
+    <span class="n">x_vars</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Level&#39;</span><span class="p">,</span> <span class="s1">&#39;Season For Sorting&#39;</span><span class="p">],</span> 
+    <span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;Season&#39;</span><span class="p">,</span> 
+    <span class="n">x_vars_to_exclude</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Season For Sorting&#39;</span><span class="p">],</span>
+    <span class="n">aggfunc</span> <span class="o">=</span> <span class="s1">&#39;mean&#39;</span><span class="p">)</span>
+
+<span class="n">wadi</span><span class="p">(</span><span class="n">fig</span><span class="o">=</span><span class="n">fig</span><span class="p">,</span> 
+     <span class="n">file_path</span><span class="o">=</span><span class="s1">&#39;output/mean_score_by_level_and_season_autopivot&#39;</span><span class="p">,</span> 
+     <span class="n">display_type</span><span class="o">=</span><span class="n">display_type</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>x_vars: [&#39;Level&#39;, &#39;Season For Sorting&#39;]
+index prior to pivot_table() call: [&#39;Level&#39;, &#39;Season For Sorting&#39;, &#39;Season&#39;]
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="../_images/4f6043d3f196cf5de98a1f57e229a0a201c4178eef9c909e4f09b5dfe5f6d5a1.png"><img alt="../_images/4f6043d3f196cf5de98a1f57e229a0a201c4178eef9c909e4f09b5dfe5f6d5a1.png" src="../_images/4f6043d3f196cf5de98a1f57e229a0a201c4178eef9c909e4f09b5dfe5f6d5a1.png" style="width: 720px;" /></a>
+</div>
+</div>
+<p>Note that the above output is identical to the output of the following cell, which uses an aggregated dataframe (df_se_pivot) as its data source. This identical output was achieved by adding in a weight column (‘Respones’).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">autopivot_plus_bar</span><span class="p">(</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">df_se_pivot</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="s1">&#39;Score&#39;</span><span class="p">,</span> 
+    <span class="n">x_vars</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Level&#39;</span><span class="p">],</span> 
+    <span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;Season&#39;</span><span class="p">,</span> 
+    <span class="n">x_vars_to_exclude</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Season For Sorting&#39;</span><span class="p">],</span>
+    <span class="n">aggfunc</span> <span class="o">=</span> <span class="s1">&#39;mean&#39;</span><span class="p">,</span> <span class="n">weight_col</span> <span class="o">=</span> <span class="s1">&#39;Responses&#39;</span><span class="p">)</span>        
+
+<span class="n">wadi</span><span class="p">(</span><span class="n">fig</span><span class="o">=</span><span class="n">fig</span><span class="p">,</span> 
+     <span class="n">file_path</span><span class="o">=</span><span class="s1">&#39;output/mean_score_by_level_and_season_autopivot_v2&#39;</span><span class="p">,</span> 
+     <span class="n">display_type</span><span class="o">=</span><span class="n">display_type</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>x_vars: [&#39;Level&#39;]
+index prior to pivot_table() call: [&#39;Level&#39;, &#39;Season&#39;]
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="../_images/4f6043d3f196cf5de98a1f57e229a0a201c4178eef9c909e4f09b5dfe5f6d5a1.png"><img alt="../_images/4f6043d3f196cf5de98a1f57e229a0a201c4178eef9c909e4f09b5dfe5f6d5a1.png" src="../_images/4f6043d3f196cf5de98a1f57e229a0a201c4178eef9c909e4f09b5dfe5f6d5a1.png" style="width: 720px;" /></a>
+</div>
+</div>
+<p>In contrast, the following output, which uses df_se_pivot as well but does <em>not</em> reference a weight column, differs slightly from the above two graphs. This is because it is falling into the ‘average of averages’ error noted earlier.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">autopivot_plus_bar</span><span class="p">(</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">df_se_pivot</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="s1">&#39;Score&#39;</span><span class="p">,</span> 
+    <span class="n">x_vars</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Level&#39;</span><span class="p">],</span> 
+    <span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;Season&#39;</span><span class="p">,</span> 
+    <span class="n">x_vars_to_exclude</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Season For Sorting&#39;</span><span class="p">],</span>
+    <span class="n">aggfunc</span> <span class="o">=</span> <span class="s1">&#39;mean&#39;</span><span class="p">)</span>    
+
+<span class="n">wadi</span><span class="p">(</span><span class="n">fig</span><span class="o">=</span><span class="n">fig</span><span class="p">,</span> 
+     <span class="n">file_path</span><span class="o">=</span><span class="s1">&#39;output/mean_score_by_level_and_season_autopivot_aoa_error&#39;</span><span class="p">,</span> 
+     <span class="n">display_type</span><span class="o">=</span><span class="n">display_type</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>x_vars: [&#39;Level&#39;]
+index prior to pivot_table() call: [&#39;Level&#39;, &#39;Season&#39;]
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="../_images/2229aef06d752cfda3bf84f464e8dd25020188e01aa56cb26794b571294bdf3c.png"><img alt="../_images/2229aef06d752cfda3bf84f464e8dd25020188e01aa56cb26794b571294bdf3c.png" src="../_images/2229aef06d752cfda3bf84f464e8dd25020188e01aa56cb26794b571294bdf3c.png" style="width: 720px;" /></a>
+</div>
+</div>
+<p>These functions also allow the color argument to be skipped, though the result is rather plain:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">autopivot_plus_bar</span><span class="p">(</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">df_se</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="s1">&#39;Score&#39;</span><span class="p">,</span> 
+    <span class="n">x_vars</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;College&#39;</span><span class="p">,</span> <span class="s1">&#39;Level&#39;</span><span class="p">],</span>
+    <span class="n">aggfunc</span> <span class="o">=</span> <span class="s1">&#39;mean&#39;</span><span class="p">)</span>
+
+<span class="n">wadi</span><span class="p">(</span><span class="n">fig</span><span class="o">=</span><span class="n">fig</span><span class="p">,</span> 
+     <span class="n">file_path</span><span class="o">=</span><span class="s1">&#39;output/mean_score_by_college_and_level_autopivot_colorless&#39;</span><span class="p">,</span> 
+     <span class="n">display_type</span><span class="o">=</span><span class="n">display_type</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>x_vars: [&#39;College&#39;, &#39;Level&#39;]
+index prior to pivot_table() call: [&#39;College&#39;, &#39;Level&#39;]
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="../_images/9d9707c7f5cfa27cd1d432b377947a81de4131b60594709e3950e0edab85e730.png"><img alt="../_images/9d9707c7f5cfa27cd1d432b377947a81de4131b60594709e3950e0edab85e730.png" src="../_images/9d9707c7f5cfa27cd1d432b377947a81de4131b60594709e3950e0edab85e730.png" style="width: 720px;" /></a>
+</div>
+</div>
+<p>They also allow an empty list of comparison values to get passed to x_vars, thus producing a single bar that represents the average of all values in the DataFrame.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">autopivot_plus_bar</span><span class="p">(</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">df_se</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="s1">&#39;Score&#39;</span><span class="p">,</span> 
+    <span class="n">x_vars</span> <span class="o">=</span> <span class="p">[],</span> 
+    <span class="n">color</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> 
+    <span class="n">x_vars_to_exclude</span> <span class="o">=</span> <span class="p">[],</span>
+    <span class="n">aggfunc</span> <span class="o">=</span> <span class="s1">&#39;mean&#39;</span><span class="p">)</span>       
+
+<span class="n">wadi</span><span class="p">(</span><span class="n">fig</span><span class="o">=</span><span class="n">fig</span><span class="p">,</span> 
+     <span class="n">file_path</span><span class="o">=</span><span class="s1">&#39;output/overall_mean_score_autopivot&#39;</span><span class="p">,</span> 
+     <span class="n">display_type</span><span class="o">=</span><span class="n">display_type</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="../_images/ab287a9da223ec24e549756b3c814ee42393ca6d5b8a140a708426510e4a7cf6.png"><img alt="../_images/ab287a9da223ec24e549756b3c814ee42393ca6d5b8a140a708426510e4a7cf6.png" src="../_images/ab287a9da223ec24e549756b3c814ee42393ca6d5b8a140a708426510e4a7cf6.png" style="width: 720px;" /></a>
+</div>
+</div>
+<p>At the opposite extreme, we can graph 6 comparison variables within the same chart (though the result is not the easiest to read):</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">autopivot_plus_bar</span><span class="p">(</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">df_se</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="s1">&#39;Score&#39;</span><span class="p">,</span> 
+    <span class="n">x_vars</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s1">&#39;Starting Year&#39;</span><span class="p">,</span> <span class="s1">&#39;Season&#39;</span><span class="p">,</span> <span class="s1">&#39;Gender&#39;</span><span class="p">,</span> <span class="s1">&#39;College&#39;</span><span class="p">,</span> <span class="s1">&#39;Class Of&#39;</span><span class="p">,</span> 
+        <span class="s1">&#39;Level For Sorting&#39;</span><span class="p">,</span> <span class="s1">&#39;Level&#39;</span><span class="p">],</span> 
+    <span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;Season&#39;</span><span class="p">,</span> 
+    <span class="n">x_vars_to_exclude</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Level For Sorting&#39;</span><span class="p">],</span>
+    <span class="n">aggfunc</span> <span class="o">=</span> <span class="s1">&#39;mean&#39;</span><span class="p">)</span>      
+
+<span class="n">wadi</span><span class="p">(</span><span class="n">fig</span><span class="o">=</span><span class="n">fig</span><span class="p">,</span> 
+     <span class="n">file_path</span><span class="o">=</span><span class="s1">&#39;output/mean_score_by_6_variables_autopivot&#39;</span><span class="p">,</span> 
+     <span class="n">display_type</span><span class="o">=</span><span class="n">display_type</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>x_vars: [&#39;Starting Year&#39;, &#39;Gender&#39;, &#39;College&#39;, &#39;Class Of&#39;, &#39;Level For Sorting&#39;, &#39;Level&#39;]
+index prior to pivot_table() call: [&#39;Starting Year&#39;, &#39;Gender&#39;, &#39;College&#39;, &#39;Class Of&#39;, &#39;Level For Sorting&#39;, &#39;Level&#39;, &#39;Season&#39;]
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="../_images/35abeb5f481ff83bda26539449ce09f35e8f883d1a6af712a2ab4f58a3caaa8e.png"><img alt="../_images/35abeb5f481ff83bda26539449ce09f35e8f883d1a6af712a2ab4f58a3caaa8e.png" src="../_images/35abeb5f481ff83bda26539449ce09f35e8f883d1a6af712a2ab4f58a3caaa8e.png" style="width: 720px;" /></a>
+</div>
+</div>
+<p>The autopivot() and autobar() functions featured here can help speed up the process of creating standalone Plotly charts. However, these functions will prove even more useful within the Online Visualizations section of Python for Nonprofits–as they’ll allow us to turn a small set of user inputs into a wide variety of charts and tables.</p>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./Graphing"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="graphing.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Creating Interactive and Static Charts with Plotly</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../Mapping/choropleth_maps.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Mapping Census Data using Plotly (Work in progress)</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-a-detailed-survey-results-dataset">Creating a detailed survey results dataset</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#importing-each-dataset">Importing each dataset:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#merging-these-datasets-together">Merging these datasets together:</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-basic-autopivot-function">A basic autopivot function</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-basic-autobar-function">A basic autobar function</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#testing-out-autopivot-simple-and-autobar-simple">Testing out autopivot_simple and autobar_simple:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#importing-autopivot-and-autobar-functions">Importing autopivot and autobar functions</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#demonstrating-these-functions">Demonstrating these functions</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Kenneth Burchfiel
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

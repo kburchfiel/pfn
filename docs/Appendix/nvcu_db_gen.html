@@ -1,0 +1,2341 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>NVCU Database Generator &#8212; Python for Nonprofits</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Appendix/nvcu_db_gen';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="helper_funcs.py" href="../Book_Specific_Materials/helper_funcs_py_nb.html" />
+    <link rel="prev" title="Source code for PFN Dash App Demo" href="../Book_Specific_Materials/PFN_Dash_App_Demo_py_nb.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../front_matter_for_book.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Python for Nonprofits</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../front_matter_for_book.html">
+                    Wecome to Python for Nonprofits!
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Introduction</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Introduction/introduction.html">An Introduction to Python for Nonprofits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Introduction/the_case_for_python_at_nonprofits.html">The Case for Using Python at Nonprofits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Book_Specific_Materials/getting_started_for_book.html">Getting Started</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Importing and Prepping Data</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Data_Retrieval/data_retrieval.html">Data Retrieval</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Data_Prep/data_prep.html">Data Prep</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Analyzing Data</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Descriptive_Stats/descriptive_stats.html">Descriptive Stats</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Descriptive_Stats/descriptive_stats_part_2.html">Descriptive Stats: Part 2</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Census_Data_Imports/census_data_imports.html">Census Data Imports</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Book_Specific_Materials/census_import_scripts_py_nb.html">census_import_scripts.py</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Visualizing Data</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Graphing/graphing.html">Creating Interactive and Static Charts with Plotly</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../Graphing/pivot_and_graph_functions.html">Pivot and Graph Functions</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Mapping/choropleth_maps.html">Mapping Census Data using Plotly (Work in progress)</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Book_Specific_Materials/plotly_choropleth_map_functions_py_nb.html">plotly_choropleth_map_functions.py</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Mapping/choropleth_maps_with_folium.html">Creating Choropleth Maps with Folium</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Book_Specific_Materials/folium_choropleth_map_functions_py_nb.html">folium_choropleth_map_functions.py</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Regressions</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Regressions/regression_analyses.html">Regression Analyses</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Publishing Analyses Online</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Static_Sites/simple_static_site.html">Creating a Simple Static Webpage</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Updating_Online_Spreadsheets/updating_online_spreadsheets.html">Updating Online Spreadsheets</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Book_Specific_Materials/weather_import_py_nb.html">weather_import.py</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Online_Visualizations/Simple_App_Without_Login/readme.html">Simple Dash App Without Login</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Book_Specific_Materials/Simple_App_Without_Login_py_nb.html">Source code for Simple App Without Login</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Online_Visualizations/PFN_Dash_App_Demo/readme.html">PFN Dash App Demo</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Book_Specific_Materials/PFN_Dash_App_Demo_py_nb.html">Source code for PFN Dash App Demo</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendix</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">NVCU Database Generator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Book_Specific_Materials/helper_funcs_py_nb.html">helper_funcs.py</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/Appendix/nvcu_db_gen.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>NVCU Database Generator</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#connecting-to-our-nvcu-database-via-the-sqlalchemy-library">Connecting to our NVCU database via the SQLAlchemy library</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-a-current-enrollment-table">Creating a current enrollment table</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-lists-of-names">Creating lists of names</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#initializing-our-current-enrollment-table">Initializing our current enrollment table</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-student-ids">Creating student IDs</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#assigning-students-to-different-colleges">Assigning students to different colleges</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#saving-this-table-to-our-nvcu-database">Saving this table to our NVCU database</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-a-survey-results-table">Creating a survey results table</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-fall-survey-results">Creating fall survey results</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-spring-results">Creating spring results</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#combining-fall-and-spring-results-into-the-same-table">Combining fall and spring results into the same table</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-a-set-of-winter-results-that-can-be-incorporated-into-a-data-cleaning-reformatting-script">Creating a set of winter results that can be incorporated into a data cleaning/reformatting script</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-a-dining-transactions-table">Creating a dining transactions table</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-a-table-of-fall-and-spring-bookstore-sales-by-student-for-a-given-year">Creating a table of fall and spring bookstore sales by student for a given year:</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="nvcu-database-generator">
+<h1>NVCU Database Generator<a class="headerlink" href="#nvcu-database-generator" title="Link to this heading">#</a></h1>
+<p>By Kenneth Burchfiel</p>
+<p>Released under the MIT License</p>
+<p>This script will create a SQLite database for the (fictional) Northern Virginia Catholic University that can be referenced within other sections of Python for Nonprofits. The data within this database will be fictional also.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">sqlalchemy</span><span class="w"> </span><span class="kn">import</span> <span class="n">create_engine</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="c1"># Setting up random number generation capabilities:</span>
+<span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="mi">2325</span><span class="p">)</span> 
+<span class="c1"># Based on https://numpy.org/doc/stable/reference/random/generator.html </span>
+<span class="c1"># The faker library is a great tool for creating fictional</span>
+<span class="c1"># database records. I set the locale to &#39;en_US&#39; because NVCU</span>
+<span class="c1"># is based in the United States.</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">faker</span><span class="w"> </span><span class="kn">import</span> <span class="n">Faker</span><span class="p">;</span> <span class="n">fake</span> <span class="o">=</span> <span class="n">Faker</span><span class="p">(</span><span class="s1">&#39;en_US&#39;</span><span class="p">)</span>  
+<span class="kn">from</span><span class="w"> </span><span class="nn">helper_funcs</span><span class="w"> </span><span class="kn">import</span> <span class="n">config_notebook</span>
+<span class="n">display_type</span> <span class="o">=</span> <span class="n">config_notebook</span><span class="p">(</span><span class="n">display_max_columns</span> <span class="o">=</span> <span class="mi">7</span><span class="p">,</span>
+                              <span class="n">display_max_rows</span> <span class="o">=</span> <span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="connecting-to-our-nvcu-database-via-the-sqlalchemy-library">
+<h2>Connecting to our NVCU database via the SQLAlchemy library<a class="headerlink" href="#connecting-to-our-nvcu-database-via-the-sqlalchemy-library" title="Link to this heading">#</a></h2>
+<p>(This code will work even if no database currently exists at the path shown below.)</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">e</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="s1">&#39;sqlite:///nvcu_db.db&#39;</span><span class="p">)</span>
+<span class="c1"># Based on: https://docs.sqlalchemy.org/en/20/dialects/sqlite.html#pysqlite</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">student_count</span> <span class="o">=</span> <span class="mi">2</span><span class="o">**</span><span class="mi">14</span>
+<span class="n">student_count</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>16384
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="creating-a-current-enrollment-table">
+<h2>Creating a current enrollment table<a class="headerlink" href="#creating-a-current-enrollment-table" title="Link to this heading">#</a></h2>
+<section id="creating-lists-of-names">
+<h3>Creating lists of names<a class="headerlink" href="#creating-lists-of-names" title="Link to this heading">#</a></h3>
+<p>We’ll use the Faker library to create equal numbers of female and male first names, then concatenate these lists to create a single list of first names.</p>
+<p>(Note: The <a class="reference external" href="https://faker.readthedocs.io/en/master/locales/en_US.html">Faker documentation for the ‘en_US’ (US English) locale</a> was a useful resource in writing this code.)</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">student_count</span>
+<span class="c1"># It&#39;s convenient to also create a variable for the value equal</span>
+<span class="c1"># to half of the student count. (Dividing the student count by</span>
+<span class="c1"># 2 produces a float by default, so we&#39;ll convert this value to </span>
+<span class="c1"># an int so that it can be used as a range within list comprehensions.)</span>
+<span class="n">half_student_count</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">student_count</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">half_student_count</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>8192
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">female_first_names</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">fake</span><span class="o">.</span><span class="n">first_name_female</span><span class="p">()</span> 
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">half_student_count</span><span class="p">)]</span>
+<span class="n">male_first_names</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">fake</span><span class="o">.</span><span class="n">first_name_male</span><span class="p">()</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">half_student_count</span><span class="p">)]</span>
+<span class="n">first_names</span> <span class="o">=</span> <span class="n">female_first_names</span> <span class="o">+</span> <span class="n">male_first_names</span>
+<span class="n">last_names</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">fake</span><span class="o">.</span><span class="n">last_name</span><span class="p">()</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">student_count</span><span class="p">)]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># In order to make our genders match our names, we&#39;ll </span>
+<span class="c1"># make the first half of our gender list female and the second </span>
+<span class="c1"># half male (as the first and second halves of our first names</span>
+<span class="c1"># list show male and female names, respectively.)</span>
+<span class="n">genders</span> <span class="o">=</span> <span class="p">([</span><span class="s1">&#39;F&#39;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">half_student_count</span><span class="p">)]</span> 
+<span class="o">+</span> <span class="p">[</span><span class="s1">&#39;M&#39;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">half_student_count</span><span class="p">)])</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="initializing-our-current-enrollment-table">
+<h3>Initializing our current enrollment table<a class="headerlink" href="#initializing-our-current-enrollment-table" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_curr_enrollment</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+    <span class="n">index</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">student_count</span><span class="p">),</span> 
+<span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;first_name&#39;</span><span class="p">:</span><span class="n">first_names</span><span class="p">,</span>
+        <span class="s1">&#39;last_name&#39;</span><span class="p">:</span><span class="n">last_names</span><span class="p">,</span>
+        <span class="s1">&#39;gender&#39;</span><span class="p">:</span><span class="n">genders</span><span class="p">})</span>
+<span class="n">df_curr_enrollment</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>first_name</th>
+      <th>last_name</th>
+      <th>gender</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Brandy</td>
+      <td>Wang</td>
+      <td>F</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Cynthia</td>
+      <td>Whitaker</td>
+      <td>F</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>16382</th>
+      <td>Gary</td>
+      <td>French</td>
+      <td>M</td>
+    </tr>
+    <tr>
+      <th>16383</th>
+      <td>Robert</td>
+      <td>Martin</td>
+      <td>M</td>
+    </tr>
+  </tbody>
+</table>
+<p>16384 rows × 3 columns</p>
+</div></div></div>
+</div>
+<p>Creating matriculation years:</p>
+<p>In order to simulate increasing enrollment over time, weights were added to the rng.choice() call so that recent years would appear more frequently.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">rng</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span>
+    <span class="p">[</span><span class="mi">2020</span><span class="p">,</span> <span class="mi">2021</span><span class="p">,</span> <span class="mi">2022</span><span class="p">,</span> <span class="mi">2023</span><span class="p">],</span> 
+    <span class="n">p</span><span class="o">=</span><span class="p">[</span><span class="mf">0.20</span><span class="p">,</span> <span class="mf">0.22</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">,</span> <span class="mf">0.33</span><span class="p">],</span> <span class="n">size</span> <span class="o">=</span> <span class="n">student_count</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([2023, 2023, 2020, ..., 2023, 2022, 2023], shape=(16384,))
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_curr_enrollment</span><span class="p">[</span><span class="s1">&#39;matriculation_year&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span>
+    <span class="p">[</span><span class="mi">2020</span><span class="p">,</span> <span class="mi">2021</span><span class="p">,</span> <span class="mi">2022</span><span class="p">,</span> <span class="mi">2023</span><span class="p">],</span> <span class="n">p</span><span class="o">=</span><span class="p">[</span><span class="mf">0.20</span><span class="p">,</span> <span class="mf">0.22</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">,</span> <span class="mf">0.33</span><span class="p">],</span> 
+    <span class="n">size</span><span class="o">=</span><span class="n">student_count</span><span class="p">)</span>
+<span class="c1"># https://numpy.org/doc/stable/reference/random/generated/numpy.random.Generator.choice.html</span>
+<span class="n">df_curr_enrollment</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>first_name</th>
+      <th>last_name</th>
+      <th>gender</th>
+      <th>matriculation_year</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Brandy</td>
+      <td>Wang</td>
+      <td>F</td>
+      <td>2020</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Cynthia</td>
+      <td>Whitaker</td>
+      <td>F</td>
+      <td>2020</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>16382</th>
+      <td>Gary</td>
+      <td>French</td>
+      <td>M</td>
+      <td>2020</td>
+    </tr>
+    <tr>
+      <th>16383</th>
+      <td>Robert</td>
+      <td>Martin</td>
+      <td>M</td>
+      <td>2021</td>
+    </tr>
+  </tbody>
+</table>
+<p>16384 rows × 4 columns</p>
+</div></div></div>
+</div>
+</section>
+<section id="creating-student-ids">
+<h3>Creating student IDs<a class="headerlink" href="#creating-student-ids" title="Link to this heading">#</a></h3>
+<p>Student IDs will use the format matriculation_year-matriculation_number. matriculation_number represents the order in which students enrolled for a given year; these numbers are unique within each year, but not between years. This number can then be combined with students’ matriculation years to form a unique ID.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Calculating matriculation numbers by grouping the DataFrame by</span>
+<span class="c1"># matriculation year, then assigning each student within each year a unique</span>
+<span class="c1"># number:</span>
+<span class="c1"># (This can be achieved via df.groupby() and df.rank(). See</span>
+<span class="c1"># https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.groupby.html</span>
+<span class="c1"># and https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.rank.html )</span>
+<span class="n">df_curr_enrollment</span><span class="p">[</span><span class="s1">&#39;matriculation_number&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_curr_enrollment</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span>
+    <span class="s1">&#39;matriculation_year&#39;</span><span class="p">)[</span><span class="s1">&#39;matriculation_year&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">rank</span><span class="p">(</span>
+    <span class="n">method</span> <span class="o">=</span> <span class="s1">&#39;first&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;int&#39;</span><span class="p">)</span>
+<span class="n">df_curr_enrollment</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>first_name</th>
+      <th>last_name</th>
+      <th>gender</th>
+      <th>matriculation_year</th>
+      <th>matriculation_number</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Brandy</td>
+      <td>Wang</td>
+      <td>F</td>
+      <td>2020</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Cynthia</td>
+      <td>Whitaker</td>
+      <td>F</td>
+      <td>2020</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>16382</th>
+      <td>Gary</td>
+      <td>French</td>
+      <td>M</td>
+      <td>2020</td>
+      <td>3289</td>
+    </tr>
+    <tr>
+      <th>16383</th>
+      <td>Robert</td>
+      <td>Martin</td>
+      <td>M</td>
+      <td>2021</td>
+      <td>3653</td>
+    </tr>
+  </tbody>
+</table>
+<p>16384 rows × 5 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Adding matriculation years, matriculation numbers, and hyphens together</span>
+<span class="c1"># to create student IDs:</span>
+<span class="n">df_curr_enrollment</span><span class="p">[</span><span class="s1">&#39;student_id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">df_curr_enrollment</span><span class="p">[</span><span class="s1">&#39;matriculation_year&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;str&#39;</span><span class="p">)</span> 
+    <span class="o">+</span> <span class="s1">&#39;-&#39;</span> 
+    <span class="o">+</span> <span class="n">df_curr_enrollment</span><span class="p">[</span><span class="s1">&#39;matriculation_number&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;str&#39;</span><span class="p">))</span>
+<span class="c1"># Sorting the DataFrame by matriculation year and matriculation number:</span>
+<span class="c1"># (The DataFrame could also be sorted by student_id, but because these </span>
+<span class="c1"># numbers would be interpreted as strings, ids like 2020-10 would appear </span>
+<span class="c1"># in front of ones like 2020-2.)</span>
+<span class="n">df_curr_enrollment</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span>
+    <span class="p">[</span><span class="s1">&#39;matriculation_year&#39;</span><span class="p">,</span> <span class="s1">&#39;matriculation_number&#39;</span><span class="p">],</span> <span class="n">inplace</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+<span class="n">df_curr_enrollment</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">df_curr_enrollment</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>first_name</th>
+      <th>last_name</th>
+      <th>gender</th>
+      <th>matriculation_year</th>
+      <th>matriculation_number</th>
+      <th>student_id</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Brandy</td>
+      <td>Wang</td>
+      <td>F</td>
+      <td>2020</td>
+      <td>1</td>
+      <td>2020-1</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Cynthia</td>
+      <td>Whitaker</td>
+      <td>F</td>
+      <td>2020</td>
+      <td>2</td>
+      <td>2020-2</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>16382</th>
+      <td>Joseph</td>
+      <td>Campbell</td>
+      <td>M</td>
+      <td>2023</td>
+      <td>5442</td>
+      <td>2023-5442</td>
+    </tr>
+    <tr>
+      <th>16383</th>
+      <td>Austin</td>
+      <td>Davis</td>
+      <td>M</td>
+      <td>2023</td>
+      <td>5443</td>
+      <td>2023-5443</td>
+    </tr>
+  </tbody>
+</table>
+<p>16384 rows × 6 columns</p>
+</div></div></div>
+</div>
+<p>We’ll also use matriculation years as a basis for dates of birth. (These date of birth calculations aren’t the most realistic, but they are good enough for use within our fictional dataset.)</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_curr_enrollment</span><span class="p">[</span><span class="s1">&#39;birth_month&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">integers</span><span class="p">(</span>
+    <span class="n">low</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">high</span> <span class="o">=</span> <span class="mi">13</span><span class="p">,</span> <span class="n">size</span> <span class="o">=</span> <span class="n">student_count</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;str&#39;</span><span class="p">)</span>
+<span class="n">df_curr_enrollment</span><span class="p">[</span><span class="s1">&#39;birth_day&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">integers</span><span class="p">(</span>
+    <span class="n">low</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">high</span> <span class="o">=</span> <span class="mi">29</span><span class="p">,</span> <span class="n">size</span> <span class="o">=</span> <span class="n">student_count</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;str&#39;</span><span class="p">)</span>
+
+<span class="c1"># Adding leading zeros to month and date values:</span>
+<span class="k">for</span> <span class="n">column</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;birth_month&#39;</span><span class="p">,</span> <span class="s1">&#39;birth_day&#39;</span><span class="p">]:</span>
+    <span class="n">df_curr_enrollment</span><span class="p">[</span><span class="n">column</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_curr_enrollment</span><span class="p">[</span><span class="n">column</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">zfill</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="c1"># In order to prevent a non-existent date (e.g. February 31) from getting </span>
+<span class="c1"># stored in our results, we&#39;ll limit our birthday integers to the </span>
+<span class="c1"># range [1, 28].</span>
+<span class="n">df_curr_enrollment</span><span class="p">[</span><span class="s1">&#39;birth_year&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">df_curr_enrollment</span><span class="p">[</span>
+<span class="s1">&#39;matriculation_year&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="mi">18</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;str&#39;</span><span class="p">)</span>
+
+<span class="c1"># Combining these columns together to create date of birth values in</span>
+<span class="c1"># YYYY-MM-DD format:</span>
+<span class="n">df_curr_enrollment</span><span class="p">[</span><span class="s1">&#39;date_of_birth&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">df_curr_enrollment</span><span class="p">[</span><span class="s1">&#39;birth_year&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;-&#39;</span>
+    <span class="o">+</span> <span class="n">df_curr_enrollment</span><span class="p">[</span><span class="s1">&#39;birth_month&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;-&#39;</span>
+    <span class="o">+</span> <span class="n">df_curr_enrollment</span><span class="p">[</span><span class="s1">&#39;birth_day&#39;</span><span class="p">])</span>
+
+<span class="c1"># Now that we have our date_of_birth column in place, we no longer need</span>
+<span class="c1"># the columns that stored individual parts of those birthdays:</span>
+<span class="n">df_curr_enrollment</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span>
+    <span class="p">[</span><span class="s1">&#39;birth_month&#39;</span><span class="p">,</span> <span class="s1">&#39;birth_day&#39;</span><span class="p">,</span> 
+    <span class="s1">&#39;birth_year&#39;</span><span class="p">],</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+
+<span class="n">df_curr_enrollment</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>first_name</th>
+      <th>last_name</th>
+      <th>gender</th>
+      <th>matriculation_year</th>
+      <th>matriculation_number</th>
+      <th>student_id</th>
+      <th>date_of_birth</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Brandy</td>
+      <td>Wang</td>
+      <td>F</td>
+      <td>2020</td>
+      <td>1</td>
+      <td>2020-1</td>
+      <td>2002-12-16</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Cynthia</td>
+      <td>Whitaker</td>
+      <td>F</td>
+      <td>2020</td>
+      <td>2</td>
+      <td>2020-2</td>
+      <td>2002-09-26</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>16382</th>
+      <td>Joseph</td>
+      <td>Campbell</td>
+      <td>M</td>
+      <td>2023</td>
+      <td>5442</td>
+      <td>2023-5442</td>
+      <td>2005-11-03</td>
+    </tr>
+    <tr>
+      <th>16383</th>
+      <td>Austin</td>
+      <td>Davis</td>
+      <td>M</td>
+      <td>2023</td>
+      <td>5443</td>
+      <td>2023-5443</td>
+      <td>2005-04-05</td>
+    </tr>
+  </tbody>
+</table>
+<p>16384 rows × 7 columns</p>
+</div></div></div>
+</div>
+</section>
+<section id="assigning-students-to-different-colleges">
+<h3>Assigning students to different colleges<a class="headerlink" href="#assigning-students-to-different-colleges" title="Link to this heading">#</a></h3>
+<p>(I used Wikipedia’s <a class="reference external" href="https://en.wikipedia.org/wiki/List_of_patron_saints_by_occupation_and_activity">‘List of patron saints by occupation and activity’</a> page to determine the saint after which each college would be named.)</p>
+<p>NVCU has four different colleges:</p>
+<ol class="arabic simple">
+<li><p>St. Luke’s, a humanities college. (St. Luke is one of the patron saints of artists.) Abbreviation: STL</p></li>
+<li><p>St. Benedict’s, a STEM college. (St. Benedict is one of the patron saints of engineers.) Abbreviation: STB</p></li>
+<li><p>St. Matthew’s, a business college. (St. Matthew is the patron saint of accountants.) Abbreviation: STM</p></li>
+<li><p>St. Catherine’s, a health college. (St. Catherine of Alexandria is one of the patron saints of nurses.) Abbreviation: STC</p></li>
+</ol>
+<p>We can use np.choice to assign students to different colleges. However, to make the data more interesting, we’ll have one college (STL) increase in popularity over time; another (STC) decrease in popularity; and the two remaining colleges remain roughly constant in popularity. We can simulate these changes by (1) creating filtered versions of the DataFrame for each year; (2) calling np.choice() with different probability sets for each year in order to create the ‘college’ column; and (3) recreating df_curr_enrollment by adding these year-specific DataFrames back together.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_list</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">year</span> <span class="ow">in</span> <span class="n">df_curr_enrollment</span><span class="p">[</span><span class="s1">&#39;matriculation_year&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Now adding in college enrollments for </span><span class="si">{</span><span class="n">year</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">df_curr_enrollment</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;matriculation_year == @year&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">year</span> <span class="o">==</span> <span class="mi">2020</span><span class="p">:</span>
+        <span class="n">probabilities</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.15</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">]</span>
+    <span class="k">elif</span> <span class="n">year</span> <span class="o">==</span> <span class="mi">2021</span><span class="p">:</span>
+        <span class="n">probabilities</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.19</span><span class="p">,</span> <span class="mf">0.26</span><span class="p">,</span> <span class="mf">0.29</span><span class="p">,</span> <span class="mf">0.26</span><span class="p">]</span>
+    <span class="k">elif</span> <span class="n">year</span> <span class="o">==</span> <span class="mi">2022</span><span class="p">:</span>
+        <span class="n">probabilities</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.25</span><span class="p">,</span> <span class="mf">0.27</span><span class="p">,</span> <span class="mf">0.27</span><span class="p">,</span> <span class="mf">0.21</span><span class="p">]</span>
+    <span class="k">elif</span> <span class="n">year</span> <span class="o">==</span> <span class="mi">2023</span><span class="p">:</span>
+        <span class="n">probabilities</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.27</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">,</span> <span class="mf">0.31</span><span class="p">,</span> <span class="mf">0.17</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;A probability list needs to be added in for </span><span class="si">{</span><span class="n">year</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+    <span class="n">df</span><span class="p">[</span><span class="s1">&#39;college&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span>
+        <span class="p">[</span><span class="s1">&#39;STL&#39;</span><span class="p">,</span> <span class="s1">&#39;STB&#39;</span><span class="p">,</span> <span class="s1">&#39;STM&#39;</span><span class="p">,</span> <span class="s1">&#39;STC&#39;</span><span class="p">],</span> 
+        <span class="n">p</span> <span class="o">=</span> <span class="n">probabilities</span><span class="p">,</span> <span class="n">size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">))</span>
+    <span class="n">df_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+<span class="n">df_curr_enrollment</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">df</span> <span class="k">for</span> <span class="n">df</span> <span class="ow">in</span> <span class="n">df_list</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Now adding in college enrollments for 2020.
+Now adding in college enrollments for 2021.
+Now adding in college enrollments for 2022.
+Now adding in college enrollments for 2023.
+</pre></div>
+</div>
+</div>
+</div>
+<p>The commented-out cell below shows an alternative approach to assigning colleges to each student. Because it iterates through each row in the DataFrame, it took 2.25 seconds to run on my laptop versus 0.016 seconds for the method shown above; in other words, the method in the previous cell was 133 times faster.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># df_curr_enrollment[&#39;college&#39;] = &#39;&#39;</span>
+<span class="c1"># college_col = df_curr_enrollment.columns.get_loc(&#39;college&#39;)</span>
+<span class="c1"># for i in range(len(df_curr_enrollment)):</span>
+<span class="c1">#     year = df_curr_enrollment.iloc[i][&#39;matriculation_year&#39;]</span>
+<span class="c1">#     if year == 2020:</span>
+<span class="c1">#         probabilities = [0.15, 0.25, 0.3, 0.3]</span>
+<span class="c1">#     elif year == 2021:</span>
+<span class="c1">#         probabilities = [0.19, 0.26, 0.29, 0.26]</span>
+<span class="c1">#     elif year == 2022:</span>
+<span class="c1">#         probabilities = [0.25, 0.27, 0.27, 0.21]</span>
+<span class="c1">#     elif year == 2022:</span>
+<span class="c1">#         probabilities = [0.27, 0.25, 0.31, 0.17]</span>
+<span class="c1">#     df_curr_enrollment.iloc[i, college_col] = rng.choice(</span>
+<span class="c1">#     [&#39;STL&#39;, &#39;STB&#39;, &#39;STM&#39;, &#39;STC&#39;], p = probabilities)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_curr_enrollment</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>first_name</th>
+      <th>last_name</th>
+      <th>gender</th>
+      <th>...</th>
+      <th>student_id</th>
+      <th>date_of_birth</th>
+      <th>college</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Brandy</td>
+      <td>Wang</td>
+      <td>F</td>
+      <td>...</td>
+      <td>2020-1</td>
+      <td>2002-12-16</td>
+      <td>STC</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Cynthia</td>
+      <td>Whitaker</td>
+      <td>F</td>
+      <td>...</td>
+      <td>2020-2</td>
+      <td>2002-09-26</td>
+      <td>STM</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>16382</th>
+      <td>Joseph</td>
+      <td>Campbell</td>
+      <td>M</td>
+      <td>...</td>
+      <td>2023-5442</td>
+      <td>2005-11-03</td>
+      <td>STB</td>
+    </tr>
+    <tr>
+      <th>16383</th>
+      <td>Austin</td>
+      <td>Davis</td>
+      <td>M</td>
+      <td>...</td>
+      <td>2023-5443</td>
+      <td>2005-04-05</td>
+      <td>STM</td>
+    </tr>
+  </tbody>
+</table>
+<p>16384 rows × 8 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Assigning additional year-related values:</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_curr_enrollment</span><span class="p">[</span><span class="s1">&#39;class_of&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_curr_enrollment</span><span class="p">[</span>
+<span class="s1">&#39;matriculation_year&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="mi">4</span>
+<span class="c1"># The earlier the matriculation year, the higher the student&#39;s current</span>
+<span class="c1"># level.</span>
+<span class="n">df_curr_enrollment</span><span class="p">[</span><span class="s1">&#39;level&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_curr_enrollment</span><span class="p">[</span>
+<span class="s1">&#39;matriculation_year&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span>
+    <span class="p">{</span><span class="mi">2020</span><span class="p">:</span><span class="s1">&#39;Se&#39;</span><span class="p">,</span><span class="mi">2021</span><span class="p">:</span><span class="s1">&#39;Ju&#39;</span><span class="p">,</span>
+     <span class="mi">2022</span><span class="p">:</span><span class="s1">&#39;So&#39;</span><span class="p">,</span><span class="mi">2023</span><span class="p">:</span><span class="s1">&#39;Fr&#39;</span><span class="p">})</span> <span class="c1"># Fr, So, Ju, and Se stand for </span>
+<span class="c1"># Freshman, Sophomore, Junior, and Senior, respectively.</span>
+<span class="c1"># Creating an integer-based equivalent to &#39;level&#39;:</span>
+<span class="n">df_curr_enrollment</span><span class="p">[</span><span class="s1">&#39;level_for_sorting&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">((</span>
+    <span class="n">df_curr_enrollment</span><span class="p">[</span><span class="s1">&#39;matriculation_year&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="mi">2023</span><span class="p">)</span> <span class="o">*</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">df_curr_enrollment</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>first_name</th>
+      <th>last_name</th>
+      <th>gender</th>
+      <th>...</th>
+      <th>class_of</th>
+      <th>level</th>
+      <th>level_for_sorting</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Brandy</td>
+      <td>Wang</td>
+      <td>F</td>
+      <td>...</td>
+      <td>2024</td>
+      <td>Se</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Cynthia</td>
+      <td>Whitaker</td>
+      <td>F</td>
+      <td>...</td>
+      <td>2024</td>
+      <td>Se</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>16382</th>
+      <td>Joseph</td>
+      <td>Campbell</td>
+      <td>M</td>
+      <td>...</td>
+      <td>2027</td>
+      <td>Fr</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>16383</th>
+      <td>Austin</td>
+      <td>Davis</td>
+      <td>M</td>
+      <td>...</td>
+      <td>2027</td>
+      <td>Fr</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+<p>16384 rows × 11 columns</p>
+</div></div></div>
+</div>
+</section>
+<section id="saving-this-table-to-our-nvcu-database">
+<h3>Saving this table to our NVCU database<a class="headerlink" href="#saving-this-table-to-our-nvcu-database" title="Link to this heading">#</a></h3>
+<p>(This operation will also create our database file (e.g. nvcu_db.db, the path specified when we first created our database engine) if it did not exist already.)</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_curr_enrollment</span><span class="o">.</span><span class="n">to_sql</span><span class="p">(</span>
+    <span class="s1">&#39;curr_enrollment&#39;</span><span class="p">,</span> 
+    <span class="n">con</span><span class="o">=</span><span class="n">e</span><span class="p">,</span> <span class="n">if_exists</span><span class="o">=</span><span class="s1">&#39;replace&#39;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>16384
+</pre></div>
+</div>
+</div>
+</div>
+<p>To demonstrate that the above operation was successful, we can read in a copy of this table via pd.read_sql():</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">read_sql</span><span class="p">(</span><span class="s1">&#39;curr_enrollment&#39;</span><span class="p">,</span> <span class="n">con</span> <span class="o">=</span> <span class="n">e</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>first_name</th>
+      <th>last_name</th>
+      <th>gender</th>
+      <th>...</th>
+      <th>class_of</th>
+      <th>level</th>
+      <th>level_for_sorting</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Brandy</td>
+      <td>Wang</td>
+      <td>F</td>
+      <td>...</td>
+      <td>2024</td>
+      <td>Se</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Cynthia</td>
+      <td>Whitaker</td>
+      <td>F</td>
+      <td>...</td>
+      <td>2024</td>
+      <td>Se</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>16382</th>
+      <td>Joseph</td>
+      <td>Campbell</td>
+      <td>M</td>
+      <td>...</td>
+      <td>2027</td>
+      <td>Fr</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>16383</th>
+      <td>Austin</td>
+      <td>Davis</td>
+      <td>M</td>
+      <td>...</td>
+      <td>2027</td>
+      <td>Fr</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+<p>16384 rows × 11 columns</p>
+</div></div></div>
+</div>
+<p>This same table can also be saved as a standalone .csv file (thus making it easier to examine via a spreadsheet editor):</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_curr_enrollment</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;curr_enrollment.csv&#39;</span><span class="p">,</span> <span class="n">index</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
+<span class="n">df_curr_enrollment</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span>
+    <span class="s1">&#39;../Data_Retrieval/curr_enrollment_tab_separated.csv&#39;</span><span class="p">,</span> 
+    <span class="n">index</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">sep</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>You may also save it as an .xlsx file if you’d prefer: (Note that the openpyxl library is required for the following line to run successfully.)</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_curr_enrollment</span><span class="o">.</span><span class="n">to_excel</span><span class="p">(</span>
+    <span class="s1">&#39;../Data_Retrieval/curr_enrollment.xlsx&#39;</span><span class="p">,</span> <span class="n">index</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="creating-a-survey-results-table">
+<h2>Creating a survey results table<a class="headerlink" href="#creating-a-survey-results-table" title="Link to this heading">#</a></h2>
+<p>This table will store fall and spring student survey results for the most recent school year. We’ll configure our results so that certain groups (e.g. freshmen, seniors, and students in the STB and STL colleges) report higher results over time than do others.</p>
+<section id="creating-fall-survey-results">
+<h3>Creating fall survey results<a class="headerlink" href="#creating-fall-survey-results" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">limit_results</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">column</span><span class="p">,</span> <span class="nb">min</span><span class="p">,</span> <span class="nb">max</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;This function restricts the values within a particular DataFrame</span>
+<span class="sd">    column to a range provided by the user.</span>
+<span class="sd">    </span>
+<span class="sd">    df: the DataFrame to modify</span>
+<span class="sd">    </span>
+<span class="sd">    column: the column within df whose values will be restricted.</span>
+<span class="sd">    </span>
+<span class="sd">    min and max: the minimum and max values, respectively, to allow within</span>
+<span class="sd">    this column.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">df</span><span class="p">[</span><span class="n">column</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span>
+        <span class="n">df</span><span class="p">[</span><span class="n">column</span><span class="p">]</span> <span class="o">&lt;</span> <span class="nb">min</span><span class="p">,</span> <span class="nb">min</span><span class="p">,</span> <span class="n">df</span><span class="p">[</span><span class="n">column</span><span class="p">])</span>
+    <span class="n">df</span><span class="p">[</span><span class="n">column</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span>
+        <span class="n">df</span><span class="p">[</span><span class="n">column</span><span class="p">]</span> <span class="o">&gt;</span> <span class="nb">max</span><span class="p">,</span> <span class="nb">max</span><span class="p">,</span> <span class="n">df</span><span class="p">[</span><span class="n">column</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Initializing the table as a copy of selected columns from </span>
+<span class="c1"># df_curr_enrollment:</span>
+<span class="n">df_fall_survey</span> <span class="o">=</span> <span class="n">df_curr_enrollment</span><span class="o">.</span><span class="n">copy</span><span class="p">()[</span>
+<span class="p">[</span><span class="s1">&#39;matriculation_year&#39;</span><span class="p">,</span> <span class="s1">&#39;matriculation_number&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;student_id&#39;</span><span class="p">,</span> <span class="s1">&#39;college&#39;</span><span class="p">,</span> <span class="s1">&#39;level&#39;</span><span class="p">]]</span>
+<span class="n">df_fall_survey</span><span class="p">[</span><span class="s1">&#39;starting_year&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2023</span> <span class="c1"># Other years could be stored</span>
+<span class="c1"># within this table as well.</span>
+<span class="n">df_fall_survey</span><span class="p">[</span><span class="s1">&#39;season&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;Fall&#39;</span>
+<span class="c1"># We&#39;ll use rng.normal(), which produces random numbers that follow a </span>
+<span class="c1"># normal distribution, to initialize our fall results.</span>
+<span class="c1"># See https://numpy.org/doc/stable/reference/random/generated/numpy.</span>
+<span class="c1"># random.Generator.normal.html</span>
+<span class="n">df_fall_survey</span><span class="p">[</span><span class="s1">&#39;score&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span>
+    <span class="n">loc</span> <span class="o">=</span> <span class="mi">70</span><span class="p">,</span> <span class="n">scale</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span> <span class="n">size</span> <span class="o">=</span> <span class="n">student_count</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;int&#39;</span><span class="p">)</span>
+<span class="c1"># calling limit_results to restrict the scores to the range [0, 100]:</span>
+<span class="n">limit_results</span><span class="p">(</span><span class="n">df_fall_survey</span><span class="p">,</span> <span class="s1">&#39;score&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">df_fall_survey</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>matriculation_year</th>
+      <th>matriculation_number</th>
+      <th>student_id</th>
+      <th>...</th>
+      <th>starting_year</th>
+      <th>season</th>
+      <th>score</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2020</td>
+      <td>1</td>
+      <td>2020-1</td>
+      <td>...</td>
+      <td>2023</td>
+      <td>Fall</td>
+      <td>88</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2020</td>
+      <td>2</td>
+      <td>2020-2</td>
+      <td>...</td>
+      <td>2023</td>
+      <td>Fall</td>
+      <td>37</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>16382</th>
+      <td>2023</td>
+      <td>5442</td>
+      <td>2023-5442</td>
+      <td>...</td>
+      <td>2023</td>
+      <td>Fall</td>
+      <td>67</td>
+    </tr>
+    <tr>
+      <th>16383</th>
+      <td>2023</td>
+      <td>5443</td>
+      <td>2023-5443</td>
+      <td>...</td>
+      <td>2023</td>
+      <td>Fall</td>
+      <td>68</td>
+    </tr>
+  </tbody>
+</table>
+<p>16384 rows × 8 columns</p>
+</div></div></div>
+</div>
+<p>Confirming that the minimum and maximum ‘score’ values within df_fall_survey lie within the range [0, 100]:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_fall_survey</span><span class="p">[</span><span class="s1">&#39;score&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">df_fall_survey</span><span class="p">[</span><span class="s1">&#39;score&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(np.int64(30), np.int64(100))
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="creating-spring-results">
+<h3>Creating spring results<a class="headerlink" href="#creating-spring-results" title="Link to this heading">#</a></h3>
+<p>In order to create these results, we’ll first create a copy of our fall results table. Next, we’ll calculate our spring results by creating a score_change variable that defaults to 10; adjusting this variable up or down based on students’ college membership and level; and then adding the product of this variable and rng.random()* to a student’s fall score.</p>
+<p>We’ll use .iloc[] to make these updates. An alternative would be <a class="reference external" href="http://df.at">df.at</a>[], but the approach shown in this cell allows for different index labels to be used.</p>
+<p>*rng.random() produces a float in the range [0, 1). See <a class="reference external" href="https://numpy.org/doc/stable/reference/random/generated/numpy.random.Generator.random.html">the numpy documentation</a> for more details. The use of rng.random() allows for more variation in individual fall-to-spring changes.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_spring_survey</span> <span class="o">=</span> <span class="n">df_fall_survey</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span>
+    <span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;score&#39;</span><span class="p">:</span><span class="s1">&#39;fall_score&#39;</span><span class="p">})</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;Fall&#39;</span><span class="p">,</span><span class="s1">&#39;Spring&#39;</span><span class="p">)</span>
+<span class="n">df_spring_survey</span><span class="p">[</span><span class="s1">&#39;score&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+<span class="n">score_col</span> <span class="o">=</span> <span class="n">df_spring_survey</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">get_loc</span><span class="p">(</span><span class="s1">&#39;score&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">df_spring_survey</span><span class="p">)):</span>
+    <span class="n">score_change</span> <span class="o">=</span> <span class="mi">10</span>
+    <span class="n">college</span> <span class="o">=</span> <span class="n">df_spring_survey</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s1">&#39;college&#39;</span><span class="p">]</span>
+    <span class="n">level</span> <span class="o">=</span> <span class="n">df_spring_survey</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s1">&#39;level&#39;</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">college</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;STL&#39;</span><span class="p">,</span> <span class="s1">&#39;STM&#39;</span><span class="p">]:</span>
+        <span class="n">score_change</span> <span class="o">+=</span> <span class="mi">20</span>
+    <span class="k">if</span> <span class="n">level</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;So&#39;</span><span class="p">,</span> <span class="s1">&#39;Ju&#39;</span><span class="p">]:</span>
+        <span class="n">score_change</span> <span class="o">-=</span> <span class="mi">10</span>
+    <span class="c1"># Using .iloc to make our updates:</span>
+    <span class="c1"># This approach prevents &#39;setting with copy&#39; warnings from being </span>
+    <span class="c1"># displayed. Note the use of get_loc to determine which column index </span>
+    <span class="c1"># value to incorporate into .iloc.</span>
+    <span class="n">df_spring_survey</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">score_col</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">df_spring_survey</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span>
+    <span class="n">i</span><span class="p">][</span><span class="s1">&#39;fall_score&#39;</span><span class="p">]</span> <span class="o">-</span><span class="mi">5</span> <span class="o">+</span> <span class="n">rng</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">*</span> <span class="n">score_change</span><span class="p">)</span>
+    
+
+<span class="n">limit_results</span><span class="p">(</span><span class="n">df_spring_survey</span><span class="p">,</span> <span class="s1">&#39;score&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">df_spring_survey</span><span class="p">[</span><span class="s1">&#39;score&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_spring_survey</span><span class="p">[</span><span class="s1">&#39;score&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;int&#39;</span><span class="p">)</span>
+<span class="n">df_spring_survey</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>matriculation_year</th>
+      <th>matriculation_number</th>
+      <th>student_id</th>
+      <th>...</th>
+      <th>season</th>
+      <th>fall_score</th>
+      <th>score</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2020</td>
+      <td>1</td>
+      <td>2020-1</td>
+      <td>...</td>
+      <td>Spring</td>
+      <td>88</td>
+      <td>86</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2020</td>
+      <td>2</td>
+      <td>2020-2</td>
+      <td>...</td>
+      <td>Spring</td>
+      <td>37</td>
+      <td>35</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2020</td>
+      <td>3</td>
+      <td>2020-3</td>
+      <td>...</td>
+      <td>Spring</td>
+      <td>54</td>
+      <td>54</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2020</td>
+      <td>4</td>
+      <td>2020-4</td>
+      <td>...</td>
+      <td>Spring</td>
+      <td>56</td>
+      <td>57</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2020</td>
+      <td>5</td>
+      <td>2020-5</td>
+      <td>...</td>
+      <td>Spring</td>
+      <td>77</td>
+      <td>74</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 9 columns</p>
+</div></div></div>
+</div>
+<p>A pivot table of results by college and level reveals the variation in mean scores created by the above for loop.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_spring_survey</span><span class="o">.</span><span class="n">pivot_table</span><span class="p">(</span>
+    <span class="n">index</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;college&#39;</span><span class="p">,</span> <span class="s1">&#39;level&#39;</span><span class="p">],</span> 
+    <span class="n">values</span> <span class="o">=</span> <span class="s1">&#39;score&#39;</span><span class="p">,</span> <span class="n">aggfunc</span> <span class="o">=</span> <span class="s1">&#39;mean&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>college</th>
+      <th>level</th>
+      <th>score</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>STB</td>
+      <td>Fr</td>
+      <td>69.177235</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>STB</td>
+      <td>Ju</td>
+      <td>64.950769</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>STM</td>
+      <td>Se</td>
+      <td>79.309831</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>STM</td>
+      <td>So</td>
+      <td>73.415690</td>
+    </tr>
+  </tbody>
+</table>
+<p>16 rows × 3 columns</p>
+</div></div></div>
+</div>
+</section>
+<section id="combining-fall-and-spring-results-into-the-same-table">
+<h3>Combining fall and spring results into the same table<a class="headerlink" href="#combining-fall-and-spring-results-into-the-same-table" title="Link to this heading">#</a></h3>
+<p>We’ll use a ‘long’ format for this table. In other words, rather than show fall and spring results side by side for each student (an example of a ‘wide’-formatted table), we’ll list these results as separate rows. I consider this setup to be more realistic: in real life, this table would likely be created by stacking individual sets of survey results on top of one another.</p>
+<p>The only identifier that we’ll preserve is the student ID, as this will be sufficient for linking this dataset with any other table (such as our current enrollment dataset) that also contains this key.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_survey</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span>
+    <span class="p">[</span><span class="n">df_fall_survey</span><span class="p">,</span> <span class="n">df_spring_survey</span><span class="p">])</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()[</span>
+<span class="p">[</span><span class="s1">&#39;student_id&#39;</span><span class="p">,</span> <span class="s1">&#39;starting_year&#39;</span><span class="p">,</span> <span class="s1">&#39;season&#39;</span><span class="p">,</span> <span class="s1">&#39;score&#39;</span><span class="p">]]</span>
+<span class="n">df_survey</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>student_id</th>
+      <th>starting_year</th>
+      <th>season</th>
+      <th>score</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2020-1</td>
+      <td>2023</td>
+      <td>Fall</td>
+      <td>88</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2020-2</td>
+      <td>2023</td>
+      <td>Fall</td>
+      <td>37</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>32766</th>
+      <td>2023-5442</td>
+      <td>2023</td>
+      <td>Spring</td>
+      <td>64</td>
+    </tr>
+    <tr>
+      <th>32767</th>
+      <td>2023-5443</td>
+      <td>2023</td>
+      <td>Spring</td>
+      <td>77</td>
+    </tr>
+  </tbody>
+</table>
+<p>32768 rows × 4 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_survey</span><span class="o">.</span><span class="n">to_sql</span><span class="p">(</span><span class="s1">&#39;survey_results&#39;</span><span class="p">,</span> <span class="n">if_exists</span> <span class="o">=</span> <span class="s1">&#39;replace&#39;</span><span class="p">,</span> 
+                 <span class="n">index</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">con</span> <span class="o">=</span> <span class="n">e</span><span class="p">)</span>
+<span class="n">df_survey</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;survey_results.csv&#39;</span><span class="p">,</span> <span class="n">index</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="creating-a-set-of-winter-results-that-can-be-incorporated-into-a-data-cleaning-reformatting-script">
+<h3>Creating a set of winter results that can be incorporated into a data cleaning/reformatting script<a class="headerlink" href="#creating-a-set-of-winter-results-that-can-be-incorporated-into-a-data-cleaning-reformatting-script" title="Link to this heading">#</a></h3>
+<p>In order to demonstrate how the Pandas library can be used to clean and reformat data, I’ll now create a winter survey results table that contains several issues, including:</p>
+<ol class="arabic simple">
+<li><p>Column names that differ from those in the fall/spring results</p></li>
+<li><p>Different data formats</p></li>
+<li><p>A missing column</p></li>
+<li><p>Duplicate values</p></li>
+<li><p>Missing values for certain students</p></li>
+<li><p>Results spread over 16 separate files (one for each school/level pair)</p></li>
+</ol>
+<p>These issues will be addressed within the data_cleaning_and_reformatting.ipynb script within PFN’s Data Prep section.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_winter_survey</span> <span class="o">=</span> <span class="n">df_fall_survey</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">df_winter_survey</span><span class="p">[</span><span class="s1">&#39;SEASON&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;W&#39;</span>
+<span class="c1"># Initializing winter survey results as lower copies of fall ones, </span>
+<span class="c1"># then converting them to a different data type:</span>
+<span class="c1"># (Converting the results to integers, then strings prevents the original</span>
+<span class="c1"># decimal values from getting added to the final output.</span>
+<span class="n">df_winter_survey</span><span class="p">[</span><span class="s1">&#39;SURVEY_SCORE&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">df_winter_survey</span><span class="p">[</span><span class="s1">&#39;score&#39;</span><span class="p">]</span> 
+    <span class="o">+</span> <span class="p">(</span><span class="n">rng</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="n">size</span> <span class="o">=</span> <span class="n">student_count</span><span class="p">)</span> <span class="o">*</span> <span class="o">-</span><span class="mi">10</span><span class="p">))</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span>
+        <span class="s1">&#39;int&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;str&#39;</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;.0%&#39;</span>
+<span class="n">df_winter_survey</span><span class="p">[</span><span class="s1">&#39;STARTINGYR&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_winter_survey</span><span class="p">[</span><span class="s1">&#39;starting_year&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="mi">2000</span>
+<span class="n">df_winter_survey</span><span class="p">[</span><span class="s1">&#39;MATRICYR&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">df_winter_survey</span><span class="p">[</span><span class="s1">&#39;matriculation_year&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="mi">2000</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;str&#39;</span><span class="p">)</span>
+<span class="n">df_winter_survey</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;matriculation_number&#39;</span><span class="p">:</span><span class="s1">&#39;MATRIC#&#39;</span><span class="p">},</span> 
+                        <span class="n">inplace</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+<span class="n">df_winter_survey</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span>
+    <span class="p">[</span><span class="s1">&#39;matriculation_year&#39;</span><span class="p">,</span> <span class="s1">&#39;student_id&#39;</span><span class="p">,</span> <span class="s1">&#39;starting_year&#39;</span><span class="p">,</span>
+     <span class="s1">&#39;season&#39;</span><span class="p">,</span><span class="s1">&#39;score&#39;</span><span class="p">],</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+<span class="c1"># Removing 15% of students from the results via df.sample:      </span>
+<span class="n">df_winter_survey</span> <span class="o">=</span> <span class="n">df_winter_survey</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">frac</span><span class="o">=</span><span class="mf">0.85</span><span class="p">)</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="c1"># See https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.</span>
+<span class="c1"># DataFrame.sample.html</span>
+<span class="c1"># using df.sample() to add duplicate records for 5% of the students present</span>
+<span class="c1"># within the sample:</span>
+<span class="n">df_winter_survey</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span>
+    <span class="p">[</span><span class="n">df_winter_survey</span><span class="p">,</span> <span class="n">df_winter_survey</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">frac</span><span class="o">=</span><span class="mf">0.05</span><span class="p">)])</span>
+<span class="n">df_winter_survey</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">df_winter_survey</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>MATRIC#</th>
+      <th>college</th>
+      <th>level</th>
+      <th>SEASON</th>
+      <th>SURVEY_SCORE</th>
+      <th>STARTINGYR</th>
+      <th>MATRICYR</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>807</td>
+      <td>STC</td>
+      <td>Se</td>
+      <td>W</td>
+      <td>82.0%</td>
+      <td>23</td>
+      <td>20</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1163</td>
+      <td>STM</td>
+      <td>Ju</td>
+      <td>W</td>
+      <td>64.0%</td>
+      <td>23</td>
+      <td>21</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>14620</th>
+      <td>1715</td>
+      <td>STB</td>
+      <td>So</td>
+      <td>W</td>
+      <td>74.0%</td>
+      <td>23</td>
+      <td>22</td>
+    </tr>
+    <tr>
+      <th>14621</th>
+      <td>1040</td>
+      <td>STM</td>
+      <td>Se</td>
+      <td>W</td>
+      <td>32.0%</td>
+      <td>23</td>
+      <td>20</td>
+    </tr>
+  </tbody>
+</table>
+<p>14622 rows × 7 columns</p>
+</div></div></div>
+</div>
+<p>Dividing these results into 16 individual datasets (one for each college/level pair), then saving those results into the Data Prep section of PFN:</p>
+<p>(The ‘college’ and ‘level’ fields within df_winter_survey were only necessary for filtering data and creating school and level-based filenames, so they don’t need to be included in the .csv copies of the data.)</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">college</span> <span class="ow">in</span> <span class="n">df_winter_survey</span><span class="p">[</span><span class="s1">&#39;college&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">():</span>
+    <span class="k">for</span> <span class="n">level</span> <span class="ow">in</span> <span class="n">df_winter_survey</span><span class="p">[</span><span class="s1">&#39;level&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">():</span>
+        <span class="n">df_results</span> <span class="o">=</span> <span class="n">df_winter_survey</span><span class="o">.</span><span class="n">query</span><span class="p">(</span>
+            <span class="s2">&quot;college == @college &amp; level == @level&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span>
+            <span class="p">[</span><span class="s1">&#39;college&#39;</span><span class="p">,</span> <span class="s1">&#39;level&#39;</span><span class="p">],</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">df_results</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s1">&#39;../Data_Prep/winter_results/</span><span class="si">{</span><span class="n">college</span><span class="si">}</span><span class="s1">_</span><span class="si">{</span><span class="n">level</span><span class="si">}</span><span class="s1">_results.csv&#39;</span><span class="p">,</span> 
+            <span class="n">index</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="creating-a-dining-transactions-table">
+<h2>Creating a dining transactions table<a class="headerlink" href="#creating-a-dining-transactions-table" title="Link to this heading">#</a></h2>
+<p>I created this table in order to illustrate the ‘average of averages’ problem within descriptive_stats_part_2.ipynb. It currently shows only four items for each transaction: (1) the amount of money spent; (2) the abbreviated level (Fr for freshman, So for sophomore, etc.) of the diner; (3) the starting school year in which the transaction was made; and (4) the weekday of the transaction.</p>
+<p>The table is designed so that younger levels will have more entries than older levels, but older levels will spend higher amounts, on average, per transaction.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dining_transaction_count</span> <span class="o">=</span> <span class="mi">22453</span>
+<span class="c1"># Initializing the table:</span>
+<span class="c1"># Note the use of rng.choice() to make younger-level transactions</span>
+<span class="c1"># more common than older-level ones and mid-week transactions </span>
+<span class="c1"># more common than weekend-ones.</span>
+<span class="c1"># This set of code uses ng.random() to initialize each transaction as a </span>
+<span class="c1"># number between $0 and $20; however, these numbers will get adjusted</span>
+<span class="c1"># later in this cell.</span>
+<span class="n">df_dining_transactions</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+    <span class="n">index</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">dining_transaction_count</span><span class="p">),</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;starting_year&#39;</span><span class="p">:</span><span class="mi">2023</span><span class="p">,</span>
+            <span class="s1">&#39;weekday&#39;</span><span class="p">:</span><span class="n">rng</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span>
+        <span class="p">[</span><span class="s1">&#39;Su&#39;</span><span class="p">,</span> <span class="s1">&#39;Mo&#39;</span><span class="p">,</span> <span class="s1">&#39;Tu&#39;</span><span class="p">,</span> <span class="s1">&#39;We&#39;</span><span class="p">,</span> <span class="s1">&#39;Th&#39;</span><span class="p">,</span> <span class="s1">&#39;Fr&#39;</span><span class="p">,</span> <span class="s1">&#39;Sa&#39;</span><span class="p">],</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.16</span><span class="p">,</span> <span class="mf">0.23</span><span class="p">,</span> <span class="mf">0.24</span><span class="p">,</span> <span class="mf">0.18</span><span class="p">,</span> <span class="mf">0.11</span><span class="p">,</span> <span class="mf">0.03</span><span class="p">],</span> 
+                <span class="n">size</span> <span class="o">=</span> <span class="n">dining_transaction_count</span><span class="p">),</span>
+            <span class="s1">&#39;level&#39;</span><span class="p">:</span><span class="n">rng</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span>
+        <span class="p">[</span><span class="s1">&#39;Fr&#39;</span><span class="p">,</span> <span class="s1">&#39;So&#39;</span><span class="p">,</span> <span class="s1">&#39;Ju&#39;</span><span class="p">,</span> <span class="s1">&#39;Se&#39;</span><span class="p">],</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.55</span><span class="p">,</span> <span class="mf">0.21</span><span class="p">,</span> <span class="mf">0.15</span><span class="p">,</span> <span class="mf">0.09</span><span class="p">],</span> <span class="n">size</span> <span class="o">=</span> <span class="n">dining_transaction_count</span><span class="p">),</span>
+           <span class="s1">&#39;base_charge&#39;</span><span class="p">:[</span>
+               <span class="n">rng</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">*</span> <span class="mi">20</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span>
+                   <span class="n">dining_transaction_count</span><span class="p">)]})</span>
+
+<span class="c1"># Creating a &#39;multiplier&#39; column that will cause average transaction</span>
+<span class="c1"># amounts for older levels to exceed those of younger levels:</span>
+<span class="n">df_dining_transactions</span><span class="p">[</span><span class="s1">&#39;multiplier&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_dining_transactions</span><span class="p">[</span>
+<span class="s1">&#39;level&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span>
+    <span class="p">{</span><span class="s1">&#39;Fr&#39;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;So&#39;</span><span class="p">:</span><span class="mf">1.3</span><span class="p">,</span> <span class="s1">&#39;Ju&#39;</span><span class="p">:</span> <span class="mf">1.7</span><span class="p">,</span> <span class="s1">&#39;Se&#39;</span><span class="p">:</span><span class="mf">2.1</span><span class="p">})</span>
+<span class="n">df_dining_transactions</span><span class="p">[</span><span class="s1">&#39;amount&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span>
+    <span class="n">df_dining_transactions</span><span class="p">[</span><span class="s1">&#39;base_charge&#39;</span><span class="p">]</span> 
+    <span class="o">*</span> <span class="n">df_dining_transactions</span><span class="p">[</span><span class="s1">&#39;multiplier&#39;</span><span class="p">],</span> <span class="mi">2</span><span class="p">)</span>
+
+<span class="c1"># Removing columns that are no longer needed:</span>
+<span class="n">df_dining_transactions</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span>
+    <span class="p">[</span><span class="s1">&#39;base_charge&#39;</span><span class="p">,</span> <span class="s1">&#39;multiplier&#39;</span><span class="p">],</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+<span class="n">df_dining_transactions</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>starting_year</th>
+      <th>weekday</th>
+      <th>level</th>
+      <th>amount</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2023</td>
+      <td>We</td>
+      <td>Fr</td>
+      <td>13.36</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2023</td>
+      <td>Tu</td>
+      <td>Se</td>
+      <td>12.22</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>22451</th>
+      <td>2023</td>
+      <td>Sa</td>
+      <td>Fr</td>
+      <td>13.25</td>
+    </tr>
+    <tr>
+      <th>22452</th>
+      <td>2023</td>
+      <td>Mo</td>
+      <td>Fr</td>
+      <td>1.95</td>
+    </tr>
+  </tbody>
+</table>
+<p>22453 rows × 4 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_dining_transactions</span><span class="o">.</span><span class="n">to_sql</span><span class="p">(</span><span class="s1">&#39;dining_transactions&#39;</span><span class="p">,</span> <span class="n">if_exists</span> <span class="o">=</span> <span class="s1">&#39;replace&#39;</span><span class="p">,</span> 
+                 <span class="n">index</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">con</span> <span class="o">=</span> <span class="n">e</span><span class="p">)</span>
+<span class="n">df_dining_transactions</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;dining_transactions.csv&#39;</span><span class="p">,</span> <span class="n">index</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="creating-a-table-of-fall-and-spring-bookstore-sales-by-student-for-a-given-year">
+<h2>Creating a table of fall and spring bookstore sales by student for a given year:<a class="headerlink" href="#creating-a-table-of-fall-and-spring-bookstore-sales-by-student-for-a-given-year" title="Link to this heading">#</a></h2>
+<p>(This table will play a key role in the Regressions section of Python for Nonprofits.)</p>
+<p>We’ll initialize this table as a subset of df_curr_enrollment, as certain demographic items will play a role in students’ spring purchase totals.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_sales</span> <span class="o">=</span> <span class="n">df_curr_enrollment</span><span class="p">[</span>
+<span class="p">[</span><span class="s1">&#39;student_id&#39;</span><span class="p">,</span> <span class="s1">&#39;gender&#39;</span><span class="p">,</span> <span class="s1">&#39;college&#39;</span><span class="p">,</span> <span class="s1">&#39;level&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+<span class="c1"># Specifying an RNG seed: (I sometimes use the time of day, in HHMMSS</span>
+<span class="c1"># format, as a basis for a seed value.)</span>
+<span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="n">seed</span> <span class="o">=</span> <span class="mi">225403</span><span class="p">)</span>
+
+<span class="c1"># Fall sales will be normally distributed for all students:</span>
+<span class="n">df_sales</span><span class="p">[</span><span class="s1">&#39;Fall&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span>
+    <span class="n">loc</span> <span class="o">=</span> <span class="mi">80</span><span class="p">,</span> <span class="n">scale</span> <span class="o">=</span> <span class="mi">25</span><span class="p">,</span> <span class="n">size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">df_sales</span><span class="p">))</span>
+
+<span class="c1"># Spring sales will be higher than fall sales by default. The following</span>
+<span class="c1"># code specifies these changes using a normal distribution, as I found that</span>
+<span class="c1"># doing so helped make my regression residuals more normally distributed</span>
+<span class="c1"># also.)</span>
+<span class="n">spring_change</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span> <span class="o">=</span> <span class="mi">11</span><span class="p">,</span> <span class="n">scale</span> <span class="o">=</span> <span class="mi">25</span><span class="p">,</span> <span class="n">size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">df_sales</span><span class="p">))</span>
+<span class="n">df_sales</span><span class="p">[</span><span class="s1">&#39;Spring&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_sales</span><span class="p">[</span><span class="s1">&#39;Fall&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">spring_change</span>
+<span class="c1"># Modifying Spring totals based on demographic components:</span>
+<span class="n">spring_col</span> <span class="o">=</span> <span class="n">df_sales</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">get_loc</span><span class="p">(</span><span class="s1">&#39;Spring&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">df_sales</span><span class="p">)):</span>
+    <span class="c1"># Unhealthy snacks were removed from the checkout aisle; </span>
+    <span class="c1"># this ended up reducing revenue among freshmen and sophomore</span>
+    <span class="c1"># (who particularly liked these snacks.)</span>
+    <span class="k">if</span> <span class="n">df_sales</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s1">&#39;level&#39;</span><span class="p">]</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;Fr&#39;</span><span class="p">,</span> <span class="s1">&#39;So&#39;</span><span class="p">]:</span>
+        <span class="n">df_sales</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">spring_col</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">df_sales</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">spring_col</span><span class="p">]</span> <span class="o">+</span> <span class="n">rng</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span>
+                <span class="n">loc</span> <span class="o">=</span> <span class="o">-</span><span class="mi">21</span><span class="p">,</span> <span class="n">scale</span> <span class="o">=</span> <span class="mi">3</span><span class="p">))</span>
+    <span class="c1"># An intensive marketing campaign was carried out at STM and STL;</span>
+    <span class="c1"># if it ended up being successful, it would then be implemented</span>
+    <span class="c1"># at the other colleges also.</span>
+    <span class="k">if</span> <span class="n">df_sales</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s1">&#39;college&#39;</span><span class="p">]</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;STM&#39;</span><span class="p">,</span> <span class="s1">&#39;STL&#39;</span><span class="p">]:</span>
+        <span class="n">df_sales</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">spring_col</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">df_sales</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">spring_col</span><span class="p">]</span> <span class="o">+</span> <span class="n">rng</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span>
+                <span class="n">loc</span> <span class="o">=</span> <span class="mi">9</span><span class="p">,</span> <span class="n">scale</span> <span class="o">=</span> <span class="mi">3</span><span class="p">))</span>
+
+<span class="c1"># I&#39;ll leave in negative Fall and Spring values, as they could be </span>
+<span class="c1"># explained by refunds.</span>
+
+<span class="n">df_sales</span><span class="p">[</span><span class="s1">&#39;Fall&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_sales</span><span class="p">[</span><span class="s1">&#39;Fall&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">df_sales</span><span class="p">[</span><span class="s1">&#39;Spring&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_sales</span><span class="p">[</span><span class="s1">&#39;Spring&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">df_sales</span><span class="p">[</span><span class="s1">&#39;Fall_Spring_Change&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_sales</span><span class="p">[</span><span class="s1">&#39;Spring&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="n">df_sales</span><span class="p">[</span><span class="s1">&#39;Fall&#39;</span><span class="p">]</span>
+
+<span class="n">df_sales</span><span class="o">.</span><span class="n">to_sql</span><span class="p">(</span><span class="s1">&#39;bookstore_sales&#39;</span><span class="p">,</span> <span class="n">if_exists</span> <span class="o">=</span> <span class="s1">&#39;replace&#39;</span><span class="p">,</span> 
+                 <span class="n">index</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">con</span> <span class="o">=</span> <span class="n">e</span><span class="p">)</span>
+<span class="n">df_sales</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;bookstore_sales.csv&#39;</span><span class="p">,</span> <span class="n">index</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
+
+<span class="n">df_sales</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>student_id</th>
+      <th>gender</th>
+      <th>college</th>
+      <th>level</th>
+      <th>Fall</th>
+      <th>Spring</th>
+      <th>Fall_Spring_Change</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2020-1</td>
+      <td>F</td>
+      <td>STC</td>
+      <td>Se</td>
+      <td>66.80</td>
+      <td>58.24</td>
+      <td>-8.56</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2020-2</td>
+      <td>F</td>
+      <td>STM</td>
+      <td>Se</td>
+      <td>104.67</td>
+      <td>151.90</td>
+      <td>47.23</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>16382</th>
+      <td>2023-5442</td>
+      <td>M</td>
+      <td>STB</td>
+      <td>Fr</td>
+      <td>100.52</td>
+      <td>38.29</td>
+      <td>-62.23</td>
+    </tr>
+    <tr>
+      <th>16383</th>
+      <td>2023-5443</td>
+      <td>M</td>
+      <td>STM</td>
+      <td>Fr</td>
+      <td>57.45</td>
+      <td>29.43</td>
+      <td>-28.02</td>
+    </tr>
+  </tbody>
+</table>
+<p>16384 rows × 7 columns</p>
+</div></div></div>
+</div>
+<p>That’s the end of this script for now. I may add additional tables to this database in the future, including:</p>
+<ol class="arabic simple">
+<li><p>A table that stores starting incomes for graduating seniors over the last 2+ years</p></li>
+<li><p>A table that compares students’ college admissions test percentiles to graduate admissions test percentiles.</p></li>
+</ol>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./Appendix"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../Book_Specific_Materials/PFN_Dash_App_Demo_py_nb.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Source code for PFN Dash App Demo</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../Book_Specific_Materials/helper_funcs_py_nb.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">helper_funcs.py</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#connecting-to-our-nvcu-database-via-the-sqlalchemy-library">Connecting to our NVCU database via the SQLAlchemy library</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-a-current-enrollment-table">Creating a current enrollment table</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-lists-of-names">Creating lists of names</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#initializing-our-current-enrollment-table">Initializing our current enrollment table</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-student-ids">Creating student IDs</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#assigning-students-to-different-colleges">Assigning students to different colleges</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#saving-this-table-to-our-nvcu-database">Saving this table to our NVCU database</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-a-survey-results-table">Creating a survey results table</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-fall-survey-results">Creating fall survey results</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-spring-results">Creating spring results</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#combining-fall-and-spring-results-into-the-same-table">Combining fall and spring results into the same table</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-a-set-of-winter-results-that-can-be-incorporated-into-a-data-cleaning-reformatting-script">Creating a set of winter results that can be incorporated into a data cleaning/reformatting script</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-a-dining-transactions-table">Creating a dining transactions table</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-a-table-of-fall-and-spring-bookstore-sales-by-student-for-a-given-year">Creating a table of fall and spring bookstore sales by student for a given year:</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Kenneth Burchfiel
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="8.5in"
+   height="11in"
+   viewBox="0 0 215.9 279.39999"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.2.2 (b0a8486541, 2022-12-01)"
+   sodipodi:docname="back_cover.svg"
+   xml:space="preserve"
+   inkscape:export-filename="back_cover.png"
+   inkscape:export-xdpi="300"
+   inkscape:export-ydpi="300"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"><sodipodi:namedview
+     id="namedview7"
+     pagecolor="#91b4b4"
+     bordercolor="#eeeeee"
+     borderopacity="1"
+     inkscape:showpageshadow="0"
+     inkscape:pageopacity="1"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#505050"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="0.70710678"
+     inkscape:cx="380.42345"
+     inkscape:cy="538.81537"
+     inkscape:window-width="1920"
+     inkscape:window-height="1008"
+     inkscape:window-x="1920"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" /><defs
+     id="defs2"><rect
+       x="68.326696"
+       y="79.853046"
+       width="679.69716"
+       height="954.93179"
+       id="rect7236" /><rect
+       x="43.376831"
+       y="198.11066"
+       width="722.37257"
+       height="477.61029"
+       id="rect3133" /><rect
+       x="78.928593"
+       y="97.473897"
+       width="781.55183"
+       height="244.87329"
+       id="rect242" /><rect
+       x="74.204435"
+       y="95.487425"
+       width="380.9587"
+       height="207.77304"
+       id="rect236" /><clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath993"><rect
+         style="fill:#000000;stroke-width:0.277683"
+         id="rect995"
+         width="60.451057"
+         height="57.571697"
+         x="121.22923"
+         y="124.85354"
+         ry="0" /></clipPath><rect
+       x="68.326698"
+       y="79.853043"
+       width="679.69714"
+       height="954.93176"
+       id="rect7236-3" /></defs><g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"><text
+       xml:space="preserve"
+       transform="scale(0.26458333)"
+       id="text234"
+       style="font-weight:bold;font-size:32px;font-family:'Liberation Sans';-inkscape-font-specification:'Liberation Sans Bold';white-space:pre;shape-inside:url(#rect236);display:inline;fill:#000000" /><text
+       xml:space="preserve"
+       transform="scale(0.26458333)"
+       id="text7234"
+       style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:26.6667px;font-family:Jost;-inkscape-font-specification:'Jost Italic';white-space:pre;shape-inside:url(#rect7236);display:inline;fill:#000000"><tspan
+         x="68.326172"
+         y="102.93313"
+         id="tspan698"><tspan
+   style="font-weight:bold"
+   id="tspan696">Python for Nonprofits</tspan> is a guide to applying Python in </tspan><tspan
+         x="68.326172"
+         y="136.2665"
+         id="tspan700">nonprofit settings. Specifically, it teaches you how to use </tspan><tspan
+         x="68.326172"
+         y="169.59988"
+         id="tspan702">Python to:
+</tspan><tspan
+         x="68.326172"
+         y="202.93325"
+         id="tspan704">
+</tspan><tspan
+         x="68.326172"
+         y="236.26663"
+         id="tspan706">--Import data, then clean and reformat it
+</tspan><tspan
+         x="68.326172"
+         y="269.6"
+         id="tspan708">--Analyze data using descriptive statistics and linear </tspan><tspan
+         x="68.326172"
+         y="302.93337"
+         id="tspan710">regressions
+</tspan><tspan
+         x="68.326172"
+         y="336.26675"
+         id="tspan712">--Create both charts and maps
+</tspan><tspan
+         x="68.326172"
+         y="369.60012"
+         id="tspan714">--Share spreadsheets and interactive visualizations online
+</tspan><tspan
+         x="68.326172"
+         y="402.9335"
+         id="tspan716">
+</tspan><tspan
+         x="68.326172"
+         y="436.26687"
+         id="tspan718">PFN is released under the MIT license. This means that you </tspan><tspan
+         x="68.326172"
+         y="469.60024"
+         id="tspan720">can use this code in both commercial and personal </tspan><tspan
+         x="68.326172"
+         y="502.93362"
+         id="tspan722">applications, and that you can choose whatever license you </tspan><tspan
+         x="68.326172"
+         y="536.26699"
+         id="tspan724">want for your own code.  This choice makes PFN much more </tspan><tspan
+         x="68.326172"
+         y="569.60037"
+         id="tspan726">flexible than many other educational Python resources.
+</tspan><tspan
+         x="68.326172"
+         y="602.93374"
+         id="tspan728">
+</tspan><tspan
+         x="68.326172"
+         y="636.26711"
+         id="tspan732"><tspan
+   style="font-weight:bold"
+   id="tspan730">About the author</tspan>
+</tspan><tspan
+         x="68.326172"
+         y="669.60049"
+         id="tspan734">
+</tspan><tspan
+         x="68.326172"
+         y="702.93386"
+         id="tspan736">Ken Burchfiel has used Python in nonprofit settings since </tspan><tspan
+         x="68.326172"
+         y="736.26724"
+         id="tspan738">graduating from Columbia Business School in 2022. He </tspan><tspan
+         x="68.326172"
+         y="769.60061"
+         id="tspan740">loves finding ways to apply this programming language--and </tspan><tspan
+         x="68.326172"
+         y="802.93398"
+         id="tspan742">its incredible array of libraries--to help further nonprofits' </tspan><tspan
+         x="68.326172"
+         y="836.26736"
+         id="tspan744">missions. He lives in Charlottesville, VA with his wife and </tspan><tspan
+         x="68.326172"
+         y="869.60073"
+         id="tspan746">son.
+</tspan><tspan
+         x="68.326172"
+         y="902.93411"
+         id="tspan748">
+</tspan></text></g></svg>

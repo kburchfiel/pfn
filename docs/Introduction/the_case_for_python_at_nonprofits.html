@@ -1,0 +1,554 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>The Case for Using Python at Nonprofits &#8212; Python for Nonprofits</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Introduction/the_case_for_python_at_nonprofits';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Getting Started" href="../Book_Specific_Materials/getting_started_for_book.html" />
+    <link rel="prev" title="An Introduction to Python for Nonprofits" href="introduction.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../front_matter_for_book.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Python for Nonprofits</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../front_matter_for_book.html">
+                    Wecome to Python for Nonprofits!
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Introduction</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">An Introduction to Python for Nonprofits</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">The Case for Using Python at Nonprofits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Book_Specific_Materials/getting_started_for_book.html">Getting Started</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Importing and Prepping Data</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Data_Retrieval/data_retrieval.html">Data Retrieval</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Data_Prep/data_prep.html">Data Prep</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Analyzing Data</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Descriptive_Stats/descriptive_stats.html">Descriptive Stats</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Descriptive_Stats/descriptive_stats_part_2.html">Descriptive Stats: Part 2</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Census_Data_Imports/census_data_imports.html">Census Data Imports</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Book_Specific_Materials/census_import_scripts_py_nb.html">census_import_scripts.py</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Visualizing Data</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Graphing/graphing.html">Creating Interactive and Static Charts with Plotly</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../Graphing/pivot_and_graph_functions.html">Pivot and Graph Functions</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Mapping/choropleth_maps.html">Mapping Census Data using Plotly (Work in progress)</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Book_Specific_Materials/plotly_choropleth_map_functions_py_nb.html">plotly_choropleth_map_functions.py</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Mapping/choropleth_maps_with_folium.html">Creating Choropleth Maps with Folium</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Book_Specific_Materials/folium_choropleth_map_functions_py_nb.html">folium_choropleth_map_functions.py</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Regressions</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Regressions/regression_analyses.html">Regression Analyses</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Publishing Analyses Online</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Static_Sites/simple_static_site.html">Creating a Simple Static Webpage</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Updating_Online_Spreadsheets/updating_online_spreadsheets.html">Updating Online Spreadsheets</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Book_Specific_Materials/weather_import_py_nb.html">weather_import.py</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Online_Visualizations/Simple_App_Without_Login/readme.html">Simple Dash App Without Login</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Book_Specific_Materials/Simple_App_Without_Login_py_nb.html">Source code for Simple App Without Login</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Online_Visualizations/PFN_Dash_App_Demo/readme.html">PFN Dash App Demo</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Book_Specific_Materials/PFN_Dash_App_Demo_py_nb.html">Source code for PFN Dash App Demo</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendix</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Appendix/nvcu_db_gen.html">NVCU Database Generator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Book_Specific_Materials/helper_funcs_py_nb.html">helper_funcs.py</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/Introduction/the_case_for_python_at_nonprofits.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>The Case for Using Python at Nonprofits</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#python-is-flexible">Python is <em>flexible</em></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#python-is-fast">Python is <em>fast</em></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#python-is-free">Python is <em>free</em></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#python-is-famous">Python is <em>famous</em></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#python-is-fun-to-me-at-least">Python is <em>fun</em> (to me, at least!)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#don-t-take-my-word-for-it-give-it-a-try-yourself">Don’t take my word for it–give it a try yourself!</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="the-case-for-using-python-at-nonprofits">
+<h1>The Case for Using Python at Nonprofits<a class="headerlink" href="#the-case-for-using-python-at-nonprofits" title="Link to this heading">#</a></h1>
+<p><em>By Kenneth Burchfiel</em></p>
+<p>Python is a great option for managing, analyzing, and visualizing nonprofit data for four reasons: it’s <em>flexible</em>, <em>fast</em>, <em>free</em>, and <em>famous</em>. And you might even find it to be <em>fun</em> as well.</p>
+<p>This programming language won’t be the right fit for every nonprofit, and it does require more study and practice than many commercial solutions. However, I would suggest that nonprofits at least consider incorporating Python into their data workflows.</p>
+<section id="python-is-flexible">
+<h2>Python is <em>flexible</em><a class="headerlink" href="#python-is-flexible" title="Link to this heading">#</a></h2>
+<p>Python’s versatility is one of its key strengths. You can use it to read in data from numerous different sources; reformat and analyze that data; create visualizations; and even share your analyses online via an interactive dashboard. Other tools, like spreadsheet programs or business intelligence software, may specialize in one or more of these components, but Python is a fantastic choice for all of them.</p>
+<p>Python not only supports many different use cases but also allows you to create scripts that are tailored to your nonprofit’s specific needs. If you want a closed-source commercial software program to perform an additional task, you’d probably need to submit a feature request and then wait for the developers to incorporate it into the next version of their program–if they choose to do so at all. Meanwhile, if you want a Python script to perform a certain task, you can add in code for that task yourself (provided, of course, that you have the time and capabilities to do so).</p>
+<p>This flexibility is greatly enhanced by the wide variety of libraries offered for Python. For instance, <em>Pandas</em> is a powerful tool for reading, reformatting, and analyzing data. <em>Plotly</em> allows you to easily create interactive charts and maps. And <em>Dash</em>, together with Plotly, can power interactive online dashboards in order to make your analyses and visualizations easier to share with others. (Each of these libraries, among others, will get featured in Python for Nonprofits.) These packages aren’t part of the core Python programming language, but they are easy to install, and detailed documentation on each of them is accessible online.</p>
+<p>One drawback of this flexibility, however, is that users of a Python script that another user wrote will need to take additional time to understand how it works–especially if it was not documented well. As long as someone has learned how to use a proprietary program, he or she should have little trouble making updates to a file that someone else created within that program, given that such software offers less room for variation. However, a Python expert will probably still need to take time to understand a script that another expert created, especially if it incorporates libraries or methods with which the expert isn’t yet familiar.</p>
+</section>
+<section id="python-is-fast">
+<h2>Python is <em>fast</em><a class="headerlink" href="#python-is-fast" title="Link to this heading">#</a></h2>
+<p>Once you’ve created a Python script that completes a certain task, you should then be able to finish that task much more quickly the next time around than you could have within a spreadsheet editor or other tool. Therefore, the more you incorporate Python into your workflow, the more productive you and your team can be.</p>
+<p>For example, let’s say that your nonprofit sends out a survey to its service recipients each month, then compiles that data into a report for its board. It’s true that pivoting and charting this data within a spreadsheet editor would likely be quicker than writing a set of Python code to perform these same steps. <em>However</em>, once you’ve created that Python code, you could then have it create your tables and charts in a matter of minutes or even seconds. (Or, if you configure your script to read in the latest survey data automatically and then instruct your computer to run it on a regular basis, you could produce your analyses without any keypresses at all.)</p>
+<p>Similarly, suppose your supervisor requests that you use a new color scheme for 20 different charts that you created as part of a report. If you created these charts in Python and defined the color scheme at the beginning of your script, you could easily update all 20 charts by changing that scheme’s definition and rerunning the script.</p>
+<p>This speed advantage does have a few caveats. For instance, if a new set of data that you receive uses a different layout, different value types (e.g. ‘5%’ instead of ‘0.05’), or different column names, you’ll likely need to adjust your code to accommodate that new setup. However, Python also helps speed up data cleaning tasks, so if your nonprofit’s data is imperfect (which I imagine to be the case just about anywhere), Python might become an even more useful tool as a result.</p>
+<p>I also recognize that individuals with experience in Visual Basic for Applications (<a class="reference external" href="https://en.wikipedia.org/wiki/Visual_Basic_for_Applications">https://en.wikipedia.org/wiki/Visual_Basic_for_Applications</a>) could likely create Excel macros that would provide similar speed advantages. However, I would suggest that the time spent learning VBA might be better spent on Python given the latter’s versatility and popularity (more on this soon).</p>
+</section>
+<section id="python-is-free">
+<h2>Python is <em>free</em><a class="headerlink" href="#python-is-free" title="Link to this heading">#</a></h2>
+<p>The more companies rely on a SAAS (Software As A Service) model, in which you must provide ongoing payments to continue using a program, the more appealing Python and other free and open-source tools will appear as a result. This is the case for all organizations, but Python’s cost advantage may be particularly compelling to nonprofits.</p>
+<p>Suppose that you use a proprietary data visualization program that costs 200 dollars per user per year. If you have 300 staff members who use this software, your annual payments for it will amount to 60,000 dollars.</p>
+<p>However, because Python is free to use and open source, you could dramatically reduce these costs by building a web dashboard using Python instead. You would probably need to pay for server and hosting costs, but you’d be able to avoid per-user fees and thus save significant amounts of money as a result.</p>
+<p>Again, there are some caveats here. First, unless you build the web dashboard yourself (which would present opportunity costs), you’d need to pay someone to recreate it in Python; if your dashboard is particularly complex, these upfront costs may be too large for your nonprofit to bear. However, if you’re already paying someone to manage your proprietary visualization program, having them rebuild your dashboard in Python instead <em>might</em> be a financially sound decision.</p>
+<p>Second, not all versions of Python are free. For instance, if you use Anaconda for an organization with 200 or more employees, you may need to pay 50 dollars a month. (See Anaconda’s Terms of Service (<a class="reference external" href="https://legal.anaconda.com/policies/en?name=terms-of-service#terms-of-service">https://legal.anaconda.com/policies/en?name=terms-of-service#terms-of-service</a>) for more details; the exact monthly cost is subject to change, if it hasn’t changed already.) My understanding is that using Miniforge (<a class="github reference external" href="https://github.com/conda-forge/miniforge">conda-forge/miniforge</a>) <em>should</em> allow you to legally avoid this monthly payment, but I can’t guarantee that this is the case. (I do use Miniforge for my own personal and professional use and would recommend that you consider doing so as well.)</p>
+</section>
+<section id="python-is-famous">
+<h2>Python is <em>famous</em><a class="headerlink" href="#python-is-famous" title="Link to this heading">#</a></h2>
+<p>Python, according to the TIOBE Index (<a class="reference external" href="https://www.tiobe.com/tiobe-index/">https://www.tiobe.com/tiobe-index/</a>), is the world’s most popular language. The rating of 23.85% that it received in March 2025 was over 9 times the rating of VBA, the language behind Excel macros that I mentioned earlier, and 25 times that of R (another commonly-used language for data science applications). As just one example of its broad adoption, over 3.2 million users have enrolled in The University of Michigan’s ‘Programming for Everybody’ Python course (<a class="reference external" href="https://www.coursera.org/learn/python">https://www.coursera.org/learn/python</a>). Due to the language’s popularity, I would expect that nonprofits can find a broad pool of prospective talent for Python-related work.</p>
+<p>Python’s wide usage has another important benefit: if you’re facing an error message or a bug, it’s likely that you’ll find someone on Stack Overflow or GitHub who encountered a similar issue–and someone else who was able to resolve it for them.</p>
+</section>
+<section id="python-is-fun-to-me-at-least">
+<h2>Python is <em>fun</em> (to me, at least!)<a class="headerlink" href="#python-is-fun-to-me-at-least" title="Link to this heading">#</a></h2>
+<p>Although your experience may vary, I have found great enjoyment in learning and applying Python. The mix of creativity, problem-solving, and real-world application that Python (like other programming languages) offers means that writing code often feels more like play than work. Granted, there have been plenty of frustrating moments along the way, but that frustration dissolves into gratification once a solution to the problem is found.</p>
+<p>Although the first four of the 5 ‘Fs’ that I’ve presented here might be more relevant to a nonprofit’s management team or board, I’d argue that the ‘fun’ factor is one of the best reasons to study and apply Python. If you find working in Python to be entertaining and enjoyable, that’s a great reason to continue building up your skills! Alternatively, if you come to loathe the programming experience, consider using another method to analyze data (or find someone else to take care of the Python work).</p>
+</section>
+<section id="don-t-take-my-word-for-it-give-it-a-try-yourself">
+<h2>Don’t take my word for it–give it a try yourself!<a class="headerlink" href="#don-t-take-my-word-for-it-give-it-a-try-yourself" title="Link to this heading">#</a></h2>
+<p>I recognize that this essay glosses over the complexity of choosing what tools to use to meet a given nonprofit’s data needs. There are undoubtedly many cases when proprietary software would be a better fit than Python for a given organization. However, I’m also confident that Python is an underutilized tool within the nonprofit sector. I hope that Python for Nonprofits can demonstrate the utility of this language for your organization <em>and</em> give you the confidence you need to begin applying it.</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./Introduction"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="introduction.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">An Introduction to Python for Nonprofits</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../Book_Specific_Materials/getting_started_for_book.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Getting Started</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#python-is-flexible">Python is <em>flexible</em></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#python-is-fast">Python is <em>fast</em></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#python-is-free">Python is <em>free</em></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#python-is-famous">Python is <em>famous</em></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#python-is-fun-to-me-at-least">Python is <em>fun</em> (to me, at least!)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#don-t-take-my-word-for-it-give-it-a-try-yourself">Don’t take my word for it–give it a try yourself!</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Kenneth Burchfiel
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

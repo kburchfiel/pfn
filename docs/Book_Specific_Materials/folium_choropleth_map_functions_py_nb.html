@@ -1,0 +1,1027 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>folium_choropleth_map_functions.py &#8212; Python for Nonprofits</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Book_Specific_Materials/folium_choropleth_map_functions_py_nb';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Regression Analyses" href="../Regressions/regression_analyses.html" />
+    <link rel="prev" title="Creating Choropleth Maps with Folium" href="../Mapping/choropleth_maps_with_folium.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../front_matter_for_book.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Python for Nonprofits</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../front_matter_for_book.html">
+                    Wecome to Python for Nonprofits!
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Introduction</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Introduction/introduction.html">An Introduction to Python for Nonprofits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Introduction/the_case_for_python_at_nonprofits.html">The Case for Using Python at Nonprofits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting_started_for_book.html">Getting Started</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Importing and Prepping Data</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Data_Retrieval/data_retrieval.html">Data Retrieval</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Data_Prep/data_prep.html">Data Prep</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Analyzing Data</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Descriptive_Stats/descriptive_stats.html">Descriptive Stats</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Descriptive_Stats/descriptive_stats_part_2.html">Descriptive Stats: Part 2</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Census_Data_Imports/census_data_imports.html">Census Data Imports</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="census_import_scripts_py_nb.html">census_import_scripts.py</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Visualizing Data</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Graphing/graphing.html">Creating Interactive and Static Charts with Plotly</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../Graphing/pivot_and_graph_functions.html">Pivot and Graph Functions</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Mapping/choropleth_maps.html">Mapping Census Data using Plotly (Work in progress)</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="plotly_choropleth_map_functions_py_nb.html">plotly_choropleth_map_functions.py</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../Mapping/choropleth_maps_with_folium.html">Creating Choropleth Maps with Folium</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">folium_choropleth_map_functions.py</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Regressions</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Regressions/regression_analyses.html">Regression Analyses</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Publishing Analyses Online</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Static_Sites/simple_static_site.html">Creating a Simple Static Webpage</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Updating_Online_Spreadsheets/updating_online_spreadsheets.html">Updating Online Spreadsheets</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="weather_import_py_nb.html">weather_import.py</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Online_Visualizations/Simple_App_Without_Login/readme.html">Simple Dash App Without Login</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="Simple_App_Without_Login_py_nb.html">Source code for Simple App Without Login</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Online_Visualizations/PFN_Dash_App_Demo/readme.html">PFN Dash App Demo</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="PFN_Dash_App_Demo_py_nb.html">Source code for PFN Dash App Demo</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendix</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Appendix/nvcu_db_gen.html">NVCU Database Generator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="helper_funcs_py_nb.html">helper_funcs.py</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/Book_Specific_Materials/folium_choropleth_map_functions_py_nb.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>folium_choropleth_map_functions.py</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="folium-choropleth-map-functions-py">
+<h1>folium_choropleth_map_functions.py<a class="headerlink" href="#folium-choropleth-map-functions-py" title="Link to this heading">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Folium-based choropleth map functions</span>
+<span class="c1"># By Kenneth Burchfiel</span>
+<span class="c1"># Released under the MIT License</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">folium</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">geopandas</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">branca.utilities</span><span class="w"> </span><span class="kn">import</span> <span class="n">color_brewer</span>
+<span class="c1"># color_brewer source code: </span>
+<span class="c1"># https://github.com/python-visualization/branca/blob/main/branca/</span>
+<span class="c1"># utilities.py</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">selenium</span><span class="w"> </span><span class="kn">import</span> <span class="n">webdriver</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">branca.colormap</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">cm</span>
+<span class="c1"># From https://python-visualization.github.io/folium/latest/</span>
+<span class="c1"># advanced_guide/colormaps.html#StepColormap</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">branca.colormap</span><span class="w"> </span><span class="kn">import</span> <span class="n">StepColormap</span> <span class="c1"># From Folium&#39;s features.py</span>
+<span class="c1"># source code: </span>
+<span class="c1"># https://github.com/python-visualization/folium/blob/main/</span>
+<span class="c1"># folium/features.py</span>
+
+
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">cptt</span><span class="p">(</span>
+    <span class="n">starting_lat</span><span class="p">,</span> <span class="n">starting_lon</span><span class="p">,</span> <span class="n">gdf</span><span class="p">,</span> 
+    <span class="n">data_col</span><span class="p">,</span> <span class="n">boundary_name_col</span><span class="p">,</span>
+    <span class="n">data_col_alias</span><span class="p">,</span> <span class="n">boundary_name_alias</span><span class="p">,</span>
+    <span class="n">zoom_start</span> <span class="o">=</span> <span class="mi">6</span><span class="p">,</span> 
+    <span class="n">bin_type</span> <span class="o">=</span> <span class="s1">&#39;linear&#39;</span><span class="p">,</span> 
+    <span class="n">bin_count</span> <span class="o">=</span> <span class="mi">6</span><span class="p">,</span> <span class="n">custom_threshold_list</span> <span class="o">=</span> <span class="p">[],</span> 
+    <span class="n">color_scheme</span> <span class="o">=</span> <span class="s1">&#39;RdYlBu&#39;</span><span class="p">,</span>
+    <span class="n">tooltip_variable_list</span> <span class="o">=</span> <span class="p">[],</span> <span class="n">tooltip_alias_list</span> <span class="o">=</span> <span class="p">[],</span>
+    <span class="n">save_html</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">save_screenshot</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="n">driver_window_width</span> <span class="o">=</span> <span class="mi">3000</span><span class="p">,</span>
+    <span class="n">driver_window_height</span> <span class="o">=</span> <span class="mi">1688</span><span class="p">,</span>
+    <span class="n">map_filename</span> <span class="o">=</span> <span class="s1">&#39;map&#39;</span><span class="p">,</span> <span class="n">html_map_folder</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+    <span class="n">png_map_folder</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+    <span class="n">geometry_col</span> <span class="o">=</span> <span class="s1">&#39;geometry&#39;</span><span class="p">,</span>
+    <span class="n">tiles</span> <span class="o">=</span> <span class="s1">&#39;OpenStreetMap&#39;</span><span class="p">,</span> <span class="n">choropleth_opacity</span> <span class="o">=</span> <span class="mf">0.6</span><span class="p">,</span>
+    <span class="n">add_boundary_labels</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">boundary_label_lon_shift</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span>
+    <span class="n">boundary_label_lat_shift</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span> <span class="n">boundary_label_col</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+    <span class="n">round_boundary_labels</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">boundary_label_round_val</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="n">delete_html_file</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span> 
+<span class="w">    </span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;This function creates a chorolpeth map with a set of tooltips</span>
+<span class="sd">    via folium.GeoJson(). (cptt stands for &#39;chorolpeth and tooltip.&#39; </span>
+<span class="sd">    Creating these two items together saves</span>
+<span class="sd">    storage space versus building them individually.</span>
+<span class="sd">    The function also adds in boundary labels upon request.</span>
+
+<span class="sd">    Note: Much of this function is based on the sample code found at </span>
+<span class="sd">    https://python-visualization.github.io/folium/latest/user_guide/</span>
+<span class="sd">    geojson/geojson_popup_and_tooltip.html</span>
+<span class="sd">    and https://python-visualization.github.io/folium/latest/user_guide/</span>
+<span class="sd">    geojson/geojson.html .</span>
+<span class="sd">    </span>
+<span class="sd">    starting_lat, starting_lon, and zoom_start: the initial latitude,</span>
+<span class="sd">    longitude, and zoom to pass to folium.Map(), respectively. For maps</span>
+<span class="sd">    of the contiguous 48 US states, consider using a starting latitude </span>
+<span class="sd">    of 38 and a starting longitude of -95.</span>
+<span class="sd">    </span>
+<span class="sd">    gdf: A GeoDataFrame containing both boundary outlines and statistical</span>
+<span class="sd">    data to visualize. Note that, in order to reduce the size of the </span>
+<span class="sd">    resulting map, gdf will be condensed to include only those columns </span>
+<span class="sd">    necessary for creating the map and adding in tooltips.</span>
+<span class="sd">    </span>
+<span class="sd">    data_col: the column within gdf containing data to visualize.</span>
+<span class="sd">    </span>
+<span class="sd">    boundary_name_col: the column within gdf that displays names of</span>
+<span class="sd">    the boundaries being visualized.</span>
+
+<span class="sd">    data_col_alias and boundary_name_alias: The labels to use for</span>
+<span class="sd">    data_col and county_boundary_name_col, respectively, within the </span>
+<span class="sd">    map&#39;s tooltips.</span>
+<span class="sd">        </span>
+<span class="sd">    tooltip_variable_list: A list of variables </span>
+<span class="sd">    (other than boundary_name_col</span>
+<span class="sd">    and data_col, which will get added in automatically) </span>
+<span class="sd">    to display within the tooltip.</span>
+
+<span class="sd">    bin_type: Set to &#39;linear&#39; (the default argument) to create </span>
+<span class="sd">    equally spaced bins; &#39;percentile&#39; to base choropleth colors on </span>
+<span class="sd">    percentiles (resulting in roughly equal numbers of results per bin);</span>
+<span class="sd">    or &#39;custom&#39; to pass in a list of custom bins. (The custom option can </span>
+<span class="sd">    be particularly useful when you wish to use the same set of bins for </span>
+<span class="sd">    multiple maps.)</span>
+
+<span class="sd">    bin_count: The number of separate colors to show within the map. This</span>
+<span class="sd">    parameter will be ignored when bin_type is set to &#39;custom.&#39;</span>
+
+<span class="sd">    custom_threshold_list: A list of custom bin ranges to use for the map.</span>
+<span class="sd">    Will only get applied when bin_type is set to &#39;custom.&#39;</span>
+<span class="sd">        </span>
+<span class="sd">    color_scheme: The color scheme to use within the map (e.g. &#39;RdYlBu&#39;). </span>
+<span class="sd">    Options can be found on https://colorbrewer2.org/ . </span>
+<span class="sd">    In order to reverse</span>
+<span class="sd">    a scheme, add &#39;_r&#39; to the end (e.g. &#39;RdYlBu_r&#39;). Source:</span>
+<span class="sd">    https://github.com/python-visualization/branca/blob/main/branca/</span>
+<span class="sd">    utilities.py</span>
+
+<span class="sd">    save_html: set to True to save this map as an HTML file.</span>
+<span class="sd">    </span>
+<span class="sd">    save_screenshot: set to True in order to generate a screenshot of </span>
+<span class="sd">    the map, then save it as a .PNG file. In order for this screenshot </span>
+<span class="sd">    to get created, save_html must also be set to True.</span>
+
+<span class="sd">    driver_window_width and driver_window_height: the default width and </span>
+<span class="sd">    height, respectively, of the Selenium driver window that will be </span>
+<span class="sd">    called to generate a screenshot. The default settings work well </span>
+<span class="sd">    for maps of the contiguous United States.</span>
+
+<span class="sd">    map_filename: The name to use when saving the map. The script will add</span>
+<span class="sd">    the correct extension (e.g. &#39;html&#39;) to this map, so leave that portion</span>
+<span class="sd">    out of the argument.</span>
+
+<span class="sd">    html_map_folder and png_map_folder: The folders </span>
+<span class="sd">    in which to store HTML and PNG versions of maps, respectively. </span>
+<span class="sd">    Note that, if you&#39;re generating screenshots, html_map_folder needs </span>
+<span class="sd">    to be an absolute path (so that it can get interpreted correctly by </span>
+<span class="sd">    the Selenium-driven browser). For instance, if your html_map_folder </span>
+<span class="sd">    is titled &#39;maps&#39; and stored within your directory, pass </span>
+<span class="sd">    os.getcwd()+&#39;/maps&#39; as your html_map_folder argument.</span>
+
+<span class="sd">    geometry_col: The column in gdf that stores shape boundary data.</span>
+
+<span class="sd">    Tiles: the tile provider to use for your map. Note that different tile </span>
+<span class="sd">    services use different licenses for their tiles. If you don&#39;t want </span>
+<span class="sd">    to use any tiles, enter None (no quotes) as your argument </span>
+<span class="sd">    for this parameter.</span>
+
+<span class="sd">    choropleth_opacity: a float, ranging from 0 to 1, that determines</span>
+<span class="sd">    how opaque to make the colors within the choropleth map. If tiles </span>
+<span class="sd">    is set to None, consider setting choropleth_opacity to 1.</span>
+
+<span class="sd">    add_boundary_labels: Set to True to label each boundary within </span>
+<span class="sd">    the map.</span>
+<span class="sd">    </span>
+<span class="sd">    boundary_label_lon_shift and boundary_label_lat_shift: Integers that </span>
+<span class="sd">    specify how far west and north to shift boundary labels so that they </span>
+<span class="sd">    appear more centered. (These values will get passed to the </span>
+<span class="sd">    icon_anchor parameter of the DivIcons.)</span>
+
+<span class="sd">    boundary_label_col: The column to use as a source for boundary labels.</span>
+<span class="sd">    You may choose to set this to be the same as data_col or boundary_name</span>
+<span class="sd">    col, but you&#39;re not limited to those options.</span>
+
+<span class="sd">    round_boundary_labels: set to True to round boundary labels by</span>
+<span class="sd">    boundary_label_round_val (see below).</span>
+
+<span class="sd">    boundary_label_round_val: An integer specifying the amount by which to </span>
+<span class="sd">    round the boundary labels. Set to 0 to round to whole numbers, to 1 to</span>
+<span class="sd">    round to tenths, and so forth.</span>
+
+<span class="sd">    delete_html_file: set to True in order to delete the HTML file saved </span>
+<span class="sd">    by this function. (This can be useful when you are only calling this </span>
+<span class="sd">    function only to create a screenshot of a map. Once the screenshot </span>
+<span class="sd">    has been saved, the original HTML file no longer needs to be </span>
+<span class="sd">    retained.) Note that, if save_html is set to False, the program </span>
+<span class="sd">    will *not* attempt to delete the HTML file, as it&#39;s likely that one </span>
+<span class="sd">    doesn&#39;t exist to begin with.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    
+    <span class="c1"># You can uncomment the following two print statements to compare</span>
+    <span class="c1"># the sizes of gdf and gdf_condensed.</span>
+    
+    <span class="c1"># print(gdf.memory_usage(deep=True).sum() / 1000000)</span>
+    <span class="c1"># See https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.</span>
+    <span class="c1"># memory_usage.html</span>
+
+    <span class="c1"># Creating a condensed version of gdf that can serve as the basis for </span>
+    <span class="c1"># the map: (Condensing the DataFrame prevents unnecessary columns</span>
+    <span class="c1"># from getting included in the HTML output and thus increasing</span>
+    <span class="c1"># the map&#39;s file size.)</span>
+
+    <span class="n">gdf_condensed</span> <span class="o">=</span> <span class="n">gdf</span><span class="o">.</span><span class="n">copy</span><span class="p">()[</span>
+    <span class="p">[</span><span class="n">boundary_name_col</span><span class="p">,</span> <span class="n">data_col</span><span class="p">,</span> <span class="n">geometry_col</span><span class="p">]</span> <span class="o">+</span> <span class="n">tooltip_variable_list</span><span class="p">]</span>
+
+    <span class="c1"># Removing any NaN data_col entries from our dataset so that they</span>
+    <span class="c1"># won&#39;t interfere with our mapping code:</span>
+    <span class="c1"># {data_col} is surrounded by ` characters to make this code </span>
+    <span class="c1"># compatible with column names that contain spaces.</span>
+    <span class="n">gdf_condensed</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;`</span><span class="si">{</span><span class="n">data_col</span><span class="si">}</span><span class="s2">`.isna() == False&quot;</span><span class="p">,</span> <span class="n">inplace</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+
+    <span class="c1"># print(gdf_condensed.memory_usage(deep=True).sum() / 1000000)</span>
+
+    <span class="c1"># Creating a blank map as the starting point for our choropleth:</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="n">folium</span><span class="o">.</span><span class="n">Map</span><span class="p">([</span><span class="n">starting_lat</span><span class="p">,</span> <span class="n">starting_lon</span><span class="p">],</span> 
+                   <span class="n">zoom_start</span> <span class="o">=</span> <span class="n">zoom_start</span><span class="p">,</span> <span class="n">tiles</span> <span class="o">=</span> <span class="n">tiles</span><span class="p">)</span>
+
+   
+    <span class="c1"># Adding labels to each boundary:</span>
+    <span class="c1"># (Note: this code will work better for larger shapes, such as US </span>
+    <span class="c1"># states, and likely less well for smaller boundaries like counties </span>
+    <span class="c1"># or zip codes.)</span>
+    <span class="c1"># Adding these labels prior to creating our tooltips ensures that</span>
+    <span class="c1"># the former won&#39;t block the latter when the user is interacting with</span>
+    <span class="c1"># the map.</span>
+
+    <span class="c1"># Calculating reference points for adding labels to each boundary:</span>
+    <span class="c1"># The following code applies GeoPandas&#39; representative_point() method</span>
+    <span class="c1"># to calculate central points for each boundary that always lie within</span>
+    <span class="c1"># that boundary. It then uses a list comprehension to create lists of</span>
+    <span class="c1"># x and y coordinates that can be fed into folium mapping code.</span>
+    <span class="c1"># (The POINT items returned by representative_point() don&#39;t appear</span>
+    <span class="c1"># to work as well with Folium.)</span>
+
+    <span class="k">if</span> <span class="n">add_boundary_labels</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">gdf_condensed</span><span class="p">[</span><span class="s1">&#39;boundary_label_reference_points&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="p">[</span><span class="n">coord</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">coord</span><span class="o">.</span><span class="n">x</span><span class="p">]</span> <span class="k">for</span> <span class="n">coord</span> <span class="ow">in</span> 
+         <span class="n">gdf_condensed</span><span class="p">[</span><span class="s1">&#39;geometry&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">representative_point</span><span class="p">()]</span>
+        <span class="c1"># Documentation for representative_point(): </span>
+        <span class="c1"># https://geopandas.org/en/stable/docs/reference/api/geopandas.</span>
+        <span class="c1"># GeoSeries.representative_point.html#geopandas.GeoSeries.</span>
+        <span class="c1"># representative_point</span>
+        <span class="c1"># x and y are attributes of Geoseries objects:</span>
+        <span class="c1"># https://geopandas.org/en/stable/docs/reference/geoseries.html</span>
+    
+    
+        <span class="c1"># Using these reference points to add the values stored</span>
+        <span class="c1"># in boundary_label_col as boundary labels:</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">gdf_condensed</span><span class="p">)):</span>
+            <span class="n">boundary_label</span> <span class="o">=</span> <span class="n">gdf_condensed</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">i</span><span class="p">][</span>
+            <span class="n">boundary_label_col</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">round_boundary_labels</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
+                <span class="n">boundary_label</span> <span class="o">=</span> <span class="n">boundary_label</span><span class="o">.</span><span class="n">round</span><span class="p">(</span>
+                    <span class="n">boundary_label_round_val</span><span class="p">)</span>
+            <span class="n">folium</span><span class="o">.</span><span class="n">Marker</span><span class="p">(</span><span class="n">location</span> <span class="o">=</span> <span class="n">gdf_condensed</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">i</span><span class="p">][</span>
+                          <span class="s1">&#39;boundary_label_reference_points&#39;</span><span class="p">],</span>
+                         <span class="n">icon</span> <span class="o">=</span> <span class="n">folium</span><span class="o">.</span><span class="n">features</span><span class="o">.</span><span class="n">DivIcon</span><span class="p">(</span>
+                             <span class="sa">f</span><span class="s2">&quot;&lt;b&gt;</span><span class="si">{</span><span class="n">boundary_label</span><span class="si">}</span><span class="s2">&lt;/b&gt;&quot;</span><span class="p">,</span>
+                         <span class="n">icon_anchor</span> <span class="o">=</span> <span class="p">(</span><span class="n">boundary_label_lon_shift</span><span class="p">,</span> 
+                                        <span class="n">boundary_label_lat_shift</span><span class="p">))</span>
+                         <span class="p">)</span><span class="o">.</span><span class="n">add_to</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+        <span class="c1"># Part of the folium.Marker() call above is based on an example </span>
+        <span class="c1"># by StackOverflow user &#39;r-beginners&#39;</span>
+        <span class="c1"># (who pointed out that you could pass a DivIcon to the &#39;icon&#39; </span>
+        <span class="c1"># parameter </span>
+        <span class="c1"># within a Marker in order to add text labels to shapes). </span>
+        <span class="c1"># Source: https://stackoverflow.com/a/72588910/13097194</span>
+        <span class="c1"># The use of icon_anchor to adjust the labels&#39; locations</span>
+        <span class="c1"># comes from the DivIcon documentation at:</span>
+        <span class="c1"># https://python-visualization.github.io/folium/latest/</span>
+        <span class="c1"># reference.html#folium.features.DivIcon</span>
+    
+    
+    <span class="c1"># Creating the tooltips:</span>
+
+    <span class="n">tooltip_field_list</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">boundary_name_col</span><span class="p">,</span> <span class="n">data_col</span><span class="p">]</span> <span class="o">+</span> <span class="n">tooltip_variable_list</span>
+
+    <span class="n">alias_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">boundary_name_alias</span><span class="p">,</span> 
+                  <span class="n">data_col_alias</span><span class="p">]</span> <span class="o">+</span> <span class="n">tooltip_alias_list</span>
+
+    
+    <span class="c1"># print(tooltip_field_list, alias_list)</span>
+    
+    <span class="n">tooltip</span> <span class="o">=</span> <span class="n">folium</span><span class="o">.</span><span class="n">GeoJsonTooltip</span><span class="p">(</span>
+        <span class="n">fields</span><span class="o">=</span> <span class="n">tooltip_field_list</span><span class="p">,</span>
+        <span class="n">aliases</span><span class="o">=</span><span class="n">alias_list</span><span class="p">,</span>
+        <span class="n">localize</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">sticky</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">labels</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">style</span><span class="o">=</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">            background-color: #FFFFFF;</span>
+<span class="s2">            border: 1px;</span>
+<span class="s2">            border-radius: 1px;</span>
+<span class="s2">            box-shadow: 1px;</span>
+<span class="s2">        &quot;&quot;&quot;</span><span class="p">,</span>
+        <span class="n">max_width</span><span class="o">=</span><span class="mi">800</span>
+    <span class="p">)</span>
+    
+    <span class="c1"># Creating our set of colors to use for the choropleth map:</span>
+    <span class="k">if</span> <span class="n">bin_type</span> <span class="o">==</span> <span class="s1">&#39;custom&#39;</span><span class="p">:</span> <span class="c1"># In this case, bin_count will be overwritten</span>
+        <span class="c1"># by the length of custom_threshold_list minus 1. (The number of</span>
+        <span class="c1"># bins will always be one less than the number of thresholds, as </span>
+        <span class="c1"># two thresholds are needed to establish the boundaries for </span>
+        <span class="c1"># one bin.</span>
+        <span class="c1"># For instance, if you have three thresholds (0, 1, and 2),</span>
+        <span class="c1"># two bins can be created from this list: 0-1 and 1-2.)</span>
+        <span class="n">bin_count</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">custom_threshold_list</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+    <span class="n">color_range</span> <span class="o">=</span> <span class="n">color_brewer</span><span class="p">(</span><span class="n">color_scheme</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="n">bin_count</span><span class="p">)</span>
+    <span class="c1"># Based on Choropleth() definition within</span>
+    <span class="c1"># https://github.com/python-visualization/folium/blob/main/folium/</span>
+    <span class="c1"># features.py</span>
+    
+    <span class="c1"># To reverse the set of colors passed to color_scheme, add &#39;_r&#39; </span>
+    <span class="c1"># to the end of the string (e.g. &#39;RdYlBu_r&#39;). Source: </span>
+    <span class="c1"># https://github.com/python-visualization/branca/blob/main/branca</span>
+    <span class="c1"># /utilities.py</span>
+
+
+    <span class="c1"># Determining which colors to apply to each result:</span>
+    
+    <span class="k">if</span> <span class="n">bin_type</span> <span class="o">==</span> <span class="s1">&#39;linear&#39;</span><span class="p">:</span> <span class="c1"># Equally-spaced bins will be used. </span>
+        <span class="c1"># The number of bins will be derived from the number of </span>
+        <span class="c1"># colors in color_range.</span>
+        <span class="n">stepped_cm</span> <span class="o">=</span> <span class="n">StepColormap</span><span class="p">(</span>
+            <span class="n">colors</span> <span class="o">=</span> <span class="n">color_range</span><span class="p">,</span> 
+            <span class="n">vmin</span> <span class="o">=</span> <span class="n">gdf_condensed</span><span class="p">[</span><span class="n">data_col</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span>
+            <span class="n">vmax</span> <span class="o">=</span> <span class="n">gdf_condensed</span><span class="p">[</span><span class="n">data_col</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
+        <span class="c1"># Based on: </span>
+        <span class="c1"># https://python-visualization.github.io/branca/colormap.html#</span>
+        <span class="c1"># branca.colormap.StepColormap</span>
+
+    <span class="k">else</span><span class="p">:</span> <span class="c1"># In this case, a different approach to creating the </span>
+        <span class="c1"># StepColorMap</span>
+        <span class="c1"># will be used that better accommodates non-equally-spaced bins.</span>
+        
+        <span class="k">if</span> <span class="n">bin_type</span> <span class="o">==</span> <span class="s1">&#39;percentile&#39;</span><span class="p">:</span> <span class="c1"># In this case, </span>
+            <span class="c1"># percentile-based bins will</span>
+            <span class="c1"># be used.</span>
+            <span class="n">bin_thresholds</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">gdf_condensed</span><span class="p">[</span><span class="n">data_col</span><span class="p">]</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">bin_count</span><span class="o">+</span><span class="mi">1</span><span class="p">)))</span> 
+            <span class="c1"># For np.linspace() documentation, see:</span>
+            <span class="c1"># https://numpy.org/doc/stable/reference/generated/</span>
+            <span class="c1"># numpy.linspace.html</span>
+    
+        <span class="k">elif</span> <span class="n">bin_type</span> <span class="o">==</span> <span class="s1">&#39;custom&#39;</span><span class="p">:</span> <span class="c1"># This condition allows for a set of </span>
+            <span class="c1"># custom bins to be passed in.</span>
+            <span class="n">bin_thresholds</span> <span class="o">=</span> <span class="n">custom_threshold_list</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;bin_type must be set to &#39;linear&#39;, </span><span class="se">\</span>
+<span class="s2">&#39;percentile, or &#39;custom.&#39;&quot;</span><span class="p">)</span>
+        
+        <span class="c1"># The following approach works for both &#39;percentile&#39; and </span>
+        <span class="c1"># &#39;custom&#39; bin_type conditions.</span>
+        <span class="n">stepped_cm</span> <span class="o">=</span> <span class="n">StepColormap</span><span class="p">(</span>
+            <span class="n">colors</span> <span class="o">=</span> <span class="n">color_range</span><span class="p">,</span> 
+            <span class="n">vmin</span> <span class="o">=</span> <span class="n">bin_thresholds</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">vmax</span> <span class="o">=</span> <span class="n">bin_thresholds</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span>
+            <span class="n">index</span> <span class="o">=</span> <span class="n">bin_thresholds</span><span class="p">)</span>
+        <span class="c1"># Based on the self.color_scale initialization within Folium&#39;s </span>
+        <span class="c1"># Choropleth()  source code (available at</span>
+        <span class="c1"># https://github.com/python-visualization/folium/blob/main/</span>
+        <span class="c1"># folium/features.py )</span>
+
+    
+    <span class="c1"># The following code will both assign colors from StepColorMap</span>
+    <span class="c1"># to each region *and* add in tooltips. This approach allows the</span>
+    <span class="c1"># colors and tooltips to reference the same set of outlines,</span>
+    <span class="c1"># thus allowing for a smaller file size.</span>
+    
+    <span class="n">g</span> <span class="o">=</span> <span class="n">folium</span><span class="o">.</span><span class="n">GeoJson</span><span class="p">(</span>
+        <span class="n">gdf_condensed</span><span class="p">,</span>
+        <span class="n">style_function</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;fillColor&quot;</span><span class="p">:</span> <span class="n">stepped_cm</span><span class="p">(</span>
+                <span class="n">x</span><span class="p">[</span><span class="s2">&quot;properties&quot;</span><span class="p">][</span><span class="n">data_col</span><span class="p">]),</span>
+            <span class="s2">&quot;fillOpacity&quot;</span><span class="p">:</span> <span class="n">choropleth_opacity</span><span class="p">,</span>
+            <span class="s2">&quot;weight&quot;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span>
+            <span class="s2">&quot;color&quot;</span><span class="p">:</span><span class="s2">&quot;black&quot;</span>
+        <span class="p">},</span>
+        <span class="n">tooltip</span><span class="o">=</span><span class="n">tooltip</span>
+    <span class="p">)</span><span class="o">.</span><span class="n">add_to</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+    <span class="c1"># The Folium.GeoJSON overview at</span>
+    <span class="c1"># https://python-visualization.github.io/folium/latest/</span>
+    <span class="c1"># user_guide/geojson/geojson.html</span>
+    <span class="c1"># contributed to this code as well.</span>
+    <span class="c1"># Note that we need to add [&quot;properties&quot;] in between x and </span>
+    <span class="c1"># [data_col], likely because gdf_condensed</span>
+    <span class="c1"># is being interpreted as a GeoJSON object. I based this off of the</span>
+    <span class="c1"># &quot;if &quot;e&quot; in feature[&quot;properties&quot;][&quot;name&quot;].lower()&quot; line within</span>
+    <span class="c1"># the above link.</span>
+
+    <span class="c1"># Adding the color legend for the choropleth to the map:</span>
+    <span class="n">stepped_cm</span><span class="o">.</span><span class="n">add_to</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+    <span class="c1"># Based on:</span>
+    <span class="c1"># https://python-visualization.github.io/folium/latest/user_guide/</span>
+    <span class="c1"># geojson/geojson.html</span>
+
+    <span class="k">if</span> <span class="n">save_html</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">m</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">html_map_folder</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">map_filename</span><span class="si">}</span><span class="s2">.html&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Generating a screenshot of the map:</span>
+    <span class="k">if</span> <span class="n">save_screenshot</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Generating screenshot.&quot;</span><span class="p">)</span>
+        <span class="n">options</span> <span class="o">=</span> <span class="n">webdriver</span><span class="o">.</span><span class="n">ChromeOptions</span><span class="p">()</span>
+        <span class="c1"># Source: https://www.selenium.dev/documentation/webdriver/</span>
+        <span class="c1"># browsers/chrome/</span>
+        <span class="n">options</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;--window-size=</span><span class="si">{</span><span class="n">driver_window_width</span><span class="si">}</span><span class="s1">,</span><span class="se">\</span>
+<span class="si">{</span><span class="n">driver_window_height</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span> <span class="c1"># I found that this window</span>
+        <span class="c1"># size, along with a starting zoom of 6 within our mapping code,</span>
+        <span class="c1"># created a relatively detailed map of the contiguous 48 US </span>
+        <span class="c1"># states. </span>
+        <span class="c1"># If you&#39;d like to create an even more detailed map, </span>
+        <span class="c1"># consider setting your starting zoom to 7 and your window size </span>
+        <span class="c1"># to 6000,3375.</span>
+        <span class="n">options</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--headless&#39;</span><span class="p">)</span> <span class="c1"># In my experience, this </span>
+        <span class="c1"># addition  (which prevents the Selenium-driven browser from </span>
+        <span class="c1"># displaying on your computer) was necessary for allowing 4K </span>
+        <span class="c1"># screenshots to get saved</span>
+        <span class="c1"># as 3840x2160-pixel images. Without this line, the </span>
+        <span class="c1"># screenshots would  get rendered with a resolution of </span>
+        <span class="c1"># 3814x1868 pixels.</span>
+        <span class="c1"># Source of the above two lines:  </span>
+        <span class="c1"># https://www.selenium.dev/documentation/webdriver/</span>
+        <span class="c1"># browsers/chrome/</span>
+        <span class="c1"># and</span>
+        <span class="c1"># https://github.com/GoogleChrome/chrome-launcher/blob/</span>
+        <span class="c1"># main/docs/chrome-flags-for-tools.md</span>
+        <span class="c1"># I learned about the necessity of using headless mode </span>
+        <span class="c1"># *somewhere* on  StackOverflow. Many answers to the question</span>
+        <span class="c1"># linked below regarding generating screenshots reference it </span>
+        <span class="c1"># as an important step, for instance.</span>
+        <span class="c1"># https://stackoverflow.com/questions/41721734/take-screenshot</span>
+        <span class="c1"># -of-full-page-with-selenium-python-with-chromedriver/57338909</span>
+
+        
+        <span class="c1"># Launching the Selenium driver:</span>
+        <span class="n">driver</span> <span class="o">=</span> <span class="n">webdriver</span><span class="o">.</span><span class="n">Chrome</span><span class="p">(</span><span class="n">options</span><span class="o">=</span><span class="n">options</span><span class="p">)</span> 
+        <span class="c1"># Source: https://www.selenium.dev/documentation/webdriver/</span>
+        <span class="c1"># browsers/chrome/</span>
+        
+        <span class="c1"># Navigating to our map:</span>
+        <span class="c1"># Note: In order to get the following code to work within</span>
+        <span class="c1"># Linux, I needed to precede the local path with &#39;file://&#39; as </span>
+        <span class="c1"># noted by GitHub user lukeis here: </span>
+        <span class="c1"># https://github.com/seleniumhq/selenium-google-code-issue-</span>
+        <span class="c1"># archive/issues/3997#issuecomment-192014472</span>
+        <span class="n">driver</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;file://</span><span class="si">{</span><span class="n">html_map_folder</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">map_filename</span><span class="si">}</span><span class="s2">.html&quot;</span><span class="p">)</span>
+        <span class="c1"># Source: https://www.selenium.dev/documentation/</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="c1"># Helps ensure that the browser has enough </span>
+        <span class="c1"># time to download</span>
+        <span class="c1"># map contents from the tile provider. This time might need to be</span>
+        <span class="c1"># increased if a slow internet connection is in use. Conversely,</span>
+        <span class="c1"># if no tiles are being incorporated into the map, </span>
+        <span class="c1"># there may not be any need to call</span>
+        <span class="c1"># time.sleep().</span>
+        <span class="c1"># Taking our screenshot and then saving it as a PNG image:</span>
+        <span class="n">driver</span><span class="o">.</span><span class="n">get_screenshot_as_file</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">png_map_folder</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">map_filename</span><span class="si">}</span><span class="s2">.png&quot;</span><span class="p">)</span>
+        <span class="c1"># Source: </span>
+        <span class="c1"># https://selenium-python.readthedocs.io/api.html#selenium.</span>
+        <span class="c1"># webdriver.remote.webdriver.WebDriver.get_screenshot_as_file</span>
+        
+        <span class="c1"># Exiting out of the webdriver:</span>
+        <span class="n">driver</span><span class="o">.</span><span class="n">quit</span><span class="p">()</span>
+        <span class="c1"># Source: https://www.selenium.dev/documentation/</span>
+    
+    <span class="k">if</span> <span class="p">(</span><span class="n">delete_html_file</span> <span class="o">==</span> <span class="kc">True</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">save_html</span> <span class="o">==</span> <span class="kc">True</span><span class="p">):</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">html_map_folder</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">map_filename</span><span class="si">}</span><span class="s2">.html&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Removed HTML copy of map.&quot;</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">m</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">create_map_and_screenshot</span><span class="p">(</span>
+    <span class="n">starting_lat</span><span class="p">,</span> <span class="n">starting_lon</span><span class="p">,</span> <span class="n">gdf</span><span class="p">,</span> 
+    <span class="n">data_col</span><span class="p">,</span> <span class="n">boundary_name_col</span><span class="p">,</span>
+    <span class="n">data_col_alias</span><span class="p">,</span> <span class="n">boundary_name_alias</span><span class="p">,</span>
+    <span class="n">html_zoom_start</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span>
+    <span class="n">screenshot_zoom_start</span> <span class="o">=</span> <span class="mi">6</span><span class="p">,</span> 
+    <span class="n">bin_type</span> <span class="o">=</span> <span class="s1">&#39;linear&#39;</span><span class="p">,</span> <span class="n">bin_count</span> <span class="o">=</span> <span class="mi">6</span><span class="p">,</span> 
+    <span class="n">custom_threshold_list</span> <span class="o">=</span> <span class="p">[],</span>
+    <span class="n">color_scheme</span> <span class="o">=</span> <span class="s1">&#39;RdYlBu&#39;</span><span class="p">,</span>
+    <span class="n">tooltip_variable_list</span> <span class="o">=</span> <span class="p">[],</span> <span class="n">tooltip_alias_list</span> <span class="o">=</span> <span class="p">[],</span>
+    <span class="n">map_filename</span> <span class="o">=</span> <span class="s1">&#39;map&#39;</span><span class="p">,</span> <span class="n">html_map_folder</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+    <span class="n">png_map_folder</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+    <span class="n">geometry_col</span> <span class="o">=</span> <span class="s1">&#39;geometry&#39;</span><span class="p">,</span>
+    <span class="n">tiles</span> <span class="o">=</span> <span class="s1">&#39;OpenStreetMap&#39;</span><span class="p">,</span> <span class="n">choropleth_opacity</span> <span class="o">=</span> <span class="mf">0.6</span><span class="p">,</span>
+    <span class="n">add_boundary_labels</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">boundary_label_lon_shift</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span>
+    <span class="n">boundary_label_lat_shift</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span> <span class="n">boundary_label_col</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+    <span class="n">round_boundary_labels</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">boundary_label_round_val</span> <span class="o">=</span> <span class="mi">0</span><span class="p">):</span> 
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;This function calls cptt() twice in order to create separate PNG</span>
+<span class="sd">    and HTML versions of a map. This approach allows separate zoom levels</span>
+<span class="sd">    to be passed to each map, which can prevent one or both maps from </span>
+<span class="sd">    displaying a non-ideal zoom level.</span>
+<span class="sd">    </span>
+<span class="sd">    html_zoom_start and screenshot_zoom_start: the zoom settings to use</span>
+<span class="sd">    for the HTML and PNG maps, respectively.</span>
+<span class="sd">    </span>
+<span class="sd">    For information on other variables, consult the documentation within </span>
+<span class="sd">    cptt().&#39;&#39;&#39;</span>
+
+    <span class="c1"># Creating an HTML map optimized for generating a screenshot;</span>
+    <span class="c1"># creating the screenshot; and then deleting the HTML copy of the map</span>
+    <span class="c1"># (as we only needed it in order to create the screenshot):</span>
+    <span class="n">cptt</span><span class="p">(</span>
+    <span class="n">starting_lat</span> <span class="o">=</span> <span class="n">starting_lat</span><span class="p">,</span> 
+        <span class="n">starting_lon</span> <span class="o">=</span> <span class="n">starting_lon</span><span class="p">,</span> <span class="n">gdf</span> <span class="o">=</span> <span class="n">gdf</span><span class="p">,</span> 
+    <span class="n">data_col</span> <span class="o">=</span> <span class="n">data_col</span><span class="p">,</span> <span class="n">boundary_name_col</span> <span class="o">=</span> <span class="n">boundary_name_col</span><span class="p">,</span>
+    <span class="n">data_col_alias</span> <span class="o">=</span> <span class="n">data_col_alias</span><span class="p">,</span> 
+        <span class="n">boundary_name_alias</span> <span class="o">=</span> <span class="n">boundary_name_alias</span><span class="p">,</span>
+    <span class="n">zoom_start</span> <span class="o">=</span> <span class="n">screenshot_zoom_start</span><span class="p">,</span> 
+    <span class="n">bin_type</span> <span class="o">=</span> <span class="n">bin_type</span><span class="p">,</span> 
+    <span class="n">bin_count</span> <span class="o">=</span> <span class="n">bin_count</span><span class="p">,</span> 
+    <span class="n">custom_threshold_list</span> <span class="o">=</span> <span class="n">custom_threshold_list</span><span class="p">,</span> 
+    <span class="n">color_scheme</span> <span class="o">=</span> <span class="n">color_scheme</span><span class="p">,</span>
+    <span class="n">tooltip_variable_list</span> <span class="o">=</span> <span class="n">tooltip_variable_list</span><span class="p">,</span> 
+        <span class="n">tooltip_alias_list</span> <span class="o">=</span> <span class="n">tooltip_alias_list</span><span class="p">,</span>
+    <span class="n">save_html</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">save_screenshot</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="n">map_filename</span> <span class="o">=</span> <span class="n">map_filename</span><span class="p">,</span> <span class="n">html_map_folder</span> <span class="o">=</span> <span class="n">html_map_folder</span><span class="p">,</span>
+    <span class="n">png_map_folder</span> <span class="o">=</span> <span class="n">png_map_folder</span><span class="p">,</span>
+    <span class="n">geometry_col</span> <span class="o">=</span> <span class="n">geometry_col</span><span class="p">,</span>
+    <span class="n">tiles</span> <span class="o">=</span> <span class="n">tiles</span><span class="p">,</span> <span class="n">choropleth_opacity</span> <span class="o">=</span> <span class="n">choropleth_opacity</span><span class="p">,</span>
+    <span class="n">add_boundary_labels</span> <span class="o">=</span> <span class="n">add_boundary_labels</span><span class="p">,</span> 
+        <span class="n">boundary_label_lon_shift</span> <span class="o">=</span> <span class="n">boundary_label_lon_shift</span><span class="p">,</span>
+    <span class="n">boundary_label_lat_shift</span> <span class="o">=</span> <span class="n">boundary_label_lat_shift</span><span class="p">,</span> 
+        <span class="n">boundary_label_col</span> <span class="o">=</span> <span class="n">boundary_label_col</span><span class="p">,</span>
+    <span class="n">round_boundary_labels</span> <span class="o">=</span> <span class="n">round_boundary_labels</span><span class="p">,</span>
+    <span class="n">boundary_label_round_val</span> <span class="o">=</span> <span class="n">boundary_label_round_val</span><span class="p">,</span>
+    <span class="n">delete_html_file</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+
+    
+    <span class="c1"># Creating a copy of the map optimized for interactive viewing:</span>
+    <span class="c1"># (This HTML file will get retained, whereas that created in order to </span>
+    <span class="c1"># produce the screenshot in the earlier cptt() call got deleted.)</span>
+    <span class="c1"># Note that this code was called *after* the screenshot generation</span>
+    <span class="c1"># code so that the latter&#39;s HTML map doesn&#39;t overwrite this one.</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="n">cptt</span><span class="p">(</span>
+    <span class="n">starting_lat</span> <span class="o">=</span> <span class="n">starting_lat</span><span class="p">,</span> 
+        <span class="n">starting_lon</span> <span class="o">=</span> <span class="n">starting_lon</span><span class="p">,</span> <span class="n">gdf</span> <span class="o">=</span> <span class="n">gdf</span><span class="p">,</span> 
+    <span class="n">data_col</span> <span class="o">=</span> <span class="n">data_col</span><span class="p">,</span> <span class="n">boundary_name_col</span> <span class="o">=</span> <span class="n">boundary_name_col</span><span class="p">,</span>
+    <span class="n">data_col_alias</span> <span class="o">=</span> <span class="n">data_col_alias</span><span class="p">,</span> 
+        <span class="n">boundary_name_alias</span> <span class="o">=</span> <span class="n">boundary_name_alias</span><span class="p">,</span>
+    <span class="n">zoom_start</span> <span class="o">=</span> <span class="n">html_zoom_start</span><span class="p">,</span> 
+    <span class="n">bin_type</span> <span class="o">=</span> <span class="n">bin_type</span><span class="p">,</span> 
+    <span class="n">bin_count</span> <span class="o">=</span> <span class="n">bin_count</span><span class="p">,</span> 
+    <span class="n">custom_threshold_list</span> <span class="o">=</span> <span class="n">custom_threshold_list</span><span class="p">,</span> 
+    <span class="n">color_scheme</span> <span class="o">=</span> <span class="n">color_scheme</span><span class="p">,</span>
+    <span class="n">tooltip_variable_list</span> <span class="o">=</span> <span class="n">tooltip_variable_list</span><span class="p">,</span> 
+        <span class="n">tooltip_alias_list</span> <span class="o">=</span> <span class="n">tooltip_alias_list</span><span class="p">,</span>
+    <span class="n">save_html</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">save_screenshot</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">map_filename</span> <span class="o">=</span> <span class="n">map_filename</span><span class="p">,</span> <span class="n">html_map_folder</span> <span class="o">=</span> <span class="n">html_map_folder</span><span class="p">,</span>
+    <span class="n">png_map_folder</span> <span class="o">=</span> <span class="n">png_map_folder</span><span class="p">,</span>
+    <span class="n">geometry_col</span> <span class="o">=</span> <span class="n">geometry_col</span><span class="p">,</span>
+    <span class="n">tiles</span> <span class="o">=</span> <span class="n">tiles</span><span class="p">,</span> <span class="n">choropleth_opacity</span> <span class="o">=</span> <span class="n">choropleth_opacity</span><span class="p">,</span>
+    <span class="n">add_boundary_labels</span> <span class="o">=</span> <span class="n">add_boundary_labels</span><span class="p">,</span> 
+        <span class="n">boundary_label_lon_shift</span> <span class="o">=</span> <span class="n">boundary_label_lon_shift</span><span class="p">,</span>
+    <span class="n">boundary_label_lat_shift</span> <span class="o">=</span> <span class="n">boundary_label_lat_shift</span><span class="p">,</span> 
+        <span class="n">boundary_label_col</span> <span class="o">=</span> <span class="n">boundary_label_col</span><span class="p">,</span>
+    <span class="n">round_boundary_labels</span> <span class="o">=</span> <span class="n">round_boundary_labels</span><span class="p">,</span>
+    <span class="n">boundary_label_round_val</span> <span class="o">=</span> <span class="n">boundary_label_round_val</span><span class="p">,</span>
+    <span class="n">delete_html_file</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> 
+
+    <span class="c1"># Returning the map:</span>
+    <span class="k">return</span> <span class="n">m</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./Book_Specific_Materials"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../Mapping/choropleth_maps_with_folium.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Creating Choropleth Maps with Folium</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../Regressions/regression_analyses.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Regression Analyses</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Kenneth Burchfiel
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
