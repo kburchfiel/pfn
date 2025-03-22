@@ -62,7 +62,7 @@ dash-bootstrap-components
 
 (These libraries will be imported from pip. Therefore, in order to determine what format of their name to use, visit the library on Pypi and then enter the text following the 'pip install' example. For instance, on the gspread-dataframe PyPI page (https://pypi.org/project/gspread-dataframe/), you'll see `pip install gspread-dataframe` as the recommended installation command; therefore, add `gspread-dataframe` to the requirements.txt page rather than `gspread-dataframe` (its name within conda) or `gspread_dataframe` (its name within `app.py`).
 
-(Also note that entering `gcloud run deploy --source .` (don't forget the space and period!) rather than `gcloud run deploy` saves you a step during the deployment process.)
+(Also note that entering `gcloud run deploy --source .` (don't forget the space and period at the end!) rather than `gcloud run deploy` saves you a step during the deployment process.)
 
 The Google Cloud Region Picker (https://cloud.withgoogle.com/region-picker/) site can help you determine where to host your app. (When prompted for my region choice, I entered `us-central1`. Note that the numbers corresponding to regions can change over time, so if you want to enter a number for the region selection instead, just make sure it still corresponds to your desired area!)
 

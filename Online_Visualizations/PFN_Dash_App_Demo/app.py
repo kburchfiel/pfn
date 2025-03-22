@@ -208,7 +208,7 @@ app.layout = html.Div(
         # The following explanatory text will appear at the bottom of 
         # each page.
         dcc.Markdown('''        
-*This site is part of [Python for Nonprofits]
+*This site is part of Python for Nonprofits
 (https://github.com/kburchfiel/pfn), created by Kenneth Burchfiel and 
 licensed under the MIT License.*
 

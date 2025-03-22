@@ -18,7 +18,7 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:svg="http://www.w3.org/2000/svg"><sodipodi:namedview
      id="namedview7"
-     pagecolor="#91b4b4"
+     pagecolor="#0080ff"
      bordercolor="#eeeeee"
      borderopacity="1"
      inkscape:showpageshadow="0"
@@ -28,19 +28,19 @@
      inkscape:document-units="mm"
      showgrid="false"
      inkscape:zoom="0.70710678"
-     inkscape:cx="380.42345"
-     inkscape:cy="538.81537"
-     inkscape:window-width="1920"
-     inkscape:window-height="1008"
-     inkscape:window-x="1920"
+     inkscape:cx="161.22035"
+     inkscape:cy="496.38896"
+     inkscape:window-width="1536"
+     inkscape:window-height="792"
+     inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:window-maximized="1"
      inkscape:current-layer="layer1" /><defs
      id="defs2"><rect
        x="68.326696"
        y="79.853046"
-       width="679.69716"
-       height="954.93179"
+       width="696.14007"
+       height="953.52638"
        id="rect7236" /><rect
        x="43.376831"
        y="198.11066"
@@ -84,93 +84,162 @@
        style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:26.6667px;font-family:Jost;-inkscape-font-specification:'Jost Italic';white-space:pre;shape-inside:url(#rect7236);display:inline;fill:#000000"><tspan
          x="68.326172"
          y="102.93313"
-         id="tspan698"><tspan
-   style="font-weight:bold"
-   id="tspan696">Python for Nonprofits</tspan> is a guide to applying Python in </tspan><tspan
+         id="tspan690"><tspan
+           style="font-weight:bold;fill:#ffffff"
+           id="tspan686">Python for Nonprofits</tspan><tspan
+           style="fill:#ffffff"
+           id="tspan688"> is a guide to applying Python in </tspan></tspan><tspan
          x="68.326172"
          y="136.2665"
-         id="tspan700">nonprofit settings. Specifically, it teaches you how to use </tspan><tspan
+         id="tspan694"><tspan
+           style="fill:#ffffff"
+           id="tspan692">nonprofit settings. Specifically, it teaches you how to use </tspan></tspan><tspan
          x="68.326172"
          y="169.59988"
-         id="tspan702">Python to:
-</tspan><tspan
+         id="tspan698"><tspan
+           style="fill:#ffffff"
+           id="tspan696">Python to:
+</tspan></tspan><tspan
          x="68.326172"
          y="202.93325"
-         id="tspan704">
-</tspan><tspan
+         id="tspan702"><tspan
+           style="fill:#ffffff"
+           id="tspan700">
+</tspan></tspan><tspan
          x="68.326172"
          y="236.26663"
-         id="tspan706">--Import data, then clean and reformat it
-</tspan><tspan
+         id="tspan706"><tspan
+           style="fill:#ffffff"
+           id="tspan704">--Import data, then clean and reformat it
+</tspan></tspan><tspan
          x="68.326172"
          y="269.6"
-         id="tspan708">--Analyze data using descriptive statistics and linear </tspan><tspan
+         id="tspan710"><tspan
+           style="fill:#ffffff"
+           id="tspan708">--Analyze data using descriptive statistics and linear </tspan></tspan><tspan
          x="68.326172"
          y="302.93337"
-         id="tspan710">regressions
-</tspan><tspan
+         id="tspan714"><tspan
+           style="fill:#ffffff"
+           id="tspan712">regressions
+</tspan></tspan><tspan
          x="68.326172"
          y="336.26675"
-         id="tspan712">--Create both charts and maps
-</tspan><tspan
+         id="tspan718"><tspan
+           style="fill:#ffffff"
+           id="tspan716">--Create both charts and maps
+</tspan></tspan><tspan
          x="68.326172"
          y="369.60012"
-         id="tspan714">--Share spreadsheets and interactive visualizations online
-</tspan><tspan
+         id="tspan722"><tspan
+           style="fill:#ffffff"
+           id="tspan720">--Share spreadsheets and interactive visualizations online
+</tspan></tspan><tspan
          x="68.326172"
          y="402.9335"
-         id="tspan716">
-</tspan><tspan
+         id="tspan726"><tspan
+           style="fill:#ffffff"
+           id="tspan724">
+</tspan></tspan><tspan
          x="68.326172"
          y="436.26687"
-         id="tspan718">PFN is released under the MIT license. This means that you </tspan><tspan
+         id="tspan730"><tspan
+           style="fill:#ffffff"
+           id="tspan728">PFN is released under the MIT license. This means that you </tspan></tspan><tspan
          x="68.326172"
          y="469.60024"
-         id="tspan720">can use this code in both commercial and personal </tspan><tspan
+         id="tspan734"><tspan
+           style="fill:#ffffff"
+           id="tspan732">can use this code in both commercial and personal </tspan></tspan><tspan
          x="68.326172"
          y="502.93362"
-         id="tspan722">applications, and that you can choose whatever license you </tspan><tspan
+         id="tspan738"><tspan
+           style="fill:#ffffff"
+           id="tspan736">applications, and that you can choose whatever license you </tspan></tspan><tspan
          x="68.326172"
          y="536.26699"
-         id="tspan724">want for your own code.  This choice makes PFN much more </tspan><tspan
+         id="tspan742"><tspan
+           style="fill:#ffffff"
+           id="tspan740">want for your own code.  This choice makes PFN much more </tspan></tspan><tspan
          x="68.326172"
          y="569.60037"
-         id="tspan726">flexible than many other educational Python resources.
-</tspan><tspan
+         id="tspan746"><tspan
+           style="fill:#ffffff"
+           id="tspan744">flexible than many other educational Python resources.
+</tspan></tspan><tspan
          x="68.326172"
          y="602.93374"
-         id="tspan728">
-</tspan><tspan
+         id="tspan750"><tspan
+           style="fill:#ffffff"
+           id="tspan748">
+</tspan></tspan><tspan
          x="68.326172"
          y="636.26711"
-         id="tspan732"><tspan
-   style="font-weight:bold"
-   id="tspan730">About the author</tspan>
-</tspan><tspan
+         id="tspan754"><tspan
+           style="fill:#ffffff"
+           id="tspan752">The GitHub repository associated with this book is available 
+</tspan></tspan><tspan
          x="68.326172"
          y="669.60049"
-         id="tspan734">
-</tspan><tspan
+         id="tspan758"><tspan
+           style="fill:#ffffff"
+           id="tspan756">at https://github.com/kburchfiel/pfn .
+</tspan></tspan><tspan
          x="68.326172"
          y="702.93386"
-         id="tspan736">Ken Burchfiel has used Python in nonprofit settings since </tspan><tspan
+         id="tspan762"><tspan
+           style="fill:#ffffff"
+           id="tspan760">
+</tspan></tspan><tspan
          x="68.326172"
          y="736.26724"
-         id="tspan738">graduating from Columbia Business School in 2022. He </tspan><tspan
+         id="tspan768"><tspan
+           style="font-weight:bold;fill:#ffffff"
+           id="tspan764">About the author</tspan><tspan
+           style="fill:#ffffff"
+           id="tspan766">
+</tspan></tspan><tspan
          x="68.326172"
          y="769.60061"
-         id="tspan740">loves finding ways to apply this programming language--and </tspan><tspan
+         id="tspan772"><tspan
+           style="fill:#ffffff"
+           id="tspan770">
+</tspan></tspan><tspan
          x="68.326172"
          y="802.93398"
-         id="tspan742">its incredible array of libraries--to help further nonprofits' </tspan><tspan
+         id="tspan776"><tspan
+           style="fill:#ffffff"
+           id="tspan774">Ken Burchfiel has used Python in nonprofit settings since </tspan></tspan><tspan
          x="68.326172"
          y="836.26736"
-         id="tspan744">missions. He lives in Charlottesville, VA with his wife and </tspan><tspan
+         id="tspan782"><tspan
+           style="fill:#ffffff"
+           id="tspan778">graduating from Columbia Business School in 2022. He </tspan><tspan
+           style="fill:#ffffff"
+           id="tspan780">loves </tspan></tspan><tspan
          x="68.326172"
          y="869.60073"
-         id="tspan746">son.
-</tspan><tspan
+         id="tspan788"><tspan
+           style="fill:#ffffff"
+           id="tspan784">finding ways to apply this programming language--and </tspan><tspan
+           style="fill:#ffffff"
+           id="tspan786">its </tspan></tspan><tspan
          x="68.326172"
          y="902.93411"
-         id="tspan748">
-</tspan></text></g></svg>
+         id="tspan792"><tspan
+           style="fill:#ffffff"
+           id="tspan790">incredible array of libraries--to help further nonprofits' </tspan></tspan><tspan
+         x="68.326172"
+         y="936.26748"
+         id="tspan798"><tspan
+           style="fill:#ffffff"
+           id="tspan794">missions. He lives in Charlottesville, VA with his wife and </tspan><tspan
+           style="fill:#ffffff"
+           id="tspan796">son.
+</tspan></tspan><tspan
+         x="68.326172"
+         y="969.60085"
+         id="tspan802"><tspan
+           style="fill:#ffffff"
+           id="tspan800">
+</tspan></tspan></text></g></svg>

@@ -1,8 +1,9 @@
-Flask
-gunicorn
-Werkzeug
-dash
-Flask-Login
-dash-pivottable
-pandas
-dash-bootstrap-components
+dash==3.0.0
+dash-bootstrap-components==2.0.0
+dash-pivottable==0.0.2
+Flask==3.0.3
+Flask-Login==0.6.3
+gunicorn==23.0.0
+pandas==2.2.3
+plotly==6.0.1
+Werkzeug==3.0.6
