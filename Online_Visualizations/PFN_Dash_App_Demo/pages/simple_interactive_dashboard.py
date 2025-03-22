@@ -35,9 +35,9 @@ layout = dbc.Container([
     dashboard), but it can still serve as a helpful introduction 
     to some of Dash's core features.
 
-    This dashboard also applies the [Dash Bootstrap Components](
-    https://dash-bootstrap-components.opensource.faculty.ai/docs/
-    components/layout/) library in order
+    This dashboard also applies the Dash Bootstrap Components (
+    https://dash-bootstrap-components.opensource.faculty.ai)
+    library in order
     to create a more condensed layout that accommodates a range of 
     screen sizes. This library is also used in certain other dashboards 
     within this app.

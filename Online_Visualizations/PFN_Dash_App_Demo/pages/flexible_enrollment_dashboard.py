@@ -113,7 +113,8 @@ def display_graph(x_vars, color, college_filter,
     x_vars_to_exclude = ['Level For Sorting'], 
         overall_data_name = 'All Data',
     weight_col = None, filter_tuple_list = filter_tuple_list,
-    custom_aggfunc_name = '', create_table = True)
+    custom_aggfunc_name = '', create_table = True,
+    text_auto = '.0f')
 
     print(table)
 

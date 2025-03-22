@@ -259,9 +259,10 @@ def autopivot(df, y, aggfunc, x_vars = [],
     index, aggfunc
 
 def autobar(df_pivot, x_val_name, y, color, barmode, x_var_count, 
-            index, aggfunc, custom_aggfunc_name = None):
+            index, aggfunc, custom_aggfunc_name = None,
+           text_auto = '.2f'):
     '''This function creates a bar graph of a pivot table (such as one
-    created within autopivot(). 
+    created within autopivot()). 
     Most arguments arguments for this function
     correspond to the values returned by autopivot(); more information on
     each can be found within that function.
@@ -273,6 +274,14 @@ def autobar(df_pivot, x_val_name, y, color, barmode, x_var_count,
     aggfunc within the title. Note that '' can be passed to
     this parameter in order to exclude the aggregate function
     from chart titles.)
+
+    text_auto: The value to pass to the text_auto argument of px.bar(),
+    which specifies whether (and how) to display data labels on bars.
+    Set this variable to False if you wish not to include any labels;
+    set to '.2f' to show labels up to 2 decimal points; set to '.0f'
+    to show labels as integers; and '.1%' to show labels in percentage
+    form with a single decimal point. These are just some of the many
+    options you can pass for this argument.
     '''
     
     # Creating a title for the chart:
@@ -332,7 +341,7 @@ by {index[0]} and {index[1]}"
         # The following code will still work if color is set to None.
         fig = px.bar(df_pivot, x = x_val_name, y = y, 
                color = color, barmode = barmode,
-               text_auto = '.1f', title = plot_title)
+               text_auto = text_auto, title = plot_title)
     else: # In this case, there's no data to plot,
         # so an empty figure will be returned instead.
         fig = px.bar(title=plot_title)
@@ -369,7 +378,7 @@ def autopivot_plus_bar(
     x_vars_to_exclude = [], overall_data_name = 'All Data',
     weight_col = None, filter_tuple_list = [],
     custom_aggfunc_name = None, convert_x_vars_to_strings = True,
-    create_table = False):
+    create_table = False, text_auto = '.2f'):
     '''This function calls both autopivot() and autobar(), thus 
     simplifying the process of using both functions within a script. 
     See autopivot() and autobar()'s individual function definitions 
@@ -391,7 +400,8 @@ def autopivot_plus_bar(
         df_pivot = df_pivot, x_val_name = x_val_name, y = y, 
         color = color, barmode = barmode, x_var_count = x_var_count, 
         index = index, aggfunc = aggfunc, 
-        custom_aggfunc_name=custom_aggfunc_name)
+        custom_aggfunc_name=custom_aggfunc_name,
+    text_auto = text_auto)
 
     if create_table == False:
         return fig_bar

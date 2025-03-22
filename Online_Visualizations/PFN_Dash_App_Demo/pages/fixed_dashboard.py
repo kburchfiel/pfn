@@ -63,5 +63,5 @@ layout = dbc.Container([
     # callbacks) came from https://dash.plotly.com/
     # tutorial#visualizing-data .
     dcc.Graph(figure=fig_enrollment_by_college),
-    dcc.Graph(figure=fig_enrollment_by_level),
+    dcc.Graph(figure=fig_enrollment_by_level)
 ])
