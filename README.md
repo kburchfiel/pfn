@@ -76,15 +76,15 @@ Although most of the libraries that Python for Nonprofits uses are available wit
 
 1. [**Data Prep**](https://github.com/kburchfiel/pfn/blob/main/Data_Prep/data_prep.ipynb)
 
-1. [**Census Data Imports**](https://github.com/kburchfiel/pfn/blob/main/Census_Data_Imports/census_data_imports.ipynb)
-
-    1. [Census Data Import Scripts](https://github.com/kburchfiel/pfn/blob/main/Census_Data_Imports/census_import_scripts.py)
-
 #### Part 3: [Analyzing Data](https://github.com/kburchfiel/pfn/tree/main/Descriptive_Stats)
 
 1. [**Descriptive Stats**](https://github.com/kburchfiel/pfn/blob/main/Descriptive_Stats/descriptive_stats.ipynb)
 
 1. [**Descriptive Stats: Part 2**](https://github.com/kburchfiel/pfn/blob/main/Descriptive_Stats/descriptive_stats_part_2.ipynb)
+
+1. [**Census Data Imports**](https://github.com/kburchfiel/pfn/blob/main/Census_Data_Imports/census_data_imports.ipynb)
+
+    1. [Census Data Import Scripts](https://github.com/kburchfiel/pfn/blob/main/Census_Data_Imports/census_import_scripts.py)
 
 #### Part 4: Visualizing Data via [Graphs](https://github.com/kburchfiel/pfn/blob/main/Descriptive_Stats/descriptive_stats_part_2.ipynb) and [Maps](https://github.com/kburchfiel/pfn/tree/main/Mapping)
 

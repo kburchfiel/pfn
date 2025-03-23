@@ -2,10 +2,6 @@
 # By Kenneth Burchfiel
 # Released under the MIT license
 
-# This file contains a function that performs the data retrieval 
-# steps deliniated in recent_weather_data.ipynb within
-# the Automated_Notebooks section of Python for Nonprofits.
-
 import pandas as pd
 import os
 import numpy as np
@@ -293,13 +289,3 @@ _historical_hourly_data.csv', index = False)
 
     df_wx.to_csv(f'{data_folder}{post_folder_char}\
 {station_code}_historical_hourly_data_updated.csv', index = False)
-
-    
-
-
-    
-
-
-
-
-
