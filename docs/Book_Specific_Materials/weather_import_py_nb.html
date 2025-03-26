@@ -185,7 +185,6 @@
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Visualizing Data</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../Graphing/graphing.html">Creating Interactive and Static Charts with Plotly</a></li>
-
 <li class="toctree-l1"><a class="reference internal" href="../Graphing/pivot_and_graph_functions.html">Pivot and Graph Functions</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../Mapping/choropleth_maps.html">Mapping Census Data using Plotly (Work in progress)</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="plotly_choropleth_map_functions_py_nb.html">plotly_choropleth_map_functions.py</a></li>
@@ -371,13 +370,9 @@
 <h1>weather_import.py<a class="headerlink" href="#weather-import-py" title="Link to this heading">#</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Weather Import</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Weather Data Import</span>
 <span class="c1"># By Kenneth Burchfiel</span>
 <span class="c1"># Released under the MIT license</span>
-
-<span class="c1"># This file contains a function that performs the data retrieval </span>
-<span class="c1"># steps deliniated in recent_weather_data.ipynb within</span>
-<span class="c1"># the Automated_Notebooks section of Python for Nonprofits.</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
@@ -666,11 +661,6 @@
 
     <span class="n">df_wx</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">data_folder</span><span class="si">}{</span><span class="n">post_folder_char</span><span class="si">}</span><span class="se">\</span>
 <span class="si">{</span><span class="n">station_code</span><span class="si">}</span><span class="s1">_historical_hourly_data_updated.csv&#39;</span><span class="p">,</span> <span class="n">index</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
-
-    
-
-
-    
 </pre></div>
 </div>
 </div>

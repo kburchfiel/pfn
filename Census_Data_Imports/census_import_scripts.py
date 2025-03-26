@@ -1,10 +1,6 @@
 # Census Data Import Scripts
 
-# By Kenneth Burchfiel
-
-# Released under the MIT License
-
-# This Python file creates scripts for creating lists of American
+# This Python file stores functions for creating lists of American
 # Community Survey variables; generating aliases for variable codes;
 # using the Census API to download data; and adding certain statistical
 # fields to tables.
@@ -16,11 +12,14 @@ def download_variable_list(year, survey):
     '''This function imports a list of all variables from the Census
     website, thus allowing variable codes to get mapped to names in 
     subsequent analyses.
+    
     year: the year for which to retrieve variables.
+    
     survey: the ACS type for which to retrieve variables (e.g.
     'acs5' or 'acs1' for the 5-year and 1-year ACS estimates,
     respectively.)
     '''
+    
     print(f"Importing {survey} variables from {year}.")
     df_variables_page = pd.read_html(
         f'https://api.census.gov/data/\
@@ -42,10 +41,10 @@ def download_variable_list(year, survey):
     ).reset_index(drop=True)
     # Removing an extraneous column from our output
     if 'Unnamed: 8' in df_variables.columns:
-        df_variables.drop('Unnamed: 8', axis = 1, inplace = True)
+        df_variables.drop('Unnamed: 8', axis=1, inplace=True)
     # Saving this table to a local .csv file:
     df_variables.to_csv(f'Datasets/{survey}_{year}_variables.csv',
-                       index = False) 
+                       index=False) 
 
     # Given that there are tens of thousands of individual variables
     # within the ACS, it could take a very long time to identify 
@@ -58,11 +57,8 @@ def download_variable_list(year, survey):
         'Group')[['Concept', 'Group']].copy(
         ).reset_index(drop=True)
     df_groups.head()
-
     df_groups.to_csv(f'Datasets/{survey}_{year}_groups.csv', 
-                 index = False)
-
-    
+                 index=False)    
     print(f"Finished saving variable and group tables to .csv files.")
     
 
@@ -83,6 +79,7 @@ def create_variable_aliases(df_variables, variable_list):
     variable_list: The list of variables to rename 
     (e.g. ['B01001_001E', 'B01001_002E']).
     '''
+    
     # Creating a DataFrame that contains the information needed for the
     # updated column names:
     df_aliases = df_variables.query(
@@ -102,10 +99,10 @@ def create_variable_aliases(df_variables, variable_list):
 
 
 def retrieve_census_data(survey, year, region, key, variable_list,
-                         rename_data_fields = False, 
-                         field_vars_dict = {}):
-    '''This function (which I plan to expand) retrieves data from the US
-    Census API. It accommodates more than 50 variables.
+                         rename_data_fields=False, 
+                         field_vars_dict={}):
+    '''This function retrieves data from the US
+    Census API. 
     
     survey: the survey from which to retrieve data. The only arguments
     currently supported are 'acs5' and 'acs1' (for the American Community 
@@ -115,15 +112,15 @@ def retrieve_census_data(survey, year, region, key, variable_list,
     When region is set to 'acs5', the survey results will include data
     for the 5 years leading up to (and including) the 'year' argument.
     (For example, if you set 'year' to 2021, you'll retrieve ACS5 data
-    from 2017 to 2021 (inclusive).)
-    
+    from 2017 to 2021 (inclusive).)    
     
     region: The geographic level at which you wish to retrieve data. 
     Examples include 'us', 'state', 'county', 'zip', 'msa' 
     (for metropolitan/micropolitan statistical area data), and 'csa' 
-    (for combined statistical area data); 
-    however, other regions are supported as well. Consult your survey's 
-    API examples page for other options. (For instance, if you wanted to 
+    (for combined statistical area data); however, other regions are 
+    supported as well. Consult your survey's API examples page for 
+    other options. 
+    (For instance, if you wanted to 
     retrieve data by urban area within the 2021 ACS5, you could go to 
     https://api.census.gov/data/2021/acs/acs5/examples.html, then search
     for 'urban area.' The Urban Area URL ends with
@@ -137,6 +134,9 @@ def retrieve_census_data(survey, year, region, key, variable_list,
     # for more information.
     
     variable_list: The list of variables for which to retrieve data.
+    This function allows for the retrieval of data for more than 50 
+    variables; it does so by making multiple calls to the Census API,
+    then merging the results of those calls together.
 
     key: your personal Census API key.
 
@@ -147,7 +147,9 @@ def retrieve_census_data(survey, year, region, key, variable_list,
     retrieved by the Census (e.g. 'B01001_001E' as keys and your desired
     replacements as values. Example: 
     {'B01001_001E': 'Sex by Age_Estimate!!Total:_B01001_001E',
-     'B01001_002E': 'Sex by Age_Estimate!!Total:!!Male:_B01001_002E'}'
+     'B01001_002E': 'Sex by Age_Estimate!!Total:!!Male:_B01001_002E'}'.
+    I suggest that you use the output of a create_variable_aliases() call
+    as the argument for this parameter.
      
     '''
 
@@ -173,8 +175,8 @@ in your variable list: {duplicate_variables}")
                          the function.")
 
     
-    # Converting simplified region names into strings that the API 
-    # function will recognize:
+    # Converting simplified region names into strings that the Census API 
+    # will recognize:
     if region == 'zip':
         region = 'zip%20code%20tabulation%20area' # Based on
         # the ZCTA example within
@@ -191,18 +193,19 @@ in your variable list: {duplicate_variables}")
     # Only 50 variables can be retrieved from the Census API at a time 
     # using the approach shown in this function. The following code 
     # accommodates this limitation by splitting variable_list into 
-    # sublists of up to 49 variables. The data retrieved for the variables 
+    # sublists of up to 45 variables. The data retrieved for the variables 
     # in these sublists will then get merged back together.
-    # (49 variables are retrieved at a time instead of 50 because it 
-    # appears that the initial 'NAME' variable also counts towards 
-    # the 50-variable limit.)
+    # (45 variables are retrieved at a time instead of 50 because certain
+    # geographic variables, such as 'NAME', also appear to count toward
+    # the 50-variable limit--and more than one geographic variable
+    # may be present depending on which region type was selected.)
     
     i = 0
        
     while i < len(variable_list): # i.e. while there
         # are still more variables to iterate through
-        variable_sublist = variable_list[i:i+49] # This line reads the 
-        # next 49 variables from variable_list into a sublist that can 
+        variable_sublist = variable_list[i:i+45] # This line reads the 
+        # next 45 variables from variable_list into a sublist that can 
         # then be\ passed to the API
         # print("variable_sublist:", variable_sublist)
         # Converting the list of variables into a string that can be 
@@ -234,7 +237,7 @@ in your variable list: {duplicate_variables}")
         # values as the column values and then deleting this row.
     
         df_results.columns = df_results.iloc[0]
-        df_results.drop(0, inplace = True)
+        df_results.drop(0, inplace=True)
 
 
         # Determining which merge keys to use when combining API results
@@ -259,14 +262,13 @@ in your variable list: {duplicate_variables}")
             df_combined_results = df_results.copy()
         else: # Merging our latest set of results into df_results:
             df_combined_results = df_combined_results.merge(
-                df_results, on = merge_keys,
-                how = 'outer').copy()
+                df_results, on=merge_keys,
+                how='outer').copy()
             # Added .copy() here in response to a data fragmentation 
         # warning
 
-        i += 49 
-        # Allows the function to iterate through the next 49 variables
-        # within variable_list
+        i += 45 # Allows the function to iterate through the next 
+        # 45 variables within variable_list
 
         
     # Converting variable columns to numeric data types:
@@ -282,12 +284,17 @@ in your variable list: {duplicate_variables}")
     # Replacing column names with aliases if requested:
     if rename_data_fields == True:
         df_combined_results.rename(
-            columns = field_vars_dict, inplace = True)
+            columns=field_vars_dict, inplace=True)
 
     # The following for loop moves all of the merge keys (e.g. geographic
     # identifiers) to the left side of the table. This is particularly
     # useful when retrieving longer lists of variables, as otherwise,
-    # certain keys can get buried in the middle of the dataset
+    # certain keys can get buried in the middle of the dataset.
+
+    # I think I got the idea of chaining .insert() and .pop() together
+    # from a StackOverflow answer like this one from Marc Maxmeister : 
+    # https://stackoverflow.com/a/77463008/13097194 )
+    
     for i in range(len(merge_keys)):
         df_combined_results.insert(
             i, merge_keys[i], 
@@ -301,7 +308,7 @@ in your variable list: {duplicate_variables}")
     return df_combined_results
 
 def create_comparison_fields(df, field_var, year_list,
-                             field_year_separator = '_'):
+                             field_year_separator='_'):
     '''This function calculates nominal and percentage changes
     between the last year in a list and all years leading up to that year.
     It also calculates both rank and percentile information for these
@@ -322,6 +329,9 @@ def create_comparison_fields(df, field_var, year_list,
     if year_list equals [2005, 2009, 2015], the function will create
     comparisons between (1) 2005 and 2015 and (2) 2009 and 2015 (but not
     2005 and 2009).
+    year_list should be sorted chronologically in order to avoid
+    unexpected/undesired outputs.
+    
     field_var data for each of these years should be stored within
     the DataFrame. For instance, if year_list is equal to the example
     shown above, field_var is 'Total_Pop', and field_year_separator (see
@@ -348,25 +358,27 @@ def create_comparison_fields(df, field_var, year_list,
         df[f'{field_var}{field_year_separator}{latest_year}'] 
         / df[f'{field_var}{field_year_separator}{year}']) - 1)
 
-    
         # Calculating ranks and percentiles for both the nominal 
         # change and % change columns:
         # Note that field_var still needs to be included within these
         # columns in order to specify what change, exactly, is being
         # analyzed. (This is particularly important when this function
         # gets called for multiple field_var entries.)
+
+        # Nominal change rank and percentile calculations:
         df[f'{year}-{latest_year} {field_var} Change Rank'] = df[
         f'{year}-{latest_year} {field_var} Change'].rank(
-            ascending=False, method = 'min')
+            ascending=False, method='min')
         
         df[f'{year}-{latest_year} {field_var} Change Percentile'] = (
         100 * df[
         f'{year}-{latest_year} {field_var} Change'].rank(
             pct=True, ascending=True, method='max'))
-        
+
+        # Percentage change rank and percentile calculations:
         df[f'{year}-{latest_year} {field_var} % Change Rank'] = (
             df[f'{year}-{latest_year} {field_var} % Change'].rank(
-            ascending=False, method = 'min'))
+            ascending=False, method='min'))
         
         df[f'{year}-{latest_year} {field_var} % Change Percentile'] = (
             100 * df[

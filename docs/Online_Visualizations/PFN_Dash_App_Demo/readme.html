@@ -185,7 +185,6 @@
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Visualizing Data</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../../Graphing/graphing.html">Creating Interactive and Static Charts with Plotly</a></li>
-
 <li class="toctree-l1"><a class="reference internal" href="../../Graphing/pivot_and_graph_functions.html">Pivot and Graph Functions</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../Mapping/choropleth_maps.html">Mapping Census Data using Plotly (Work in progress)</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../Book_Specific_Materials/plotly_choropleth_map_functions_py_nb.html">plotly_choropleth_map_functions.py</a></li>
@@ -456,17 +455,24 @@ be found within the <strong>Dash Pivottable (Enrollment)</strong> (<a class="ref
 <ol class="arabic simple">
 <li><p>I used the following requirements.txt values (to reflect the libraries used within this app):</p></li>
 </ol>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Flask</span>
-<span class="n">gunicorn</span>
-<span class="n">Werkzeug</span>
-<span class="n">dash</span>
-<span class="n">Flask</span><span class="o">-</span><span class="n">Login</span>
-<span class="n">dash</span><span class="o">-</span><span class="n">pivottable</span>
-<span class="n">pandas</span>
-<span class="n">dash</span><span class="o">-</span><span class="n">bootstrap</span><span class="o">-</span><span class="n">components</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">dash</span><span class="o">==</span><span class="mf">3.0.0</span>
+<span class="n">dash</span><span class="o">-</span><span class="n">bootstrap</span><span class="o">-</span><span class="n">components</span><span class="o">==</span><span class="mf">2.0.0</span>
+<span class="n">dash</span><span class="o">-</span><span class="n">pivottable</span><span class="o">==</span><span class="mf">0.0.2</span>
+<span class="n">Flask</span><span class="o">==</span><span class="mf">3.0.3</span>
+<span class="n">Flask</span><span class="o">-</span><span class="n">Login</span><span class="o">==</span><span class="mf">0.6.3</span>
+<span class="n">gunicorn</span><span class="o">==</span><span class="mf">23.0.0</span>
+<span class="n">pandas</span><span class="o">==</span><span class="mf">2.2.3</span>
+<span class="n">plotly</span><span class="o">==</span><span class="mf">6.0.1</span>
+<span class="n">Werkzeug</span><span class="o">==</span><span class="mf">3.0.6</span>
 </pre></div>
 </div>
-<ol class="arabic simple" start="2">
+<p><strong>Note</strong>: I specified the exact versions of each library within this file because, when updating the app after Dash 3 got released, I found that an earlier version of Dash was being used within my cloud-hosted app. (I think this explains why data within certain graphs was not appearing correctly.) To resolve this issue, I:</p>
+<ol class="arabic simple">
+<li><p>Created a new Conda environment just for this app</p></li>
+<li><p>Used pip to import each library within my requirements.txt file (since pip would also be used to add libraries to the cloud-hosted app)</p></li>
+<li><p>Confirmed that the local app was working correctly</p></li>
+<li><p>Copied the version numbers for each locally-hosted library into my requirements.txt file</p></li>
+<li><p>Redeployed the app–which, thankfully, now worked fine</p></li>
 <li><p>It’s worth highlighting that, whereas the app within the Simple_App_Without_Login folder contained the line <code class="docutils literal notranslate"><span class="pre">server</span> <span class="pre">=</span> <span class="pre">app.server</span></code> (as indicated by the deployment guide at <a class="reference external" href="https://dash.plotly.com/deployment">https://dash.plotly.com/deployment</a>), this app will instead use <code class="docutils literal notranslate"><span class="pre">server</span> <span class="pre">=</span> <span class="pre">Flask(__name__)</span></code> due to the incorporation of Flask-Login.</p></li>
 </ol>
 </section>

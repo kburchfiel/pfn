@@ -102,13 +102,24 @@ Most of the deployment steps written within the Simple_App_Without_Login readme 
 1. I used the following requirements.txt values (to reflect the libraries used within this app):
 
 ```
-Flask
-gunicorn
-Werkzeug
-dash
-Flask-Login
-dash-pivottable
-pandas
-dash-bootstrap-components
+dash==3.0.0
+dash-bootstrap-components==2.0.0
+dash-pivottable==0.0.2
+Flask==3.0.3
+Flask-Login==0.6.3
+gunicorn==23.0.0
+pandas==2.2.3
+plotly==6.0.1
+Werkzeug==3.0.6
 ```
+
+**Note**: I specified the exact versions of each library within this file because, when updating the app after Dash 3 got released, I found that an earlier version of Dash was being used within my cloud-hosted app. (I think this explains why data within certain graphs was not appearing correctly.) To resolve this issue, I:
+
+1. Created a new Conda environment just for this app
+2. Used pip to import each library within my requirements.txt file (since pip would also be used to add libraries to the cloud-hosted app)
+3. Confirmed that the local app was working correctly
+4. Copied the version numbers for each locally-hosted library into my requirements.txt file
+5. Redeployed the app--which, thankfully, now worked fine
+
+
 2. It's worth highlighting that, whereas the app within the Simple_App_Without_Login folder contained the line `server = app.server` (as indicated by the deployment guide at https://dash.plotly.com/deployment), this app will instead use `server = Flask(__name__)` due to the incorporation of Flask-Login.

@@ -185,7 +185,6 @@
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Visualizing Data</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../Graphing/graphing.html">Creating Interactive and Static Charts with Plotly</a></li>
-
 <li class="toctree-l1"><a class="reference internal" href="../Graphing/pivot_and_graph_functions.html">Pivot and Graph Functions</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../Mapping/choropleth_maps.html">Mapping Census Data using Plotly (Work in progress)</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../Book_Specific_Materials/plotly_choropleth_map_functions_py_nb.html">plotly_choropleth_map_functions.py</a></li>
@@ -365,9 +364,13 @@
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#calculating-weighted-average-results-by-student-and-dealing-with-missing-values">Calculating weighted average results by student (and dealing with missing values)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-danger-of-relying-on-column-index-positions-when-analyzing-datasets">The danger of relying on column index positions when analyzing datasets</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#why-column-wise-operations-should-be-preferred-over-for-loops">Why column-wise operations should be preferred over for loops</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#microdata-pre-baked-data-and-the-average-of-averages-problem">Microdata, pre-baked data, and the ‘average of averages’ problem</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#handling-missing-data-when-creating-pivot-tables">Handling missing data when creating pivot tables</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-advantages-of-map-and-np-select-over-np-where-when-missing-data-are-present">The advantages of map() and np.select() over np.where() when missing data are present</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-advantages-of-map-and-np-select-over-np-where-when-missing-data-are-present">The advantages of <code class="docutils literal notranslate"><span class="pre">map()</span></code> and <code class="docutils literal notranslate"><span class="pre">np.select()</span></code> over <code class="docutils literal notranslate"><span class="pre">np.where()</span></code> when missing data are present</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion">Conclusion</a></li>
 </ul>
             </nav>
         </div>
@@ -382,14 +385,16 @@
   <section class="tex2jax_ignore mathjax_ignore" id="descriptive-stats-part-2">
 <h1>Descriptive Stats: Part 2<a class="headerlink" href="#descriptive-stats-part-2" title="Link to this heading">#</a></h1>
 <p>By Kenneth Burchfiel</p>
-<p>Released under the MIT license</p>
 <p>This second part of Python for Nonprofits’ descriptive stats section covers several potential data analysis pitfalls. Specifically, it will explore:</p>
 <ol class="arabic simple">
-<li><p>Challenges with finding average values for tables whose rows are themselves averages</p></li>
+<li><p>How to adjust for missing values when calculating weighted averages</p></li>
+<li><p>The risk of relying on column index positions</p></li>
+<li><p>Why column-wise operations should be preferred over for loops</p></li>
+<li><p>Challenges with finding average values for fields whose rows are themselves averages</p></li>
 <li><p>Methods of accounting for missing data when creating pivot tables</p></li>
 <li><p>Issues with using <code class="docutils literal notranslate"><span class="pre">np.where()</span></code> to create derivatives of columns with missing data (and why <code class="docutils literal notranslate"><span class="pre">map()</span></code> and <code class="docutils literal notranslate"><span class="pre">np.select()</span></code> are better fits)</p></li>
 </ol>
-<p>I have to admit that, even by programming textbook standards, you may not find this to be the most exciting chapter. You may well be anxious to get ahead to the graphing, mapping, and online dashboard sections of PFN (which are just around the corner).</p>
+<p>I have to admit that, even by programming textbook standards, you may not find this to be the most exciting chapter. You may well be anxious to get ahead to the graphing, mapping, and online dashboard sections of PFN–i.e. the ‘fun’ stuff.</p>
 <p>However, in order to be confident that your graphs, maps, and dashboards will provide an accurate view of your underlying data, it’s crucial to exercise caution when pivoting and transforming tables. This chapter is meant to help you be more cautious–and thus more successful–in your data analysis adventures.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -401,19 +406,1423 @@
 <span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
 <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;../Appendix&#39;</span><span class="p">)</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">helper_funcs</span><span class="w"> </span><span class="kn">import</span> <span class="n">config_notebook</span>
-<span class="n">display_type</span> <span class="o">=</span> <span class="n">config_notebook</span><span class="p">(</span><span class="n">display_max_columns</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span>
-                              <span class="n">display_max_rows</span> <span class="o">=</span> <span class="mi">8</span><span class="p">)</span>
+<span class="n">display_type</span> <span class="o">=</span> <span class="n">config_notebook</span><span class="p">(</span><span class="n">display_max_columns</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span>
+                              <span class="n">display_max_rows</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
+<section id="calculating-weighted-average-results-by-student-and-dealing-with-missing-values">
+<h2>Calculating weighted average results by student (and dealing with missing values)<a class="headerlink" href="#calculating-weighted-average-results-by-student-and-dealing-with-missing-values" title="Link to this heading">#</a></h2>
+<p>Suppose that the NVCU administration also wishes to see what percentage of students had a weighted average annual survey score below 60. Because they are more interested in students’ most recent survey results, they would like you to assign a weight of 0.2 to the fall results; 0.3 to the winter results; and 0.5 to the spring results. (Thus, students’ weighted survey averages will equal 0.2*F + 0.3*W + 0.5*S, with F, W, and S referring to students’ fall, winter, and spring results, respectively.)</p>
+<p>We’ll begin this analysis by loading in ‘survey_results_by_student_wide.csv’, which shows fall, winter, and spring scores side by side for each student.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_student_results_wide</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span>
+    <span class="s1">&#39;survey_results_by_student_wide.csv&#39;</span><span class="p">)</span>
+<span class="c1"># Creating a copy of this DataFrame that includes only students with </span>
+<span class="c1"># valid winter survey results:</span>
+<span class="c1"># (We&#39;ll make use of this copy later within this notebook.)</span>
+<span class="n">df_valid_survey_results</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">df_student_results_wide</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;Winter.notna()&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span>
+        <span class="s1">&#39;starting_year&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+<span class="n">df_student_results_wide</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>starting_year</th>
+      <th>student_id</th>
+      <th>Fall</th>
+      <th>Winter</th>
+      <th>Spring</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2023</td>
+      <td>2020-1</td>
+      <td>88.0</td>
+      <td>81.0</td>
+      <td>86.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2023</td>
+      <td>2020-10</td>
+      <td>69.0</td>
+      <td>63.0</td>
+      <td>73.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2023</td>
+      <td>2020-100</td>
+      <td>68.0</td>
+      <td>60.0</td>
+      <td>88.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2023</td>
+      <td>2020-1000</td>
+      <td>58.0</td>
+      <td>55.0</td>
+      <td>65.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2023</td>
+      <td>2020-1001</td>
+      <td>88.0</td>
+      <td>84.0</td>
+      <td>100.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Because not all students took the winter survey, some winter results have NaN (not a number) values. We can count the number of NaN results for each column by (1) calling the <code class="docutils literal notranslate"><span class="pre">isna()</span></code> function, which displays whether or not each cell is NaN, then (2) following that call with .sum() in order to add up all NaN entries.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_student_results_wide</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>starting_year       0
+student_id          0
+Fall                0
+Winter           2458
+Spring              0
+dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+<p>These missing results will make our weighted average calculations a bit more complicated. For instance, suppose we tried to create our weighted averages using the following code:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">avg_score_cols_to_display</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;student_id&#39;</span><span class="p">,</span> <span class="s1">&#39;Fall&#39;</span><span class="p">,</span> <span class="s1">&#39;Winter&#39;</span><span class="p">,</span> <span class="s1">&#39;Spring&#39;</span><span class="p">,</span> <span class="s1">&#39;weighted_avg_score&#39;</span><span class="p">]</span> 
+<span class="c1"># Displaying only these columns in the following cells will help</span>
+<span class="c1"># condense the output</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_student_results_wide</span><span class="p">[</span><span class="s1">&#39;weighted_avg_score&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">df_student_results_wide</span><span class="p">[</span><span class="s1">&#39;Fall&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="mf">0.2</span> 
+    <span class="o">+</span> <span class="n">df_student_results_wide</span><span class="p">[</span><span class="s1">&#39;Winter&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="mf">0.3</span> 
+    <span class="o">+</span> <span class="n">df_student_results_wide</span><span class="p">[</span><span class="s1">&#39;Spring&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="mf">0.5</span><span class="p">)</span>
+<span class="n">df_student_results_wide</span><span class="p">[</span><span class="n">avg_score_cols_to_display</span><span class="p">]</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>student_id</th>
+      <th>Fall</th>
+      <th>Winter</th>
+      <th>Spring</th>
+      <th>weighted_avg_score</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2020-1</td>
+      <td>88.0</td>
+      <td>81.0</td>
+      <td>86.0</td>
+      <td>84.9</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2020-10</td>
+      <td>69.0</td>
+      <td>63.0</td>
+      <td>73.0</td>
+      <td>69.2</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2020-100</td>
+      <td>68.0</td>
+      <td>60.0</td>
+      <td>88.0</td>
+      <td>75.6</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2020-1000</td>
+      <td>58.0</td>
+      <td>55.0</td>
+      <td>65.0</td>
+      <td>60.6</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2020-1001</td>
+      <td>88.0</td>
+      <td>84.0</td>
+      <td>100.0</td>
+      <td>92.8</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>This code works fine for students with valid scores for all 3 seasons, but those with a NaN winter value will also end up with a NaN average score:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_student_results_wide</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;Winter.isna()&quot;</span><span class="p">)[</span>
+<span class="n">avg_score_cols_to_display</span><span class="p">]</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>student_id</th>
+      <th>Fall</th>
+      <th>Winter</th>
+      <th>Spring</th>
+      <th>weighted_avg_score</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>10</th>
+      <td>2020-1007</td>
+      <td>93.0</td>
+      <td>NaN</td>
+      <td>96.0</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>2020-1014</td>
+      <td>66.0</td>
+      <td>NaN</td>
+      <td>66.0</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>2020-1017</td>
+      <td>70.0</td>
+      <td>NaN</td>
+      <td>66.0</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>28</th>
+      <td>2020-1023</td>
+      <td>72.0</td>
+      <td>NaN</td>
+      <td>67.0</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>31</th>
+      <td>2020-1026</td>
+      <td>74.0</td>
+      <td>NaN</td>
+      <td>75.0</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>A naive approach to compensate for these NaN results would be to call <code class="docutils literal notranslate"><span class="pre">fillna()</span></code> to replace all NaN values with 0, as shown in the following block of code. However, <strong>this approach will result in inaccurately low average score values for students with missing winter results.</strong> This is because our valid score weights for these students (0.2 for fall and 0.5 for spring) add up to only 0.7.</p>
+<p>In the following output, note how the weighted averages for students with missing winter scores are lower than both their fall <em>and</em> spring scores, which doesn’t make sense.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_student_results_wide</span><span class="p">[</span><span class="s1">&#39;weighted_avg_score&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">df_student_results_wide</span><span class="p">[</span><span class="s1">&#39;Fall&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.2</span> 
+    <span class="o">+</span> <span class="n">df_student_results_wide</span><span class="p">[</span><span class="s1">&#39;Winter&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.3</span> 
+    <span class="o">+</span> <span class="n">df_student_results_wide</span><span class="p">[</span><span class="s1">&#39;Spring&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.5</span><span class="p">)</span>
+<span class="n">df_student_results_wide</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;Winter.isna()&quot;</span><span class="p">)[</span>
+<span class="n">avg_score_cols_to_display</span><span class="p">]</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>student_id</th>
+      <th>Fall</th>
+      <th>Winter</th>
+      <th>Spring</th>
+      <th>weighted_avg_score</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>10</th>
+      <td>2020-1007</td>
+      <td>93.0</td>
+      <td>NaN</td>
+      <td>96.0</td>
+      <td>66.6</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>2020-1014</td>
+      <td>66.0</td>
+      <td>NaN</td>
+      <td>66.0</td>
+      <td>46.2</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>2020-1017</td>
+      <td>70.0</td>
+      <td>NaN</td>
+      <td>66.0</td>
+      <td>47.0</td>
+    </tr>
+    <tr>
+      <th>28</th>
+      <td>2020-1023</td>
+      <td>72.0</td>
+      <td>NaN</td>
+      <td>67.0</td>
+      <td>47.9</td>
+    </tr>
+    <tr>
+      <th>31</th>
+      <td>2020-1026</td>
+      <td>74.0</td>
+      <td>NaN</td>
+      <td>75.0</td>
+      <td>52.3</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Here’s a better approach that, while a bit more complex, successfully adjusts for missing values. First, we’ll create a weight column for each season that displays either our predetermined weight (if a student has a valid score for that season) or 0 (if the student does not). We’ll also create a column that adds all of these weights together.</p>
+<p>The following code applies <code class="docutils literal notranslate"><span class="pre">np.where()</span></code> to determine whether or not to assign a given student/season pair a weight of 0. If a score is missing for a given season, that season will receive a weight entry of 0; otherwise, it will be assigned the usual weight. (See <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.where.html">https://numpy.org/doc/stable/reference/generated/numpy.where.html</a> for more information about np.where().)</p>
+<p><code class="docutils literal notranslate"><span class="pre">np.where()</span></code> is a great option for filling in DataFrame fields based on two specific conditions (e.g. is survey data for a season <em>missing</em> or <em>present</em>?). However, if you ever need to handle three or more conditions, consider using <code class="docutils literal notranslate"><span class="pre">np.select()</span></code> instead. (We’ll cover this function later within PFN.)</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">season_weight_dict</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Fall&#39;</span><span class="p">:</span><span class="mf">0.2</span><span class="p">,</span><span class="s1">&#39;Winter&#39;</span><span class="p">:</span><span class="mf">0.3</span><span class="p">,</span><span class="s1">&#39;Spring&#39;</span><span class="p">:</span><span class="mf">0.5</span><span class="p">}</span>
+<span class="c1"># Using a for loop to create these columns makes our code a bit more </span>
+<span class="c1"># concise.</span>
+<span class="k">for</span> <span class="n">season</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;Fall&#39;</span><span class="p">,</span> <span class="s1">&#39;Winter&#39;</span><span class="p">,</span> <span class="s1">&#39;Spring&#39;</span><span class="p">]:</span>
+    <span class="n">df_student_results_wide</span><span class="p">[</span><span class="n">season</span><span class="o">+</span><span class="s1">&#39;_weight&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span>
+        <span class="n">df_student_results_wide</span><span class="p">[</span><span class="n">season</span><span class="p">]</span><span class="o">.</span><span class="n">isna</span><span class="p">(),</span> <span class="mi">0</span><span class="p">,</span> 
+        <span class="n">season_weight_dict</span><span class="p">[</span><span class="n">season</span><span class="p">])</span>    
+
+<span class="c1"># adding axis=1 as an argument to df.sum() ensures that the calculations</span>
+<span class="c1"># will be made row-wise rather than column-wise.</span>
+<span class="n">df_student_results_wide</span><span class="p">[</span><span class="s1">&#39;weight_sum&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_student_results_wide</span><span class="p">[[</span>
+    <span class="s1">&#39;Fall_weight&#39;</span><span class="p">,</span> <span class="s1">&#39;Winter_weight&#39;</span><span class="p">,</span> <span class="s1">&#39;Spring_weight&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">df_student_results_wide</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>starting_year</th>
+      <th>student_id</th>
+      <th>Fall</th>
+      <th>...</th>
+      <th>Winter_weight</th>
+      <th>Spring_weight</th>
+      <th>weight_sum</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2023</td>
+      <td>2020-1</td>
+      <td>88.0</td>
+      <td>...</td>
+      <td>0.3</td>
+      <td>0.5</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2023</td>
+      <td>2020-10</td>
+      <td>69.0</td>
+      <td>...</td>
+      <td>0.3</td>
+      <td>0.5</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2023</td>
+      <td>2020-100</td>
+      <td>68.0</td>
+      <td>...</td>
+      <td>0.3</td>
+      <td>0.5</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2023</td>
+      <td>2020-1000</td>
+      <td>58.0</td>
+      <td>...</td>
+      <td>0.3</td>
+      <td>0.5</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2023</td>
+      <td>2020-1001</td>
+      <td>88.0</td>
+      <td>...</td>
+      <td>0.3</td>
+      <td>0.5</td>
+      <td>1.0</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 10 columns</p>
+</div></div></div>
+</div>
+<p>We can now accurately calculate average scores for all students by (1) multiplying each score by its corresponding weight value (which will be 0 in the case of missing scores); (2) adding these products together; and then (3) dividing the sum by the <code class="docutils literal notranslate"><span class="pre">weight_sum</span></code> column. If a student has missing values for a given season, his or her <code class="docutils literal notranslate"><span class="pre">weight_sum</span></code> value will also be lower, thus compensating for his/her lower sum of scores.</p>
+<p>(Note that we’ll still fill in missing scores with 0 in order to prevent final NaN outputs.)</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_student_results_wide</span><span class="p">[</span><span class="s1">&#39;weighted_avg_score&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">df_student_results_wide</span><span class="p">[</span><span class="s1">&#39;Fall&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> 
+    <span class="o">*</span> <span class="n">df_student_results_wide</span><span class="p">[</span><span class="s1">&#39;Fall_weight&#39;</span><span class="p">]</span>
+    <span class="o">+</span> <span class="n">df_student_results_wide</span><span class="p">[</span><span class="s1">&#39;Winter&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> 
+    <span class="o">*</span> <span class="n">df_student_results_wide</span><span class="p">[</span><span class="s1">&#39;Winter_weight&#39;</span><span class="p">]</span>
+    <span class="o">+</span> <span class="n">df_student_results_wide</span><span class="p">[</span><span class="s1">&#39;Spring&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="o">*</span> <span class="n">df_student_results_wide</span><span class="p">[</span><span class="s1">&#39;Spring_weight&#39;</span><span class="p">])</span> <span class="o">/</span> <span class="p">(</span>
+        <span class="n">df_student_results_wide</span><span class="p">[</span><span class="s1">&#39;weight_sum&#39;</span><span class="p">])</span>
+
+<span class="n">df_student_results_wide</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;Winter.isna()&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>starting_year</th>
+      <th>student_id</th>
+      <th>Fall</th>
+      <th>...</th>
+      <th>Winter_weight</th>
+      <th>Spring_weight</th>
+      <th>weight_sum</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>10</th>
+      <td>2023</td>
+      <td>2020-1007</td>
+      <td>93.0</td>
+      <td>...</td>
+      <td>0.0</td>
+      <td>0.5</td>
+      <td>0.7</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>2023</td>
+      <td>2020-1014</td>
+      <td>66.0</td>
+      <td>...</td>
+      <td>0.0</td>
+      <td>0.5</td>
+      <td>0.7</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>2023</td>
+      <td>2020-1017</td>
+      <td>70.0</td>
+      <td>...</td>
+      <td>0.0</td>
+      <td>0.5</td>
+      <td>0.7</td>
+    </tr>
+    <tr>
+      <th>28</th>
+      <td>2023</td>
+      <td>2020-1023</td>
+      <td>72.0</td>
+      <td>...</td>
+      <td>0.0</td>
+      <td>0.5</td>
+      <td>0.7</td>
+    </tr>
+    <tr>
+      <th>31</th>
+      <td>2023</td>
+      <td>2020-1026</td>
+      <td>74.0</td>
+      <td>...</td>
+      <td>0.0</td>
+      <td>0.5</td>
+      <td>0.7</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 10 columns</p>
+</div></div></div>
+</div>
+<p>The following output confirms that students’ weighted average scores are no longer being dragged down by missing winter results:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_student_results_wide</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;Winter.isna()&quot;</span><span class="p">)[</span>
+<span class="n">avg_score_cols_to_display</span><span class="p">]</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>student_id</th>
+      <th>Fall</th>
+      <th>Winter</th>
+      <th>Spring</th>
+      <th>weighted_avg_score</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>10</th>
+      <td>2020-1007</td>
+      <td>93.0</td>
+      <td>NaN</td>
+      <td>96.0</td>
+      <td>95.142857</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>2020-1014</td>
+      <td>66.0</td>
+      <td>NaN</td>
+      <td>66.0</td>
+      <td>66.000000</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>2020-1017</td>
+      <td>70.0</td>
+      <td>NaN</td>
+      <td>66.0</td>
+      <td>67.142857</td>
+    </tr>
+    <tr>
+      <th>28</th>
+      <td>2020-1023</td>
+      <td>72.0</td>
+      <td>NaN</td>
+      <td>67.0</td>
+      <td>68.428571</td>
+    </tr>
+    <tr>
+      <th>31</th>
+      <td>2020-1026</td>
+      <td>74.0</td>
+      <td>NaN</td>
+      <td>75.0</td>
+      <td>74.714286</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>A few additional notes:</p>
+<ol class="arabic simple">
+<li><p>This approach would also successfully compensate for students with missing fall or spring scores. It would only fail to work for students who had no survey results at all–but such students should be excluded from these calculations to begin with.</p></li>
+<li><p>Note that, for students with missing winter weights, this code uses a fall score weight of 0.2/0.7 (28.6%) and a spring score weight of 0.5/0.7 (71.4%). Thus, fall and spring results counted more for these students than they did for students with valid winter results.</p></li>
+</ol>
+<p>Now that we’ve calculated weighted average results for all students, we can finally answer the administrators’ original question: what percentage of students had a weigted average survey score below 60?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_student_results_wide</span><span class="p">[</span><span class="s1">&#39;weighted_avg_below_60&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span>
+    <span class="n">df_student_results_wide</span><span class="p">[</span><span class="s1">&#39;weighted_avg_score&#39;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+<span class="c1"># Calling value_counts(normalize=True), then multiplying the results </span>
+<span class="c1"># by 100, allows us to calculate the percentage of students with weighted </span>
+<span class="c1"># averages below 60.</span>
+<span class="mi">100</span><span class="o">*</span><span class="n">df_student_results_wide</span><span class="p">[</span><span class="s1">&#39;weighted_avg_below_60&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">(</span>
+    <span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>weighted_avg_below_60
+0    81.292725
+1    18.707275
+Name: proportion, dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<p>It turns out that around 18.7% of students had a weighted average score below 60.</p>
+</section>
+<section id="the-danger-of-relying-on-column-index-positions-when-analyzing-datasets">
+<h2>The danger of relying on column index positions when analyzing datasets<a class="headerlink" href="#the-danger-of-relying-on-column-index-positions-when-analyzing-datasets" title="Link to this heading">#</a></h2>
+<p>There are several different ways to specify the DataFrame columns on which you would like to perform operations. So far, I have been selecting columns using their names (e.g. <code class="docutils literal notranslate"><span class="pre">df_student_results_wide['Spring']</span></code>). However, it’s also possible to select them via their index positions. In this section, I’ll explain why this is often <em>not</em> a good idea.</p>
+<p><code class="docutils literal notranslate"><span class="pre">df_valid_survey_results</span></code>, a copy of our student-level results table that excludes missing winter results, has four columns: ‘student_id’, ‘Fall’, ‘Winter’, and ‘Spring’. These columns’ index positions are 0, 1, 2, and 3, respectively.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_valid_survey_results</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>student_id</th>
+      <th>Fall</th>
+      <th>Winter</th>
+      <th>Spring</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2020-1</td>
+      <td>88.0</td>
+      <td>81.0</td>
+      <td>86.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2020-10</td>
+      <td>69.0</td>
+      <td>63.0</td>
+      <td>73.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2020-100</td>
+      <td>68.0</td>
+      <td>60.0</td>
+      <td>88.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2020-1000</td>
+      <td>58.0</td>
+      <td>55.0</td>
+      <td>65.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2020-1001</td>
+      <td>88.0</td>
+      <td>84.0</td>
+      <td>100.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>If I wanted to create a non-weighted average of students’ winter and spring scores, I <em>could</em> use <code class="docutils literal notranslate"><span class="pre">.iloc[]</span></code> (which allows columns to be selected via these index positions) to retrieve the scores for these two seasons.</p>
+<p>In the following code, <code class="docutils literal notranslate"><span class="pre">.iloc[:,2:4]</span></code> selects all rows for the columns between index positions 2 (inclusive) and 4 (exclusive)–or, in other words, the columns with index positions 2 and 3.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_valid_survey_results</span><span class="p">[</span>
+<span class="s1">&#39;Winter/Spring Avg.&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_valid_survey_results</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span>
+<span class="p">:,</span><span class="mi">2</span><span class="p">:</span><span class="mi">4</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">df_valid_survey_results</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>student_id</th>
+      <th>Fall</th>
+      <th>Winter</th>
+      <th>Spring</th>
+      <th>Winter/Spring Avg.</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2020-1</td>
+      <td>88.0</td>
+      <td>81.0</td>
+      <td>86.0</td>
+      <td>83.5</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2020-10</td>
+      <td>69.0</td>
+      <td>63.0</td>
+      <td>73.0</td>
+      <td>68.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2020-100</td>
+      <td>68.0</td>
+      <td>60.0</td>
+      <td>88.0</td>
+      <td>74.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2020-1000</td>
+      <td>58.0</td>
+      <td>55.0</td>
+      <td>65.0</td>
+      <td>60.0</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>16380</th>
+      <td>2023-996</td>
+      <td>62.0</td>
+      <td>58.0</td>
+      <td>69.0</td>
+      <td>63.5</td>
+    </tr>
+    <tr>
+      <th>16381</th>
+      <td>2023-997</td>
+      <td>47.0</td>
+      <td>42.0</td>
+      <td>42.0</td>
+      <td>42.0</td>
+    </tr>
+    <tr>
+      <th>16382</th>
+      <td>2023-998</td>
+      <td>77.0</td>
+      <td>67.0</td>
+      <td>74.0</td>
+      <td>70.5</td>
+    </tr>
+    <tr>
+      <th>16383</th>
+      <td>2023-999</td>
+      <td>64.0</td>
+      <td>62.0</td>
+      <td>65.0</td>
+      <td>63.5</td>
+    </tr>
+  </tbody>
+</table>
+<p>13926 rows × 5 columns</p>
+</div></div></div>
+</div>
+<p>This code accurately calculates the average of each student’s winter and spring survey scores. What makes it dangerous, though, is that a minor change to the table could end up filling this field with incorrect data.</p>
+<p>For instance, suppose that a new column gets added to the left of our survey scores in the future:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_valid_survey_results</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;University&#39;</span><span class="p">,</span> <span class="s1">&#39;NVCU&#39;</span><span class="p">)</span>
+<span class="n">df_valid_survey_results</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>student_id</th>
+      <th>University</th>
+      <th>Fall</th>
+      <th>Winter</th>
+      <th>Spring</th>
+      <th>Winter/Spring Avg.</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2020-1</td>
+      <td>NVCU</td>
+      <td>88.0</td>
+      <td>81.0</td>
+      <td>86.0</td>
+      <td>83.5</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2020-10</td>
+      <td>NVCU</td>
+      <td>69.0</td>
+      <td>63.0</td>
+      <td>73.0</td>
+      <td>68.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2020-100</td>
+      <td>NVCU</td>
+      <td>68.0</td>
+      <td>60.0</td>
+      <td>88.0</td>
+      <td>74.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2020-1000</td>
+      <td>NVCU</td>
+      <td>58.0</td>
+      <td>55.0</td>
+      <td>65.0</td>
+      <td>60.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2020-1001</td>
+      <td>NVCU</td>
+      <td>88.0</td>
+      <td>84.0</td>
+      <td>100.0</td>
+      <td>92.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>If we call the same code on this modified column, our ‘Winter/Spring Avg.’ column will now show the average of <em>fall</em> and winter scores, since the ‘University’ column has changed which columns correspond to the index positions of 2 and 3.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_valid_survey_results</span><span class="p">[</span>
+<span class="s1">&#39;Winter/Spring Avg.&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_valid_survey_results</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span>
+<span class="p">:,</span><span class="mi">2</span><span class="p">:</span><span class="mi">4</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">df_valid_survey_results</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>student_id</th>
+      <th>University</th>
+      <th>Fall</th>
+      <th>Winter</th>
+      <th>Spring</th>
+      <th>Winter/Spring Avg.</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2020-1</td>
+      <td>NVCU</td>
+      <td>88.0</td>
+      <td>81.0</td>
+      <td>86.0</td>
+      <td>84.5</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2020-10</td>
+      <td>NVCU</td>
+      <td>69.0</td>
+      <td>63.0</td>
+      <td>73.0</td>
+      <td>66.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2020-100</td>
+      <td>NVCU</td>
+      <td>68.0</td>
+      <td>60.0</td>
+      <td>88.0</td>
+      <td>64.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2020-1000</td>
+      <td>NVCU</td>
+      <td>58.0</td>
+      <td>55.0</td>
+      <td>65.0</td>
+      <td>56.5</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2020-1001</td>
+      <td>NVCU</td>
+      <td>88.0</td>
+      <td>84.0</td>
+      <td>100.0</td>
+      <td>86.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Thus, a much safer approach is to explicitly name the columns that you wish to incorporate into a calculation. The following code will work fine regardless of the index positions of the ‘Winter’ and ‘Spring’ columns.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_valid_survey_results</span><span class="p">[</span>
+<span class="s1">&#39;Winter/Spring Avg.&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_valid_survey_results</span><span class="p">[</span>
+<span class="p">[</span><span class="s1">&#39;Winter&#39;</span><span class="p">,</span> <span class="s1">&#39;Spring&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">df_valid_survey_results</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>student_id</th>
+      <th>University</th>
+      <th>Fall</th>
+      <th>Winter</th>
+      <th>Spring</th>
+      <th>Winter/Spring Avg.</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2020-1</td>
+      <td>NVCU</td>
+      <td>88.0</td>
+      <td>81.0</td>
+      <td>86.0</td>
+      <td>83.5</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2020-10</td>
+      <td>NVCU</td>
+      <td>69.0</td>
+      <td>63.0</td>
+      <td>73.0</td>
+      <td>68.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2020-100</td>
+      <td>NVCU</td>
+      <td>68.0</td>
+      <td>60.0</td>
+      <td>88.0</td>
+      <td>74.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2020-1000</td>
+      <td>NVCU</td>
+      <td>58.0</td>
+      <td>55.0</td>
+      <td>65.0</td>
+      <td>60.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2020-1001</td>
+      <td>NVCU</td>
+      <td>88.0</td>
+      <td>84.0</td>
+      <td>100.0</td>
+      <td>92.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Note that the code that explicitly states the name of each column is also more intuitive, as it eliminates the need to cross-reference which column corresponds to each index position. And the more intuitive you can keep your code, particularly within complex projects, the better.</p>
+</section>
+<section id="why-column-wise-operations-should-be-preferred-over-for-loops">
+<h2>Why column-wise operations should be preferred over for loops<a class="headerlink" href="#why-column-wise-operations-should-be-preferred-over-for-loops" title="Link to this heading">#</a></h2>
+<p>If you’re a newcomer to Pandas, you may initially want to try using for loops to update values within DataFrames (especially if you’ve been used to using such loops within languages like C or C++). However, I recommend that you use <em>column-wise operations</em> (e.g. code that will apply to all rows within a column) rather than loops whenever possible, simply because the former are much, much faster than the latter.</p>
+<p>Let’s say that we wanted to create an unweighted average of our fall, winter, and spring scores within <code class="docutils literal notranslate"><span class="pre">df_valid_survey_results</span></code>. One option would be to initialize an empty ‘Average’ column, then fill it in by looping through all rows in our dataset.</p>
+<p>Creating our ‘Average’ column:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Removing columns that we no longer need:</span>
+<span class="n">df_valid_survey_results</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span>
+    <span class="p">[</span><span class="s1">&#39;University&#39;</span><span class="p">,</span> <span class="s1">&#39;Winter/Spring Avg.&#39;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">df_valid_survey_results</span><span class="p">[</span><span class="s1">&#39;Average&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+<span class="n">df_valid_survey_results</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>student_id</th>
+      <th>Fall</th>
+      <th>Winter</th>
+      <th>Spring</th>
+      <th>Average</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2020-1</td>
+      <td>88.0</td>
+      <td>81.0</td>
+      <td>86.0</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2020-10</td>
+      <td>69.0</td>
+      <td>63.0</td>
+      <td>73.0</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2020-100</td>
+      <td>68.0</td>
+      <td>60.0</td>
+      <td>88.0</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2020-1000</td>
+      <td>58.0</td>
+      <td>55.0</td>
+      <td>65.0</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2020-1001</td>
+      <td>88.0</td>
+      <td>84.0</td>
+      <td>100.0</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Determining the index position of our ‘Average’ column:</p>
+<p>(If we tried to use this column’s name within our for loop rather than its index position, the averages wouldn’t actually get added in, and we’d end up with a <code class="docutils literal notranslate"><span class="pre">SettingWithCopyWarning</span></code>.)</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">avg_index</span> <span class="o">=</span> <span class="n">df_valid_survey_results</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">get_loc</span><span class="p">(</span><span class="s1">&#39;Average&#39;</span><span class="p">)</span>
+<span class="n">avg_index</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>4
+</pre></div>
+</div>
+</div>
+</div>
+<p>Calculating this average for each row:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">df_valid_survey_results</span><span class="p">)):</span>
+    <span class="n">df_valid_survey_results</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">avg_index</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="c1"># Note: the following alternative to the previous line would not work,</span>
+    <span class="c1"># as noted in the documentation above:</span>
+    <span class="c1"># df_valid_survey_results.iloc[i][&#39;Average&#39;] = (  # Incorrect!</span>
+        <span class="n">df_valid_survey_results</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s1">&#39;Fall&#39;</span><span class="p">]</span> <span class="o">+</span> 
+        <span class="n">df_valid_survey_results</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s1">&#39;Winter&#39;</span><span class="p">]</span> <span class="o">+</span> 
+        <span class="n">df_valid_survey_results</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s1">&#39;Spring&#39;</span><span class="p">])</span> <span class="o">/</span> <span class="mi">3</span>
+<span class="n">df_valid_survey_results</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>student_id</th>
+      <th>Fall</th>
+      <th>Winter</th>
+      <th>Spring</th>
+      <th>Average</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2020-1</td>
+      <td>88.0</td>
+      <td>81.0</td>
+      <td>86.0</td>
+      <td>85.000000</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2020-10</td>
+      <td>69.0</td>
+      <td>63.0</td>
+      <td>73.0</td>
+      <td>68.333333</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2020-100</td>
+      <td>68.0</td>
+      <td>60.0</td>
+      <td>88.0</td>
+      <td>72.000000</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2020-1000</td>
+      <td>58.0</td>
+      <td>55.0</td>
+      <td>65.0</td>
+      <td>59.333333</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2020-1001</td>
+      <td>88.0</td>
+      <td>84.0</td>
+      <td>100.0</td>
+      <td>90.666667</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>I ran the previous cell 5 times on my computer and found that it took an average of 1.72 seconds to execute. There are 13,926 rows within <code class="docutils literal notranslate"><span class="pre">df_valid_survey_results</span></code>, so even on a fast laptop, it will take Python a decent while to process each one.</p>
+<p>The following cell, in contrast, uses a column-wise operation to compute this average:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_valid_survey_results</span><span class="p">[</span><span class="s1">&#39;Average&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">df_valid_survey_results</span><span class="p">[</span><span class="s1">&#39;Fall&#39;</span><span class="p">]</span> <span class="o">+</span> 
+    <span class="n">df_valid_survey_results</span><span class="p">[</span><span class="s1">&#39;Winter&#39;</span><span class="p">]</span> <span class="o">+</span> 
+    <span class="n">df_valid_survey_results</span><span class="p">[</span><span class="s1">&#39;Spring&#39;</span><span class="p">])</span> <span class="o">/</span> <span class="mi">3</span>
+<span class="n">df_valid_survey_results</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>student_id</th>
+      <th>Fall</th>
+      <th>Winter</th>
+      <th>Spring</th>
+      <th>Average</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2020-1</td>
+      <td>88.0</td>
+      <td>81.0</td>
+      <td>86.0</td>
+      <td>85.000000</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2020-10</td>
+      <td>69.0</td>
+      <td>63.0</td>
+      <td>73.0</td>
+      <td>68.333333</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2020-100</td>
+      <td>68.0</td>
+      <td>60.0</td>
+      <td>88.0</td>
+      <td>72.000000</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2020-1000</td>
+      <td>58.0</td>
+      <td>55.0</td>
+      <td>65.0</td>
+      <td>59.333333</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2020-1001</td>
+      <td>88.0</td>
+      <td>84.0</td>
+      <td>100.0</td>
+      <td>90.666667</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>I ran this cell 5 times as well and found that it needed only 5.4 milliseconds (on average) to execute. In other words, it was over <em>300 times</em> faster than the for loop-based approach!</p>
+<p>The difference between 1.72 seconds and 0.006 seconds may not seem like much in nominal terms. However, when you’re dealing with a dataset that contains 13 <em>million</em> rows rather than 13 <em>thousand</em>, or a script that performs dozens of these sorts of calculations, the performance advantage of column-wise calculations will become much clearer.</p>
+<p>There are many ways to execute even complex calculations in column-wise form; tools like <code class="docutils literal notranslate"><span class="pre">np.where()</span></code>, <code class="docutils literal notranslate"><span class="pre">np.select()</span></code>, <code class="docutils literal notranslate"><span class="pre">Series.map()</span></code>, and <code class="docutils literal notranslate"><span class="pre">Series.apply()</span></code> can help you do so.</p>
+</section>
 <section id="microdata-pre-baked-data-and-the-average-of-averages-problem">
 <h2>Microdata, pre-baked data, and the ‘average of averages’ problem<a class="headerlink" href="#microdata-pre-baked-data-and-the-average-of-averages-problem" title="Link to this heading">#</a></h2>
-<p>df_transactions, a table of dining hall transactions shown below, is an excellent candidate for creating a diverse set of pivot tables and charts because each transaction has its own row. (In other words, the table contains <em>microdata</em>; for more on this subject, reference <a class="reference external" href="https://en.wikipedia.org/wiki/Microdata_(statistics).">https://en.wikipedia.org/wiki/Microdata_(statistics).</a>) This allows you to calculate statistics for an arbitrary set of comparison variables by applying an aggregate function to all rows contained within those groups in the table.</p>
+<p><code class="docutils literal notranslate"><span class="pre">df_transactions</span></code>, a table of NVCU dining hall transactions that the following cell loads in, is an excellent candidate for creating a diverse set of pivot tables and charts because each transaction has its own row. (In other words, the table contains <em>microdata</em>; for more on this subject, reference <a class="reference external" href="https://en.wikipedia.org/wiki/Microdata_(statistics)">https://en.wikipedia.org/wiki/Microdata_(statistics)</a> .) Microdata-based tables allow you to easily calculate statistics for your choice of comparison variables by (1) grouping rows into unique combinations of these variables, then (2) applying one or more statistical functions (<code class="docutils literal notranslate"><span class="pre">mean</span></code>, <code class="docutils literal notranslate"><span class="pre">median</span></code>, etc.) to each group. (As you’ve already seen, pivot tables make this process very simple.)</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_transactions</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_sql</span><span class="p">(</span>
-    <span class="s1">&#39;select * from dining_transactions&#39;</span><span class="p">,</span> <span class="n">con</span> <span class="o">=</span> <span class="n">e</span><span class="p">)</span>
+    <span class="s1">&#39;select * from dining_transactions&#39;</span><span class="p">,</span> <span class="n">con</span><span class="o">=</span><span class="n">e</span><span class="p">)</span>
 <span class="n">df_transactions</span><span class="p">[</span><span class="s1">&#39;transactions&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
 <span class="n">df_transactions</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
 </pre></div>
@@ -503,13 +1912,13 @@
 </div>
 </div>
 </div>
-<p>If you instead wanted to find the average amount spent by <em>weekday and level</em>, you could easily do so via pandas’ <code class="docutils literal notranslate"><span class="pre">pivot_table()</span></code> function:</p>
+<p>If you instead wanted to find the average amount spent by <em>weekday and level</em>, you could easily do so via Pandas’ <code class="docutils literal notranslate"><span class="pre">pivot_table()</span></code> function:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_transactions</span><span class="o">.</span><span class="n">pivot_table</span><span class="p">(</span>
-    <span class="n">index</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;weekday&#39;</span><span class="p">,</span> <span class="s1">&#39;level&#39;</span><span class="p">],</span> <span class="n">values</span> <span class="o">=</span> <span class="s1">&#39;amount&#39;</span><span class="p">,</span> 
-    <span class="n">aggfunc</span> <span class="o">=</span> <span class="s1">&#39;mean&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span>
-    <span class="n">by</span> <span class="o">=</span> <span class="s1">&#39;amount&#39;</span><span class="p">,</span> <span class="n">ascending</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
+    <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;weekday&#39;</span><span class="p">,</span> <span class="s1">&#39;level&#39;</span><span class="p">],</span> <span class="n">values</span><span class="o">=</span><span class="s1">&#39;amount&#39;</span><span class="p">,</span> 
+    <span class="n">aggfunc</span><span class="o">=</span><span class="s1">&#39;mean&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span>
+    <span class="n">by</span><span class="o">=</span><span class="s1">&#39;amount&#39;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -563,48 +1972,23 @@
       <td>21.268938</td>
     </tr>
     <tr>
-      <th>...</th>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-    </tr>
-    <tr>
-      <th>24</th>
-      <td>We</td>
-      <td>Fr</td>
-      <td>9.916478</td>
-    </tr>
-    <tr>
-      <th>20</th>
-      <td>Tu</td>
-      <td>Fr</td>
-      <td>9.835650</td>
-    </tr>
-    <tr>
-      <th>12</th>
-      <td>Su</td>
-      <td>Fr</td>
-      <td>9.812551</td>
-    </tr>
-    <tr>
-      <th>8</th>
-      <td>Sa</td>
-      <td>Fr</td>
-      <td>9.467975</td>
+      <th>18</th>
+      <td>Th</td>
+      <td>Se</td>
+      <td>21.072613</td>
     </tr>
   </tbody>
 </table>
-<p>28 rows × 3 columns</p>
 </div></div></div>
 </div>
 <p>However, you may not always have access to this type of data. Instead, you might receive an <em>aggregated</em> dataset in which averages by different groups are <em>pre-baked</em>–e.g. already present in the output. As you’ll soon see, this makes the table much less flexible.</p>
-<p>‘pre-baked’ is not, to my knowledge, a common statistical term, but I find that it works pretty well for describing this type of data. For instance, once you’ve <em>baked</em> apples, wheat, and sugar (or whatever goes into a pie–I’m not a baker!) into a pie, it’s pretty hard to convert that dish into a caramelized apple. Similarly, as the following examples will show, once you’ve ‘baked’ a list of transactions into separate sets of averages by level and by weekday, it will be impossible to use that data to calculate total spending amounts by level <em>and</em> weekday–as we no longer know how each level value relates to each weekday value.</p>
+<p>‘pre-baked’ is not, to my knowledge, a common statistical term, but I find that it works pretty well for describing this type of data. For instance, once you’ve <em>baked</em> a pie using apples, wheat, and sugar (or whatever goes into a pie–I’m not a baker!), it’s pretty hard to convert that dish into a caramelized apple. Similarly, as the following examples will show, once you’ve ‘baked’ a list of transactions into separate sets of averages by level and by weekday, it will be impossible to use that data to calculate total spending amounts by level <em>and</em> weekday–as we no longer know how each level value relates to each weekday value.</p>
 <p>To illustrate this issues caused by pre-baked datasets, let’s generate two DataFrames, the first of which will show average transaction amounts by level, and the second of which will show average amounts by weekday.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_average_spending_by_level</span> <span class="o">=</span> <span class="n">df_transactions</span><span class="o">.</span><span class="n">pivot_table</span><span class="p">(</span>
-    <span class="n">index</span> <span class="o">=</span> <span class="s1">&#39;level&#39;</span><span class="p">,</span> <span class="n">values</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s1">&#39;amount&#39;</span><span class="p">,</span> <span class="s1">&#39;transactions&#39;</span><span class="p">],</span> <span class="n">aggfunc</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="n">index</span><span class="o">=</span><span class="s1">&#39;level&#39;</span><span class="p">,</span> <span class="n">values</span><span class="o">=</span><span class="p">[</span>
+    <span class="s1">&#39;amount&#39;</span><span class="p">,</span> <span class="s1">&#39;transactions&#39;</span><span class="p">],</span> <span class="n">aggfunc</span><span class="o">=</span><span class="p">{</span>
     <span class="s1">&#39;amount&#39;</span><span class="p">:</span><span class="s1">&#39;mean&#39;</span><span class="p">,</span> <span class="s1">&#39;transactions&#39;</span><span class="p">:</span><span class="s1">&#39;count&#39;</span><span class="p">})</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
 <span class="n">df_average_spending_by_level</span>
 </pre></div>
@@ -666,8 +2050,8 @@
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_average_spending_by_weekday</span> <span class="o">=</span> <span class="n">df_transactions</span><span class="o">.</span><span class="n">pivot_table</span><span class="p">(</span>
-    <span class="n">index</span> <span class="o">=</span> <span class="s1">&#39;weekday&#39;</span><span class="p">,</span> <span class="n">values</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s1">&#39;amount&#39;</span><span class="p">,</span> <span class="s1">&#39;transactions&#39;</span><span class="p">],</span> <span class="n">aggfunc</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="n">index</span><span class="o">=</span><span class="s1">&#39;weekday&#39;</span><span class="p">,</span> <span class="n">values</span><span class="o">=</span><span class="p">[</span>
+    <span class="s1">&#39;amount&#39;</span><span class="p">,</span> <span class="s1">&#39;transactions&#39;</span><span class="p">],</span> <span class="n">aggfunc</span><span class="o">=</span><span class="p">{</span>
     <span class="s1">&#39;amount&#39;</span><span class="p">:</span><span class="s1">&#39;mean&#39;</span><span class="p">,</span> <span class="s1">&#39;transactions&#39;</span><span class="p">:</span><span class="s1">&#39;count&#39;</span><span class="p">})</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
 <span class="n">df_average_spending_by_weekday</span>
 </pre></div>
@@ -744,11 +2128,11 @@
 </table>
 </div></div></div>
 </div>
-<p>We can see that lower levels (e.g. freshmen and sophomores) tend to spend more per dining hall visit than upper levels; in addition, we can see that spending is relatively constant across weekdays. However, because these tables are pre-baked, we don’t have any way of calculating average spending by level <em>and</em> weekday like we could with df_transactions.</p>
-<p>In addition, let’s say that we wanted to calculate average dining hall spending using df_average_spending_by_level. A naive approach would be to simply calculate the average of each row:</p>
+<p>We can see that lower levels (e.g. freshmen and sophomores) tend to spend less per dining hall visit than upper levels; in addition, we can see that spending doesn’t vary too much by day of the week. However, because these tables are pre-baked, we don’t have any way of calculating average spending by level <em>and</em> weekday like we could with df_transactions.</p>
+<p>In addition, let’s say that we wanted to calculate average dining hall spending for all students using <code class="docutils literal notranslate"><span class="pre">df_average_spending_by_level</span></code>. A naive approach would be to simply calculate the average of each row:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># The following approach is incorrect!</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># The following approach is incorrect:</span>
 
 <span class="n">df_average_spending_by_level</span><span class="p">[</span><span class="s1">&#39;amount&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
 </pre></div>
@@ -760,7 +2144,7 @@
 </div>
 </div>
 </div>
-<p>This average is way off the actual average, which we calculated earlier in this code using df_transactions. Why is this the case? As df_average_spending_by_level shows, seniors and juniors spend much more than freshmen and sophomores, yet they also use the dining hall less (as shown by their smaller transaction counts). As a result, if we simply average the mean transaction amounts for each level, we’ll overrepresent upperclassmen and thus skew our average transaction amount upward.</p>
+<p>This average is way off the actual average, which we calculated earlier in this code using <code class="docutils literal notranslate"><span class="pre">df_transactions</span></code>. Why is this the case? As <code class="docutils literal notranslate"><span class="pre">df_average_spending_by_level</span></code> shows, seniors and juniors spend much more than freshmen and sophomores, yet they also use the dining hall less (as shown by their smaller transaction counts). As a result, if we simply average the mean transaction amounts for each level, we’ll overrepresent upperclassmen and thus skew our average transaction amount upward.</p>
 <p>In order to avoid this ‘average of averages’ issue, which arises whenever differences in group sizes skew an average that’s in turn based on averages for those groups, we’ll need to create a <em>weighted</em> average. We can do so by multiplying each row’s ‘amount’ column by its ‘transaction’ column; adding these products together; and then dividing them by the ‘transaction’ column.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -868,8 +2252,8 @@
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">weighted_mean</span><span class="p">(</span><span class="n">df_average_spending_by_weekday</span><span class="p">,</span> 
-                 <span class="n">metric_col</span> <span class="o">=</span> <span class="s1">&#39;amount&#39;</span><span class="p">,</span>
-                 <span class="n">weight_col</span> <span class="o">=</span> <span class="s1">&#39;transactions&#39;</span><span class="p">)</span>
+                 <span class="n">metric_col</span><span class="o">=</span><span class="s1">&#39;amount&#39;</span><span class="p">,</span>
+                 <span class="n">weight_col</span><span class="o">=</span><span class="s1">&#39;transactions&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -879,8 +2263,8 @@
 </div>
 </div>
 </div>
-<p>This average matches the weighted average that we calculated within df_average_spending_by_level.</p>
-<p>Incidentally, because average transaction amounts are relatively constant across weekdays, simply averaging all ‘amount’ values within df_average_spending_by_weekday will get us very close to the actual average (despite the considerable variation in transaction counts by weekday). These kinds of ‘believable’, yet incorrect values are particularly insidious: they may go unnoticed for quite a while, whereas an obviously incorrect value (e.g. a calculated mean transaction of -5, or 83,000) would get caught right away.</p>
+<p>This average matches the weighted average that we calculated within <code class="docutils literal notranslate"><span class="pre">df_average_spending_by_level</span></code>.</p>
+<p>Incidentally, because average transaction amounts are relatively constant across weekdays, simply averaging all ‘amount’ values within <code class="docutils literal notranslate"><span class="pre">df_average_spending_by_weekday</span></code> will get us very close to the actual average (despite the considerable variation in transaction counts by weekday). These kinds of ‘believable’, yet incorrect values are particularly insidious: they may go unnoticed for quite a while, whereas an obviously incorrect value (e.g. an average transaction amount of -5 or 83,000) would get caught right away.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_average_spending_by_weekday</span><span class="p">[</span><span class="s1">&#39;amount&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
@@ -895,13 +2279,16 @@
 </div>
 <p>We were able to calculate correct averages within these pre-baked tables because we also knew the number of transactions within each row. In the real world, though, such sample size information may not be available.</p>
 <p>From a data analysis perspective, it would be ideal to have all of your source data in microdata (rather than pre-baked) form. However, the microdata approach has its own drawbacks.</p>
-<p>First, data privacy needs may preclude the issuance of microdata. Imagine, for instance, that NVCU released a dataset that contained individual course grades for each student along with those students’ ages and majors. If you happened to be the only 18-year-old music major who took a course, anyone with that knowledge could find out how you performed in the class.</p>
-<p>A more private approach, in this case, would be to release separate ‘pre-baked’ tables that showed average grades by age and by major. (Even with this strategy, if a given pre-baked average was based on only a few students, it might be best to remove that row’s data so as to protect those students’ privacy.)</p>
-<p>Second, microdata can take up much more storage size than pre-baked data. To illustrate this, let’s compare the amount of memory, in kilobytes, used by df_transactions (a microdata-based table) with that used by our two pre-baked tables:</p>
+<p>First, data privacy needs may preclude the issuance of microdata. Imagine, for instance, that NVCU released a dataset that contained individual course grades for each student along with those students’ majors. If you happened to be the only music major who took a C++ course, anyone with that knowledge could find out how you performed in the class.</p>
+<p>A more private approach, in this case, would be to release separate ‘pre-baked’ tables that showed averages for courses and by major (but not averages for each course/major pair). (Even with this strategy, if a given pre-baked average was based on only a few students, it might be best to remove that row’s data so as to protect those students’ privacy.)</p>
+<p>Second, microdata can take up much more storage size than pre-baked data. To illustrate this, let’s compare the amount of memory, in kilobytes, used by <code class="docutils literal notranslate"><span class="pre">df_transactions</span></code> (a microdata-based table) with that used by our two pre-baked tables:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">microdata_kb</span> <span class="o">=</span> <span class="n">df_transactions</span><span class="o">.</span><span class="n">memory_usage</span><span class="p">(</span>
     <span class="n">index</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">deep</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">/</span> <span class="mi">1000</span>
+<span class="c1"># For more on df.memory_usage(), see</span>
+<span class="c1"># https://pandas.pydata.org/pandas-docs/stable/reference/api/</span>
+<span class="c1"># pandas.DataFrame.memory_usage.html</span>
 <span class="n">microdata_kb</span>
 </pre></div>
 </div>
@@ -940,15 +2327,23 @@
 </div>
 </div>
 </div>
-<p>The microdata table takes up over 2,700 times more memory than our two pre-baked tables! Therefore, it’s understandable that data providers may prefer to share pre-calculated averages as opposed to original datasets.</p>
+<p>The microdata table takes up over 2,700 times more memory than our two pre-baked tables combined! Therefore, it’s understandable that data providers may prefer to share pre-calculated averages rather than original datasets.</p>
 </section>
 <section id="handling-missing-data-when-creating-pivot-tables">
 <h2>Handling missing data when creating pivot tables<a class="headerlink" href="#handling-missing-data-when-creating-pivot-tables" title="Link to this heading">#</a></h2>
-<p>If a field passed to the <code class="docutils literal notranslate"><span class="pre">index</span></code> or <code class="docutils literal notranslate"><span class="pre">columns</span></code> argument of a pivot_table() call has a missing value, that missing value won’t get incorporated into the final table. This can cause calculation errors if you end up using the pivot table for further analyses. However, mitigating this issue isn’t too difficult.</p>
-<p>To demonstrate this issue, I’ll create a ‘faulty’ version of df_transactions in the following cell that has <code class="docutils literal notranslate"><span class="pre">np.nan</span></code> (e.g. missing) entries for all ‘Wednesday’ weekday values and all ‘So’ level values. As you’ll see, these missing values will cause issues when we (1) create a pivot table of this data, then (2) attempt to use that pivot table to determine the sum of all transactions in our dataset.</p>
+<p>If a field passed to the <code class="docutils literal notranslate"><span class="pre">index</span></code> or <code class="docutils literal notranslate"><span class="pre">columns</span></code> argument of a <code class="docutils literal notranslate"><span class="pre">pivot_table()</span></code> call has a missing value, that missing value won’t get incorporated into the final table. This can cause calculation errors if you end up using the pivot table for further analyses. However, mitigating this issue isn’t too difficult.</p>
+<p>To demonstrate this issue, I’ll create a ‘faulty’ version of <code class="docutils literal notranslate"><span class="pre">df_transactions</span></code> in the following cell that has <code class="docutils literal notranslate"><span class="pre">np.nan</span></code> (i.e.. missing) entries for all ‘Wednesday’ weekday values and all ‘So’ level values. As you’ll see, these missing values will cause issues when we (1) create a pivot table of this data, then (2) attempt to use that pivot table to determine the sum of all transactions in our dataset.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_transactions_faulty</span> <span class="o">=</span> <span class="n">df_transactions</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Passing the &#39;level&#39; and &#39;weekday&#39; fields as the final arguments</span>
+<span class="c1"># within these function calls allows these fields&#39; original</span>
+<span class="c1"># values to get retained should the conditions in the first </span>
+<span class="c1"># arguments not be met. (For instance, in the first np.where()</span>
+<span class="c1"># call, Wednesday values will get replaced with missing entries,</span>
+<span class="c1"># but non-Wednesday values will get replaced with themselves</span>
+<span class="c1"># (thus leaving them unchanged).</span>
+
+<span class="n">df_transactions_faulty</span> <span class="o">=</span> <span class="n">df_transactions</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
 <span class="n">df_transactions_faulty</span><span class="p">[</span><span class="s1">&#39;weekday&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span>
     <span class="n">df_transactions_faulty</span><span class="p">[</span><span class="s1">&#39;weekday&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;We&#39;</span><span class="p">,</span> 
 <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="n">df_transactions_faulty</span><span class="p">[</span><span class="s1">&#39;weekday&#39;</span><span class="p">])</span> 
@@ -956,7 +2351,7 @@
     <span class="n">df_transactions_faulty</span><span class="p">[</span><span class="s1">&#39;level&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;So&#39;</span><span class="p">,</span> 
 <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="n">df_transactions_faulty</span><span class="p">[</span><span class="s1">&#39;level&#39;</span><span class="p">])</span> 
 
-<span class="n">df_transactions_faulty</span>
+<span class="n">df_transactions_faulty</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -1020,56 +2415,23 @@
       <td>1</td>
     </tr>
     <tr>
-      <th>...</th>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-    </tr>
-    <tr>
-      <th>22449</th>
+      <th>4</th>
       <td>2023</td>
       <td>Tu</td>
       <td>Fr</td>
-      <td>5.98</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>22450</th>
-      <td>2023</td>
-      <td>Fr</td>
-      <td>NaN</td>
-      <td>7.39</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>22451</th>
-      <td>2023</td>
-      <td>Sa</td>
-      <td>Fr</td>
-      <td>13.25</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>22452</th>
-      <td>2023</td>
-      <td>Mo</td>
-      <td>Fr</td>
-      <td>1.95</td>
+      <td>11.36</td>
       <td>1</td>
     </tr>
   </tbody>
 </table>
-<p>22453 rows × 5 columns</p>
 </div></div></div>
 </div>
 <p>First, let’s try converting this dataset into a pivot table that shows total transaction amounts by week.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_transactions_faulty_pivot</span> <span class="o">=</span> <span class="n">df_transactions_faulty</span><span class="o">.</span><span class="n">pivot_table</span><span class="p">(</span>
-    <span class="n">index</span> <span class="o">=</span> <span class="s1">&#39;weekday&#39;</span><span class="p">,</span> <span class="n">values</span> <span class="o">=</span> <span class="s1">&#39;amount&#39;</span><span class="p">,</span> 
-    <span class="n">aggfunc</span> <span class="o">=</span> <span class="s1">&#39;sum&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+    <span class="n">index</span><span class="o">=</span><span class="s1">&#39;weekday&#39;</span><span class="p">,</span> <span class="n">values</span><span class="o">=</span><span class="s1">&#39;amount&#39;</span><span class="p">,</span> 
+    <span class="n">aggfunc</span><span class="o">=</span><span class="s1">&#39;sum&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
 <span class="n">df_transactions_faulty_pivot</span>
 </pre></div>
 </div>
@@ -1132,7 +2494,7 @@
 </table>
 </div></div></div>
 </div>
-<p>There’s no sign whatsoever of the ‘Wednesday’ rows. This shouldn’t be too surprising (since we removed those ‘We’ values), but it’s worth highlighting that no ‘Missing’ or ‘N/A’ row gets returned by the pivot table function.</p>
+<p>There’s no sign whatsoever of the ‘Wednesday’ rows. This shouldn’t be too surprising (since we removed those values), but it’s worth highlighting that no ‘Missing’ or ‘N/A’ row gets returned by the pivot table function.</p>
 <p>The complete absence of the ‘Wednesday’ row makes this this missing data issue easier to identify. However, many cases of missing data are far more insidious. For instance, suppose only a handful of ‘Wednesday’ entries were missing. We’d see a ‘Wednesday’ row within the pivot table, but we might not realize that its ‘amount’ sum was incorrect. (For this reason, it’s often a good idea to check for missing entries within any fields that you pass to the <code class="docutils literal notranslate"><span class="pre">index</span></code> or <code class="docutils literal notranslate"><span class="pre">column</span></code> arguments of a <code class="docutils literal notranslate"><span class="pre">pivot_table()</span></code> call.)</p>
 <p>If we try to use this pivot table to calculate the sum of all our transactions, we’ll end up with an incorrect result, since rows with missing ‘weekday’ values won’t factor into the calculation.</p>
 <div class="cell docutils container">
@@ -1147,7 +2509,7 @@
 </div>
 </div>
 </div>
-<p>For reference, here’s the correct sum:</p>
+<p>For reference, here’s the correct sum (that also includes Wednesday transactions):</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_transactions</span><span class="p">[</span><span class="s1">&#39;amount&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
@@ -1163,7 +2525,8 @@
 <p>Thankfully, it’s not too hard to prevent this issue. We simply need to fill in missing values within any fields fields passed to the <code class="docutils literal notranslate"><span class="pre">index</span></code> or <code class="docutils literal notranslate"><span class="pre">columns</span></code> arguments of the <code class="docutils literal notranslate"><span class="pre">pivot_table()</span></code> call.</p>
 <p>I’ll demonstrate two ways to replace these values with a ‘Missing’ string. First, if you don’t wish to permanently modify your original DataFrame, you can call <code class="docutils literal notranslate"><span class="pre">.fillna()</span></code> on the DataFrame being passed to the <code class="docutils literal notranslate"><span class="pre">pivot_table()</span></code> function. This ensures that rows with missing data get incorporated into the pivot table but leaves the original DataFrame untouched.</p>
 <p>The following code implements this approach via a <em>dict comprehension</em>. (For more on this valuable tool, see <a class="reference external" href="https://docs.python.org/3/tutorial/datastructures.html#dictionaries">https://docs.python.org/3/tutorial/datastructures.html#dictionaries</a> .) This approach allows me to use the same list of <code class="docutils literal notranslate"><span class="pre">index</span></code> values that I’ll pass to <code class="docutils literal notranslate"><span class="pre">pivot_table()</span></code> to specify which columns’ missing entries should get filled in. This results in cleaner and less error-prone code, as if I needed to update my index values twice, once for <code class="docutils literal notranslate"><span class="pre">pivot_table()</span></code> and once for <code class="docutils literal notranslate"><span class="pre">fillna()</span></code>, the two lists could easily get out of sync.</p>
-<p>(Another option, by the way, would be to fill missing entries within <em>all</em> columns with a ‘Missing’ string; this could be accomplished via <code class="docutils literal notranslate"><span class="pre">df_transactions_faulty.fillna('Missing')</span></code>. However, if some columns with missing data use float or integer types, this approach could either raise a warning or an error–as you’d be attempting to pass a string into a list of missing values. Thus, I recommend using the more precise solution shown below.</p>
+<p>The pivot table we’ll create in the following cell will show total transactions by both level and weekday, but a similar method would work for tables that show sums for only one of these two groups.</p>
+<p>(Another option, by the way, would be to fill missing entries within <em>all</em> columns with a ‘Missing’ string; this could be accomplished via <code class="docutils literal notranslate"><span class="pre">df_transactions_faulty.fillna('Missing')</span></code>. However, if some columns with missing data use float or integer types, this approach could either raise a warning or an error–as you’d be attempting to pass a string into a list of missing values. Thus, I recommend using the more precise solution shown below.)</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">index</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;level&#39;</span><span class="p">,</span> <span class="s1">&#39;weekday&#39;</span><span class="p">]</span> <span class="c1"># These values will get passed to the</span>
@@ -1177,9 +2540,9 @@
 <span class="c1"># api/pandas.DataFrame.fillna.html )</span>
 <span class="n">df_transactions_corrected_pivot</span> <span class="o">=</span> <span class="n">df_transactions_faulty</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span>
     <span class="p">{</span><span class="n">field</span><span class="p">:</span><span class="s1">&#39;Missing&#39;</span> <span class="k">for</span> <span class="n">field</span> <span class="ow">in</span> <span class="n">index</span><span class="p">})</span><span class="o">.</span><span class="n">pivot_table</span><span class="p">(</span>
-    <span class="n">index</span> <span class="o">=</span> <span class="n">index</span><span class="p">,</span> <span class="n">values</span> <span class="o">=</span> <span class="s1">&#39;amount&#39;</span><span class="p">,</span>
-    <span class="n">aggfunc</span> <span class="o">=</span> <span class="s1">&#39;sum&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
-<span class="n">df_transactions_corrected_pivot</span>
+    <span class="n">index</span><span class="o">=</span><span class="n">index</span><span class="p">,</span> <span class="n">values</span><span class="o">=</span><span class="s1">&#39;amount&#39;</span><span class="p">,</span>
+    <span class="n">aggfunc</span><span class="o">=</span><span class="s1">&#39;sum&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+<span class="n">df_transactions_corrected_pivot</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -1233,38 +2596,13 @@
       <td>3739.85</td>
     </tr>
     <tr>
-      <th>...</th>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-    </tr>
-    <tr>
-      <th>24</th>
-      <td>Se</td>
-      <td>Sa</td>
-      <td>1260.53</td>
-    </tr>
-    <tr>
-      <th>25</th>
-      <td>Se</td>
+      <th>4</th>
+      <td>Fr</td>
       <td>Su</td>
-      <td>2377.25</td>
-    </tr>
-    <tr>
-      <th>26</th>
-      <td>Se</td>
-      <td>Th</td>
-      <td>7017.18</td>
-    </tr>
-    <tr>
-      <th>27</th>
-      <td>Se</td>
-      <td>Tu</td>
-      <td>10613.20</td>
+      <td>6230.97</td>
     </tr>
   </tbody>
 </table>
-<p>28 rows × 3 columns</p>
 </div></div></div>
 </div>
 <p>Filling in missing ‘level’ and ‘weekday’ rows with ‘Missing’ allowed them to appear within our updated pivot table. As a result, we can now produce an accurate sum of all transactions by adding up the ‘amount’ rows within this table:</p>
@@ -1280,8 +2618,8 @@
 </div>
 </div>
 </div>
-<p>The following approach permanently replaces missing weekday and level values with ‘Missing’, thus saving you the trouble of repeating this step later in your code. It also iterates through each field in the <code class="docutils literal notranslate"><span class="pre">index</span></code> list via a for loop in order to inform you which columns, in particular, have missing data.</p>
-<p>In some cases, it may be preferable for your code to halt upon finding missing data; this halt serves as an alert that missing data exists, thus prompting you to fill in those missing entries with their actual values. The commented-out code above the first print statement in the following cell would stop this script’s operation (by raising a ValueError) if it came across any missing data.</p>
+<p>The following approach, unlike the one shown above, permanently replaces missing weekday and level values with ‘Missing’, thus saving you the trouble of repeating this step later in your code. It also iterates through each field in the <code class="docutils literal notranslate"><span class="pre">index</span></code> list via a for loop in order to inform you which columns, in particular, have missing data.</p>
+<p>In some cases, it may be preferable for your code to halt upon finding missing data; this halt serves as an alert that missing data exists, thus prompting you to fill in those missing entries with their actual values. The commented-out code above the first print statement in the following cell would stop this script’s operation (by raising a <code class="docutils literal notranslate"><span class="pre">ValueError</span></code>) if it came across any missing data.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">index</span><span class="p">:</span>
@@ -1290,13 +2628,16 @@
 <span class="c1"># running the following pivot table operation.&quot;)</span>
         <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">val</span><span class="si">}</span><span class="s2"> has NaN values; these will be filled with &#39;Missing&#39; </span><span class="se">\</span>
 <span class="s2">so that their rows&#39; data can still get incorporated into the following </span><span class="se">\</span>
-<span class="s2">pivot table.&quot;</span><span class="p">)</span>
+<span class="s2">pivot table.</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="n">df_transactions_faulty</span><span class="p">[</span><span class="n">val</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_transactions_faulty</span><span class="p">[</span><span class="n">val</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span>
             <span class="s1">&#39;Missing&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="c1"># If a column with missing data was float-based rather than</span>
+        <span class="c1"># string-based, it would be best to enter a float-based missing</span>
+        <span class="c1"># data indicator rather than this string.</span>
         
 <span class="n">df_transactions_corrected_pivot</span> <span class="o">=</span> <span class="n">df_transactions_faulty</span><span class="o">.</span><span class="n">pivot_table</span><span class="p">(</span>
-    <span class="n">index</span> <span class="o">=</span> <span class="n">index</span><span class="p">,</span> <span class="n">values</span> <span class="o">=</span> <span class="s1">&#39;amount&#39;</span><span class="p">,</span>
-    <span class="n">aggfunc</span> <span class="o">=</span> <span class="s1">&#39;sum&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+    <span class="n">index</span><span class="o">=</span><span class="n">index</span><span class="p">,</span> <span class="n">values</span><span class="o">=</span><span class="s1">&#39;amount&#39;</span><span class="p">,</span>
+    <span class="n">aggfunc</span><span class="o">=</span><span class="s1">&#39;sum&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
 <span class="n">df_transactions_corrected_pivot</span>
                          
 </pre></div>
@@ -1304,6 +2645,7 @@
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>level has NaN values; these will be filled with &#39;Missing&#39; so that their rows&#39; data can still get incorporated into the following pivot table.
+
 weekday has NaN values; these will be filled with &#39;Missing&#39; so that their rows&#39; data can still get incorporated into the following pivot table.
 </pre></div>
 </div>
@@ -1393,21 +2735,12 @@ weekday has NaN values; these will be filled with &#39;Missing&#39; so that thei
 <p>This new version of <code class="docutils literal notranslate"><span class="pre">df_transactions_corrected_pivot</span></code> also lets us calculate an accurate sum of all transactions within the original dataset:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_transactions_faulty_pivot</span><span class="p">[</span><span class="s1">&#39;amount&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_transactions_corrected_pivot</span><span class="p">[</span><span class="s1">&#39;amount&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(217029.91999999998)
-</pre></div>
-</div>
-</div>
-</div>
-<p>By the way, the following code would also have allowed us to permanently fill in all missing values within the columns in our <code class="docutils literal notranslate"><span class="pre">index</span></code> list. This code is similar to that used in the first approach, except that it saves its updates back to df_transactions_faulty, thus making them persistent.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_transactions_faulty</span> <span class="o">=</span> <span class="n">df_transactions_faulty</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span>
-    <span class="p">{</span><span class="n">field</span><span class="p">:</span><span class="s1">&#39;Missing&#39;</span> <span class="k">for</span> <span class="n">field</span> <span class="ow">in</span> <span class="n">index</span><span class="p">})</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(284156.99)
 </pre></div>
 </div>
 </div>
@@ -1415,9 +2748,8 @@ weekday has NaN values; these will be filled with &#39;Missing&#39; so that thei
 <p>I’ll now undo my corrections to df_transactions_faulty in order to prepare the dataset for the following section.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Undoing my corrections to df_transactions_faulty:</span>
-<span class="n">df_transactions_faulty</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span>
-    <span class="s1">&#39;Missing&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="n">inplace</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_transactions_faulty</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span>
+    <span class="s1">&#39;Missing&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">df_transactions_faulty</span>
 </pre></div>
 </div>
@@ -1528,9 +2860,9 @@ weekday has NaN values; these will be filled with &#39;Missing&#39; so that thei
 </div>
 </section>
 <section id="the-advantages-of-map-and-np-select-over-np-where-when-missing-data-are-present">
-<h2>The advantages of map() and np.select() over np.where() when missing data are present<a class="headerlink" href="#the-advantages-of-map-and-np-select-over-np-where-when-missing-data-are-present" title="Link to this heading">#</a></h2>
+<h2>The advantages of <code class="docutils literal notranslate"><span class="pre">map()</span></code> and <code class="docutils literal notranslate"><span class="pre">np.select()</span></code> over <code class="docutils literal notranslate"><span class="pre">np.where()</span></code> when missing data are present<a class="headerlink" href="#the-advantages-of-map-and-np-select-over-np-where-when-missing-data-are-present" title="Link to this heading">#</a></h2>
 <p>Suppose we’d like to find the total number of dining hall transactions that took place on the weekend versus those that didn’t. To make this calculation easier, we can add a ‘weekday’ column that will store a value of 1 if a transaction fell on Saturday or Sunday and 0 otherwise.</p>
-<p>We could try initializing this column via np.where(). The following cell uses this function to assign a ‘weekend’ value of 0 to all transactions whose ‘weekday’ value corresponds to Monday, Tuesday, Wednesday, Thursday, or Friday. Transactions that don’t have one of these weekday values are classified as weekend sales.</p>
+<p>We could try initializing this column via <code class="docutils literal notranslate"><span class="pre">np.where()</span></code>. The following cell uses this function to assign a ‘weekend’ value of 0 to all transactions whose ‘weekday’ value corresponds to Monday, Tuesday, Wednesday, Thursday, or Friday. Transactions that don’t have one of these weekday values are classified as weekend sales.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_transactions_faulty</span><span class="p">[</span><span class="s1">&#39;weekend&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span>
@@ -1561,7 +2893,8 @@ weekday has NaN values; these will be filled with &#39;Missing&#39; so that thei
       <th></th>
       <th>starting_year</th>
       <th>weekday</th>
-      <th>...</th>
+      <th>level</th>
+      <th>amount</th>
       <th>transactions</th>
       <th>weekend</th>
     </tr>
@@ -1571,7 +2904,8 @@ weekday has NaN values; these will be filled with &#39;Missing&#39; so that thei
       <th>0</th>
       <td>2023</td>
       <td>NaN</td>
-      <td>...</td>
+      <td>Fr</td>
+      <td>13.36</td>
       <td>1</td>
       <td>1</td>
     </tr>
@@ -1579,7 +2913,8 @@ weekday has NaN values; these will be filled with &#39;Missing&#39; so that thei
       <th>1</th>
       <td>2023</td>
       <td>Tu</td>
-      <td>...</td>
+      <td>Se</td>
+      <td>12.22</td>
       <td>1</td>
       <td>0</td>
     </tr>
@@ -1587,7 +2922,8 @@ weekday has NaN values; these will be filled with &#39;Missing&#39; so that thei
       <th>2</th>
       <td>2023</td>
       <td>NaN</td>
-      <td>...</td>
+      <td>Se</td>
+      <td>23.10</td>
       <td>1</td>
       <td>1</td>
     </tr>
@@ -1595,12 +2931,14 @@ weekday has NaN values; these will be filled with &#39;Missing&#39; so that thei
       <th>3</th>
       <td>2023</td>
       <td>Su</td>
-      <td>...</td>
+      <td>Fr</td>
+      <td>18.78</td>
       <td>1</td>
       <td>1</td>
     </tr>
     <tr>
       <th>...</th>
+      <td>...</td>
       <td>...</td>
       <td>...</td>
       <td>...</td>
@@ -1611,7 +2949,8 @@ weekday has NaN values; these will be filled with &#39;Missing&#39; so that thei
       <th>22449</th>
       <td>2023</td>
       <td>Tu</td>
-      <td>...</td>
+      <td>Fr</td>
+      <td>5.98</td>
       <td>1</td>
       <td>0</td>
     </tr>
@@ -1619,7 +2958,8 @@ weekday has NaN values; these will be filled with &#39;Missing&#39; so that thei
       <th>22450</th>
       <td>2023</td>
       <td>Fr</td>
-      <td>...</td>
+      <td>NaN</td>
+      <td>7.39</td>
       <td>1</td>
       <td>0</td>
     </tr>
@@ -1627,7 +2967,8 @@ weekday has NaN values; these will be filled with &#39;Missing&#39; so that thei
       <th>22451</th>
       <td>2023</td>
       <td>Sa</td>
-      <td>...</td>
+      <td>Fr</td>
+      <td>13.25</td>
       <td>1</td>
       <td>1</td>
     </tr>
@@ -1635,7 +2976,8 @@ weekday has NaN values; these will be filled with &#39;Missing&#39; so that thei
       <th>22452</th>
       <td>2023</td>
       <td>Mo</td>
-      <td>...</td>
+      <td>Fr</td>
+      <td>1.95</td>
       <td>1</td>
       <td>0</td>
     </tr>
@@ -1671,7 +3013,7 @@ weekday has NaN values; these will be filled with &#39;Missing&#39; so that thei
 </div>
 </div>
 </div>
-<p>Let’s now overwrite this faulty ‘weekend’ column by using <code class="docutils literal notranslate"><span class="pre">map()</span></code> instead. This function will allow us to map each individual weekday value to either 1 (for weekend) entries or 0 (for non-weekend values). Importantly, it also lets us map np.nan (i.e. missing) entries to a third number, -1: this number represents neither weekend nor non-weekend entries.</p>
+<p>Let’s now overwrite this faulty ‘weekend’ column by using <code class="docutils literal notranslate"><span class="pre">map()</span></code> instead. This function will allow us to map each individual weekday value to either 1 (for weekend) entries or 0 (for non-weekend values). Importantly, it also lets us map NaN entries to a third number, -1, which will represent missing values.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_transactions_faulty</span><span class="p">[</span><span class="s1">&#39;weekend&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
@@ -1703,7 +3045,8 @@ weekday has NaN values; these will be filled with &#39;Missing&#39; so that thei
       <th></th>
       <th>starting_year</th>
       <th>weekday</th>
-      <th>...</th>
+      <th>level</th>
+      <th>amount</th>
       <th>transactions</th>
       <th>weekend</th>
     </tr>
@@ -1713,7 +3056,8 @@ weekday has NaN values; these will be filled with &#39;Missing&#39; so that thei
       <th>0</th>
       <td>2023</td>
       <td>NaN</td>
-      <td>...</td>
+      <td>Fr</td>
+      <td>13.36</td>
       <td>1</td>
       <td>-1</td>
     </tr>
@@ -1721,7 +3065,8 @@ weekday has NaN values; these will be filled with &#39;Missing&#39; so that thei
       <th>1</th>
       <td>2023</td>
       <td>Tu</td>
-      <td>...</td>
+      <td>Se</td>
+      <td>12.22</td>
       <td>1</td>
       <td>0</td>
     </tr>
@@ -1729,7 +3074,8 @@ weekday has NaN values; these will be filled with &#39;Missing&#39; so that thei
       <th>2</th>
       <td>2023</td>
       <td>NaN</td>
-      <td>...</td>
+      <td>Se</td>
+      <td>23.10</td>
       <td>1</td>
       <td>-1</td>
     </tr>
@@ -1737,12 +3083,14 @@ weekday has NaN values; these will be filled with &#39;Missing&#39; so that thei
       <th>3</th>
       <td>2023</td>
       <td>Su</td>
-      <td>...</td>
+      <td>Fr</td>
+      <td>18.78</td>
       <td>1</td>
       <td>1</td>
     </tr>
     <tr>
       <th>...</th>
+      <td>...</td>
       <td>...</td>
       <td>...</td>
       <td>...</td>
@@ -1753,7 +3101,8 @@ weekday has NaN values; these will be filled with &#39;Missing&#39; so that thei
       <th>22449</th>
       <td>2023</td>
       <td>Tu</td>
-      <td>...</td>
+      <td>Fr</td>
+      <td>5.98</td>
       <td>1</td>
       <td>0</td>
     </tr>
@@ -1761,7 +3110,8 @@ weekday has NaN values; these will be filled with &#39;Missing&#39; so that thei
       <th>22450</th>
       <td>2023</td>
       <td>Fr</td>
-      <td>...</td>
+      <td>NaN</td>
+      <td>7.39</td>
       <td>1</td>
       <td>0</td>
     </tr>
@@ -1769,7 +3119,8 @@ weekday has NaN values; these will be filled with &#39;Missing&#39; so that thei
       <th>22451</th>
       <td>2023</td>
       <td>Sa</td>
-      <td>...</td>
+      <td>Fr</td>
+      <td>13.25</td>
       <td>1</td>
       <td>1</td>
     </tr>
@@ -1777,7 +3128,8 @@ weekday has NaN values; these will be filled with &#39;Missing&#39; so that thei
       <th>22452</th>
       <td>2023</td>
       <td>Mo</td>
-      <td>...</td>
+      <td>Fr</td>
+      <td>1.95</td>
       <td>1</td>
       <td>0</td>
     </tr>
@@ -1836,8 +3188,8 @@ Name: count, dtype: int64
 </div>
 </div>
 </div>
-<p>If you’re categorizing continuous rather than categorical data, the <code class="docutils literal notranslate"><span class="pre">map()</span></code> approach above will be hard to implement–as you might end up having to code a ton of values. Therefore, you should use <code class="docutils literal notranslate"><span class="pre">np.select()</span></code> instead. This function generally involves a bit more code than <code class="docutils literal notranslate"><span class="pre">map()</span></code> for categorical data, but it easily accommodates continuous values as well.</p>
-<p>Let’s say that we want to add a ‘large_purchase’ flag to each row that will be 1 if the amount was at or above the 90th percentile and 0 otherwise. We could then use this flag to determine each level’s likelihood of making such a large purchase.</p>
+<p>If you’re categorizing continuous rather than categorical data, the <code class="docutils literal notranslate"><span class="pre">map()</span></code> approach above will be hard to implement–as you might end up having to code a ton of values. Therefore, you should consider using <code class="docutils literal notranslate"><span class="pre">np.select()</span></code> instead. This function generally involves a bit more code than <code class="docutils literal notranslate"><span class="pre">map()</span></code> for categorical data, but it easily accommodates continuous values as well.</p>
+<p>Let’s say that we want to add a ‘large_purchase’ flag to each row that will equal 1 if the amount was at or above the 90th percentile and 0 otherwise. We could then use this flag to determine each level’s likelihood of making such a large purchase.</p>
 <p>The 90th percentile can be calculated as follows:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1854,18 +3206,18 @@ Name: count, dtype: int64
 </div>
 </div>
 </div>
-<p>The following code will simplify df_transactions_faulty by removing some columns that won’t be needed for the following section. It will also introduce missing numerical data by replacing all transactions whose final digit is a 6 with np.nan.</p>
+<p>The following code will simplify <code class="docutils literal notranslate"><span class="pre">df_transactions_faulty</span></code> by removing some columns that won’t be needed for the following section. It will also introduce missing numerical data by replacing all transactions whose final digit is a 6 with NaN.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_transactions_faulty</span> <span class="o">=</span> <span class="n">df_transactions</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span>
     <span class="p">[</span><span class="s1">&#39;weekday&#39;</span><span class="p">,</span> <span class="s1">&#39;transactions&#39;</span><span class="p">],</span> 
-    <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 
 <span class="n">df_transactions_faulty</span><span class="p">[</span><span class="s1">&#39;amount&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span>
     <span class="n">df_transactions_faulty</span><span class="p">[</span><span class="s1">&#39;amount&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;str&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">str</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;6&#39;</span><span class="p">,</span> 
     <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="n">df_transactions_faulty</span><span class="p">[</span><span class="s1">&#39;amount&#39;</span><span class="p">])</span>
 
-<span class="n">df_transactions_faulty</span>
+<span class="n">df_transactions_faulty</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -1919,38 +3271,13 @@ Name: count, dtype: int64
       <td>18.78</td>
     </tr>
     <tr>
-      <th>...</th>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-    </tr>
-    <tr>
-      <th>22449</th>
+      <th>4</th>
       <td>2023</td>
       <td>Fr</td>
-      <td>5.98</td>
-    </tr>
-    <tr>
-      <th>22450</th>
-      <td>2023</td>
-      <td>So</td>
-      <td>7.39</td>
-    </tr>
-    <tr>
-      <th>22451</th>
-      <td>2023</td>
-      <td>Fr</td>
-      <td>13.25</td>
-    </tr>
-    <tr>
-      <th>22452</th>
-      <td>2023</td>
-      <td>Fr</td>
-      <td>1.95</td>
+      <td>NaN</td>
     </tr>
   </tbody>
 </table>
-<p>22453 rows × 3 columns</p>
 </div></div></div>
 </div>
 <p>We wouldn’t want to use <code class="docutils literal notranslate"><span class="pre">np.where()</span></code> to initialize our ‘large_purchase’ column, as we would inadvertently group missing transactions as large or non-large. In addition, <code class="docutils literal notranslate"><span class="pre">map()</span></code> would be a poor solution, as we now have thousands of unique values to code rather than just a few:</p>
@@ -1967,7 +3294,7 @@ Name: count, dtype: int64
 </div>
 </div>
 <p>Therefore, we’ll instead use <code class="docutils literal notranslate"><span class="pre">np.select()</span></code>. This function applies a <code class="docutils literal notranslate"><span class="pre">condlist</span></code> (a list of possible conditions) and a <code class="docutils literal notranslate"><span class="pre">choicelist</span></code> (a list of values to apply for each of those conditions) in order to initialize or update a given column. (You don’t have to name these items <code class="docutils literal notranslate"><span class="pre">condlist</span></code> and <code class="docutils literal notranslate"><span class="pre">choicelist</span></code>, but those are their corresponding parameter names; see <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.select.html">https://numpy.org/doc/stable/reference/generated/numpy.select.html</a> ). Importantly, this function also has a <code class="docutils literal notranslate"><span class="pre">default</span></code> argument that lets you determine what value to enter if none of the conditions were met.</p>
-<p>The following code applies <code class="docutils literal notranslate"><span class="pre">np.select()</span></code> by defining two possible conditions (e.g. a transaction is above the threshold or it isn’t) and two corresponding values to enter within our ‘large_purchase’ column (1 or 0). It also adds a ‘default’ value of -1; this value will get added to the large_purchase column when a given transaction amount is missing. (Note that, if no default value is specified, numpy will add values of 0–which would easily get mistaken for the ‘not a large purchase’ condition.)</p>
+<p>The following code applies <code class="docutils literal notranslate"><span class="pre">np.select()</span></code> by defining two possible conditions (e.g. a transaction is above the threshold or it isn’t) and two corresponding values to enter within our ‘large_purchase’ column (1 or 0). It also adds a ‘default’ value of -1; this value will get added to the large_purchase column when a given transaction amount is missing. (Note that, if no default value is specified, numpy will add values of 0–which would easily get mistaken here for the ‘not a large purchase’ condition.)</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">condlist</span> <span class="o">=</span> <span class="p">[</span>
@@ -1977,10 +3304,10 @@ Name: count, dtype: int64
 
 <span class="n">choicelist</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span>
               <span class="mi">0</span><span class="p">]</span> <span class="c1"># Make sure that the order of these entries matches</span>
-<span class="c1"># the order of your condlist entries!</span>
+<span class="c1"># that of your condlist entries!</span>
 
 <span class="n">df_transactions_faulty</span><span class="p">[</span><span class="s1">&#39;large_purchase&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">select</span><span class="p">(</span>
-    <span class="n">condlist</span><span class="p">,</span> <span class="n">choicelist</span><span class="p">,</span> <span class="n">default</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">condlist</span><span class="p">,</span> <span class="n">choicelist</span><span class="p">,</span> <span class="n">default</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
 <span class="n">df_transactions_faulty</span>   
 </pre></div>
 </div>
@@ -2139,6 +3466,12 @@ Name: count, dtype: int64
 </div>
 <p>This likelihood is evidently much higher for upperclassmen (juniors and seniors) than for underclassmen (freshmen and sophomores). Of course, this analysis isn’t perfect, as it’s limited to the rows for which we have valid transaction amounts.</p>
 </section>
+<section id="conclusion">
+<h2>Conclusion<a class="headerlink" href="#conclusion" title="Link to this heading">#</a></h2>
+<p>These two chapters have offered a brief introduction–and certainly not a comprehensive reference–to the use of Pandas to calculate descriptive statistics within Python. My hope is that, now that you’ve seen how easily Pandas can perform various statistical calculations, you’ll be inspired to test this library out for other tasks as well.</p>
+<p>I have found in my own work that, while descriptive stats are less ‘trendy’ than more recent developments in the field of statistics (e.g. machine learning, neural networks, etc.), they’re still incredibly useful as a way to share, both internally and externally, how your nonprofit is performing and how those whom it serves are doing. These kinds of descriptive analyses will also serve as the foundation for many different visualizations, as we’ll see later in Python for Nonprofits.</p>
+<p>Now that we’ve learned how to retrieve, reformat, and analyze data, we can move on to a task (importing Census data) that applies each of these skills.</p>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -2206,9 +3539,13 @@ Name: count, dtype: int64
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#calculating-weighted-average-results-by-student-and-dealing-with-missing-values">Calculating weighted average results by student (and dealing with missing values)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-danger-of-relying-on-column-index-positions-when-analyzing-datasets">The danger of relying on column index positions when analyzing datasets</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#why-column-wise-operations-should-be-preferred-over-for-loops">Why column-wise operations should be preferred over for loops</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#microdata-pre-baked-data-and-the-average-of-averages-problem">Microdata, pre-baked data, and the ‘average of averages’ problem</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#handling-missing-data-when-creating-pivot-tables">Handling missing data when creating pivot tables</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-advantages-of-map-and-np-select-over-np-where-when-missing-data-are-present">The advantages of map() and np.select() over np.where() when missing data are present</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-advantages-of-map-and-np-select-over-np-where-when-missing-data-are-present">The advantages of <code class="docutils literal notranslate"><span class="pre">map()</span></code> and <code class="docutils literal notranslate"><span class="pre">np.select()</span></code> over <code class="docutils literal notranslate"><span class="pre">np.where()</span></code> when missing data are present</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion">Conclusion</a></li>
 </ul>
   </nav></div>
 

@@ -185,7 +185,6 @@
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Visualizing Data</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../Graphing/graphing.html">Creating Interactive and Static Charts with Plotly</a></li>
-
 <li class="toctree-l1"><a class="reference internal" href="../Graphing/pivot_and_graph_functions.html">Pivot and Graph Functions</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../Mapping/choropleth_maps.html">Mapping Census Data using Plotly (Work in progress)</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../Book_Specific_Materials/plotly_choropleth_map_functions_py_nb.html">plotly_choropleth_map_functions.py</a></li>
@@ -371,14 +370,13 @@
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#adding-additional-pivot-index-values">Adding additional pivot index values</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluating-changes-in-survey-scores-by-season-and-college">Evaluating changes in survey scores by season and college:</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluating-changes-in-survey-scores-by-season-and-level">Evaluating changes in survey scores by season and level:</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluating-changes-in-survey-scores-by-season-college-and-level">Evaluating changes in survey scores by season, college, <em>and</em> level:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluating-changes-in-survey-scores-by-season-level-and-college">Evaluating changes in survey scores by season, level, <em>and</em> college:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-a-wide-student-level-version-of-our-survey-results-dataset">Creating a wide student-level version of our survey results dataset</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#comparing-rows-via-sort-values-and-rank">Comparing rows via sort_values() and rank()</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#calculating-percentiles-and-ranks">Calculating percentiles and ranks</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#calculating-average-results-by-student-and-dealing-with-missing-values">Calculating average results by student (and dealing with missing values)</a></li>
-</ul>
-</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#comparing-rows-via-sort-values-and-rank">Comparing rows via <code class="docutils literal notranslate"><span class="pre">sort_values()</span></code> and <code class="docutils literal notranslate"><span class="pre">rank()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#calculating-percentiles-and-ranks">Calculating percentiles and ranks</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion">Conclusion</a></li>
 </ul>
             </nav>
         </div>
@@ -392,13 +390,14 @@
                   
   <section class="tex2jax_ignore mathjax_ignore" id="descriptive-stats">
 <h1>Descriptive Stats<a class="headerlink" href="#descriptive-stats" title="Link to this heading">#</a></h1>
-<p>By Kenneth Burchfiel</p>
-<p>Released under the MIT license</p>
 <p>Now that we’ve learned how to retrieve, reformat, and clean data, we can finally begin analyzing it! This notebook demonstrates how to calculate descriptive statistics in Python using Pandas.</p>
-<p>Suppose leaders at NVCU would like to know, on a daily basis, how spring survey results differ from fall and winter ones. (This number could change each day as new spring survey data gets released.) One way to accomplish this task would be to retrieve survey data from your database each day; paste it into Excel or Google Sheets; pivot the data, and then share the output. However, you could also accomplish these same steps in Python. While this would likely take you longer the first time around, you could then create updated analyses of your data in mere seconds. This notebook will show you how!</p>
+<p>Suppose leaders at NVCU would like to know, on a <em>daily</em> basis, how incoming spring survey results differ from fall and winter ones. (These metrics could change each day as new spring survey data gets released, and the administration does not wish to wait until all results are in before they begin reviewing the numbers.)</p>
+<p>One way to accomplish this task would be to manually import survey data from your database each day; paste it into Excel or Google Sheets; pivot the data, and then share the output. However, you could also accomplish these same steps in Python. While this would likely take you longer the first time around, you could then create updated analyses of your data in mere seconds. This notebook will show you how!</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+<span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
 <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;../Appendix&#39;</span><span class="p">)</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">helper_funcs</span><span class="w"> </span><span class="kn">import</span> <span class="n">config_notebook</span>
 <span class="n">display_type</span> <span class="o">=</span> <span class="n">config_notebook</span><span class="p">(</span><span class="n">display_max_columns</span> <span class="o">=</span> <span class="mi">8</span><span class="p">,</span>
@@ -411,11 +410,14 @@
 </div>
 </div>
 </div>
-<p>We’ll first import our combined set of fall, spring, and winter student survey results; these results were created within data_prep.ipynb. (Note that these results also include college and level data that we merged in from NVCU’s curr_enrollment SQL table; that way, we can evaluate average results by level and college.)</p>
+<p>We’ll first import our combined set of fall, spring, and winter student survey results; these results were created within data_prep.ipynb. (Note that these results also include college and level data that we merged in from NVCU’s ‘curr_enrollment’ SQL table; that way, we can evaluate average results by level and college.)</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_survey_results</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../Data_Prep/2023_survey_results.csv&#39;</span><span class="p">)</span>
-<span class="n">df_survey_results</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<span class="c1"># Removing a few non-essential columns from the display so that the table</span>
+<span class="c1"># will show up better in PDF format:</span>
+<span class="n">df_survey_results</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s1">&#39;season_order&#39;</span><span class="p">,</span> <span class="s1">&#39;level_for_sorting&#39;</span><span class="p">],</span>
+                       <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -442,10 +444,8 @@
       <th>starting_year</th>
       <th>season</th>
       <th>score</th>
-      <th>season_order</th>
       <th>college</th>
       <th>level</th>
-      <th>level_for_sorting</th>
     </tr>
   </thead>
   <tbody>
@@ -455,10 +455,8 @@
       <td>2023</td>
       <td>Fall</td>
       <td>88</td>
-      <td>0</td>
       <td>STC</td>
       <td>Se</td>
-      <td>3</td>
     </tr>
     <tr>
       <th>1</th>
@@ -466,10 +464,8 @@
       <td>2023</td>
       <td>Fall</td>
       <td>37</td>
-      <td>0</td>
       <td>STM</td>
       <td>Se</td>
-      <td>3</td>
     </tr>
     <tr>
       <th>2</th>
@@ -477,10 +473,8 @@
       <td>2023</td>
       <td>Fall</td>
       <td>54</td>
-      <td>0</td>
       <td>STC</td>
       <td>Se</td>
-      <td>3</td>
     </tr>
     <tr>
       <th>3</th>
@@ -488,10 +482,8 @@
       <td>2023</td>
       <td>Fall</td>
       <td>56</td>
-      <td>0</td>
       <td>STC</td>
       <td>Se</td>
-      <td>3</td>
     </tr>
     <tr>
       <th>4</th>
@@ -499,10 +491,8 @@
       <td>2023</td>
       <td>Fall</td>
       <td>77</td>
-      <td>0</td>
       <td>STM</td>
       <td>Se</td>
-      <td>3</td>
     </tr>
   </tbody>
 </table>
@@ -510,12 +500,12 @@
 </div>
 <section id="evaluating-changes-in-average-university-wide-results-during-the-school-year">
 <h2>Evaluating changes in average university-wide results during the school year<a class="headerlink" href="#evaluating-changes-in-average-university-wide-results-during-the-school-year" title="Link to this heading">#</a></h2>
-<p>Our dataset contains survey results from the fall, winter, and spring. In order to determine how the mean survey score has changed over the course of the year, we can use Pandas’ <a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.pivot_table.html"><code class="docutils literal notranslate"><span class="pre">pivot_table()</span></code> function</a>–which I consider to be one of the most useful functions in the Pandas library.</p>
-<p>The pivot_table() call below introduces three key arguments:</p>
-<p><code class="docutils literal notranslate"><span class="pre">index</span></code>: the list of values by which to group results. Although our dataset only contains data for one year, we’ll still include <code class="docutils literal notranslate"><span class="pre">starting_year</span></code> in our results in order to (1) allow the function to accommodate other school years and (2) demonstrate to the viewer that all of this data comes from 2023. We’ll also add both <code class="docutils literal notranslate"><span class="pre">season_order</span></code> and <code class="docutils literal notranslate"><span class="pre">season</span></code> to our list (in that order) so as to display results by season in chronological order. (Without the <code class="docutils literal notranslate"><span class="pre">season_order</span></code> argument, our results would be sorted alphabetically: by Fall, Spring, and then Winter.</p>
-<p><code class="docutils literal notranslate"><span class="pre">values</span></code>: the metric to assess. We’re interested in analyzing changes in average score by year, so we’ll pass <code class="docutils literal notranslate"><span class="pre">score</span></code> as our argument.</p>
+<p>Our dataset contains fall, winter, and spring survey results. In order to determine how the mean survey score has changed over the course of the year, we can use Pandas’ <code class="docutils literal notranslate"><span class="pre">pivot_table()</span></code> function (<a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.pivot_table.html">https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.pivot_table.html</a>). I consider <code class="docutils literal notranslate"><span class="pre">pivot_table()</span></code> to be one of the most useful functions in the Pandas library, and you’ll see it used again and again with PFN.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">pivot_table()</span></code> call below introduces three key arguments:</p>
+<p><code class="docutils literal notranslate"><span class="pre">index</span></code>: the list of values by which to group results. Although our dataset only contains data for one year, we’ll still include <code class="docutils literal notranslate"><span class="pre">starting_year</span></code> in our results in order to (1) allow the function to accommodate other school years and (2) demonstrate to the viewer that all of this data comes from 2023. We’ll also add both <code class="docutils literal notranslate"><span class="pre">season_order</span></code> and <code class="docutils literal notranslate"><span class="pre">season</span></code> to our list (in that order) so as to display results by season in chronological order. (Without the <code class="docutils literal notranslate"><span class="pre">season_order</span></code> argument, our seasons would be sorted alphabetically, with spring results preceding winter ones.</p>
+<p><code class="docutils literal notranslate"><span class="pre">values</span></code>: the metric(s) to assess. We’re interested in analyzing changes in average score by year, so we’ll pass <code class="docutils literal notranslate"><span class="pre">score</span></code> as our argument. Multiple values can be passed to this argument if needed.</p>
 <p><code class="docutils literal notranslate"><span class="pre">aggfunc</span></code>: the aggregate function to apply to our list of values. We’ll use <code class="docutils literal notranslate"><span class="pre">mean</span></code> here, but we could also have chosen <code class="docutils literal notranslate"><span class="pre">median</span></code> as a measure of the average.</p>
-<p>I generally like to add <code class="docutils literal notranslate"><span class="pre">reset_index()</span></code> to the result of <code class="docutils literal notranslate"><span class="pre">pivot_table</span></code> in order to remove any blank index values.</p>
+<p>I generally like to add <code class="docutils literal notranslate"><span class="pre">reset_index()</span></code> to the result of <code class="docutils literal notranslate"><span class="pre">pivot_table()</span></code> in order to remove any blank index values.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_results_by_season</span> <span class="o">=</span> <span class="n">df_survey_results</span><span class="o">.</span><span class="n">pivot_table</span><span class="p">(</span>
@@ -563,7 +553,7 @@
       <td>2023</td>
       <td>1</td>
       <td>Winter</td>
-      <td>64.218440</td>
+      <td>64.216214</td>
     </tr>
     <tr>
       <th>2</th>
@@ -626,7 +616,7 @@
     <tr>
       <th>1</th>
       <th>Winter</th>
-      <td>64.218440</td>
+      <td>64.216214</td>
     </tr>
     <tr>
       <th>2</th>
@@ -685,7 +675,7 @@
       <td>2023</td>
       <td>1</td>
       <td>Winter</td>
-      <td>64.218440</td>
+      <td>64.216214</td>
     </tr>
     <tr>
       <th>2</th>
@@ -699,7 +689,7 @@
       <td>2023 Average</td>
       <td></td>
       <td></td>
-      <td>68.883390</td>
+      <td>68.882726</td>
     </tr>
   </tbody>
 </table>
@@ -708,7 +698,7 @@
 </section>
 <section id="calculating-response-rates">
 <h2>Calculating response rates<a class="headerlink" href="#calculating-response-rates" title="Link to this heading">#</a></h2>
-<p>We can also use the pivot_table() function to determine survey response rates as a percentage of our current enrollment. We can import this current enrollment value from our NVCU database:</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">pivot_table()</span></code> function will also let us determine survey response rates as a percentage of our current enrollment. We can import this current enrollment value from our NVCU database:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">e</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="s1">&#39;sqlite:///../Appendix/nvcu_db.db&#39;</span><span class="p">)</span>
@@ -720,7 +710,7 @@
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">enrollment_count</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">read_sql</span><span class="p">(</span>
-    <span class="s2">&quot;Select * from curr_enrollment&quot;</span><span class="p">,</span> <span class="n">con</span> <span class="o">=</span> <span class="n">e</span><span class="p">))</span>
+    <span class="s2">&quot;Select * from curr_enrollment&quot;</span><span class="p">,</span> <span class="n">con</span><span class="o">=</span><span class="n">e</span><span class="p">))</span>
 <span class="n">enrollment_count</span>
 </pre></div>
 </div>
@@ -735,7 +725,7 @@
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">enrollment_count</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_sql</span><span class="p">(</span>
-    <span class="s2">&quot;Select COUNT(*) from curr_enrollment&quot;</span><span class="p">,</span> <span class="n">con</span> <span class="o">=</span> <span class="n">e</span><span class="p">)</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;COUNT(*)&#39;</span><span class="p">]</span>
+    <span class="s2">&quot;Select COUNT(*) from curr_enrollment&quot;</span><span class="p">,</span> <span class="n">con</span><span class="o">=</span><span class="n">e</span><span class="p">)</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;COUNT(*)&#39;</span><span class="p">]</span>
 <span class="n">enrollment_count</span>
 </pre></div>
 </div>
@@ -746,18 +736,18 @@
 </div>
 </div>
 </div>
-<p>Counting the number of survey results by season:</p>
-<p>(For teaching purposes, this cell also shows how to display results for two different value/aggfunc pairs.)</p>
+<p>Now that we have the denominator* for our response rate calculations, let’s go ahead and calculate the numerator (e.g. the number of responses per season). For teaching purposes, the following cell will also show how to use a dictionary to specify separate <code class="docutils literal notranslate"><span class="pre">aggfunc</span></code> values for different <code class="docutils literal notranslate"><span class="pre">value</span></code> entries. In this case, we’ll pass <code class="docutils literal notranslate"><span class="pre">mean</span></code> as our aggregate function for the <code class="docutils literal notranslate"><span class="pre">score</span></code> column, but <code class="docutils literal notranslate"><span class="pre">count</span></code> as our aggregate function for the <code class="docutils literal notranslate"><span class="pre">responses</span></code> field.</p>
 <p><em>Note: When calculating row counts, make sure that the column you pass to the <code class="docutils literal notranslate"><span class="pre">values</span></code> argument doesn’t contain null values; otherwise, your row counts will be incorrect (as null values will get excluded from your counts.) To prevent this issue, I often like to create a column that stores a value of 1 for every row. Using this column (titled <code class="docutils literal notranslate"><span class="pre">responses</span></code> in the following cell) ensures that my pivot table will show the correct row counts for each group.</em></p>
+<p>*A more robust approach here would have been to calculate separate enrollment figures for the fall, winter, and spring periods in order to take new matriculations and withdrawals into account.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_survey_results</span><span class="p">[</span><span class="s1">&#39;responses&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
 <span class="n">df_response_rates</span> <span class="o">=</span> <span class="n">df_survey_results</span><span class="o">.</span><span class="n">pivot_table</span><span class="p">(</span>
-    <span class="n">index</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;starting_year&#39;</span><span class="p">,</span> <span class="s1">&#39;season_order&#39;</span><span class="p">,</span> <span class="s1">&#39;season&#39;</span><span class="p">],</span> 
-    <span class="n">values</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;score&#39;</span><span class="p">,</span> <span class="s1">&#39;responses&#39;</span><span class="p">],</span> 
-    <span class="n">aggfunc</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;score&#39;</span><span class="p">:</span><span class="s1">&#39;mean&#39;</span><span class="p">,</span><span class="s1">&#39;responses&#39;</span><span class="p">:</span><span class="s1">&#39;count&#39;</span><span class="p">})</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span> 
-    <span class="c1"># Because all &#39;responses&#39; values are 1, we could have made &#39;sum&#39; </span>
-    <span class="c1"># the aggfunc for &#39;responses&#39; rather than &#39;count&#39;</span>
+    <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;starting_year&#39;</span><span class="p">,</span> <span class="s1">&#39;season_order&#39;</span><span class="p">,</span> <span class="s1">&#39;season&#39;</span><span class="p">],</span> 
+    <span class="n">values</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;score&#39;</span><span class="p">,</span> <span class="s1">&#39;responses&#39;</span><span class="p">],</span> 
+    <span class="n">aggfunc</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;score&#39;</span><span class="p">:</span><span class="s1">&#39;mean&#39;</span><span class="p">,</span><span class="s1">&#39;responses&#39;</span><span class="p">:</span><span class="s1">&#39;count&#39;</span><span class="p">})</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span> 
+    <span class="c1"># Because all &#39;responses&#39; values are 1, we could also have made &#39;sum&#39; </span>
+    <span class="c1"># the aggfunc for &#39;responses&#39; rather than &#39;count.&#39;</span>
 <span class="n">df_response_rates</span>
 </pre></div>
 </div>
@@ -803,7 +793,7 @@
       <td>1</td>
       <td>Winter</td>
       <td>13926</td>
-      <td>64.218440</td>
+      <td>64.216214</td>
     </tr>
     <tr>
       <th>2</th>
@@ -869,7 +859,7 @@
       <td>1</td>
       <td>Winter</td>
       <td>13926</td>
-      <td>64.218440</td>
+      <td>64.216214</td>
       <td>84.997559</td>
     </tr>
     <tr>
@@ -889,13 +879,13 @@
 </section>
 <section id="using-the-columns-argument-within-pivot-table-to-show-seasons-side-by-side">
 <h2>Using the <code class="docutils literal notranslate"><span class="pre">columns</span></code> argument within <code class="docutils literal notranslate"><span class="pre">pivot_table()</span></code> to show seasons side by side<a class="headerlink" href="#using-the-columns-argument-within-pivot-table-to-show-seasons-side-by-side" title="Link to this heading">#</a></h2>
-<p>Currently, the DataFrame is in ‘long’ format: each row shows data for one specific season. However, in order to more easily calculate the change in results from one season to another, we can also use the <code class="docutils literal notranslate"><span class="pre">columns</span></code> argument when creating a pivot table in order to show scores for each season side by side. (This will prove especially useful when we add additional index variables to our pivot_table() call.</p>
+<p>Currently, the DataFrame is in ‘long’ format: each row shows data for one specific season. However, in order to more easily calculate the change in results from one season to another, we can also use the <code class="docutils literal notranslate"><span class="pre">columns</span></code> argument when creating a pivot table in order to show scores for each season side by side. (This will prove especially useful when we add additional index variables to our <code class="docutils literal notranslate"><span class="pre">pivot_table()</span></code> call.</p>
 <p>The following function is similar to our earlier pivot_table calls except that the <code class="docutils literal notranslate"><span class="pre">season_order</span></code> and <code class="docutils literal notranslate"><span class="pre">season</span></code> values have been moved from the <code class="docutils literal notranslate"><span class="pre">index</span></code> argument to the argument for <code class="docutils literal notranslate"><span class="pre">columns</span></code>. This change makes the seasons appear horizontally rather than vertically.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_results_by_season_wide</span> <span class="o">=</span> <span class="n">df_survey_results</span><span class="o">.</span><span class="n">pivot_table</span><span class="p">(</span>
-    <span class="n">index</span> <span class="o">=</span> <span class="s1">&#39;starting_year&#39;</span><span class="p">,</span> <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;season_order&#39;</span><span class="p">,</span> <span class="s1">&#39;season&#39;</span><span class="p">],</span>
-    <span class="n">values</span> <span class="o">=</span> <span class="s1">&#39;score&#39;</span><span class="p">,</span> <span class="n">aggfunc</span> <span class="o">=</span> <span class="s1">&#39;mean&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+    <span class="n">index</span><span class="o">=</span><span class="s1">&#39;starting_year&#39;</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;season_order&#39;</span><span class="p">,</span> <span class="s1">&#39;season&#39;</span><span class="p">],</span>
+    <span class="n">values</span><span class="o">=</span><span class="s1">&#39;score&#39;</span><span class="p">,</span> <span class="n">aggfunc</span><span class="o">=</span><span class="s1">&#39;mean&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
 <span class="n">df_results_by_season_wide</span>
 </pre></div>
 </div>
@@ -937,14 +927,14 @@
       <th>0</th>
       <td>2023</td>
       <td>69.682251</td>
-      <td>64.21844</td>
+      <td>64.216214</td>
       <td>72.049622</td>
     </tr>
   </tbody>
 </table>
 </div></div></div>
 </div>
-<p>Note that, because we passed two values to the <code class="docutils literal notranslate"><span class="pre">columns</span></code> parameter, two levels of headers are now visible. However, I’d like to show just one level of columns that includes the ‘starting_year’ value in the top row and the season names in the bottom row. We can accomplish this by first calling <code class="docutils literal notranslate"><span class="pre">to_flat_index</span></code> to ‘flatten’ the columns into tuples:</p>
+<p>Note that, because we passed two values to the <code class="docutils literal notranslate"><span class="pre">columns</span></code> parameter, two levels of headers are now visible. However, I’d like to show just one level of columns that will comprise the <code class="docutils literal notranslate"><span class="pre">starting_year</span></code> value in the top row and the season names in the bottom row. We can accomplish this by first calling <code class="docutils literal notranslate"><span class="pre">to_flat_index()</span></code> to ‘flatten’ the columns into tuples:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_results_by_season_wide</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">(</span>
@@ -983,7 +973,7 @@
       <th>0</th>
       <td>2023</td>
       <td>69.682251</td>
-      <td>64.21844</td>
+      <td>64.216214</td>
       <td>72.049622</td>
     </tr>
   </tbody>
@@ -1031,17 +1021,21 @@
       <th>0</th>
       <td>2023</td>
       <td>69.682251</td>
-      <td>64.21844</td>
+      <td>64.216214</td>
       <td>72.049622</td>
     </tr>
   </tbody>
 </table>
 </div></div></div>
 </div>
-<p>Now that we have our seasons next to one another, we can easily calculate changes in average scores between seasons:</p>
+<p>Now that we have our seasons next to one another, we can easily calculate changes in average scores between them:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_results_by_season_wide</span><span class="p">[</span><span class="s1">&#39;Fall-Winter Change&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_results_by_season_wide</span><span class="p">[</span><span class="s1">&#39;Fall-Spring Change&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">df_results_by_season_wide</span><span class="p">[</span><span class="s1">&#39;Spring&#39;</span><span class="p">]</span> 
+    <span class="o">-</span> <span class="n">df_results_by_season_wide</span><span class="p">[</span><span class="s1">&#39;Fall&#39;</span><span class="p">])</span>
+
+<span class="n">df_results_by_season_wide</span><span class="p">[</span><span class="s1">&#39;Fall-Winter Change&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
     <span class="n">df_results_by_season_wide</span><span class="p">[</span><span class="s1">&#39;Winter&#39;</span><span class="p">]</span> 
     <span class="o">-</span> <span class="n">df_results_by_season_wide</span><span class="p">[</span><span class="s1">&#39;Fall&#39;</span><span class="p">])</span>
 
@@ -1049,9 +1043,6 @@
     <span class="n">df_results_by_season_wide</span><span class="p">[</span><span class="s1">&#39;Spring&#39;</span><span class="p">]</span> 
     <span class="o">-</span> <span class="n">df_results_by_season_wide</span><span class="p">[</span><span class="s1">&#39;Winter&#39;</span><span class="p">])</span>
 
-<span class="n">df_results_by_season_wide</span><span class="p">[</span><span class="s1">&#39;Fall-Spring Change&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
-    <span class="n">df_results_by_season_wide</span><span class="p">[</span><span class="s1">&#39;Spring&#39;</span><span class="p">]</span> 
-    <span class="o">-</span> <span class="n">df_results_by_season_wide</span><span class="p">[</span><span class="s1">&#39;Fall&#39;</span><span class="p">])</span>
 <span class="n">df_results_by_season_wide</span>
 </pre></div>
 </div>
@@ -1079,9 +1070,9 @@
       <th>Fall</th>
       <th>Winter</th>
       <th>Spring</th>
+      <th>Fall-Spring Change</th>
       <th>Fall-Winter Change</th>
       <th>Winter-Spring Change</th>
-      <th>Fall-Spring Change</th>
     </tr>
   </thead>
   <tbody>
@@ -1089,11 +1080,67 @@
       <th>0</th>
       <td>2023</td>
       <td>69.682251</td>
-      <td>64.21844</td>
+      <td>64.216214</td>
       <td>72.049622</td>
-      <td>-5.463811</td>
-      <td>7.831181</td>
       <td>2.367371</td>
+      <td>-5.466037</td>
+      <td>7.833407</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>We can simplify this code by creating a list of the seasons between which we want to calculate changes in survey scores, then looping through that list. Note that this code produces the following output as the previous cell.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">sp</span> <span class="ow">in</span> <span class="p">[(</span><span class="s1">&#39;Fall&#39;</span><span class="p">,</span> <span class="s1">&#39;Spring&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;Fall&#39;</span><span class="p">,</span> <span class="s1">&#39;Winter&#39;</span><span class="p">),</span> 
+           <span class="p">(</span><span class="s1">&#39;Winter&#39;</span><span class="p">,</span> <span class="s1">&#39;Spring&#39;</span><span class="p">)]:</span> <span class="c1"># &#39;sp&#39; here is short for &#39;season pair.&#39;</span>
+    <span class="n">df_results_by_season_wide</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">sp</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s1">-</span><span class="si">{</span><span class="n">sp</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s1"> Change&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">df_results_by_season_wide</span><span class="p">[</span><span class="n">sp</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span> 
+        <span class="o">-</span> <span class="n">df_results_by_season_wide</span><span class="p">[</span><span class="n">sp</span><span class="p">[</span><span class="mi">0</span><span class="p">]])</span>
+
+<span class="n">df_results_by_season_wide</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>starting_year</th>
+      <th>Fall</th>
+      <th>Winter</th>
+      <th>Spring</th>
+      <th>Fall-Spring Change</th>
+      <th>Fall-Winter Change</th>
+      <th>Winter-Spring Change</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2023</td>
+      <td>69.682251</td>
+      <td>64.216214</td>
+      <td>72.049622</td>
+      <td>2.367371</td>
+      <td>-5.466037</td>
+      <td>7.833407</td>
     </tr>
   </tbody>
 </table>
@@ -1103,7 +1150,7 @@
 <section id="adding-additional-pivot-index-values">
 <h2>Adding additional pivot index values<a class="headerlink" href="#adding-additional-pivot-index-values" title="Link to this heading">#</a></h2>
 <p>We now know that our average NVCU student survey scores declined from the fall to the winter and then rose from the winter to the spring. Was this trend the same across colleges and levels? We can answer this question by adding our college and level fields to the <code class="docutils literal notranslate"><span class="pre">index</span></code> argument of our pivot table function.</p>
-<p>In order to make this section more efficient, we can create a function that performs the pivot table, column renaming, and growth calculations shown for df_results_by_season_wide. This will greatly reduce the amount of code that we need to write to perform these additional analyses.</p>
+<p>In order to make this section more efficient, we can create a function that performs the pivot table, column renaming, and growth calculations shown above for <code class="docutils literal notranslate"><span class="pre">df_results_by_season_wide</span></code>. This will greatly reduce the amount of code that we need to write to perform these additional analyses.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">create_wide_table</span><span class="p">(</span><span class="n">index_values</span><span class="p">):</span>
@@ -1116,21 +1163,14 @@
     <span class="n">df_wide</span> <span class="o">=</span> <span class="n">df_survey_results</span><span class="o">.</span><span class="n">pivot_table</span><span class="p">(</span>
     <span class="n">index</span> <span class="o">=</span> <span class="n">index_values</span><span class="p">,</span> <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;season_order&#39;</span><span class="p">,</span> <span class="s1">&#39;season&#39;</span><span class="p">],</span>
     <span class="n">values</span> <span class="o">=</span> <span class="s1">&#39;score&#39;</span><span class="p">,</span> <span class="n">aggfunc</span> <span class="o">=</span> <span class="s1">&#39;mean&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
-    <span class="n">df_wide</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">(</span>
-    <span class="n">df_wide</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">to_flat_index</span><span class="p">())</span>
-    <span class="n">df_wide</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span>
-        <span class="n">column_tuple</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="n">column_tuple</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> 
-        <span class="p">[</span><span class="s1">&#39;Fall&#39;</span><span class="p">,</span> <span class="s1">&#39;Winter&#39;</span><span class="p">,</span> <span class="s1">&#39;Spring&#39;</span><span class="p">]</span> 
-        <span class="k">else</span> <span class="n">column_tuple</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">column_tuple</span> <span class="ow">in</span> 
-        <span class="n">df_wide</span><span class="o">.</span><span class="n">columns</span><span class="p">]</span>
-    <span class="n">df_wide</span><span class="p">[</span><span class="s1">&#39;Fall-Spring Change&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="n">df_wide</span><span class="p">[</span><span class="s1">&#39;Spring&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="n">df_wide</span><span class="p">[</span><span class="s1">&#39;Fall&#39;</span><span class="p">])</span>
-    <span class="n">df_wide</span><span class="p">[</span><span class="s1">&#39;Fall-Winter Change&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="n">df_wide</span><span class="p">[</span><span class="s1">&#39;Winter&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="n">df_wide</span><span class="p">[</span><span class="s1">&#39;Fall&#39;</span><span class="p">])</span>
-    <span class="n">df_wide</span><span class="p">[</span><span class="s1">&#39;Winter-Spring Change&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="n">df_wide</span><span class="p">[</span><span class="s1">&#39;Spring&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="n">df_wide</span><span class="p">[</span><span class="s1">&#39;Winter&#39;</span><span class="p">])</span>
-    <span class="n">df_wide</span><span class="p">[</span><span class="s1">&#39;Fall-Spring Change&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="n">df_wide</span><span class="p">[</span><span class="s1">&#39;Spring&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="n">df_wide</span><span class="p">[</span><span class="s1">&#39;Fall&#39;</span><span class="p">])</span>
+    <span class="n">df_wide</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">(</span><span class="n">df_wide</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">to_flat_index</span><span class="p">())</span>
+    <span class="n">df_wide</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="n">column_tuple</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="n">column_tuple</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> 
+        <span class="p">[</span><span class="s1">&#39;Fall&#39;</span><span class="p">,</span> <span class="s1">&#39;Winter&#39;</span><span class="p">,</span> <span class="s1">&#39;Spring&#39;</span><span class="p">]</span> <span class="k">else</span> <span class="n">column_tuple</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> 
+                       <span class="k">for</span> <span class="n">column_tuple</span> <span class="ow">in</span> <span class="n">df_wide</span><span class="o">.</span><span class="n">columns</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">sp</span> <span class="ow">in</span> <span class="p">[(</span><span class="s1">&#39;Fall&#39;</span><span class="p">,</span> <span class="s1">&#39;Spring&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;Fall&#39;</span><span class="p">,</span> <span class="s1">&#39;Winter&#39;</span><span class="p">),</span> 
+               <span class="p">(</span><span class="s1">&#39;Winter&#39;</span><span class="p">,</span> <span class="s1">&#39;Spring&#39;</span><span class="p">)]:</span> 
+        <span class="n">df_wide</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">sp</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s1">-</span><span class="si">{</span><span class="n">sp</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s1"> Change&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">df_wide</span><span class="p">[</span><span class="n">sp</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span> <span class="o">-</span> <span class="n">df_wide</span><span class="p">[</span><span class="n">sp</span><span class="p">[</span><span class="mi">0</span><span class="p">]])</span>
     <span class="k">return</span> <span class="n">df_wide</span>
 </pre></div>
 </div>
@@ -1185,56 +1225,57 @@
       <td>2023</td>
       <td>STB</td>
       <td>69.797119</td>
-      <td>64.404539</td>
+      <td>64.406522</td>
       <td>67.077551</td>
       <td>-2.719568</td>
-      <td>-5.392580</td>
-      <td>2.673012</td>
+      <td>-5.390596</td>
+      <td>2.671029</td>
     </tr>
     <tr>
       <th>1</th>
       <td>2023</td>
       <td>STC</td>
       <td>69.568665</td>
-      <td>64.123563</td>
+      <td>63.934845</td>
       <td>66.911444</td>
       <td>-2.657221</td>
-      <td>-5.445102</td>
-      <td>2.787881</td>
+      <td>-5.633820</td>
+      <td>2.976599</td>
     </tr>
     <tr>
       <th>2</th>
       <td>2023</td>
       <td>STL</td>
       <td>69.596675</td>
-      <td>64.117350</td>
+      <td>64.146248</td>
       <td>76.727809</td>
       <td>7.131134</td>
-      <td>-5.479325</td>
-      <td>12.610459</td>
+      <td>-5.450427</td>
+      <td>12.581561</td>
     </tr>
     <tr>
       <th>3</th>
       <td>2023</td>
       <td>STM</td>
       <td>69.735685</td>
-      <td>64.209075</td>
+      <td>64.318689</td>
       <td>76.639004</td>
       <td>6.903320</td>
-      <td>-5.526609</td>
-      <td>12.429929</td>
+      <td>-5.416995</td>
+      <td>12.320315</td>
     </tr>
   </tbody>
 </table>
 </div></div></div>
 </div>
-<p>The following cell creates a ‘long’ version of this table that displays only one season per row. We’ll utilize a .csv copy of this table within PFN’s graphing section. (We could also use the wide-formatted table shown above within our graphing script, but I wanted to make sure to demonstrate how to graph long-formatted data.)</p>
-<p>Note that <code class="docutils literal notranslate"><span class="pre">season_order</span></code> is added before <code class="docutils literal notranslate"><span class="pre">season</span></code> within the <code class="docutils literal notranslate"><span class="pre">index</span></code> list in order to get Winter results to precede Spring ones; however, it’s then dropped in order to keep the table more streamlined.</p>
+<p>Although we found earlier that university-wide survey results grew from the fall to the spring, this table shows that results for two colleges (STB and STC) actually <em>dropped</em> over that time period. (Their average spring survey scores were also markedly lower than STL’s and STM’s.) It also demonstrates that every college saw both a drop in scores from the fall to the winter <em>and</em> an increase in scores from the winter to the spring.</p>
+<p>The following cell creates a ‘long’ version of this table that features only one season per row and doesn’t display changes in scores between seasons. We’ll utilize a .csv copy of this table within PFN’s graphing section. (We could also use the wide-formatted table shown above within our graphing script, but I wanted to make sure to demonstrate how to graph long-formatted data.)</p>
+<p>Note that <code class="docutils literal notranslate"><span class="pre">season_order</span></code> is added before <code class="docutils literal notranslate"><span class="pre">season</span></code> within the <code class="docutils literal notranslate"><span class="pre">index</span></code> list in order to get Winter results to precede Spring ones; however, it’s then dropped in order to help streamline the table.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_results_by_season_and_college_long</span> <span class="o">=</span> <span class="n">df_survey_results</span><span class="o">.</span><span class="n">pivot_table</span><span class="p">(</span>
-    <span class="n">index</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;starting_year&#39;</span><span class="p">,</span> <span class="s1">&#39;college&#39;</span><span class="p">,</span> <span class="s1">&#39;season_order&#39;</span><span class="p">,</span> <span class="s1">&#39;season&#39;</span><span class="p">],</span> 
-    <span class="n">values</span> <span class="o">=</span> <span class="s1">&#39;score&#39;</span><span class="p">,</span> <span class="n">aggfunc</span> <span class="o">=</span> <span class="s1">&#39;mean&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span>
+    <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;starting_year&#39;</span><span class="p">,</span> <span class="s1">&#39;college&#39;</span><span class="p">,</span> <span class="s1">&#39;season_order&#39;</span><span class="p">,</span> <span class="s1">&#39;season&#39;</span><span class="p">],</span> 
+    <span class="n">values</span><span class="o">=</span><span class="s1">&#39;score&#39;</span><span class="p">,</span> <span class="n">aggfunc</span><span class="o">=</span><span class="s1">&#39;mean&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span>
     <span class="s1">&#39;season_order&#39;</span><span class="p">,</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
 <span class="n">df_results_by_season_and_college_long</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span>
     <span class="s1">&#39;survey_results_by_college_long.csv&#39;</span><span class="p">,</span> <span class="n">index</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
@@ -1280,7 +1321,7 @@
       <td>2023</td>
       <td>STB</td>
       <td>Winter</td>
-      <td>64.404539</td>
+      <td>64.406522</td>
     </tr>
     <tr>
       <th>2</th>
@@ -1301,7 +1342,7 @@
       <td>2023</td>
       <td>STC</td>
       <td>Winter</td>
-      <td>64.123563</td>
+      <td>63.934845</td>
     </tr>
     <tr>
       <th>5</th>
@@ -1322,7 +1363,7 @@
       <td>2023</td>
       <td>STL</td>
       <td>Winter</td>
-      <td>64.117350</td>
+      <td>64.146248</td>
     </tr>
     <tr>
       <th>8</th>
@@ -1343,7 +1384,7 @@
       <td>2023</td>
       <td>STM</td>
       <td>Winter</td>
-      <td>64.209075</td>
+      <td>64.318689</td>
     </tr>
     <tr>
       <th>11</th>
@@ -1356,19 +1397,18 @@
 </table>
 </div></div></div>
 </div>
-<p>Although university-wide survey results grew from the fall to the spring, this table shows that results for two colleges (STB and STC) actually <em>dropped</em> over that time period. (Their average spring survey scores were also markedly lower than STL’s and STM’s.) It also demonstrates that fall-to-winter scores dropped for all colleges and that every college saw an increase in scores during the winter-to-spring period.</p>
 </section>
 <section id="evaluating-changes-in-survey-scores-by-season-and-level">
 <h3>Evaluating changes in survey scores by season and level:<a class="headerlink" href="#evaluating-changes-in-survey-scores-by-season-and-level" title="Link to this heading">#</a></h3>
-<p>We’ll pivot the data by <code class="docutils literal notranslate"><span class="pre">level_for_sorting</span></code> and <em>then</em> <code class="docutils literal notranslate"><span class="pre">level</span></code> so as to order the rows from youngest to oldest.</p>
+<p>For this task, we’ll pivot the data by <code class="docutils literal notranslate"><span class="pre">level_for_sorting</span></code> so as to order the rows from youngest to oldest.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_results_by_season_and_college_wide</span> <span class="o">=</span> <span class="n">create_wide_table</span><span class="p">(</span>
-    <span class="n">index_values</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;starting_year&#39;</span><span class="p">,</span> <span class="s1">&#39;level_for_sorting&#39;</span><span class="p">,</span> <span class="s1">&#39;level&#39;</span><span class="p">])</span>
+    <span class="n">index_values</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;starting_year&#39;</span><span class="p">,</span> <span class="s1">&#39;level_for_sorting&#39;</span><span class="p">,</span> <span class="s1">&#39;level&#39;</span><span class="p">])</span>
 <span class="n">df_results_by_season_and_college_wide</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span>
     <span class="s1">&#39;starting_year&#39;</span><span class="p">,</span> <span class="s1">&#39;level_for_sorting&#39;</span><span class="p">],</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span> <span class="c1"># I chose to drop</span>
 <span class="c1"># these columns so that none of the more important ones would get </span>
-<span class="c1"># cut off by my notebook&#39;s 7-column limit</span>
+<span class="c1"># cut off by my notebook&#39;s 8-column limit</span>
 </pre></div>
 </div>
 </div>
@@ -1405,55 +1445,55 @@
       <th>0</th>
       <td>Fr</td>
       <td>69.609774</td>
-      <td>64.160563</td>
+      <td>64.193667</td>
       <td>74.833180</td>
       <td>5.223406</td>
-      <td>-5.449211</td>
-      <td>10.672617</td>
+      <td>-5.416107</td>
+      <td>10.639513</td>
     </tr>
     <tr>
       <th>1</th>
       <td>So</td>
       <td>69.688672</td>
-      <td>64.235604</td>
+      <td>64.231086</td>
       <td>69.495124</td>
       <td>-0.193548</td>
-      <td>-5.453069</td>
-      <td>5.259520</td>
+      <td>-5.457586</td>
+      <td>5.264038</td>
     </tr>
     <tr>
       <th>2</th>
       <td>Ju</td>
       <td>69.768957</td>
-      <td>64.244819</td>
+      <td>64.221396</td>
       <td>69.350671</td>
       <td>-0.418286</td>
-      <td>-5.524138</td>
-      <td>5.105852</td>
+      <td>-5.547561</td>
+      <td>5.129274</td>
     </tr>
     <tr>
       <th>3</th>
       <td>Se</td>
       <td>69.698085</td>
-      <td>64.263740</td>
+      <td>64.229462</td>
       <td>73.546671</td>
       <td>3.848586</td>
-      <td>-5.434344</td>
-      <td>9.282931</td>
+      <td>-5.468623</td>
+      <td>9.317209</td>
     </tr>
   </tbody>
 </table>
 </div></div></div>
 </div>
-<p>This table shows that scores for sophomores and juniors did not change much from the fall to the spring, but scores for freshmen and seniors increased. All levels showed a fall-to-winter drop followed by a winter-to-spring rise.</p>
+<p>This table shows that, whereas scores for sophomores and juniors did not change much from the fall to the spring, scores for freshmen and seniors increased quite a bit during that period. All levels showed a fall-to-winter drop followed by a winter-to-spring rise.</p>
 </section>
-<section id="evaluating-changes-in-survey-scores-by-season-college-and-level">
-<h3>Evaluating changes in survey scores by season, college, <em>and</em> level:<a class="headerlink" href="#evaluating-changes-in-survey-scores-by-season-college-and-level" title="Link to this heading">#</a></h3>
-<p>(I originally named the following DataFrame <code class="docutils literal notranslate"><span class="pre">df_results_by_season_level_and_college_wide</span></code>, but since that’s a rather long name and we’ll use this DataFrame quite a bit within this section, I abbreviated the index values as ‘slc’.)</p>
+<section id="evaluating-changes-in-survey-scores-by-season-level-and-college">
+<h3>Evaluating changes in survey scores by season, level, <em>and</em> college:<a class="headerlink" href="#evaluating-changes-in-survey-scores-by-season-level-and-college" title="Link to this heading">#</a></h3>
+<p>(I originally named the following DataFrame <code class="docutils literal notranslate"><span class="pre">df_results_by_season_level_and_college_wide</span></code>, but since that’s a rather long name for a DataFrame that we’ll use quite frequently, I chose the abbreviated name <code class="docutils literal notranslate"><span class="pre">df_results_slc</span></code> instead.)</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_results_slc</span> <span class="o">=</span> <span class="n">create_wide_table</span><span class="p">(</span>
-    <span class="n">index_values</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;starting_year&#39;</span><span class="p">,</span> <span class="s1">&#39;college&#39;</span><span class="p">,</span> 
+    <span class="n">index_values</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;starting_year&#39;</span><span class="p">,</span> <span class="s1">&#39;college&#39;</span><span class="p">,</span> 
                     <span class="s1">&#39;level_for_sorting&#39;</span><span class="p">,</span> <span class="s1">&#39;level&#39;</span><span class="p">])</span>
 <span class="n">df_results_slc</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;survey_results_slc_wide.csv&#39;</span><span class="p">,</span> <span class="n">index</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
 <span class="n">df_results_slc</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
@@ -1500,8 +1540,8 @@
       <td>...</td>
       <td>69.177235</td>
       <td>-0.416348</td>
-      <td>-5.634492</td>
-      <td>5.218144</td>
+      <td>-5.403776</td>
+      <td>4.987428</td>
     </tr>
     <tr>
       <th>1</th>
@@ -1512,8 +1552,8 @@
       <td>...</td>
       <td>65.377306</td>
       <td>-5.000000</td>
-      <td>-5.217350</td>
-      <td>0.217350</td>
+      <td>-5.237847</td>
+      <td>0.237847</td>
     </tr>
     <tr>
       <th>2</th>
@@ -1524,8 +1564,8 @@
       <td>...</td>
       <td>64.950769</td>
       <td>-5.000000</td>
-      <td>-5.379513</td>
-      <td>0.379513</td>
+      <td>-5.507824</td>
+      <td>0.507824</td>
     </tr>
     <tr>
       <th>3</th>
@@ -1536,8 +1576,8 @@
       <td>...</td>
       <td>68.543287</td>
       <td>-0.611041</td>
-      <td>-5.254624</td>
-      <td>4.643582</td>
+      <td>-5.426788</td>
+      <td>4.815747</td>
     </tr>
     <tr>
       <th>4</th>
@@ -1548,8 +1588,8 @@
       <td>...</td>
       <td>69.079348</td>
       <td>-0.519565</td>
-      <td>-5.455323</td>
-      <td>4.935758</td>
+      <td>-5.674532</td>
+      <td>5.154967</td>
     </tr>
   </tbody>
 </table>
@@ -1560,9 +1600,9 @@
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_survey_results_slc_long</span> <span class="o">=</span> <span class="n">df_survey_results</span><span class="o">.</span><span class="n">pivot_table</span><span class="p">(</span>
-    <span class="n">index</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;starting_year&#39;</span><span class="p">,</span> <span class="s1">&#39;college&#39;</span><span class="p">,</span> 
+    <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;starting_year&#39;</span><span class="p">,</span> <span class="s1">&#39;college&#39;</span><span class="p">,</span> 
              <span class="s1">&#39;level_for_sorting&#39;</span><span class="p">,</span> <span class="s1">&#39;level&#39;</span><span class="p">,</span> <span class="s1">&#39;season&#39;</span><span class="p">],</span>
-    <span class="n">values</span> <span class="o">=</span> <span class="s1">&#39;score&#39;</span><span class="p">,</span> <span class="n">aggfunc</span> <span class="o">=</span> <span class="s1">&#39;mean&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+    <span class="n">values</span><span class="o">=</span><span class="s1">&#39;score&#39;</span><span class="p">,</span> <span class="n">aggfunc</span> <span class="o">=</span> <span class="s1">&#39;mean&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
 <span class="n">df_survey_results_slc_long</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span>
     <span class="s1">&#39;survey_results_slc_long.csv&#39;</span><span class="p">,</span> <span class="n">index</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
 <span class="n">df_survey_results_slc_long</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
@@ -1622,7 +1662,7 @@
       <td>0</td>
       <td>Fr</td>
       <td>Winter</td>
-      <td>63.959091</td>
+      <td>64.189807</td>
     </tr>
     <tr>
       <th>3</th>
@@ -1647,16 +1687,273 @@
 </div></div></div>
 </div>
 </section>
+<section id="creating-a-wide-student-level-version-of-our-survey-results-dataset">
+<h3>Creating a wide student-level version of our survey results dataset<a class="headerlink" href="#creating-a-wide-student-level-version-of-our-survey-results-dataset" title="Link to this heading">#</a></h3>
+<p>We’ll also create a table that shows fall, winter, and spring survey results for each individual student within the same row. (This table will get used within Part 2 of the Descriptive Stats section.)</p>
+<p>Since we’re simply condensing and reshaping <code class="docutils literal notranslate"><span class="pre">df_survey_results</span></code> here rather than calculating averages, we can use <code class="docutils literal notranslate"><span class="pre">pivot</span></code> rather than <code class="docutils literal notranslate"><span class="pre">pivot_table</span></code>. Note that <code class="docutils literal notranslate"><span class="pre">pivot</span></code> doesn’t take <code class="docutils literal notranslate"><span class="pre">aggfunc</span></code> as an argument (as we’re not creating any aggregate statistics here).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_student_results_wide</span> <span class="o">=</span> <span class="n">df_survey_results</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span><span class="o">.</span><span class="n">pivot</span><span class="p">(</span>
+    <span class="n">index</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;starting_year&#39;</span><span class="p">,</span> <span class="s1">&#39;student_id&#39;</span><span class="p">],</span>
+             <span class="n">columns</span> <span class="o">=</span> <span class="s1">&#39;season&#39;</span><span class="p">,</span> <span class="n">values</span> <span class="o">=</span> <span class="s1">&#39;score&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+<span class="n">df_student_results_wide</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>season</th>
+      <th>starting_year</th>
+      <th>student_id</th>
+      <th>Fall</th>
+      <th>Spring</th>
+      <th>Winter</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2023</td>
+      <td>2020-1</td>
+      <td>88.0</td>
+      <td>86.0</td>
+      <td>81.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2023</td>
+      <td>2020-10</td>
+      <td>69.0</td>
+      <td>73.0</td>
+      <td>63.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2023</td>
+      <td>2020-100</td>
+      <td>68.0</td>
+      <td>88.0</td>
+      <td>60.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2023</td>
+      <td>2020-1000</td>
+      <td>58.0</td>
+      <td>65.0</td>
+      <td>55.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2023</td>
+      <td>2020-1001</td>
+      <td>88.0</td>
+      <td>100.0</td>
+      <td>84.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Note that ‘Spring’ is located to the left of ‘Winter’. To move it to the right, I’ll call <code class="docutils literal notranslate"><span class="pre">df.insert()</span></code>, which allows us to add a new column into the DataFrame. This ‘new’ column will actually be the current Winter column, which I’ll first remove from the DataFrame via <code class="docutils literal notranslate"><span class="pre">df.pop()</span></code>.</p>
+<p>The first argument within <code class="docutils literal notranslate"><span class="pre">df.insert()</span></code> is the location of the new column. The code calculates this location by subtracting 1 from the number of columns within <code class="docutils literal notranslate"><span class="pre">df_student_results_wide</span></code>; this will represent the position to the right of the ‘Winter’ column once the ‘Spring’ column is removed. (I could have hardcoded this value, but this approach will better accommodate changes to <code class="docutils literal notranslate"><span class="pre">df_student_results_wide</span></code>’s structure).</p>
+<p><code class="docutils literal notranslate"><span class="pre">df_insert()</span></code>’s second argument is the name (which we’ll keep as ‘Spring’), and its third argument is the data to add to this new column (which, in this case, will be the existing ‘Spring’ column entries).</p>
+<p>For more details on these functions, visit <a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.insert.html">https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.insert.html</a> and <a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.pop.html">https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.pop.html</a> . The idea of chaining these two functions together isn’t an original one; I probably got it from a StackOverflow answer like this one from Marc Maxmeister : <a class="reference external" href="https://stackoverflow.com/a/77463008/13097194">https://stackoverflow.com/a/77463008/13097194</a> )</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_student_results_wide</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span>
+    <span class="nb">len</span><span class="p">(</span><span class="n">df_student_results_wide</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;Spring&#39;</span><span class="p">,</span>
+                       <span class="n">df_student_results_wide</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;Spring&#39;</span><span class="p">))</span>
+<span class="n">df_student_results_wide</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>season</th>
+      <th>starting_year</th>
+      <th>student_id</th>
+      <th>Fall</th>
+      <th>Winter</th>
+      <th>Spring</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2023</td>
+      <td>2020-1</td>
+      <td>88.0</td>
+      <td>81.0</td>
+      <td>86.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2023</td>
+      <td>2020-10</td>
+      <td>69.0</td>
+      <td>63.0</td>
+      <td>73.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2023</td>
+      <td>2020-100</td>
+      <td>68.0</td>
+      <td>60.0</td>
+      <td>88.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2023</td>
+      <td>2020-1000</td>
+      <td>58.0</td>
+      <td>55.0</td>
+      <td>65.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2023</td>
+      <td>2020-1001</td>
+      <td>88.0</td>
+      <td>84.0</td>
+      <td>100.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>I could also have reordered the columns via the following code; however, this code would then need to be updated to account for any new columns that we chose to add to the dataset, whereas the method shown above is a bit more flexible.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_student_results_wide</span> <span class="o">=</span> <span class="n">df_student_results_wide</span><span class="p">[</span>
+<span class="p">[</span><span class="s1">&#39;starting_year&#39;</span><span class="p">,</span> <span class="s1">&#39;student_id&#39;</span><span class="p">,</span> <span class="s1">&#39;Fall&#39;</span><span class="p">,</span> <span class="s1">&#39;Winter&#39;</span><span class="p">,</span> <span class="s1">&#39;Spring&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">df_student_results_wide</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>season</th>
+      <th>starting_year</th>
+      <th>student_id</th>
+      <th>Fall</th>
+      <th>Winter</th>
+      <th>Spring</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2023</td>
+      <td>2020-1</td>
+      <td>88.0</td>
+      <td>81.0</td>
+      <td>86.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2023</td>
+      <td>2020-10</td>
+      <td>69.0</td>
+      <td>63.0</td>
+      <td>73.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2023</td>
+      <td>2020-100</td>
+      <td>68.0</td>
+      <td>60.0</td>
+      <td>88.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2023</td>
+      <td>2020-1000</td>
+      <td>58.0</td>
+      <td>55.0</td>
+      <td>65.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2023</td>
+      <td>2020-1001</td>
+      <td>88.0</td>
+      <td>84.0</td>
+      <td>100.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Saving the table to a .csv file so that it can get imported into Part 2 of the Descriptive Stats section:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_student_results_wide</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span>
+    <span class="s1">&#39;survey_results_by_student_wide.csv&#39;</span><span class="p">,</span> <span class="n">index</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
 </section>
 <section id="comparing-rows-via-sort-values-and-rank">
-<h2>Comparing rows via sort_values() and rank()<a class="headerlink" href="#comparing-rows-via-sort-values-and-rank" title="Link to this heading">#</a></h2>
-<p>Which college/level pairs had the highest and lowest spring survey results? We could examine <code class="docutils literal notranslate"><span class="pre">df_results_slc</span></code> line by line to answer this question; however, two Pandas functions–sort_values() and rank()–can make it easier to compare survey outcomes by college and level.</p>
+<h2>Comparing rows via <code class="docutils literal notranslate"><span class="pre">sort_values()</span></code> and <code class="docutils literal notranslate"><span class="pre">rank()</span></code><a class="headerlink" href="#comparing-rows-via-sort-values-and-rank" title="Link to this heading">#</a></h2>
+<p>Which college/level pairs had the highest and lowest spring survey results? We could examine <code class="docutils literal notranslate"><span class="pre">df_results_slc</span></code> line by line to answer this question; however, two Pandas functions–sort_values() and rank()–can help us answer this question more efficiently.</p>
 <p>First, here are the the five college/level pairs with the highest average spring results:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_results_slc</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span>
-<span class="s1">&#39;Spring&#39;</span><span class="p">,</span> <span class="n">ascending</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span>
-    <span class="p">[</span><span class="s1">&#39;starting_year&#39;</span><span class="p">,</span> <span class="s1">&#39;level_for_sorting&#39;</span><span class="p">],</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_results_slc</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;Spring&#39;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span>
+    <span class="p">[</span><span class="s1">&#39;starting_year&#39;</span><span class="p">,</span> <span class="s1">&#39;level_for_sorting&#39;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -1695,55 +1992,55 @@
       <td>STM</td>
       <td>Se</td>
       <td>70.058590</td>
-      <td>64.464658</td>
+      <td>64.707852</td>
       <td>79.309831</td>
       <td>9.251241</td>
-      <td>-5.593932</td>
-      <td>14.845173</td>
+      <td>-5.350738</td>
+      <td>14.601979</td>
     </tr>
     <tr>
       <th>8</th>
       <td>STL</td>
       <td>Fr</td>
       <td>69.585030</td>
-      <td>64.325988</td>
+      <td>64.255102</td>
       <td>79.111622</td>
       <td>9.526592</td>
-      <td>-5.259042</td>
-      <td>14.785634</td>
+      <td>-5.329928</td>
+      <td>14.856520</td>
     </tr>
     <tr>
       <th>12</th>
       <td>STM</td>
       <td>Fr</td>
       <td>69.650503</td>
-      <td>64.172657</td>
+      <td>64.286313</td>
       <td>78.488468</td>
       <td>8.837966</td>
-      <td>-5.477846</td>
-      <td>14.315812</td>
+      <td>-5.364190</td>
+      <td>14.202156</td>
     </tr>
     <tr>
       <th>11</th>
       <td>STL</td>
       <td>Se</td>
       <td>69.026639</td>
-      <td>63.622549</td>
+      <td>63.520482</td>
       <td>77.915984</td>
       <td>8.889344</td>
-      <td>-5.404090</td>
-      <td>14.293435</td>
+      <td>-5.506157</td>
+      <td>14.395502</td>
     </tr>
     <tr>
       <th>10</th>
       <td>STL</td>
       <td>Ju</td>
       <td>69.878706</td>
-      <td>64.393496</td>
+      <td>64.372549</td>
       <td>74.634771</td>
       <td>4.756065</td>
-      <td>-5.485210</td>
-      <td>10.241275</td>
+      <td>-5.506157</td>
+      <td>10.262222</td>
     </tr>
   </tbody>
 </table>
@@ -1752,9 +2049,8 @@
 <p>And here are the five pairs with the <em>lowest</em> spring results:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_results_slc</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span>
-    <span class="s1">&#39;Spring&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span>
-    <span class="p">[</span><span class="s1">&#39;starting_year&#39;</span><span class="p">,</span> <span class="s1">&#39;level_for_sorting&#39;</span><span class="p">],</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_results_slc</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;Spring&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span>
+    <span class="p">[</span><span class="s1">&#39;starting_year&#39;</span><span class="p">,</span> <span class="s1">&#39;level_for_sorting&#39;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -1793,61 +2089,61 @@
       <td>STC</td>
       <td>Ju</td>
       <td>69.180932</td>
-      <td>63.694301</td>
+      <td>63.502506</td>
       <td>64.180932</td>
       <td>-5.000000</td>
-      <td>-5.486631</td>
-      <td>0.486631</td>
+      <td>-5.678425</td>
+      <td>0.678425</td>
     </tr>
     <tr>
       <th>5</th>
       <td>STC</td>
       <td>So</td>
       <td>69.331325</td>
-      <td>63.932600</td>
+      <td>63.760684</td>
       <td>64.331325</td>
       <td>-5.000000</td>
-      <td>-5.398726</td>
-      <td>0.398726</td>
+      <td>-5.570642</td>
+      <td>0.570642</td>
     </tr>
     <tr>
       <th>2</th>
       <td>STB</td>
       <td>Ju</td>
       <td>69.950769</td>
-      <td>64.571256</td>
+      <td>64.442945</td>
       <td>64.950769</td>
       <td>-5.000000</td>
-      <td>-5.379513</td>
-      <td>0.379513</td>
+      <td>-5.507824</td>
+      <td>0.507824</td>
     </tr>
     <tr>
       <th>1</th>
       <td>STB</td>
       <td>So</td>
       <td>70.377306</td>
-      <td>65.159956</td>
+      <td>65.139459</td>
       <td>65.377306</td>
       <td>-5.000000</td>
-      <td>-5.217350</td>
-      <td>0.217350</td>
+      <td>-5.237847</td>
+      <td>0.237847</td>
     </tr>
     <tr>
       <th>3</th>
       <td>STB</td>
       <td>Se</td>
       <td>69.154329</td>
-      <td>63.899705</td>
+      <td>63.727541</td>
       <td>68.543287</td>
       <td>-0.611041</td>
-      <td>-5.254624</td>
-      <td>4.643582</td>
+      <td>-5.426788</td>
+      <td>4.815747</td>
     </tr>
   </tbody>
 </table>
 </div></div></div>
 </div>
-<p>Note that the use of sort_values() here did not actually change the underlying order of the DataFrame. Although it displays in sorted order immediately after sort_values() gets called, the DataFrame will revert to its original sort order during subsequent lines of code. The following cell demonstrates this:</p>
+<p>Note that the use of <code class="docutils literal notranslate"><span class="pre">sort_values()</span></code> here did not actually change the underlying order of the DataFrame. Although the output appeared in sorted order immediately after <code class="docutils literal notranslate"><span class="pre">sort_values()</span></code> got called, the DataFrame will then revert to its original sort order during subsequent lines of code. The following cell demonstrates this:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_results_slc</span><span class="o">.</span><span class="n">head</span><span class="p">()</span> <span class="c1"># Note that the DataFrame</span>
@@ -1895,8 +2191,8 @@
       <td>...</td>
       <td>69.177235</td>
       <td>-0.416348</td>
-      <td>-5.634492</td>
-      <td>5.218144</td>
+      <td>-5.403776</td>
+      <td>4.987428</td>
     </tr>
     <tr>
       <th>1</th>
@@ -1907,8 +2203,8 @@
       <td>...</td>
       <td>65.377306</td>
       <td>-5.000000</td>
-      <td>-5.217350</td>
-      <td>0.217350</td>
+      <td>-5.237847</td>
+      <td>0.237847</td>
     </tr>
     <tr>
       <th>2</th>
@@ -1919,8 +2215,8 @@
       <td>...</td>
       <td>64.950769</td>
       <td>-5.000000</td>
-      <td>-5.379513</td>
-      <td>0.379513</td>
+      <td>-5.507824</td>
+      <td>0.507824</td>
     </tr>
     <tr>
       <th>3</th>
@@ -1931,8 +2227,8 @@
       <td>...</td>
       <td>68.543287</td>
       <td>-0.611041</td>
-      <td>-5.254624</td>
-      <td>4.643582</td>
+      <td>-5.426788</td>
+      <td>4.815747</td>
     </tr>
     <tr>
       <th>4</th>
@@ -1943,8 +2239,8 @@
       <td>...</td>
       <td>69.079348</td>
       <td>-0.519565</td>
-      <td>-5.455323</td>
-      <td>4.935758</td>
+      <td>-5.674532</td>
+      <td>5.154967</td>
     </tr>
   </tbody>
 </table>
@@ -1952,26 +2248,29 @@
 </div></div></div>
 </div>
 <p>This behavior, which is seen in many other Pandas functions, is actually quite helpful: it allows you to test out changes and modifications without making them permanent (which, if you make a mistake, could force you to restart your script).</p>
-<p>It’s also worth mentioning that none of these changes are affecting the underlying .csv file from which we retrieved our data. That file will only get modified if we use to_csv() to save our table to that same filename.</p>
 <p>To make a sort persistent, you can use one of the following two lines:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># First option (my preference because it often requires fewer characters:</span>
-<span class="n">df_results_slc</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span>
-    <span class="s1">&#39;Spring&#39;</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># First option (my preference because it often requires fewer characters):</span>
+<span class="n">df_results_slc</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;Spring&#39;</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
 <span class="c1"># An alternative option (which can come in handy when making multiple</span>
 <span class="c1"># changes to a dataset at once):</span>
-<span class="n">df_results_slc</span> <span class="o">=</span> <span class="p">(</span>
-    <span class="n">df_results_slc</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;Spring&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-
+<span class="n">df_results_slc</span> <span class="o">=</span> <span class="p">(</span><span class="n">df_results_slc</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;Spring&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
 
 <span class="c1"># Make sure NOT to add &#39;inplace = True&#39; as an argument when using the </span>
-<span class="c1"># second method, as your DataFrame will then get replaced with None! </span>
+<span class="c1"># second method, as your DataFrame will then get replaced with </span>
+<span class="c1"># a &#39;None&#39; object!</span>
 <span class="c1"># For an explanation of None, see: </span>
 <span class="c1"># https://docs.python.org/3/library/constants.html#None</span>
-
-<span class="n">df_results_slc</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now that we’ve made our sort persistent, we will continue to see it reflected within subsequent sets of output:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_results_slc</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -2015,8 +2314,8 @@
       <td>...</td>
       <td>64.180932</td>
       <td>-5.000000</td>
-      <td>-5.486631</td>
-      <td>0.486631</td>
+      <td>-5.678425</td>
+      <td>0.678425</td>
     </tr>
     <tr>
       <th>5</th>
@@ -2027,8 +2326,8 @@
       <td>...</td>
       <td>64.331325</td>
       <td>-5.000000</td>
-      <td>-5.398726</td>
-      <td>0.398726</td>
+      <td>-5.570642</td>
+      <td>0.570642</td>
     </tr>
     <tr>
       <th>2</th>
@@ -2039,8 +2338,8 @@
       <td>...</td>
       <td>64.950769</td>
       <td>-5.000000</td>
-      <td>-5.379513</td>
-      <td>0.379513</td>
+      <td>-5.507824</td>
+      <td>0.507824</td>
     </tr>
     <tr>
       <th>1</th>
@@ -2051,8 +2350,8 @@
       <td>...</td>
       <td>65.377306</td>
       <td>-5.000000</td>
-      <td>-5.217350</td>
-      <td>0.217350</td>
+      <td>-5.237847</td>
+      <td>0.237847</td>
     </tr>
     <tr>
       <th>3</th>
@@ -2063,14 +2362,15 @@
       <td>...</td>
       <td>68.543287</td>
       <td>-0.611041</td>
-      <td>-5.254624</td>
-      <td>4.643582</td>
+      <td>-5.426788</td>
+      <td>4.815747</td>
     </tr>
   </tbody>
 </table>
 <p>5 rows × 10 columns</p>
 </div></div></div>
 </div>
+<p>It’s also worth mentioning that none of these changes, even the persistent sort that we just effected, are affecting the underlying .csv file from which we retrieved our data. That file will only get modified if we use <code class="docutils literal notranslate"><span class="pre">to_csv()</span></code> to save our table to that same filename. (You’ll usually want to save tables to a different filename anyway so that your output doesn’t overwrite your input.)</p>
 </section>
 <section id="calculating-percentiles-and-ranks">
 <h2>Calculating percentiles and ranks<a class="headerlink" href="#calculating-percentiles-and-ranks" title="Link to this heading">#</a></h2>
@@ -2079,10 +2379,9 @@
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Creating a condensed DataFrame:</span>
-<span class="n">df_spring_ranks</span> <span class="o">=</span> <span class="n">df_results_slc</span><span class="o">.</span><span class="n">copy</span><span class="p">()[[</span>
-    <span class="s1">&#39;starting_year&#39;</span><span class="p">,</span> <span class="s1">&#39;college&#39;</span><span class="p">,</span> 
+<span class="n">df_spring_ranks</span> <span class="o">=</span> <span class="n">df_results_slc</span><span class="o">.</span><span class="n">copy</span><span class="p">()[[</span><span class="s1">&#39;starting_year&#39;</span><span class="p">,</span> <span class="s1">&#39;college&#39;</span><span class="p">,</span> 
     <span class="s1">&#39;level_for_sorting&#39;</span><span class="p">,</span> <span class="s1">&#39;level&#39;</span><span class="p">,</span> <span class="s1">&#39;Spring&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span>
-    <span class="s1">&#39;Spring&#39;</span><span class="p">,</span> <span class="n">ascending</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
+    <span class="s1">&#39;Spring&#39;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 <span class="c1"># Converting average spring results to integers:</span>
 <span class="n">df_spring_ranks</span><span class="p">[</span><span class="s1">&#39;Spring&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_spring_ranks</span><span class="p">[</span><span class="s1">&#39;Spring&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;int&#39;</span><span class="p">)</span>
 
@@ -2090,8 +2389,8 @@
 <span class="c1"># Note: the inclusion of &quot;method = &#39;min&#39;&quot; ensures that, in the case of </span>
 <span class="c1"># ties, each tied row will show the lowest (i.e. best) possible rank. </span>
 <span class="c1"># This is the ranking convention that I&#39;m more familiar with, but Pandas </span>
-<span class="c1"># allows for other methods also. ascending = False assigns the best ranks </span>
-<span class="c1"># to the highest results.</span>
+<span class="c1"># allows for other methods also. Meanwhile, &quot;ascending = False&quot; assigns the </span>
+<span class="c1"># best ranks to the highest results.</span>
 <span class="c1"># See the df.rank() documentation for more details:</span>
 <span class="c1"># https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.</span>
 <span class="c1"># DataFrame.rank.html</span>
@@ -2279,12 +2578,12 @@
 </div></div></div>
 </div>
 <p>Our code for calculating percentiles will also use <code class="docutils literal notranslate"><span class="pre">df.rank()</span></code>; we can instruct that function to display its output as percentiles by adding the argument <code class="docutils literal notranslate"><span class="pre">pct=True</span></code>. We’ll also add (1) <code class="docutils literal notranslate"><span class="pre">ascending=True</span></code> so that the highest scores will get the highest percentiles and (2) <code class="docutils literal notranslate"><span class="pre">method='max'</span></code> so that, in the case of ties, the highest possible percentile will get displayed.</p>
-<p>Note that, while the highest percentile in the following output is 100, the lowest percentile is not 0. I believe this is because Pandas calculates percentiles as the percentage of results <em>equal to or lower than</em> the current result. Therefore, even the lowest row won’t get a percentile of 0 during percentile calculations, as it will at least be equal to itself.</p>
+<p>Note that, while the highest percentile in the following output is 100, the lowest percentile is not 0. I’m quite sure that this is because Pandas calculates percentiles as the percentage of results <em>equal to or lower than</em> the current result. Therefore, even the lowest row won’t get a percentile of 0 during percentile calculations, as it will at least be equal to itself. (The larger your dataset, the closer the smallest percentile will be to 0.)</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_spring_ranks</span><span class="p">[</span><span class="s1">&#39;Spring_Percentile&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">100</span> 
-<span class="o">*</span> <span class="n">df_spring_ranks</span><span class="p">[</span><span class="s1">&#39;Spring&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">rank</span><span class="p">(</span>
-    <span class="n">ascending</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">pct</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;max&#39;</span><span class="p">))</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_spring_ranks</span><span class="p">[</span><span class="s1">&#39;Spring_Percentile&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="mi">100</span> <span class="o">*</span> <span class="n">df_spring_ranks</span><span class="p">[</span><span class="s1">&#39;Spring&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">rank</span><span class="p">(</span>
+        <span class="n">ascending</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">pct</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;max&#39;</span><span class="p">))</span>
 <span class="n">df_spring_ranks</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -2372,16 +2671,13 @@
 </table>
 </div></div></div>
 </div>
-<p>Although our DataFrame was sorted by Spring results, df.rank() would still have successfully calculated ranks and percentiles regardless of how the DataFrame happened to be sorted.</p>
-<section id="calculating-average-results-by-student-and-dealing-with-missing-values">
-<h3>Calculating average results by student (and dealing with missing values)<a class="headerlink" href="#calculating-average-results-by-student-and-dealing-with-missing-values" title="Link to this heading">#</a></h3>
-<p>Suppose that the NVCU administration wishes to see what percentage of students had a weighted average annual survey score below 60. Because they are more interested in students’ most recent survey results, they would like you to assign a weight of 0.2 to the fall results; 0.3 to the winter results; and 0.5 to the spring results. (Thus, students’ weighted survey averages will equal 0.2*F + 0.3*W + 0.5*S, with F, W, and S referring to students’ fall, winter, and spring results, respectively.)</p>
-<p>We’ll begin this analysis by calling create_wide_table that shows fall, winter, and spring scores side by side for each student:</p>
+<p>Although our DataFrame was sorted by Spring results, <code class="docutils literal notranslate"><span class="pre">df.rank()</span></code> would still have successfully calculated ranks and percentiles regardless of how the DataFrame happened to be sorted. We can demonstrate this via the following code (which sorts the DataFrame by a different field before calling <code class="docutils literal notranslate"><span class="pre">rank()</span></code>):</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_student_results_wide</span> <span class="o">=</span> <span class="n">create_wide_table</span><span class="p">(</span>
-    <span class="n">index_values</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;starting_year&#39;</span><span class="p">,</span> <span class="s1">&#39;student_id&#39;</span><span class="p">])</span>
-<span class="n">df_student_results_wide</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_spring_ranks</span><span class="p">[</span><span class="s1">&#39;Spring_Percentile&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="mi">100</span> <span class="o">*</span> <span class="n">df_spring_ranks</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;college&#39;</span><span class="p">)[</span><span class="s1">&#39;Spring&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">rank</span><span class="p">(</span>
+        <span class="n">ascending</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">pct</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;max&#39;</span><span class="p">))</span>
+<span class="n">df_spring_ranks</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -2405,573 +2701,88 @@
     <tr style="text-align: right;">
       <th></th>
       <th>starting_year</th>
-      <th>student_id</th>
-      <th>Fall</th>
-      <th>Winter</th>
+      <th>college</th>
+      <th>level_for_sorting</th>
+      <th>level</th>
       <th>Spring</th>
-      <th>Fall-Spring Change</th>
-      <th>Fall-Winter Change</th>
-      <th>Winter-Spring Change</th>
+      <th>Spring_Rank</th>
+      <th>Spring_Percentile</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <th>0</th>
+      <th>15</th>
       <td>2023</td>
-      <td>2020-1</td>
-      <td>88.0</td>
-      <td>81.0</td>
-      <td>86.0</td>
-      <td>-2.0</td>
-      <td>-7.0</td>
-      <td>5.0</td>
+      <td>STM</td>
+      <td>3</td>
+      <td>Se</td>
+      <td>79</td>
+      <td>1.0</td>
+      <td>100.00</td>
     </tr>
     <tr>
-      <th>1</th>
+      <th>8</th>
       <td>2023</td>
-      <td>2020-10</td>
-      <td>69.0</td>
-      <td>63.0</td>
-      <td>73.0</td>
-      <td>4.0</td>
-      <td>-6.0</td>
-      <td>10.0</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>2023</td>
-      <td>2020-100</td>
-      <td>68.0</td>
-      <td>60.0</td>
-      <td>88.0</td>
-      <td>20.0</td>
-      <td>-8.0</td>
-      <td>28.0</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>2023</td>
-      <td>2020-1000</td>
-      <td>58.0</td>
-      <td>55.0</td>
-      <td>65.0</td>
-      <td>7.0</td>
-      <td>-3.0</td>
-      <td>10.0</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>2023</td>
-      <td>2020-1001</td>
-      <td>88.0</td>
-      <td>84.0</td>
-      <td>100.0</td>
-      <td>12.0</td>
-      <td>-4.0</td>
-      <td>16.0</td>
-    </tr>
-  </tbody>
-</table>
-</div></div></div>
-</div>
-<p>Notice that some winter results have NaN (not a number) values. We can count the number of NaN results for each column via <code class="docutils literal notranslate"><span class="pre">df.isna().sum()</span></code>:</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_student_results_wide</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>starting_year              0
-student_id                 0
-Fall                       0
-Winter                  2458
-Spring                     0
-Fall-Spring Change         0
-Fall-Winter Change      2458
-Winter-Spring Change    2458
-dtype: int64
-</pre></div>
-</div>
-</div>
-</div>
-<p>These missing results will make our weighted average calculations a bit more complicated. For instance, suppose we tried to create our weighted averages using the following code:</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_student_results_wide</span><span class="p">[</span><span class="s1">&#39;weighted_avg_score&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
-    <span class="n">df_student_results_wide</span><span class="p">[</span><span class="s1">&#39;Fall&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="mf">0.2</span> 
-    <span class="o">+</span> <span class="n">df_student_results_wide</span><span class="p">[</span><span class="s1">&#39;Winter&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="mf">0.3</span> 
-    <span class="o">+</span> <span class="n">df_student_results_wide</span><span class="p">[</span><span class="s1">&#39;Spring&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="mf">0.5</span><span class="p">)</span>
-<span class="n">df_student_results_wide</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>starting_year</th>
-      <th>student_id</th>
-      <th>Fall</th>
-      <th>Winter</th>
-      <th>...</th>
-      <th>Fall-Spring Change</th>
-      <th>Fall-Winter Change</th>
-      <th>Winter-Spring Change</th>
-      <th>weighted_avg_score</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>2023</td>
-      <td>2020-1</td>
-      <td>88.0</td>
-      <td>81.0</td>
-      <td>...</td>
-      <td>-2.0</td>
-      <td>-7.0</td>
-      <td>5.0</td>
-      <td>84.9</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>2023</td>
-      <td>2020-10</td>
-      <td>69.0</td>
-      <td>63.0</td>
-      <td>...</td>
-      <td>4.0</td>
-      <td>-6.0</td>
-      <td>10.0</td>
-      <td>69.2</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>2023</td>
-      <td>2020-100</td>
-      <td>68.0</td>
-      <td>60.0</td>
-      <td>...</td>
-      <td>20.0</td>
-      <td>-8.0</td>
-      <td>28.0</td>
-      <td>75.6</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>2023</td>
-      <td>2020-1000</td>
-      <td>58.0</td>
-      <td>55.0</td>
-      <td>...</td>
-      <td>7.0</td>
-      <td>-3.0</td>
-      <td>10.0</td>
-      <td>60.6</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>2023</td>
-      <td>2020-1001</td>
-      <td>88.0</td>
-      <td>84.0</td>
-      <td>...</td>
-      <td>12.0</td>
-      <td>-4.0</td>
-      <td>16.0</td>
-      <td>92.8</td>
-    </tr>
-  </tbody>
-</table>
-<p>5 rows × 9 columns</p>
-</div></div></div>
-</div>
-<p>This code works fine for students with valid scores for all 3 seasons, but those with a NaN winter value will also end up with a NaN average score.</p>
-<p>We can get rid of the NaN results by calling <code class="docutils literal notranslate"><span class="pre">fillna()</span></code> to replace all NaN values with 0, as shown below. However, <strong>note that this approach will result in inaccurately low average score values for students with missing winter results.</strong> This is because our valid score weights for these students (0.2 for Fall and 0.5 for Spring) add up to only 0.7; in other words, these scores are around 30% lower than they should be.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_student_results_wide</span><span class="p">[</span><span class="s1">&#39;weighted_avg_score&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
-    <span class="n">df_student_results_wide</span><span class="p">[</span><span class="s1">&#39;Fall&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.2</span> 
-    <span class="o">+</span> <span class="n">df_student_results_wide</span><span class="p">[</span><span class="s1">&#39;Winter&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.3</span> 
-    <span class="o">+</span> <span class="n">df_student_results_wide</span><span class="p">[</span><span class="s1">&#39;Spring&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.5</span><span class="p">)</span>
-<span class="n">df_student_results_wide</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;Winter.isna()&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>starting_year</th>
-      <th>student_id</th>
-      <th>Fall</th>
-      <th>Winter</th>
-      <th>...</th>
-      <th>Fall-Spring Change</th>
-      <th>Fall-Winter Change</th>
-      <th>Winter-Spring Change</th>
-      <th>weighted_avg_score</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>5</th>
-      <td>2023</td>
-      <td>2020-1002</td>
-      <td>62.0</td>
-      <td>NaN</td>
-      <td>...</td>
-      <td>-3.0</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>41.9</td>
+      <td>STL</td>
+      <td>0</td>
+      <td>Fr</td>
+      <td>79</td>
+      <td>1.0</td>
+      <td>100.00</td>
     </tr>
     <tr>
       <th>12</th>
       <td>2023</td>
-      <td>2020-1009</td>
-      <td>74.0</td>
-      <td>NaN</td>
-      <td>...</td>
-      <td>-5.0</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>49.3</td>
+      <td>STM</td>
+      <td>0</td>
+      <td>Fr</td>
+      <td>78</td>
+      <td>3.0</td>
+      <td>87.50</td>
     </tr>
     <tr>
-      <th>23</th>
+      <th>11</th>
       <td>2023</td>
-      <td>2020-1019</td>
-      <td>72.0</td>
-      <td>NaN</td>
-      <td>...</td>
-      <td>17.0</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>58.9</td>
+      <td>STL</td>
+      <td>3</td>
+      <td>Se</td>
+      <td>77</td>
+      <td>4.0</td>
+      <td>81.25</td>
     </tr>
     <tr>
-      <th>24</th>
+      <th>10</th>
       <td>2023</td>
-      <td>2020-102</td>
-      <td>79.0</td>
-      <td>NaN</td>
-      <td>...</td>
-      <td>-2.0</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>54.3</td>
-    </tr>
-    <tr>
-      <th>33</th>
-      <td>2023</td>
-      <td>2020-1028</td>
-      <td>68.0</td>
-      <td>NaN</td>
-      <td>...</td>
-      <td>-3.0</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>46.1</td>
+      <td>STL</td>
+      <td>2</td>
+      <td>Ju</td>
+      <td>74</td>
+      <td>5.0</td>
+      <td>75.00</td>
     </tr>
   </tbody>
 </table>
-<p>5 rows × 9 columns</p>
 </div></div></div>
 </div>
-<p>Here’s a better approach that, while a bit more complex, successfully adjusts for missing values. First, we’ll create a weight column for each season that displays either our predetermined weight (if a student has a valid score for that season) or 0 (if the student does not). We’ll also create a column that adds all of these weights together.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">season_weight_dict</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Fall&#39;</span><span class="p">:</span><span class="mf">0.2</span><span class="p">,</span><span class="s1">&#39;Winter&#39;</span><span class="p">:</span><span class="mf">0.3</span><span class="p">,</span><span class="s1">&#39;Spring&#39;</span><span class="p">:</span><span class="mf">0.5</span><span class="p">}</span>
-<span class="c1"># Using a for loop to create these columns makes our code a bit more </span>
-<span class="c1"># concise.</span>
-<span class="k">for</span> <span class="n">season</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;Fall&#39;</span><span class="p">,</span> <span class="s1">&#39;Winter&#39;</span><span class="p">,</span> <span class="s1">&#39;Spring&#39;</span><span class="p">]:</span>
-    <span class="n">df_student_results_wide</span><span class="p">[</span><span class="n">season</span><span class="o">+</span><span class="s1">&#39;_weight&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span>
-        <span class="n">df_student_results_wide</span><span class="p">[</span><span class="n">season</span><span class="p">]</span><span class="o">.</span><span class="n">isna</span><span class="p">(),</span> <span class="mi">0</span><span class="p">,</span> 
-        <span class="n">season_weight_dict</span><span class="p">[</span><span class="n">season</span><span class="p">])</span>
-
-<span class="c1"># adding axis=1 as an argument to df.sum() ensures that the calculations</span>
-<span class="c1"># will be made row-wise rather than column-wise.</span>
-<span class="n">df_student_results_wide</span><span class="p">[</span><span class="s1">&#39;weight_sum&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_student_results_wide</span><span class="p">[[</span>
-    <span class="s1">&#39;Fall_weight&#39;</span><span class="p">,</span> <span class="s1">&#39;Winter_weight&#39;</span><span class="p">,</span> <span class="s1">&#39;Spring_weight&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-
-<span class="n">df_student_results_wide</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">end_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="n">run_time</span> <span class="o">=</span> <span class="n">end_time</span> <span class="o">-</span> <span class="n">start_time</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Finished running this script in </span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">run_time</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">)</span><span class="si">}</span><span class="s2"> seconds.&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>starting_year</th>
-      <th>student_id</th>
-      <th>Fall</th>
-      <th>Winter</th>
-      <th>...</th>
-      <th>Fall_weight</th>
-      <th>Winter_weight</th>
-      <th>Spring_weight</th>
-      <th>weight_sum</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>2023</td>
-      <td>2020-1</td>
-      <td>88.0</td>
-      <td>81.0</td>
-      <td>...</td>
-      <td>0.2</td>
-      <td>0.3</td>
-      <td>0.5</td>
-      <td>1.0</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>2023</td>
-      <td>2020-10</td>
-      <td>69.0</td>
-      <td>63.0</td>
-      <td>...</td>
-      <td>0.2</td>
-      <td>0.3</td>
-      <td>0.5</td>
-      <td>1.0</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>2023</td>
-      <td>2020-100</td>
-      <td>68.0</td>
-      <td>60.0</td>
-      <td>...</td>
-      <td>0.2</td>
-      <td>0.3</td>
-      <td>0.5</td>
-      <td>1.0</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>2023</td>
-      <td>2020-1000</td>
-      <td>58.0</td>
-      <td>55.0</td>
-      <td>...</td>
-      <td>0.2</td>
-      <td>0.3</td>
-      <td>0.5</td>
-      <td>1.0</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>2023</td>
-      <td>2020-1001</td>
-      <td>88.0</td>
-      <td>84.0</td>
-      <td>...</td>
-      <td>0.2</td>
-      <td>0.3</td>
-      <td>0.5</td>
-      <td>1.0</td>
-    </tr>
-  </tbody>
-</table>
-<p>5 rows × 13 columns</p>
-</div></div></div>
-</div>
-<p>We can now accurately calculate average scores for all students by (1) multiplying each score by its corresponding weight value (which will be 0 in the case of missing scores); (2) adding these products together; and then (3) dividing the sum by the <code class="docutils literal notranslate"><span class="pre">weight_sum</span></code> column. If a student happens to have a missing value for a given season, the <code class="docutils literal notranslate"><span class="pre">weight_sum</span></code> value will be lower to compensate for this omission.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_student_results_wide</span><span class="p">[</span><span class="s1">&#39;weighted_avg_score&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
-    <span class="n">df_student_results_wide</span><span class="p">[</span><span class="s1">&#39;Fall&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> 
-    <span class="o">*</span> <span class="n">df_student_results_wide</span><span class="p">[</span><span class="s1">&#39;Fall_weight&#39;</span><span class="p">]</span>
-    <span class="o">+</span> <span class="n">df_student_results_wide</span><span class="p">[</span><span class="s1">&#39;Winter&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> 
-    <span class="o">*</span> <span class="n">df_student_results_wide</span><span class="p">[</span><span class="s1">&#39;Winter_weight&#39;</span><span class="p">]</span>
-    <span class="o">+</span> <span class="n">df_student_results_wide</span><span class="p">[</span><span class="s1">&#39;Spring&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-    <span class="o">*</span> <span class="n">df_student_results_wide</span><span class="p">[</span><span class="s1">&#39;Spring_weight&#39;</span><span class="p">])</span> <span class="o">/</span> <span class="p">(</span>
-        <span class="n">df_student_results_wide</span><span class="p">[</span><span class="s1">&#39;weight_sum&#39;</span><span class="p">])</span>
-
-<span class="n">df_student_results_wide</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;Winter.isna()&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>starting_year</th>
-      <th>student_id</th>
-      <th>Fall</th>
-      <th>Winter</th>
-      <th>...</th>
-      <th>Fall_weight</th>
-      <th>Winter_weight</th>
-      <th>Spring_weight</th>
-      <th>weight_sum</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>5</th>
-      <td>2023</td>
-      <td>2020-1002</td>
-      <td>62.0</td>
-      <td>NaN</td>
-      <td>...</td>
-      <td>0.2</td>
-      <td>0.0</td>
-      <td>0.5</td>
-      <td>0.7</td>
-    </tr>
-    <tr>
-      <th>12</th>
-      <td>2023</td>
-      <td>2020-1009</td>
-      <td>74.0</td>
-      <td>NaN</td>
-      <td>...</td>
-      <td>0.2</td>
-      <td>0.0</td>
-      <td>0.5</td>
-      <td>0.7</td>
-    </tr>
-    <tr>
-      <th>23</th>
-      <td>2023</td>
-      <td>2020-1019</td>
-      <td>72.0</td>
-      <td>NaN</td>
-      <td>...</td>
-      <td>0.2</td>
-      <td>0.0</td>
-      <td>0.5</td>
-      <td>0.7</td>
-    </tr>
-    <tr>
-      <th>24</th>
-      <td>2023</td>
-      <td>2020-102</td>
-      <td>79.0</td>
-      <td>NaN</td>
-      <td>...</td>
-      <td>0.2</td>
-      <td>0.0</td>
-      <td>0.5</td>
-      <td>0.7</td>
-    </tr>
-    <tr>
-      <th>33</th>
-      <td>2023</td>
-      <td>2020-1028</td>
-      <td>68.0</td>
-      <td>NaN</td>
-      <td>...</td>
-      <td>0.2</td>
-      <td>0.0</td>
-      <td>0.5</td>
-      <td>0.7</td>
-    </tr>
-  </tbody>
-</table>
-<p>5 rows × 13 columns</p>
-</div></div></div>
-</div>
-<p>A few notes:</p>
-<ol class="arabic simple">
-<li><p>This approach would also successfully compensate for students with missing fall or spring scores. It would only fail to work for students who had no survey results at all–but such students should be excluded from these calculations to begin with.</p></li>
-<li><p>Note that, for students with missing winter weights, this code uses a fall score weight of 0.2/0.7 (28.6%) and a spring score weight of 0.5/0.7 (71.4%). These weights are higher in order to compensate for the missing winter results.</p></li>
-</ol>
-<p>Now that we’ve calculated weighted average results for all students, we can answer the administrators’ original question (what percentage of students had a weighted average survey score below 60):</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Using np.where() to flag students with a weighted average below 60:</span>
-<span class="c1"># (See https://numpy.org/doc/stable/reference/generated/numpy.where.html </span>
-<span class="c1"># for more information about np.where().)</span>
-<span class="n">df_student_results_wide</span><span class="p">[</span><span class="s1">&#39;weighted_avg_below_60&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span>
-    <span class="n">df_student_results_wide</span><span class="p">[</span><span class="s1">&#39;weighted_avg_score&#39;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-
-<span class="c1"># Calling value_counts(normalize=True), then multiplying the results </span>
-<span class="c1"># by 100, allows us to calculate the percentage of students with weighted </span>
-<span class="c1"># averages below 60.</span>
-<span class="mi">100</span><span class="o">*</span><span class="n">df_student_results_wide</span><span class="p">[</span><span class="s1">&#39;weighted_avg_below_60&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">(</span>
-    <span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>weighted_avg_below_60
-0    81.341553
-1    18.658447
-Name: proportion, dtype: float64
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Finished running this script in 0.602 seconds.
 </pre></div>
 </div>
 </div>
 </div>
-<p>It turns out that around 18.7% of students had a weighted average survey score below 60.</p>
-<p>This notebook has provided a brief introduction to descriptive statistics calculations within Python. PFN’s graphing section will teach you how to convert some of the pivot tables created here into line and bar charts, thus making this data easier to interpret.</p>
+<p>The above line shows how long it took this notebook to run all of its Python code. As you can see, my claim at the start of this notebook that you could use Python to perform these tasks in ‘mere seconds’ wasn’t hyperbole!</p>
 </section>
+<section id="conclusion">
+<h2>Conclusion<a class="headerlink" href="#conclusion" title="Link to this heading">#</a></h2>
+<p>This notebook has provided a brief introduction to descriptive statistics calculations within Python. PFN’s graphing section will teach you how to convert some of the pivot tables created here into line and bar charts, thus making these data easier to interpret. However, before we can dive into the fun of Python-based visualizations, we should first cover a few more important descriptive stats topics.</p>
 </section>
 </section>
 
@@ -3046,14 +2857,13 @@ Name: proportion, dtype: float64
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#adding-additional-pivot-index-values">Adding additional pivot index values</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluating-changes-in-survey-scores-by-season-and-college">Evaluating changes in survey scores by season and college:</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluating-changes-in-survey-scores-by-season-and-level">Evaluating changes in survey scores by season and level:</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluating-changes-in-survey-scores-by-season-college-and-level">Evaluating changes in survey scores by season, college, <em>and</em> level:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluating-changes-in-survey-scores-by-season-level-and-college">Evaluating changes in survey scores by season, level, <em>and</em> college:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-a-wide-student-level-version-of-our-survey-results-dataset">Creating a wide student-level version of our survey results dataset</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#comparing-rows-via-sort-values-and-rank">Comparing rows via sort_values() and rank()</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#calculating-percentiles-and-ranks">Calculating percentiles and ranks</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#calculating-average-results-by-student-and-dealing-with-missing-values">Calculating average results by student (and dealing with missing values)</a></li>
-</ul>
-</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#comparing-rows-via-sort-values-and-rank">Comparing rows via <code class="docutils literal notranslate"><span class="pre">sort_values()</span></code> and <code class="docutils literal notranslate"><span class="pre">rank()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#calculating-percentiles-and-ranks">Calculating percentiles and ranks</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion">Conclusion</a></li>
 </ul>
   </nav></div>
 

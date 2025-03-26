@@ -185,7 +185,6 @@
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Visualizing Data</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../Graphing/graphing.html">Creating Interactive and Static Charts with Plotly</a></li>
-
 <li class="toctree-l1"><a class="reference internal" href="../Graphing/pivot_and_graph_functions.html">Pivot and Graph Functions</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../Mapping/choropleth_maps.html">Mapping Census Data using Plotly (Work in progress)</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="plotly_choropleth_map_functions_py_nb.html">plotly_choropleth_map_functions.py</a></li>
@@ -602,7 +601,7 @@
     <span class="c1"># callbacks) came from https://dash.plotly.com/</span>
     <span class="c1"># tutorial#visualizing-data .</span>
     <span class="n">dcc</span><span class="o">.</span><span class="n">Graph</span><span class="p">(</span><span class="n">figure</span><span class="o">=</span><span class="n">fig_enrollment_by_college</span><span class="p">),</span>
-    <span class="n">dcc</span><span class="o">.</span><span class="n">Graph</span><span class="p">(</span><span class="n">figure</span><span class="o">=</span><span class="n">fig_enrollment_by_level</span><span class="p">),</span>
+    <span class="n">dcc</span><span class="o">.</span><span class="n">Graph</span><span class="p">(</span><span class="n">figure</span><span class="o">=</span><span class="n">fig_enrollment_by_level</span><span class="p">)</span>
 <span class="p">])</span>
 </pre></div>
 </div>
@@ -724,12 +723,12 @@
     <span class="n">x_vars_to_exclude</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Level For Sorting&#39;</span><span class="p">],</span> 
         <span class="n">overall_data_name</span> <span class="o">=</span> <span class="s1">&#39;All Data&#39;</span><span class="p">,</span>
     <span class="n">weight_col</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">filter_tuple_list</span> <span class="o">=</span> <span class="n">filter_tuple_list</span><span class="p">,</span>
-    <span class="n">custom_aggfunc_name</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">create_table</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+    <span class="n">custom_aggfunc_name</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">create_table</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="n">text_auto</span> <span class="o">=</span> <span class="s1">&#39;.0f&#39;</span><span class="p">)</span>
 
     <span class="nb">print</span><span class="p">(</span><span class="n">table</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">bar_graph</span><span class="p">,</span> <span class="n">table</span>
-
 </pre></div>
 </div>
 </section>
@@ -933,9 +932,9 @@
 <span class="s1">    dashboard), but it can still serve as a helpful introduction </span>
 <span class="s1">    to some of Dash&#39;s core features.</span>
 
-<span class="s1">    This dashboard also applies the [Dash Bootstrap Components](</span>
-<span class="s1">    https://dash-bootstrap-components.opensource.faculty.ai/docs/</span>
-<span class="s1">    components/layout/) library in order</span>
+<span class="s1">    This dashboard also applies the Dash Bootstrap Components (</span>
+<span class="s1">    https://dash-bootstrap-components.opensource.faculty.ai)</span>
+<span class="s1">    library in order</span>
 <span class="s1">    to create a more condensed layout that accommodates a range of </span>
 <span class="s1">    screen sizes. This library is also used in certain other dashboards </span>
 <span class="s1">    within this app.</span>
@@ -1119,6 +1118,9 @@ thread that &quot;this is free to use, no license&quot;. --&gt;
 
 
 <span class="c1"># Exposing the Flask Server to enable configuring it for logging in</span>
+<span class="c1"># Note that this code will be used in place of </span>
+<span class="c1"># server = app.server , which we used within our Simple_App_Without_Login</span>
+<span class="c1"># app.</span>
 <span class="n">server</span> <span class="o">=</span> <span class="n">Flask</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
 <span class="nd">@server</span><span class="o">.</span><span class="n">before_request</span>
@@ -1281,7 +1283,7 @@ thread that &quot;this is free to use, no license&quot;. --&gt;
         <span class="c1"># The following explanatory text will appear at the bottom of </span>
         <span class="c1"># each page.</span>
         <span class="n">dcc</span><span class="o">.</span><span class="n">Markdown</span><span class="p">(</span><span class="s1">&#39;&#39;&#39;        </span>
-<span class="s1">*This site is part of [Python for Nonprofits]</span>
+<span class="s1">*This site is part of Python for Nonprofits</span>
 <span class="s1">(https://github.com/kburchfiel/pfn), created by Kenneth Burchfiel and </span>
 <span class="s1">licensed under the MIT License.*</span>
 
@@ -1292,7 +1294,7 @@ thread that &quot;this is free to use, no license&quot;. --&gt;
 
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
-    <span class="n">app</span><span class="o">.</span><span class="n">run_server</span><span class="p">(</span><span class="n">debug</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">debug</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>
@@ -1559,9 +1561,10 @@ thread that &quot;this is free to use, no license&quot;. --&gt;
     <span class="n">index</span><span class="p">,</span> <span class="n">aggfunc</span>
 
 <span class="k">def</span><span class="w"> </span><span class="nf">autobar</span><span class="p">(</span><span class="n">df_pivot</span><span class="p">,</span> <span class="n">x_val_name</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">color</span><span class="p">,</span> <span class="n">barmode</span><span class="p">,</span> <span class="n">x_var_count</span><span class="p">,</span> 
-            <span class="n">index</span><span class="p">,</span> <span class="n">aggfunc</span><span class="p">,</span> <span class="n">custom_aggfunc_name</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+            <span class="n">index</span><span class="p">,</span> <span class="n">aggfunc</span><span class="p">,</span> <span class="n">custom_aggfunc_name</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+           <span class="n">text_auto</span> <span class="o">=</span> <span class="s1">&#39;.2f&#39;</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&#39;&#39;&#39;This function creates a bar graph of a pivot table (such as one</span>
-<span class="sd">    created within autopivot(). </span>
+<span class="sd">    created within autopivot()). </span>
 <span class="sd">    Most arguments arguments for this function</span>
 <span class="sd">    correspond to the values returned by autopivot(); more information on</span>
 <span class="sd">    each can be found within that function.</span>
@@ -1573,6 +1576,14 @@ thread that &quot;this is free to use, no license&quot;. --&gt;
 <span class="sd">    aggfunc within the title. Note that &#39;&#39; can be passed to</span>
 <span class="sd">    this parameter in order to exclude the aggregate function</span>
 <span class="sd">    from chart titles.)</span>
+
+<span class="sd">    text_auto: The value to pass to the text_auto argument of px.bar(),</span>
+<span class="sd">    which specifies whether (and how) to display data labels on bars.</span>
+<span class="sd">    Set this variable to False if you wish not to include any labels;</span>
+<span class="sd">    set to &#39;.2f&#39; to show labels up to 2 decimal points; set to &#39;.0f&#39;</span>
+<span class="sd">    to show labels as integers; and &#39;.1%&#39; to show labels in percentage</span>
+<span class="sd">    form with a single decimal point. These are just some of the many</span>
+<span class="sd">    options you can pass for this argument.</span>
 <span class="sd">    &#39;&#39;&#39;</span>
     
     <span class="c1"># Creating a title for the chart:</span>
@@ -1632,7 +1643,7 @@ thread that &quot;this is free to use, no license&quot;. --&gt;
         <span class="c1"># The following code will still work if color is set to None.</span>
         <span class="n">fig</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">df_pivot</span><span class="p">,</span> <span class="n">x</span> <span class="o">=</span> <span class="n">x_val_name</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">y</span><span class="p">,</span> 
                <span class="n">color</span> <span class="o">=</span> <span class="n">color</span><span class="p">,</span> <span class="n">barmode</span> <span class="o">=</span> <span class="n">barmode</span><span class="p">,</span>
-               <span class="n">text_auto</span> <span class="o">=</span> <span class="s1">&#39;.1f&#39;</span><span class="p">,</span> <span class="n">title</span> <span class="o">=</span> <span class="n">plot_title</span><span class="p">)</span>
+               <span class="n">text_auto</span> <span class="o">=</span> <span class="n">text_auto</span><span class="p">,</span> <span class="n">title</span> <span class="o">=</span> <span class="n">plot_title</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span> <span class="c1"># In this case, there&#39;s no data to plot,</span>
         <span class="c1"># so an empty figure will be returned instead.</span>
         <span class="n">fig</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="n">plot_title</span><span class="p">)</span>
@@ -1669,7 +1680,7 @@ thread that &quot;this is free to use, no license&quot;. --&gt;
     <span class="n">x_vars_to_exclude</span> <span class="o">=</span> <span class="p">[],</span> <span class="n">overall_data_name</span> <span class="o">=</span> <span class="s1">&#39;All Data&#39;</span><span class="p">,</span>
     <span class="n">weight_col</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">filter_tuple_list</span> <span class="o">=</span> <span class="p">[],</span>
     <span class="n">custom_aggfunc_name</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">convert_x_vars_to_strings</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
-    <span class="n">create_table</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
+    <span class="n">create_table</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">text_auto</span> <span class="o">=</span> <span class="s1">&#39;.2f&#39;</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&#39;&#39;&#39;This function calls both autopivot() and autobar(), thus </span>
 <span class="sd">    simplifying the process of using both functions within a script. </span>
 <span class="sd">    See autopivot() and autobar()&#39;s individual function definitions </span>
@@ -1691,7 +1702,8 @@ thread that &quot;this is free to use, no license&quot;. --&gt;
         <span class="n">df_pivot</span> <span class="o">=</span> <span class="n">df_pivot</span><span class="p">,</span> <span class="n">x_val_name</span> <span class="o">=</span> <span class="n">x_val_name</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">y</span><span class="p">,</span> 
         <span class="n">color</span> <span class="o">=</span> <span class="n">color</span><span class="p">,</span> <span class="n">barmode</span> <span class="o">=</span> <span class="n">barmode</span><span class="p">,</span> <span class="n">x_var_count</span> <span class="o">=</span> <span class="n">x_var_count</span><span class="p">,</span> 
         <span class="n">index</span> <span class="o">=</span> <span class="n">index</span><span class="p">,</span> <span class="n">aggfunc</span> <span class="o">=</span> <span class="n">aggfunc</span><span class="p">,</span> 
-        <span class="n">custom_aggfunc_name</span><span class="o">=</span><span class="n">custom_aggfunc_name</span><span class="p">)</span>
+        <span class="n">custom_aggfunc_name</span><span class="o">=</span><span class="n">custom_aggfunc_name</span><span class="p">,</span>
+    <span class="n">text_auto</span> <span class="o">=</span> <span class="n">text_auto</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">create_table</span> <span class="o">==</span> <span class="kc">False</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">fig_bar</span>
@@ -1854,14 +1866,15 @@ thread that &quot;this is free to use, no license&quot;. --&gt;
 </section>
 <section id="requirements-txt">
 <h2>requirements.txt<a class="headerlink" href="#requirements-txt" title="Link to this heading">#</a></h2>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Flask</span>
-<span class="n">gunicorn</span>
-<span class="n">Werkzeug</span>
-<span class="n">dash</span>
-<span class="n">Flask</span><span class="o">-</span><span class="n">Login</span>
-<span class="n">dash</span><span class="o">-</span><span class="n">pivottable</span>
-<span class="n">pandas</span>
-<span class="n">dash</span><span class="o">-</span><span class="n">bootstrap</span><span class="o">-</span><span class="n">components</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">dash</span><span class="o">==</span><span class="mf">3.0.0</span>
+<span class="n">dash</span><span class="o">-</span><span class="n">bootstrap</span><span class="o">-</span><span class="n">components</span><span class="o">==</span><span class="mf">2.0.0</span>
+<span class="n">dash</span><span class="o">-</span><span class="n">pivottable</span><span class="o">==</span><span class="mf">0.0.2</span>
+<span class="n">Flask</span><span class="o">==</span><span class="mf">3.0.3</span>
+<span class="n">Flask</span><span class="o">-</span><span class="n">Login</span><span class="o">==</span><span class="mf">0.6.3</span>
+<span class="n">gunicorn</span><span class="o">==</span><span class="mf">23.0.0</span>
+<span class="n">pandas</span><span class="o">==</span><span class="mf">2.2.3</span>
+<span class="n">plotly</span><span class="o">==</span><span class="mf">6.0.1</span>
+<span class="n">Werkzeug</span><span class="o">==</span><span class="mf">3.0.6</span>
 </pre></div>
 </div>
 </section>
