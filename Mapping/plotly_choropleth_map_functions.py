@@ -366,6 +366,9 @@ any conflicts.")
         # This sort_values() call is necessary for the quantile
         # ranges to line up with the score_list values that will
         # get created shortly.
+        # I also added in 'lower' as my interpolation argument
+        # so that each quantile would be an actual data point 
+        # rather than an approximation.
         percentile_quantiles = gdf[percentile_col].quantile(
         quantile_range, interpolation = 'lower').sort_values(
         ascending = False)
@@ -391,7 +394,7 @@ any conflicts.")
         score_list = score_series.to_list()
                
         color = percentile_col # Setting percentile_col as the color
-        # argument will allow fdor a wider diversity of colors in the 
+        # argument will allow for a wider diversity of colors in the 
         # event that outliers exist within the dataset.
     else:
         color = data_col
