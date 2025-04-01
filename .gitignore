@@ -84,3 +84,5 @@ Online_Visualizations/Simple_App_Without_Login/app_old.py
 PDF_Copies
 .~lock.pfn_2_project_plans_and_notes_v2.xlsx#
 create_pdfhtml_book.sh
+Mapping/OLD_2025-0-3-29_copy_choropleth_maps.ipynb
+Mapping/plotly_choropleth_map_functions_test.py
