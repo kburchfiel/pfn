@@ -284,7 +284,8 @@ any conflicts.")
 def post_map(fig, gdf, margin_list, colorbar_len, colormap_type,
             custom_colorbar_title, data_col,
             percentile_quantile_list, score_list, add_labels,
-            label_round_value, revise_state_label_points):
+            label_round_value, revise_state_label_points,
+            label_addition_method):
 
     '''
     This function is called by gen_choropleth() and gen_choropleth_map()
@@ -345,6 +346,11 @@ any conflicts.")
         gdf[label_col] = gdf[data_col].copy()
         if label_round_value is not None:
             gdf[label_col] = gdf[label_col].round(label_round_value)
+        # Now that the label column has been rounded, it should be 
+        # converted to a string; otherwise, the labels may not appear
+        # correctly (depending on what function is being used to 
+        # add them).
+        gdf[label_col] = gdf[label_col].astype('str')
     
         # Determining points within each region that can serve as 
         # text label locations:
@@ -375,31 +381,85 @@ to prevent a conflict with gen_choropleth.")
             
             gdf.at['Louisiana', 'label_lat'] = 30.5
             gdf.at['Louisiana', 'label_lon'] = -92.54
+
+        # Adding labels to the map using the function specified by
+        # label_addition_method:
         
+        if label_addition_method == 'scattergeo':
+            # This code was based mostly on
+            # https://plotly.com/python/scatter-plots-on-
+            # maps/#simple-us-airports-map .
+    
+            fig.add_scattergeo(
+                text=gdf[label_col],
+                mode='text',
+                lat=gdf['label_lat'],
+                lon=gdf['label_lon'])
+            # The following code for disabling hover labels (so that
+            # they don't interfere with existing hover values) 
+            # was based on:
+            # https://plotly.com/python/reference/scattergeo/ 
+            fig.update_traces(hoverinfo = 'skip', selector = dict(
+                type='scattergeo'))
+        
+        elif label_addition_method == 'scattermap':
 
-        # This code was based mostly on
-        # https://plotly.com/python/scatter-plots-on-
-        # maps/#simple-us-airports-map .
-        fig.add_scattergeo(
-            text=gdf[label_col],
-            mode='text',
-            lat=gdf['label_lat'],
-            lon=gdf['label_lon'])
+            fig.add_traces(go.Scattermap(
+                text=gdf[label_col],
+                lat=gdf['label_lat'],
+                lon=gdf['label_lon'],
+                mode='text',
+                hoverinfo='skip',
+                showlegend=False,
+                ))
+            # This add_traces() call is based on a response by
+            # r-beginners at 
+            # https://community.plotly.com/t/is-it-possible-to-use-add-
+            # scattergeo-to-add-text-labels-to-a-map-created-with-px-
+            # choropleth-map-not-px-choropleth/91543/2 .
+            
+            # The hoverinfo = 'skip' code came from the scattermap 
+            # documentation at:
+            # https://plotly.com/python/reference/scattermap/
 
-        # Disabling hover functionality for these text labels (as they
-        # can interfere with the pre-existing labels):
-        fig.update_traces(hoverinfo = 'skip', selector = dict(
-            type='scattergeo'))
-    # This code was based on
-    # https://plotly.com/python/reference/scattergeo/
+            # I also tried out the following method, which worked
+            # fairly well--except that hover data for these labels
+            # continued to appear (thus interfering with users' ability
+            # to view other hover tooltips).
+            
+            # fig.add_traces(px.scatter_map(
+            #     gdf,
+            #     text=label_col,
+            #     lat='label_lat',
+            #     lon='label_lon',
+            #     map_style = 'white-bg',
+            #     ).update_traces(
+            #     mode='text', marker_allowoverlap=True, hovertext='', 
+            #     hoverinfo='skip').data)
+            
+            # This method of adding a Plotly figure to an existing
+            # figure comes from StackOverflow user montol at
+            # https://stackoverflow.com/a/77888204/13097194 .
 
+            # It is meant to prevent these labels from appearing when the
+            # user hovers over them (as that can be distracting). However,
+            # this update doesn't appear to have an effect on the 
+            # actual map. 
+
+        else:
+            raise ValueError("Unrecognized label_addition_method passed \
+            to function.")
+        
+        
+    
 def gen_choropleth(
     original_gdf, geojson_col, data_col, location_name_col,
     extra_hover_cols=[], color_continuous_scale=None, 
     scope=None, title=None, basemap_visible=False, 
     colormap_type='linear', colorscale_tick_count=10, 
     tick_round_value=None, custom_colorbar_title=None, add_labels=False, 
-    label_round_value=None, percentile_round_value=2, data_round_value=2,
+    label_round_value=2, label_addition_method='scattergeo',
+    percentile_round_value=2, data_round_value=2,
     save_html=True, save_static=True, static_file_folder='',
     html_file_folder='', filename='', image_extension='png',
     include_plotlyjs='cdn', screenshot_label_font_size=18,
@@ -486,6 +546,12 @@ def gen_choropleth(
     decimal points, 2 for two decimal points, and so on.
     Set to None to prevent these entries from getting rounded.
 
+    label_addition_method: Set to 'scattergeo' to use add_scattergeo()
+    to add labels to maps; set to set to 'scattermap' to use 
+    go.scattermap() instead. (The former works great for the 
+    non-tiled maps that gen_choropleth() creates; the latter appears 
+    to work better for tiled maps generated within px.choropleth_map()).
+ 
     percentile_round_value: The value to pass to round() when creating 
     rounded copies of percentile data (thus improving the appearance of
     these percentiles within the interactive map's tooltips). Set to 
@@ -588,7 +654,7 @@ def gen_choropleth(
     post_map(fig=fig, gdf=gdf, margin_list=margin_list, 
              colorbar_len=colorbar_len, colormap_type=colormap_type,
             custom_colorbar_title=custom_colorbar_title, 
-             data_col=data_col,
+            data_col=data_col, label_addition_method=label_addition_method,
             percentile_quantile_list=percentile_quantile_list, 
             score_list=score_list, add_labels=add_labels,
             label_round_value=label_round_value, 
@@ -629,7 +695,8 @@ def gen_choropleth_map(
     colormap_type='linear', 
     colorscale_tick_count=10, tick_round_value=None,
     custom_colorbar_title=None, add_labels=False, 
-    label_round_value=None, percentile_round_value=2, data_round_value=2,
+    label_round_value=2, label_addition_method='scattermap',
+    percentile_round_value=2, data_round_value=2,
     save_html=True, save_static=True, static_file_folder='',
     html_file_folder='', filename='', image_extension='png',
     include_plotlyjs='cdn', screenshot_label_font_size=18,
@@ -690,6 +757,16 @@ def gen_choropleth_map(
     4. The screenshot_width and screenshot_height settings are
     3840 and 2160, respectively, because I found that static tiled maps 
     appear clearer when higher width and height settings are applied.
+
+    NOTE: If you set add_labels to True, you may get an error message
+    when attempting to save the map as a PNG file via
+    update_and_save_plotly_map() (which this function calls). Thus, if you 
+    don't need a static copy of your map, I recommend setting save_static
+    to False. If you *do* need a static copy, consider using
+    gen_choropleth() instead (as that function can save PNG versions of
+    labeled maps without any trouble); taking a screenshot manually;
+    or using Selenium to automate the screenshot generation process.
+    
     '''
 
     gdf, score_list, color, percentile_quantile_list, hover_data = pre_map(
@@ -710,13 +787,13 @@ def gen_choropleth_map(
     opacity=opacity)
 
     post_map(fig=fig, gdf=gdf, margin_list=margin_list, 
-             colorbar_len=colorbar_len, colormap_type=colormap_type,
+            colorbar_len=colorbar_len, colormap_type=colormap_type,
             custom_colorbar_title=custom_colorbar_title, 
-             data_col=data_col,
+            data_col=data_col, label_addition_method=label_addition_method,
             percentile_quantile_list=percentile_quantile_list, 
             score_list=score_list, add_labels=add_labels,
             label_round_value=label_round_value, 
-             revise_state_label_points=revise_state_label_points)       
+            revise_state_label_points=revise_state_label_points)       
 
     if (save_html == True) or (save_static == True):
         update_and_save_plotly_map(
