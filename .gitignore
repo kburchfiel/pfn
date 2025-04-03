@@ -86,3 +86,6 @@ PDF_Copies
 create_pdfhtml_book.sh
 Mapping/OLD_2025-0-3-29_copy_choropleth_maps.ipynb
 Mapping/plotly_choropleth_map_functions_test.py
+Mapping/Geopandas_file_save_tests.ipynb
+Mapping/states_and_growth_stats.csv
+Mapping/states_and_growth_stats.json
