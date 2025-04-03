@@ -89,3 +89,6 @@ Mapping/plotly_choropleth_map_functions_test.py
 Mapping/Geopandas_file_save_tests.ipynb
 Mapping/states_and_growth_stats.csv
 Mapping/states_and_growth_stats.json
+Mapping/geopandas_file_save_tests.ipynb
+Mapping/test_state_map_with_labels.html
+Mapping/test_state_map_with_labels.png

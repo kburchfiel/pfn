@@ -73,6 +73,12 @@ def update_and_save_plotly_map(
                 "t":screenshot_margin_list[1],
                 "l":screenshot_margin_list[2],
                 "b":screenshot_margin_list[3]})
+
+        # Data labels may be stored either as scattermaps or scattergeos,
+        # so the following lines include commands for both label types.
+        fig_for_chart.update_traces(
+            textfont_size=screenshot_label_font_size,
+            selector=dict(type='scattermap'))
         
         
         fig_for_chart.update_traces(
@@ -373,8 +379,8 @@ to prevent a conflict with gen_choropleth.")
             # and read:
             # (These points were determined using Openstreetmap 
             # coordinates as a reference.)
-            gdf.at['Maryland', 'label_lat'] = 39.4
-            gdf.at['Maryland', 'label_lon'] = -77.24
+            gdf.at['Maryland', 'label_lat'] = 39.5
+            gdf.at['Maryland', 'label_lon'] = -77.17
             
             gdf.at['Michigan', 'label_lat'] = 43.63
             gdf.at['Michigan', 'label_lon'] = -84.97
@@ -645,6 +651,8 @@ def gen_choropleth(
         extra_hover_cols=extra_hover_cols)
 
     # Generating a choropleth map:
+    # Note that we need to use geojson=gdf[geojson_col] here
+    # rather than just geojson=geojson_col.
     fig = px.choropleth(gdf, geojson=gdf[geojson_col],
     locations=gdf.index, color=color, hover_data=hover_data,
     color_continuous_scale=color_continuous_scale,
@@ -699,7 +707,7 @@ def gen_choropleth_map(
     percentile_round_value=2, data_round_value=2,
     save_html=True, save_static=True, static_file_folder='',
     html_file_folder='', filename='', image_extension='png',
-    include_plotlyjs='cdn', screenshot_label_font_size=18,
+    include_plotlyjs='cdn', screenshot_label_font_size=30,
     screenshot_width=3840, screenshot_height=2160,
     screenshot_scale=1, screenshot_title_y=0.95,
     screenshot_title_font_size=70, screenshot_colorbar_thickness=80, 
@@ -757,6 +765,9 @@ def gen_choropleth_map(
     4. The screenshot_width and screenshot_height settings are
     3840 and 2160, respectively, because I found that static tiled maps 
     appear clearer when higher width and height settings are applied.
+
+    5. Font sizes have also been increased in order to better fit these
+    larger width and height settings.
 
     NOTE: If you set add_labels to True, you may get an error message
     when attempting to save the map as a PNG file via
