@@ -374,19 +374,22 @@
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-map-with-a-percentile-scale">Creating map with a percentile scale</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#specifying-how-many-data-points-we-d-like-to-include-within-our-color-scale">Specifying how many data points we’d like to include within our color scale</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#using-quantile-increment-to-specify-which-quantiles-to-retrieve">Using <code class="docutils literal notranslate"><span class="pre">quantile_increment</span></code> to specify which quantiles to retrieve</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#finding-the-actual-percentile-ranks-within-our-dataframe-that-correspond-to-these-quantiles">Finding the actual percentile ranks within our DataFrame that correspond to these quantiles:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#finding-the-actual-percentile-ranks-within-our-dataframe-that-correspond-to-these-quantiles">Finding the actual percentile ranks within our DataFrame that correspond to these quantiles</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#rendering-an-improved-percentile-based-choropleth-map">Rendering an improved percentile-based choropleth map</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mapping-25-to-29-year-old-population-growth-at-the-county-level">Mapping 25-to-29-year-old population growth at the county level</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#performing-simliar-steps-to-map-state-level-growth-data">Performing simliar steps to map state-level growth data</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rendering-our-state-level-maps">Rendering our state-level maps</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#performing-simliar-steps-to-map-state-level-growth-data">Performing simliar steps to map state-level growth data</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#rendering-state-level-maps">Rendering state-level maps</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-tiled-choropleth-maps">Creating tiled choropleth maps</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-a-simple-tiled-map">Creating a simple tiled map</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-tiled-choropleth-maps-via-a-for-loop">Creating tiled choropleth maps via a for loop</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-a-tiled-state-level-map">Creating a tiled state-level map</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-tiled-state-level-maps">Creating tiled state-level maps</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#saving-geodataframes">Saving GeoDataFrames</a></li>
 </ul>
             </nav>
         </div>
@@ -403,15 +406,15 @@
 <p>By Kenneth Burchfiel</p>
 <p>Released under the MIT license</p>
 <p>This script will demonstrate how to use Plotly’s <code class="docutils literal notranslate"><span class="pre">px.choropleth()</span></code> and <code class="docutils literal notranslate"><span class="pre">px.choropleth_map()</span></code> functions to create <em>choropleth maps</em> that visualize population growth rates. (These growth rates were calculated using ‘census_data_imports_v2.ipynb’ (<a class="github reference external" href="https://github.com/kburchfiel/pfn/blob/main/Census_Data_Imports/census_data_imports_v2.ipynb">kburchfiel/pfn</a>) within PFN’s Census Data Imports section. This notebook will also show how to improve maps’ readability by basing choropleth colors on percentiles.</p>
-<p><em>When running the notebook on your computer, I recommend setting the ‘render_for_pdf’ variable within the Appendix’s helper_funcs.py file to False in order to allow interactive, rather than static maps, to appear. (This will also make more DataFrame columns visible within the notebook’s output.</em></p>
+<p><em>When running the notebook on your computer, I recommend setting the <code class="docutils literal notranslate"><span class="pre">render_for_pdf</span></code> variable within the Appendix’s helper_funcs.py file to False in order to allow interactive, rather than static maps, to appear. (This will also allow more DataFrame columns visible within the notebook’s output.</em>)</p>
 <p><strong>A primer on choropleth maps</strong></p>
-<p>Choropleth maps assign different colors to different regions depending on some underlying data point. Perhaps the most famous example of choropleth maps, at least in the US, are presidential election maps. Recent versions of these maps assign red and blue colors to states that are won by the Republican and Democratic nominees for president, respectively. They’re a ubiquitous sight on election nights, as they provide useful overviews of which states have been called for a particular candidate so far.</p>
-<p>Our net migration maps will differ from these election maps in that colors will be assigned based on numerical data (population growth rates) rather than categorical data (presidential parties). States and counties with the highest growth rates will be colored orange whereas those with the lowest rates will be colored purple.</p>
+<p>Choropleth maps assign different colors to different regions depending on an underlying data point. Perhaps the most famous example of choropleth maps, at least in the US, are presidential election maps. Recent versions of these maps assign red and blue colors to states that are won by the Republican and Democratic nominees for president, respectively. They’re a ubiquitous sight on election nights, as they provide useful overviews of which states have been called for a particular candidate so far.</p>
+<p>Our population growth maps will differ from these election maps in that colors will be assigned based on numerical data (growth rates) rather than categorical data (presidential parties). States and counties with the highest growth rates will be colored orange whereas those with the lowest rates will be colored purple.</p>
 <section id="a-note-on-plotly-vs-folium">
 <h2>A note on Plotly vs. Folium<a class="headerlink" href="#a-note-on-plotly-vs-folium" title="Link to this heading">#</a></h2>
 <p>I used to use Folium (<a class="reference external" href="https://python-visualization.github.io/folium/latest/">https://python-visualization.github.io/folium/latest/</a>) as my main Python mapping library. However, I decided to switch to Plotly for two main reasons:</p>
 <ol class="arabic simple">
-<li><p>The process of creating static copies of maps within Python is much, much simpler with Plotly than with Folium. The latter process is absolutely doable, but I found it challenging to create matching static and interactive copies of the same map.</p></li>
+<li><p>The process of creating static copies of maps within Python is much, much simpler with Plotly than with Folium. The latter process is absolutely doable (as you’ll learn in the Folium map chapter), but I found it challenging to create matching static and interactive copies of the same map.</p></li>
 <li><p>Plotly makes it easy to render Alaska and Hawaii near the lower 48 US states; this greatly simplifies the process of creating static choropleth maps that show the entire US.</p></li>
 </ol>
 <p>However, in your own work, you may want (or need) to use Folium rather than Plotly. In that case, make sure to check out the ‘choropleth_maps_with_folium.ipynb’ notebook and its corresponding ‘folium_choropleth_map_functions.py’ Python file. (These will be introduced soon in the book version of PFN.)</p>
@@ -442,7 +445,7 @@
 </section>
 <section id="importing-data-to-be-mapped">
 <h2>Importing data to be mapped<a class="headerlink" href="#importing-data-to-be-mapped" title="Link to this heading">#</a></h2>
-<p>Choropleth maps require two sets of data: (1) boundary data that allows outlines of regions to get drawn and (2) a metric that determines how those boundaries should get colored. The following cells will import county-level boundary data and population growth metrics, thus allowing us to visualize population increases and decreases by county.</p>
+<p>Choropleth maps require two sets of data: (1) boundary data that allows outlines of regions to get drawn and (2) a metric that determines how those boundaries should get colored. The following cells will import county-level boundary data and population growth metrics, thus allowing us to visualize population change by county.</p>
 <section id="importing-2021-county-shapefiles">
 <h3>Importing 2021 County Shapefiles<a class="headerlink" href="#importing-2021-county-shapefiles" title="Link to this heading">#</a></h3>
 <p>These shapefiles show the outlines of each US county. They can be accessed by downloading the shapefile folder located at <a class="reference external" href="https://www2.census.gov/geo/tiger/GENZ2021/shp/cb_2021_us_county_500k.zip">https://www2.census.gov/geo/tiger/GENZ2021/shp/cb_2021_us_county_500k.zip</a> . (If this link doesn’t work, try navigating to <a class="reference external" href="https://www.census.gov/geographies/mapping-files/time-series/geo/cartographic-boundary.2021.html">https://www.census.gov/geographies/mapping-files/time-series/geo/cartographic-boundary.2021.html</a> ; scrolling down to the <strong>Counties</strong> header; and then clicking on the ‘shapefile’ link that appears to the right of the “1 : 500,000 (national)” text.</p>
@@ -453,13 +456,19 @@
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">gdf_counties</span> <span class="o">=</span> <span class="n">geopandas</span><span class="o">.</span><span class="n">read_file</span><span class="p">(</span>
     <span class="s1">&#39;shapefiles/cb_2021_us_county_500k/cb_2021_us_county_500k.shp&#39;</span><span class="p">)</span>
+
+<span class="c1"># Simplifying boundaries:</span>
+<span class="c1"># You can experiment with different &#39;tolerance&#39; arguments to find the</span>
+<span class="c1"># right balance between accuracy and size/rendering speed for your project.</span>
+<span class="c1"># 0.005 tends to be my preferred default setting.</span>
 <span class="n">gdf_counties</span><span class="p">[</span><span class="s1">&#39;geometry&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">gdf_counties</span><span class="p">[</span><span class="s1">&#39;geometry&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">simplify</span><span class="p">(</span>
     <span class="n">tolerance</span> <span class="o">=</span> <span class="mf">0.005</span><span class="p">)</span>
+
 <span class="c1"># Creating a column that combines county names and long state names:</span>
 <span class="c1"># (This column can then serve as a key for an upcoming merge.)</span>
-<span class="c1"># Note that &#39;STATE_NAME&#39; is used rather than &#39;STUSPS&#39; for the state </span>
-<span class="c1"># component of this column in order to match the format used within </span>
-<span class="c1"># our demographic dataset.</span>
+<span class="c1"># &#39;STATE_NAME&#39; is used rather than &#39;STUSPS&#39; for the state </span>
+<span class="c1"># component of this column so that the column will match the format used </span>
+<span class="c1"># within our demographic dataset.</span>
 <span class="n">gdf_counties</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span>
     <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;County/State&#39;</span><span class="p">,</span> 
     <span class="n">gdf_counties</span><span class="p">[</span><span class="s1">&#39;NAMELSAD&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;, &#39;</span> <span class="o">+</span> <span class="n">gdf_counties</span><span class="p">[</span><span class="s1">&#39;STATE_NAME&#39;</span><span class="p">])</span>
@@ -539,13 +548,10 @@
 <p>5 rows × 14 columns</p>
 </div></div></div>
 </div>
+<p>Confirming that this dataset contains Connecticut’s former counties rather than planning regions:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">gdf_counties</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;STATEFP == &#39;09&#39;&quot;</span><span class="p">)</span> <span class="c1"># Confirming that this dataset </span>
-<span class="c1"># contains Connecticut&#39;s former counties rather than planning regions.</span>
-<span class="c1"># (Our population growth dataset uses these counties as well, so we&#39;ll</span>
-<span class="c1"># be able to merge the county data and boundaries together without</span>
-<span class="c1"># any issues.)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">gdf_counties</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;STATEFP == &#39;09&#39;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">()</span> 
 </pre></div>
 </div>
 </div>
@@ -593,37 +599,41 @@
       <td>MULTIPOLYGON (((-73.21763 41.14235, -73.21499 ...</td>
     </tr>
     <tr>
-      <th>...</th>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-    </tr>
-    <tr>
-      <th>2936</th>
-      <td>Litchfield County, Connecticut</td>
+      <th>911</th>
+      <td>Middlesex County, Connecticut</td>
       <td>09</td>
       <td>...</td>
-      <td>62350378</td>
-      <td>POLYGON ((-73.51795 41.67086, -73.48731 42.049...</td>
+      <td>180679141</td>
+      <td>POLYGON ((-72.75294 41.5925, -72.71454 41.6043...</td>
     </tr>
     <tr>
-      <th>3022</th>
-      <td>Hartford County, Connecticut</td>
+      <th>935</th>
+      <td>New Haven County, Connecticut</td>
       <td>09</td>
       <td>...</td>
-      <td>40617843</td>
-      <td>POLYGON ((-73.02954 41.96661, -73.00876 42.038...</td>
+      <td>667604268</td>
+      <td>MULTIPOLYGON (((-72.76143 41.24233, -72.75886 ...</td>
+    </tr>
+    <tr>
+      <th>2245</th>
+      <td>Windham County, Connecticut</td>
+      <td>09</td>
+      <td>...</td>
+      <td>21478813</td>
+      <td>POLYGON ((-72.25208 41.72706, -72.19813 41.728...</td>
     </tr>
   </tbody>
 </table>
-<p>8 rows × 14 columns</p>
+<p>5 rows × 14 columns</p>
 </div></div></div>
 </div>
+<p>(Our population growth dataset uses these counties as well, so we’ll
+be able to merge the county data and boundaries together without
+any issues.)</p>
 </section>
 <section id="importing-growth-data-for-us-counties">
 <h3>Importing growth data for US counties<a class="headerlink" href="#importing-growth-data-for-us-counties" title="Link to this heading">#</a></h3>
+<p>Now that we’ve loaded in our region boundaries, we can turn our attention to the county-level population growth data that our first sets of choropleth maps will visualize.</p>
 <p>The following table was created within the Census Data Imports section of Python for Nonprofits.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -712,7 +722,7 @@
 </div></div></div>
 </div>
 <p>Merging our Census data into our county shapefiles:</p>
-<p>(We could also have used state and county codes for this merge.)</p>
+<p>(We could also have used state and county codes for this merge; however, I prefer to merge on names when possible, as there’s always a chance that codes within two different datasets might refer to different regions.)</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">gdf_counties_and_growth_stats</span> <span class="o">=</span> <span class="n">gdf_counties</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span>
@@ -795,7 +805,6 @@
 <p>5 rows × 88 columns</p>
 </div></div></div>
 </div>
-<p>In order to create our map, we’ll group a chosen metric (e.g. nominal population growth over a 10-year period) into a specific number of bins. The following line specifies how many bins we’d like to use:</p>
 <p>Determining which set of growth data to visualize within our map:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -816,21 +825,25 @@
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data_col</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">year_range</span><span class="si">}</span><span class="s1"> Total_Pop % Change&#39;</span>
-<span class="c1"># Specifying an additional rows that will get included within the maps&#39; </span>
+
+<span class="c1"># Specifying an additional column that will get included within the maps&#39; </span>
 <span class="c1"># hover data (e.g. information that pops up when viewers move their mouse </span>
 <span class="c1"># over a particular region):</span>
-<span class="c1"># Percentile information will get added in automatically by a mapping</span>
-<span class="c1"># function that we&#39;ll use later within this script (as long as its</span>
-<span class="c1"># &#39;percentile&#39; argument is set to True), so we won&#39;t add that as an option</span>
-<span class="c1"># here.</span>
+
 <span class="n">extra_hover_data</span> <span class="o">=</span> <span class="p">[</span>
     <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">data_col</span><span class="si">}</span><span class="s1"> Rank&#39;</span><span class="p">]</span>
+
+<span class="c1"># Percentile information will get added in automatically by a mapping</span>
+<span class="c1"># function that we&#39;ll use later within this script (as long as its</span>
+<span class="c1"># &#39;percentile&#39; argument is set to True), so we won&#39;t add that to the</span>
+<span class="c1"># extra_hover_data field here.</span>
 
 <span class="n">gdf_counties_for_map</span> <span class="o">=</span> <span class="n">gdf_counties_and_growth_stats</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span>
     <span class="n">subset</span> <span class="o">=</span> <span class="n">data_col</span><span class="p">)</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">data_col</span><span class="p">,</span> <span class="n">ascending</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span>
     <span class="s1">&#39;County/State&#39;</span><span class="p">)[</span>
 <span class="p">[</span><span class="s1">&#39;geometry&#39;</span><span class="p">,</span><span class="n">data_col</span><span class="p">,</span> <span class="s1">&#39;2011-2021 Total_Pop % Change Percentile&#39;</span><span class="p">]</span> 
 <span class="o">+</span> <span class="n">extra_hover_data</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
 <span class="n">gdf_counties_for_map</span>
 </pre></div>
 </div>
@@ -908,8 +921,8 @@
 <p>3137 rows × 4 columns</p>
 </div></div></div>
 </div>
-<p><strong>Important</strong>: In order for your mapping code to work correctly, it is crucial that your indices contain the location values that you wish to use (e.g. county or state names). If you instead use a regular numerical index (e.g. 0 … n), it appears that px.choropleth() will interpret those index names as state or county FIPS codes. This will likely cause <em>the wrong data to get shown for certain locations.</em></p>
-<p>Defining a custom color scale: (This step is optional, but I wanted to demonstrate how you can send a custom scale to your map as needed. Plotly will interpolate between these colors as needed when creating the map.)</p>
+<p><strong>Important: In order for your mapping code to work correctly, it is crucial that your indices contain the location values that you wish to use (e.g. county or state names). If you instead use a regular numerical index (e.g. 0 … n), it appears that <code class="docutils literal notranslate"><span class="pre">px.choropleth()</span></code> may interpret those index names as state or county FIPS codes, depending perhaps on the <code class="docutils literal notranslate"><span class="pre">scope</span></code> argument that you pass to that function. This will likely cause <em>the wrong data to get shown for certain locations.</em></strong></p>
+<p>Defining a custom color scale: (This step is optional, but I wanted to demonstrate how you can send a custom scale to your map if needed. Plotly will automatically interpolate between these colors when determining which colors to use within your map.)</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">custom_color_scale</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;#800080&#39;</span><span class="p">,</span> <span class="s1">&#39;#ffffff&#39;</span><span class="p">,</span> <span class="s1">&#39;#ffa500&#39;</span><span class="p">]</span> <span class="c1"># Purple, </span>
@@ -932,7 +945,20 @@
 </section>
 <section id="creating-an-initial-choropleth-map-with-a-linear-scale">
 <h2>Creating an initial choropleth map with a linear scale<a class="headerlink" href="#creating-an-initial-choropleth-map-with-a-linear-scale" title="Link to this heading">#</a></h2>
-<p>The following code successfully creates a choropleth map using Plotly; however, there’s a significant problem with this map, which I’ll discuss following its render.</p>
+<p>The following code successfully creates a choropleth map using Plotly. Setting <code class="docutils literal notranslate"><span class="pre">scope</span></code> to ‘usa’ allows a special US-based projection to be used; this projection places Alaska and Hawaii to the southwest of the contiguous US, which is very convenient for static map copies.</p>
+<p>(Within the <code class="docutils literal notranslate"><span class="pre">px.choropleth()</span></code> call, note that the <code class="docutils literal notranslate"><span class="pre">geojson</span></code> argument needs to be your actual set of region polygons rather than the name of the column (in this case, ‘geometry’) that stores those polygons.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data_col</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;2011-2021 Total_Pop % Change&#39;
+</pre></div>
+</div>
+</div>
+</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">choropleth</span><span class="p">(</span>
@@ -946,6 +972,8 @@
     <span class="n">title</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;Population % Change by County from </span><span class="si">{</span><span class="n">year_range_start</span><span class="si">}</span><span class="s1"> </span><span class="se">\</span>
 <span class="s1">to </span><span class="si">{</span><span class="n">year_range_end</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
 
+
+
 <span class="c1"># Shortening our colorbar title:</span>
 <span class="n">fig</span><span class="o">.</span><span class="n">update_coloraxes</span><span class="p">(</span><span class="n">colorbar_title</span> <span class="o">=</span> <span class="s2">&quot;% Change&quot;</span><span class="p">)</span>
 <span class="c1"># (This code was based on the documentation found at</span>
@@ -953,8 +981,9 @@
 
 <span class="c1"># I found that the basemap&#39;s presence made certain coastal county borders </span>
 <span class="c1"># appear a bit &#39;messy&#39;, so I decided to disable it.</span>
-<span class="c1"># Saving this map as an image file: (</span>
-<span class="c1"># Consult the update_and_save_plotly_map() documentation within</span>
+
+<span class="c1"># Saving this map as an image file: </span>
+<span class="c1"># (Consult the update_and_save_plotly_map() documentation within</span>
 <span class="c1"># plotly_choropleth_map_functions.py for more details on the function</span>
 <span class="c1"># called below.)</span>
 <span class="n">filename</span> <span class="o">=</span> <span class="s1">&#39;sample_linear_map&#39;</span>
@@ -966,7 +995,7 @@
 <span class="c1"># (Because a .png version of this image has already been created,</span>
 <span class="c1"># we&#39;ll set generate_image to False.)</span>
 <span class="n">wadi</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="n">static_file_folder</span><span class="o">+</span><span class="s1">&#39;/&#39;</span><span class="o">+</span><span class="n">filename</span><span class="p">,</span> <span class="n">generate_image</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-     <span class="n">display_type</span> <span class="o">=</span> <span class="n">display_type</span><span class="p">)</span>
+     <span class="n">display_type</span> <span class="o">=</span> <span class="s1">&#39;png&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -974,11 +1003,28 @@
 <a class="reference internal image-reference" href="../_images/a1cc39057ab59a76978d0085f7d98d617de5a629a2cfdaa28bc522052aabd4d9.png"><img alt="../_images/a1cc39057ab59a76978d0085f7d98d617de5a629a2cfdaa28bc522052aabd4d9.png" src="../_images/a1cc39057ab59a76978d0085f7d98d617de5a629a2cfdaa28bc522052aabd4d9.png" style="width: 720px;" /></a>
 </div>
 </div>
-<p>The problem, as you might have noticed already, is that the colors within this map appear rather uniform. That’s because the outliers within the map (e.g. counties with unusually high population growth or declines) have forced most of the other counties to share a similar color.</p>
+<p>However, there is a significant issue with this map: its colors appear rather uniform. That’s because the bounds of the scale are being set by McKenzie County, ND (with an incredible 119.77% growth rate between 2011 and 2021) and Kenedy County, TX (whose population declined 48% during that same timeframe). Most counties have much smaller changes in population than these two: in fact, as the following code demonstrates, half of them have growth rates between -5% and 6%, and 90% of the rates are in the -12% to 19% range. As a result, these counties occupy a relatively narrow band of our color scale.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">gdf_counties_for_map</span><span class="p">[</span><span class="s2">&quot;2011-2021 Total_Pop % Change&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">quantile</span><span class="p">([</span>
+    <span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">,</span> <span class="mf">0.75</span><span class="p">,</span> <span class="mf">0.95</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.05   -11.813827
+0.25    -4.715807
+0.75     5.626595
+0.95    18.058103
+Name: 2011-2021 Total_Pop % Change, dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
 </section>
 <section id="creating-map-with-a-percentile-scale">
 <h2>Creating map with a percentile scale<a class="headerlink" href="#creating-map-with-a-percentile-scale" title="Link to this heading">#</a></h2>
-<p>In this case, a better approach will be to base our colors on <em>percentiles</em> rather than actual county growth values. Because percentiles are distributed pretty evenly, we’ll see a nice range of colors within our map.</p>
+<p>Given the ‘bland’ colors that our linear scale produced, a better approach will be to base our colors on <em>percentiles</em> rather than actual county growth values. Because percentiles are distributed quite evenly, we’ll see a nice range of colors within our map.</p>
 <p>The following map demonstrates this approach. We’ll simply replace the existing <code class="docutils literal notranslate"><span class="pre">color</span></code> argument (<code class="docutils literal notranslate"><span class="pre">2011-2021</span> <span class="pre">%</span> <span class="pre">Change</span> <span class="pre">Percentile</span></code>) with its corresponding percentile column:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -989,7 +1035,6 @@
     <span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;2011-2021 Total_Pop % Change Percentile&#39;</span><span class="p">,</span>
     <span class="n">hover_data</span> <span class="o">=</span> <span class="p">[</span><span class="n">data_col</span><span class="p">]</span> <span class="o">+</span> <span class="n">extra_hover_data</span><span class="p">,</span> 
     <span class="n">color_continuous_scale</span> <span class="o">=</span> <span class="n">custom_color_scale</span><span class="p">,</span>
-    <span class="c1"># color_discrete_sequence = color_list,</span>
     <span class="n">scope</span> <span class="o">=</span> <span class="s1">&#39;usa&#39;</span><span class="p">,</span>
 <span class="n">title</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;Population % Change by County from </span><span class="si">{</span><span class="n">year_range_start</span><span class="si">}</span><span class="s1"> </span><span class="se">\</span>
 <span class="s1">to </span><span class="si">{</span><span class="n">year_range_end</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span>
@@ -1009,13 +1054,13 @@
 <a class="reference internal image-reference" href="../_images/304be09a07b4402e9c002829c49e4df1967d0287cd013bc971b3e74ecf2ff855.png"><img alt="../_images/304be09a07b4402e9c002829c49e4df1967d0287cd013bc971b3e74ecf2ff855.png" src="../_images/304be09a07b4402e9c002829c49e4df1967d0287cd013bc971b3e74ecf2ff855.png" style="width: 720px;" /></a>
 </div>
 </div>
-<p>This map is much more colorful–and, as a result, easier to interpret–than the version that used a linear color scale. However, a significant drawback is that the legend no longer shows the actual percentage change values on which the percentiles are based. Viewers can hover over counties to identify these values, but this approach is more cumbersome and won’t work at all when the map is converted to a static image.</p>
-<p>Thankfully, using Plotly’s update_coloraxes() function, we can replace the <strong>percentiles in the colorbar</strong> with <strong>the actual percentage change values to which they correspond</strong>. We’ll do so by modifying two properties of the colorbar:</p>
+<p>This map is much more colorful–and, as a result, easier to interpret–than the version that used a linear color scale. However, a significant drawback is that the legend no longer shows the actual percentage change values on which the percentiles are based. Viewers can hover over counties to identify these values within the HTML copy of this map, but this approach is more cumbersome and won’t work at all when the map is converted to a static image.</p>
+<p>Thankfully, using Plotly’s <code class="docutils literal notranslate"><span class="pre">update_coloraxes()</span></code> function, we can replace the <strong>percentiles</strong> in the colorbar with <strong>the actual percentage change values</strong> to which they correspond. We’ll do so by modifying two properties of the colorbar:</p>
 <ol class="arabic simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">colorbar_tickvals</span></code>, which specifies where along the colorbar (e.g. from the lowest percentile to the highest) we’d like to add text labels. (We’ll set this property to specific percentile ranks within our dataset.)</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">colorbar_ticktext</span></code>, which specifies what text we’d like to place at those values. (We’ll set this property to the actual values within our dataset that correspond to the percentile ranks that we passed to <code class="docutils literal notranslate"><span class="pre">colorbar_tickvals</span></code>.)</p></li>
 </ol>
-<p>Making changes will require some additional code, but the result will be well worth it.</p>
+<p>Making these changes will require some additional code, but the result will be well worth it. (And don’t worry–I’ll introduce a function shortly that will take care of these steps for you, though I think it’s still valuable to know how it works.)</p>
 <section id="specifying-how-many-data-points-we-d-like-to-include-within-our-color-scale">
 <h3>Specifying how many data points we’d like to include within our color scale<a class="headerlink" href="#specifying-how-many-data-points-we-d-like-to-include-within-our-color-scale" title="Link to this heading">#</a></h3>
 <div class="cell docutils container">
@@ -1044,7 +1089,7 @@
 </section>
 <section id="using-quantile-increment-to-specify-which-quantiles-to-retrieve">
 <h3>Using <code class="docutils literal notranslate"><span class="pre">quantile_increment</span></code> to specify which quantiles to retrieve<a class="headerlink" href="#using-quantile-increment-to-specify-which-quantiles-to-retrieve" title="Link to this heading">#</a></h3>
-<p>quantile_range will increase from 0 to 1 by the amount specified in quantile_increment. <code class="docutils literal notranslate"><span class="pre">quantile_increment/2</span></code> is added to 1 in the function call in order to ensure that the output will include, but also stop at, 1.</p>
+<p><code class="docutils literal notranslate"><span class="pre">quantile_range</span></code> will increase from 0 to 1 by the amount specified in <code class="docutils literal notranslate"><span class="pre">quantile_increment</span></code>. <code class="docutils literal notranslate"><span class="pre">quantile_increment/2</span></code> is added to 1 in the function call in order to ensure that the output will include, but also stop at, 1.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">quantile_range</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="o">+</span><span class="n">quantile_increment</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> 
@@ -1061,25 +1106,25 @@
 </div>
 </section>
 <section id="finding-the-actual-percentile-ranks-within-our-dataframe-that-correspond-to-these-quantiles">
-<h3>Finding the actual percentile ranks within our DataFrame that correspond to these quantiles:<a class="headerlink" href="#finding-the-actual-percentile-ranks-within-our-dataframe-that-correspond-to-these-quantiles" title="Link to this heading">#</a></h3>
-<p>(A quantile of 0 refers to the smallest percentile rank in the dataset, while a quantile of 1 refers to the highest percentile rank; a quantile of 0.5, if specified, refers to the median percentile rank.)</p>
-<p>Note: in an earlier version of this code, I created revised colorbars using the following steps:</p>
+<h3>Finding the actual percentile ranks within our DataFrame that correspond to these quantiles<a class="headerlink" href="#finding-the-actual-percentile-ranks-within-our-dataframe-that-correspond-to-these-quantiles" title="Link to this heading">#</a></h3>
+<p>We’ll now identify which percentile ranks match the quantiles specified above. (A quantile of 0 refers to the smallest percentile rank in the dataset, while a quantile of 1 refers to the highest percentile rank; a quantile of 0.5, if specified, refers to the median percentile rank.)</p>
+<p>You might be wondering why I’m finding the <em>percentile ranks</em>, and not the original data points, that correspond to these quantiles. (If you’re not, feel free to skip the following explanation!)</p>
+<p>Initially, I <em>did</em> try to map quantiles directly to my data values when creating my revised colorbars. This entailed the following steps:</p>
 <ol class="arabic simple">
-<li><p>I used quantile() to figure out which data column values to pass to the <code class="docutils literal notranslate"><span class="pre">colorbar_ticktext</span></code> property discussed earlier.</p></li>
-<li><p>I then multiplied quantile_range() by 100 to create a range of percentile ranks (called <code class="docutils literal notranslate"><span class="pre">percentile_range</span></code>) that could be passed to the `colorbar_tickvals’ property.</p></li>
+<li><p>I used <code class="docutils literal notranslate"><span class="pre">quantile()</span></code> to figure out which data column <em>values</em>, rather than percentile ranks, to pass to the <code class="docutils literal notranslate"><span class="pre">colorbar_ticktext</span></code> property discussed earlier.</p></li>
+<li><p>I then multiplied <code class="docutils literal notranslate"><span class="pre">quantile_range()</span></code> by 100 to create a range of percentile ranks (which I labeled, not very creatively, <code class="docutils literal notranslate"><span class="pre">percentile_range</span></code>) that could be passed to the `colorbar_tickvals’ property.</p></li>
 </ol>
-<p>However, this approach had a significant flaw: because datasets often wouldn’t have an exact copy of one of the percentile ranks in percentile_range, the scores that replaced those percentile ranks often corresponded to a slightly different percentile rank. (In one actual example, Pandas calculated the quantile of 0.5 (e.g. the 50.000th percentile) as 6.289%, but this percentage actually represented the 50.98th percentile. It would therefore be inaccurate to replace the 50th-percentile marker in the colorbar with this value.)</p>
+<p>However, this approach had a significant flaw: because datasets often wouldn’t have an exact copy of one of the percentile ranks in <code class="docutils literal notranslate"><span class="pre">percentile_range</span></code>, the scores that replaced those percentile ranks often corresponded to a slightly different percentile rank. (In one actual example, Pandas calculated the quantile of 0.5 (e.g. the 50.000th percentile) as 6.289%, but this percentage actually represented the 50.98th percentile. It would therefore be inaccurate to replace the 50th-percentile marker in the colorbar with this value.)</p>
 <p>In order to avoid this issue, I revised the code so that it would find the quantiles of the actual <em>percentile ranks</em> in our dataset. This way, all of the percentile ranks passed to <code class="docutils literal notranslate"><span class="pre">colorbar_tickvals</span></code> would have actual corresponding values that could be passed to <code class="docutils literal notranslate"><span class="pre">colorbar_ticktext</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">percentile_col</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">year_range</span><span class="si">}</span><span class="s1"> Total_Pop % Change Percentile&#39;</span>
 <span class="c1"># Finding the quantiles of these percentiles: (See notes above for</span>
-<span class="c1"># clarification on this step.)</span>
+<span class="c1"># my reasoning behind this approach.)</span>
 <span class="n">gdf_county_percentile_quantiles</span> <span class="o">=</span> <span class="n">gdf_counties_for_map</span><span class="p">[</span>
 <span class="n">percentile_col</span><span class="p">]</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span>
-    <span class="n">quantile_range</span><span class="p">,</span> <span class="n">interpolation</span> <span class="o">=</span> <span class="s1">&#39;lower&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span>
-    <span class="n">ascending</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
-<span class="c1"># The &#39;lower&#39; interpretation method will help ensure that only </span>
+    <span class="n">quantile_range</span><span class="p">,</span> <span class="n">interpolation</span> <span class="o">=</span> <span class="s1">&#39;lower&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">ascending</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
+<span class="c1"># The &#39;lower&#39; interpretation method helps ensure that only </span>
 <span class="c1"># actual percentile ranks present in the DataFrame get retrieved.</span>
 <span class="c1"># This is a necessary prerequisite for using df.query() to locate</span>
 <span class="c1"># the scores that match these percentile ranks, which we&#39;ll do shortly.</span>
@@ -1102,6 +1147,7 @@ Name: 2011-2021 Total_Pop % Change Percentile, Length: 11, dtype: float64
 </div>
 </div>
 </div>
+<p>Saving these percentile ranks as a list:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">gdf_county_percentile_quantile_list</span> <span class="o">=</span> <span class="p">(</span>
@@ -1126,14 +1172,14 @@ Name: 2011-2021 Total_Pop % Change Percentile, Length: 11, dtype: float64
 </div>
 </div>
 </div>
-<p>Determining the actual data_col values within the dataset that correspond to these percentile ranks:</p>
+<p>Determining the actual <code class="docutils literal notranslate"><span class="pre">data_col</span></code> values within the dataset that correspond to these percentile ranks:</p>
 <p>Note that only one row will be retained for each percentile rank; this will ensure that the lengths of the percentile rank and percentile score lists match. (If these lengths differed, we could encounter issues when trying to replace the former with the latter within our colorbar.)</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_county_percentile_rank_score_pairs</span> <span class="o">=</span> <span class="n">gdf_counties_for_map</span><span class="o">.</span><span class="n">query</span><span class="p">(</span>
     <span class="sa">f</span><span class="s2">&quot;`</span><span class="si">{</span><span class="n">percentile_col</span><span class="si">}</span><span class="s2">` in @gdf_county_percentile_quantile_list&quot;</span>
 <span class="p">)</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">(</span><span class="n">percentile_col</span><span class="p">)</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-<span class="n">df_county_percentile_rank_score_pairs</span>
+<span class="n">df_county_percentile_rank_score_pairs</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -1185,31 +1231,31 @@ Name: 2011-2021 Total_Pop % Change Percentile, Length: 11, dtype: float64
       <td>315.0</td>
     </tr>
     <tr>
-      <th>...</th>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
+      <th>Tillamook County, Oregon</th>
+      <td>POLYGON ((-124.01799 45.04981, -124.00606 45.0...</td>
+      <td>7.445839</td>
+      <td>79.980873</td>
+      <td>629.0</td>
     </tr>
     <tr>
-      <th>Cimarron County, Oklahoma</th>
-      <td>POLYGON ((-103.00243 36.5004, -103.0022 37.000...</td>
-      <td>-8.648431</td>
-      <td>10.009563</td>
-      <td>2824.0</td>
+      <th>Lexington city, Virginia</th>
+      <td>POLYGON ((-79.46158 37.78636, -79.43712 37.794...</td>
+      <td>4.129751</td>
+      <td>70.003188</td>
+      <td>942.0</td>
     </tr>
     <tr>
-      <th>Kenedy County, Texas</th>
-      <td>MULTIPOLYGON (((-97.39839 26.86789, -97.38686 ...</td>
-      <td>-48.000000</td>
-      <td>0.031878</td>
-      <td>3137.0</td>
+      <th>Scott County, Kansas</th>
+      <td>POLYGON ((-101.12838 38.7006, -100.68801 38.70...</td>
+      <td>1.814238</td>
+      <td>59.993624</td>
+      <td>1256.0</td>
     </tr>
   </tbody>
 </table>
-<p>11 rows × 4 columns</p>
 </div></div></div>
 </div>
+<p>Note that McKenzie County’s population growth was nearly <em>10 times</em> that of the 90th-percentile county in our list. It’s no wonder that a linear scale didn’t work very well! McKenzie effectively ‘broke the curve’ for all the other counties.</p>
 <p>Rounding these percentile scores (so that they’ll display better within our colorbar), then saving them to a list:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1220,11 +1266,8 @@ Name: 2011-2021 Total_Pop % Change Percentile, Length: 11, dtype: float64
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">gdf_county_score_series</span> <span class="o">=</span> <span class="n">df_county_percentile_rank_score_pairs</span><span class="p">[</span>
-<span class="n">data_col</span><span class="p">]</span>
-<span class="k">if</span> <span class="n">round_val</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-    <span class="n">gdf_county_score_series</span> <span class="o">=</span> <span class="n">gdf_county_score_series</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">round_val</span><span class="p">)</span>
-<span class="n">gdf_county_score_list</span> <span class="o">=</span> <span class="n">gdf_county_score_series</span><span class="o">.</span><span class="n">to_list</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">gdf_county_score_list</span> <span class="o">=</span> <span class="n">df_county_percentile_rank_score_pairs</span><span class="p">[</span>
+<span class="n">data_col</span><span class="p">]</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">round_val</span><span class="p">)</span><span class="o">.</span><span class="n">to_list</span><span class="p">()</span>
 <span class="n">gdf_county_score_list</span>
 </pre></div>
 </div>
@@ -1235,11 +1278,12 @@ Name: 2011-2021 Total_Pop % Change Percentile, Length: 11, dtype: float64
 </div>
 </div>
 </div>
+<p>We’ve now calculated (1) percentile ranks at 11 different quantiles and (2) the data values that correspond to those ranks. This is the information we’ll need to update our colorbar!</p>
 </section>
 <section id="rendering-an-improved-percentile-based-choropleth-map">
 <h3>Rendering an improved percentile-based choropleth map<a class="headerlink" href="#rendering-an-improved-percentile-based-choropleth-map" title="Link to this heading">#</a></h3>
 <p>This percentile map will incorporate both a percentile-based scale <em>and</em> colorbar labels that show the values corresponding to those percentiles.</p>
-<p>First, I’ll use some simulated data to demonstrate that <code class="docutils literal notranslate"><span class="pre">colorbar_tickvals</span></code> determines where items are placed on the colorbar, whereas <code class="docutils literal notranslate"><span class="pre">colorbar_ticktext</span></code> shows what their values will be. This example will hopefully make our actual map updates clearer.</p>
+<p>First, I’ll use some simulated data to demonstrate that <code class="docutils literal notranslate"><span class="pre">colorbar_tickvals</span></code> determines where items are placed on the colorbar, whereas <code class="docutils literal notranslate"><span class="pre">colorbar_ticktext</span></code> shows what their values will be. I hope that this example will make our actual map updates clearer.</p>
 <p>Modifying <code class="docutils literal notranslate"><span class="pre">colorbar_tickvals</span></code> to designate where colorbar labels will be placed:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1287,8 +1331,8 @@ Name: 2011-2021 Total_Pop % Change Percentile, Length: 11, dtype: float64
 <span class="c1"># selecting the percentile quantiles calculated earlier </span>
 <span class="c1"># as the colorbar tick locations; (2) selecting these quantiles&#39; </span>
 <span class="c1"># corresponding percentile scores as the colorbar values; </span>
-<span class="c1"># and (3) changing the title of the colorbar from &#39;Percentile&#39; to reflect</span>
-<span class="c1"># the data being displayed within the tick text entries.</span>
+<span class="c1"># and (3) changing the title of the colorbar to reflect</span>
+<span class="c1"># the nature of the data being displayed within the tick text entries.</span>
 
 <span class="n">fig</span><span class="o">.</span><span class="n">update_coloraxes</span><span class="p">(</span>
     <span class="n">colorbar_tickvals</span> <span class="o">=</span> <span class="n">gdf_county_percentile_quantile_list</span><span class="p">,</span>
@@ -1296,13 +1340,13 @@ Name: 2011-2021 Total_Pop % Change Percentile, Length: 11, dtype: float64
     <span class="n">colorbar_ticktext</span> <span class="o">=</span> <span class="n">gdf_county_score_list</span><span class="p">,</span>
     <span class="n">colorbar_title</span> <span class="o">=</span> <span class="s2">&quot;% Change&quot;</span><span class="p">,</span>
     <span class="n">colorbar_title_side</span> <span class="o">=</span> <span class="s1">&#39;bottom&#39;</span><span class="p">)</span>
+<span class="c1"># The documentation at </span>
+<span class="c1"># https://plotly.com/python/reference/layout/coloraxis/</span>
+<span class="c1"># proved indispensable when drafting this code.</span>
 
 <span class="c1"># Note: I chose to place the colorbar title below the colorbar (via</span>
-<span class="c1"># colorbar_title_side = &#39;bottom&#39; because it ended up pretty close to </span>
+<span class="c1"># &quot;colorbar_title_side = &#39;bottom&#39;&quot;) because it ended up pretty close to </span>
 <span class="c1"># the topmost tick when the default setting (&#39;top&#39;) was used.)</span>
-
-<span class="c1"># The documentation at https://plotly.com/python/reference/layout/coloraxis/</span>
-<span class="c1"># proved indispensable when drafting this code.</span>
 
 <span class="n">filename</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;county_pop_pct_growth_</span><span class="si">{</span><span class="n">year_range_start</span><span class="si">}</span><span class="se">\</span>
 <span class="s1">-</span><span class="si">{</span><span class="n">year_range_end</span><span class="si">}</span><span class="s1">&#39;</span>
@@ -1319,12 +1363,13 @@ Name: 2011-2021 Total_Pop % Change Percentile, Length: 11, dtype: float64
 <a class="reference internal image-reference" href="../_images/9e8554b97ace91bf90e14b2c66596e4c2b99c9829eaa4e41c75809d36372986e.png"><img alt="../_images/9e8554b97ace91bf90e14b2c66596e4c2b99c9829eaa4e41c75809d36372986e.png" src="../_images/9e8554b97ace91bf90e14b2c66596e4c2b99c9829eaa4e41c75809d36372986e.png" style="width: 720px;" /></a>
 </div>
 </div>
+<p>We now have a map that shows percentile-based colors, yet also displays actual data points within the colorbar. This is a big improvement over the original linear-based map.</p>
 </section>
 </section>
 <section id="mapping-25-to-29-year-old-population-growth-at-the-county-level">
 <h2>Mapping 25-to-29-year-old population growth at the county level<a class="headerlink" href="#mapping-25-to-29-year-old-population-growth-at-the-county-level" title="Link to this heading">#</a></h2>
-<p>This section will call <code class="docutils literal notranslate"><span class="pre">gen_choropleth()</span></code>, a function stored within <code class="docutils literal notranslate"><span class="pre">plotly_choropleth_map_functions.py</span></code>, in order to produce <em>and</em> save a visualization of young adult population growth across US counties. This function is a more portable version of the mapping code presented earlier in this notebook.</p>
-<p>First, we’ll specify a few values that will get incorporated into this map:</p>
+<p>We’ll next generate a map that displays population growth for adults in their mid-to-late 20s. To speed things up, it will apply <code class="docutils literal notranslate"><span class="pre">gen_choropleth()</span></code>, a function stored within <code class="docutils literal notranslate"><span class="pre">plotly_choropleth_map_functions.py</span></code>, to produce <em>and</em> save this visualization. Much of its code is very similar to the code we just ran to create our revised percentile-based map.</p>
+<p>First, we’ll specify a few key values:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">young_data_col</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">year_range</span><span class="si">}</span><span class="s1"> Total_Pop_25_to_29 % Change&#39;</span>
@@ -1340,7 +1385,7 @@ Name: 2011-2021 Total_Pop % Change Percentile, Length: 11, dtype: float64
 </div>
 </div>
 </div>
-<p>Creating, then saving our map via <code class="docutils literal notranslate"><span class="pre">gen_choropleth()</span></code>:</p>
+<p>Next, we’ll call <code class="docutils literal notranslate"><span class="pre">gen_choropleth()</span></code> to create, then save this map. More information on the parameters this function uses can be found within the function’s documentation.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">filename</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;county_25-29_pop_pct_growth_</span><span class="si">{</span><span class="n">year_range_start</span><span class="si">}</span><span class="se">\</span>
@@ -1371,9 +1416,11 @@ Name: 2011-2021 Total_Pop % Change Percentile, Length: 11, dtype: float64
 <a class="reference internal image-reference" href="../_images/5b55d859ffba080f69cf834e2f013c14a787abe69b6f1076b5cb68ff20dba422.png"><img alt="../_images/5b55d859ffba080f69cf834e2f013c14a787abe69b6f1076b5cb68ff20dba422.png" src="../_images/5b55d859ffba080f69cf834e2f013c14a787abe69b6f1076b5cb68ff20dba422.png" style="width: 720px;" /></a>
 </div>
 </div>
+<p>Note that this map shows an even wider range in population growth rates than our previous one; this makes the use of percentile-based colors even more crucial here.</p>
 </section>
 <section id="performing-simliar-steps-to-map-state-level-growth-data">
 <h2>Performing simliar steps to map state-level growth data<a class="headerlink" href="#performing-simliar-steps-to-map-state-level-growth-data" title="Link to this heading">#</a></h2>
+<p>We’ll perform a similar set of steps to visualize population growth data at the state level.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">gdf_states</span> <span class="o">=</span> <span class="n">geopandas</span><span class="o">.</span><span class="n">read_file</span><span class="p">(</span>
@@ -1465,7 +1512,6 @@ Name: 2011-2021 Total_Pop % Change Percentile, Length: 11, dtype: float64
 <span class="n">df_acs_state_growth</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span>
     <span class="n">columns</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;state&#39;</span><span class="p">:</span><span class="s1">&#39;state_code&#39;</span><span class="p">},</span>
     <span class="n">inplace</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
-<span class="n">df_acs_state_growth</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 <span class="n">gdf_states_and_growth_stats</span> <span class="o">=</span> <span class="n">gdf_states</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span>
     <span class="n">df_acs_state_growth</span><span class="p">,</span> <span class="n">on</span> <span class="o">=</span> <span class="s1">&#39;NAME&#39;</span><span class="p">,</span> <span class="n">how</span> <span class="o">=</span> <span class="s1">&#39;inner&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span>
     <span class="n">columns</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;NAME&#39;</span><span class="p">:</span><span class="s1">&#39;State&#39;</span><span class="p">})</span>
@@ -1547,88 +1593,10 @@ Name: 2011-2021 Total_Pop % Change Percentile, Length: 11, dtype: float64
 <p>5 rows × 83 columns</p>
 </div></div></div>
 </div>
-</section>
-<section id="rendering-our-state-level-maps">
-<h2>Rendering our state-level maps<a class="headerlink" href="#rendering-our-state-level-maps" title="Link to this heading">#</a></h2>
-<p>We’ll first create a map of total population growth; next, we’ll map population growth for the 25-29 age range.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">gdf_states_and_growth_stats</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>STATEFP</th>
-      <th>STATENS</th>
-      <th>...</th>
-      <th>2016-2021 Total_Pop_25_to_29 % Change Rank</th>
-      <th>2016-2021 Total_Pop_25_to_29 % Change Percentile</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>35</td>
-      <td>00897535</td>
-      <td>...</td>
-      <td>36.0</td>
-      <td>31.372549</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>46</td>
-      <td>01785534</td>
-      <td>...</td>
-      <td>39.0</td>
-      <td>25.490196</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>06</td>
-      <td>01779778</td>
-      <td>...</td>
-      <td>30.0</td>
-      <td>43.137255</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>21</td>
-      <td>01779786</td>
-      <td>...</td>
-      <td>16.0</td>
-      <td>70.588235</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>01</td>
-      <td>01779775</td>
-      <td>...</td>
-      <td>25.0</td>
-      <td>52.941176</td>
-    </tr>
-  </tbody>
-</table>
-<p>5 rows × 83 columns</p>
-</div></div></div>
-</div>
+<section id="rendering-state-level-maps">
+<h3>Rendering state-level maps<a class="headerlink" href="#rendering-state-level-maps" title="Link to this heading">#</a></h3>
+<p>We’ll first use <code class="docutils literal notranslate"><span class="pre">gen_choropleth()</span></code> to create a map of total population growth; next, we’ll map population growth for the 25-29 age range.</p>
+<p>These maps will also display population growth rates atop each state. Such labels are especially useful for static map copies, but you may want to consider including them within HTML-based maps as well.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">filename</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;state_pop_pct_growth_</span><span class="si">{</span><span class="n">year_range_start</span><span class="si">}</span><span class="se">\</span>
@@ -1657,7 +1625,7 @@ Name: 2011-2021 Total_Pop % Change Percentile, Length: 11, dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="../_images/7321f446fbe0e49fe273d1198092aa1d02f06b90767033e73f4d295ceb1bd8ab.png"><img alt="../_images/7321f446fbe0e49fe273d1198092aa1d02f06b90767033e73f4d295ceb1bd8ab.png" src="../_images/7321f446fbe0e49fe273d1198092aa1d02f06b90767033e73f4d295ceb1bd8ab.png" style="width: 720px;" /></a>
+<a class="reference internal image-reference" href="../_images/469f7c899ba9cc2b660cc20ac419daf4f8d93a5196ac1e2f4b06a9552a74e158.png"><img alt="../_images/469f7c899ba9cc2b660cc20ac419daf4f8d93a5196ac1e2f4b06a9552a74e158.png" src="../_images/469f7c899ba9cc2b660cc20ac419daf4f8d93a5196ac1e2f4b06a9552a74e158.png" style="width: 720px;" /></a>
 </div>
 </div>
 <div class="cell docutils container">
@@ -1688,25 +1656,26 @@ Name: 2011-2021 Total_Pop % Change Percentile, Length: 11, dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="../_images/e7ee2c744150acef565ff23dcbc733c7c6eaaf49021e135b23535513716404c6.png"><img alt="../_images/e7ee2c744150acef565ff23dcbc733c7c6eaaf49021e135b23535513716404c6.png" src="../_images/e7ee2c744150acef565ff23dcbc733c7c6eaaf49021e135b23535513716404c6.png" style="width: 720px;" /></a>
+<a class="reference internal image-reference" href="../_images/7408542b7b590fa7bf5a5315948778299e98a8a61db1fe991e075cd9705c7d02.png"><img alt="../_images/7408542b7b590fa7bf5a5315948778299e98a8a61db1fe991e075cd9705c7d02.png" src="../_images/7408542b7b590fa7bf5a5315948778299e98a8a61db1fe991e075cd9705c7d02.png" style="width: 720px;" /></a>
 </div>
 </div>
 </section>
+</section>
 <section id="creating-tiled-choropleth-maps">
 <h2>Creating tiled choropleth maps<a class="headerlink" href="#creating-tiled-choropleth-maps" title="Link to this heading">#</a></h2>
-<p>The choropleth maps created thus far do not show any background images that can help users identify the regions specified within the maps. (These images are often referred to as ‘tiles.’) In order to include such tiles, we’ll need to use a separate Plotly function: <code class="docutils literal notranslate"><span class="pre">px.choropleth_map()</span></code>. (More information on this function can be found at <a class="reference external" href="https://plotly.com/python-api-reference/generated/plotly.express.choropleth_map.html">https://plotly.com/python-api-reference/generated/plotly.express.choropleth_map.html</a> ).</p>
+<p>The choropleth maps created thus far do not show any background images that can help users identify the regions specified within the maps. (These images are often referred to as ‘tiles.’) In order to include such tiles, we’ll need to use a separate Plotly function: <code class="docutils literal notranslate"><span class="pre">px.choropleth_map()</span></code>. (More information on this function can be found at <a class="reference external" href="https://plotly.com/python-api-reference/generated/plotly.express.choropleth_map.html">https://plotly.com/python-api-reference/generated/plotly.express.choropleth_map.html</a> .)</p>
 <p>Tiled maps have a few significant advantages:</p>
 <ol class="arabic simple">
-<li><p>They can make areas of the map easier to identify. For instance, if you want to figure out which cities are contained within a particular county in one of the ‘tileless’ maps created earlier, you’d need to open up a separate map in order to find out. With tiled maps, you can simply zoom in on the county in question and review the city names that appear within it.</p></li>
+<li><p>They can make areas of the map easier to identify. For instance, if you want to figure out which cities are contained within a particular county in one of the ‘tileless’ maps created earlier, you’d need to search for them within a separate map. Tiled maps include that ‘separate map’ as an underlying layer; as a result, you could simply zoom in on the county in question and review the cities that appear within it.</p></li>
 <li><p>I have found that zooming and scrolling within HTML versions of tiled maps is a smoother process than it is for the non-tiled HTML-based maps shown above. I <em>think</em> this is because the non-tiled maps made use of the Albers USA projection, which might require more processing power than the tiled maps we’ll create shortly.</p></li>
 </ol>
-<p>The main advantage of non-tiled maps, at least for the US, is that they support the Albers USA projection; this projection makes it easy to include Alaska and Hawaii within static versions of the map. They also offer a simpler, cleaner display that works great for certain maps (such as state-based ones) for which tiles don’t add that much explanatory value.</p>
+<p>The main advantage of the <em>tileless</em> maps we created earlier, at least for the US, is that they support the Albers USA projection; this projection makes it easy to include Alaska and Hawaii within static versions of the map. They also offer a simpler, cleaner display that works great for certain maps (such as state-based ones) for which tiles don’t add that much explanatory value.</p>
 <p>In general–at least for US-based maps–I would recommend using a non-tiled setup for static maps and a tiled one for HTML-based ones.</p>
 <section id="creating-a-simple-tiled-map">
 <h3>Creating a simple tiled map<a class="headerlink" href="#creating-a-simple-tiled-map" title="Link to this heading">#</a></h3>
 <p>Before we create a tiled <em>choropleth</em> map, let’s first see what a standard Plotly tiled map looks like.</p>
-<p>The following cell calls <code class="docutils literal notranslate"><span class="pre">px.choropleth_map()</span></code> directly to create a tiled map of the lower 48 US states. Within the <code class="docutils literal notranslate"><span class="pre">choropleth_map()</span></code> call, we’ll specify our tile provider* as well with the starting zoom and center of our map. After creating the map, we’ll also remove all margins from our map so that it takes up more of the screen. (I’ve found that this can be helpful for tiled maps.)</p>
-<p>*There are other tile providers that you can use as well. However, you’ll want to look into the terms of service for each provider in order to determine whether you need to pay, register, etc. in order to use the tiles for personal and/or commercial use.</p>
+<p>The following cell calls <code class="docutils literal notranslate"><span class="pre">px.choropleth_map()</span></code> to create a tiled map of the lower 48 US states. Within the <code class="docutils literal notranslate"><span class="pre">choropleth_map()</span></code> call, we’ll specify our tile provider* as well as the starting zoom and center of our map. After creating the map, we’ll also remove all margins from our map so that it takes up more of the screen. (I’ve found that this can be particularly useful for tiled maps.)</p>
+<p>*There are other tile providers that you can use as well. However, you’ll want to look into the terms of service for each one in order to determine whether you need to pay, register, etc. in order to use the tiles for personal and/or commercial use. For instance, before using CARTO-based tiles in a commercial setting, you should reach out to CARTO to determine how much such usage would cost.)</p>
 <p>Relevant resources for OpenStreetMap tile and data usage include:</p>
 <ul class="simple">
 <li><p><a class="reference external" href="https://operations.osmfoundation.org/policies/tiles/">https://operations.osmfoundation.org/policies/tiles/</a></p></li>
@@ -1735,101 +1704,23 @@ Name: 2011-2021 Total_Pop % Change Percentile, Length: 11, dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="../_images/996f261357372e35a0f32a23606dfccfffcf60e8f6ba14063a51b1233e86754d.png"><img alt="../_images/996f261357372e35a0f32a23606dfccfffcf60e8f6ba14063a51b1233e86754d.png" src="../_images/996f261357372e35a0f32a23606dfccfffcf60e8f6ba14063a51b1233e86754d.png" style="width: 720px;" /></a>
+<a class="reference internal image-reference" href="../_images/a8e2544ae5fdb6707684f55577fbf0ac3d8947076295db70063ce57302887a13.png"><img alt="../_images/a8e2544ae5fdb6707684f55577fbf0ac3d8947076295db70063ce57302887a13.png" src="../_images/a8e2544ae5fdb6707684f55577fbf0ac3d8947076295db70063ce57302887a13.png" style="width: 720px;" /></a>
 </div>
 </div>
-<p>This map differs from the ones created earlier in that it shows map data in the form of tiles. (The previous maps showed state and county outlines from the Census, but there were no tiles underlying them–just a blank background.)</p>
+<p>This graphic differs from the ones created earlier in that it shows map data in the form of tiles. (The previous maps showed state and county outlines from the Census, but there were no tiles underlying them–just a blank background.)</p>
 <p>If you zoom in on an HTML copy of this map (available within maps/simple_choropleth_maps.html), you’ll find that the map data becomes even more detailed: if you go in far enough, you’ll begin to see street names and the outlines of individual buildings.</p>
-<p>However, while this map is neat, we can get essentially the same experience by visiting <a class="reference external" href="https://www.openstreetmap.org/#map=5/37.9/-96">https://www.openstreetmap.org/#map=5/37.9/-96</a> . Therefore, let’s now make our Python based maps more useful–by overlaying choropleth data onto the tiles.</p>
+<p>However, while this map is neat, we can get essentially the same experience by visiting <a class="reference external" href="https://www.openstreetmap.org/#map=5/37.9/-96">https://www.openstreetmap.org/#map=5/37.9/-96</a> . Therefore, let’s now make this map more useful by overlaying choropleth data onto the tiles.</p>
 </section>
 <section id="creating-tiled-choropleth-maps-via-a-for-loop">
 <h3>Creating tiled choropleth maps via a for loop<a class="headerlink" href="#creating-tiled-choropleth-maps-via-a-for-loop" title="Link to this heading">#</a></h3>
-<p>The following code will create four new tiled versions of our county-level population change maps. It will do by calling <code class="docutils literal notranslate"><span class="pre">gen_choropleth_map()</span></code>, a variant of <code class="docutils literal notranslate"><span class="pre">gen_choropleth()</span></code> designed that calls <code class="docutils literal notranslate"><span class="pre">px.choropleth_map()</span></code> rather than <code class="docutils literal notranslate"><span class="pre">px.choropleth()</span></code>.</p>
-<p>In order to reduce the amount of code required for this section, we’ll generate these maps within a for loop. This loop will first create total population growth maps; it will then build growth maps for the 25-29-year-old population.</p>
-<p>For each of these map types, the code will first create a map optimized for HTML display, followed by a map designed to be viewed as a screenshot. The HTML- and PNG-optimized maps will be saved only in HTML and PNG format, respectively. Configuration settings for these two map types can be found within options_dict_list.</p>
+<p>The following code will create four new tiled versions of our county-level population change maps. It will do by calling <code class="docutils literal notranslate"><span class="pre">gen_choropleth_map()</span></code>, a variant of <code class="docutils literal notranslate"><span class="pre">gen_choropleth()</span></code> that calls <code class="docutils literal notranslate"><span class="pre">px.choropleth_map()</span></code> rather than <code class="docutils literal notranslate"><span class="pre">px.choropleth()</span></code>. (This function’s documentation, like that for <code class="docutils literal notranslate"><span class="pre">gen_choropleth()</span></code>, is available within ‘folium_choropleth_map_functions.py’.</p>
+<p>In order to reduce the amount of code required for this section, we’ll generate these maps within a for loop. This loop will first create total population growth maps; next, it will build growth maps for the 25-29-year-old population.</p>
+<p>For each of these map types, the code will first create a map optimized for HTML display followed by one designed to be viewed as a screenshot. The HTML- and PNG-optimized maps will be saved only in HTML and PNG format, respectively. Configuration settings for these two map types can be found within <code class="docutils literal notranslate"><span class="pre">options_dict_list</span></code>.</p>
 <p>A few additional notes on this code:</p>
 <ol class="arabic simple">
 <li><p>In order to compensate for these wider dimensions, the PNG-optimized maps use higher zoom and font size settings than the standard ones.</p></li>
 <li><p>The HTML-based maps do not include a title. I have found that the presence of these titles can make these maps harder to view when their underlying windows are compressed.</p></li>
 </ol>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">gdf_counties</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>County/State</th>
-      <th>STATEFP</th>
-      <th>...</th>
-      <th>AWATER</th>
-      <th>geometry</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>Riley County, Kansas</td>
-      <td>20</td>
-      <td>...</td>
-      <td>32047392</td>
-      <td>POLYGON ((-96.96169 39.22008, -96.95872 39.566...</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>Ringgold County, Iowa</td>
-      <td>19</td>
-      <td>...</td>
-      <td>8723135</td>
-      <td>POLYGON ((-94.47121 40.57082, -94.47078 40.899...</td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-    </tr>
-    <tr>
-      <th>3232</th>
-      <td>Licking County, Ohio</td>
-      <td>39</td>
-      <td>...</td>
-      <td>12761090</td>
-      <td>POLYGON ((-82.7825 39.93966, -82.77268 39.9871...</td>
-    </tr>
-    <tr>
-      <th>3233</th>
-      <td>Woodbury County, Iowa</td>
-      <td>19</td>
-      <td>...</td>
-      <td>12793700</td>
-      <td>POLYGON ((-96.49878 42.56104, -95.74161 42.561...</td>
-    </tr>
-  </tbody>
-</table>
-<p>3234 rows × 14 columns</p>
-</div></div></div>
-</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">pop_type</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;25-29_&#39;</span><span class="p">]:</span> <span class="c1"># These variables refer to all residents</span>
@@ -1847,7 +1738,10 @@ Name: 2011-2021 Total_Pop % Change Percentile, Length: 11, dtype: float64
     
     <span class="n">filename</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;county_</span><span class="si">{</span><span class="n">pop_type</span><span class="si">}</span><span class="s1">pop_pct_growth_</span><span class="si">{</span><span class="n">year_range_start</span><span class="si">}</span><span class="se">\</span>
 <span class="s1">-</span><span class="si">{</span><span class="n">year_range_end</span><span class="si">}</span><span class="s1">_tiled&#39;</span>
-
+    <span class="c1"># Specifying which arguments to use for our static and interactive </span>
+    <span class="c1"># maps:</span>
+    <span class="c1"># (The first set of options will be used for HTML-based maps, and </span>
+    <span class="c1"># the second set will be applied for PNG-based maps.)</span>
     <span class="n">options_dict_list</span> <span class="o">=</span> <span class="p">[{</span><span class="s1">&#39;zoom&#39;</span><span class="p">:</span><span class="mf">4.3</span><span class="p">,</span> <span class="s1">&#39;save_static&#39;</span><span class="p">:</span><span class="kc">False</span><span class="p">,</span> 
                           <span class="s1">&#39;save_html&#39;</span><span class="p">:</span><span class="kc">True</span><span class="p">,</span> <span class="s1">&#39;title&#39;</span><span class="p">:</span><span class="s1">&#39;&#39;</span><span class="p">},</span>
     <span class="p">{</span><span class="s1">&#39;zoom&#39;</span><span class="p">:</span><span class="mf">5.4</span><span class="p">,</span> <span class="s1">&#39;save_html&#39;</span><span class="p">:</span><span class="kc">False</span><span class="p">,</span> <span class="s1">&#39;save_static&#39;</span><span class="p">:</span><span class="kc">True</span><span class="p">,</span>
@@ -1883,52 +1777,85 @@ Name: 2011-2021 Total_Pop % Change Percentile, Length: 11, dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="../_images/a3542de42dd272401f7594ab55b3d4a77bcd097d1cb6868ed264ba2a7c29e3fe.png"><img alt="../_images/a3542de42dd272401f7594ab55b3d4a77bcd097d1cb6868ed264ba2a7c29e3fe.png" src="../_images/a3542de42dd272401f7594ab55b3d4a77bcd097d1cb6868ed264ba2a7c29e3fe.png" style="width: 720px;" /></a>
+<a class="reference internal image-reference" href="../_images/e2f105de1af6a733e39ccc36d7e92225dbc3ddd8b5122c15fd9c67c5258f5e84.png"><img alt="../_images/e2f105de1af6a733e39ccc36d7e92225dbc3ddd8b5122c15fd9c67c5258f5e84.png" src="../_images/e2f105de1af6a733e39ccc36d7e92225dbc3ddd8b5122c15fd9c67c5258f5e84.png" style="width: 720px;" /></a>
 </div>
 </div>
 </section>
-<section id="creating-a-tiled-state-level-map">
-<h3>Creating a tiled state-level map<a class="headerlink" href="#creating-a-tiled-state-level-map" title="Link to this heading">#</a></h3>
-<p>Finally, we’ll create a tiled state-level map that displays total population growth between 2011 and 2021.</p>
-<p><strong>Note:</strong> I was unable to get text labels to appear within this tiled map. I reached out to the Plotly community forum for assistance (see <a class="reference external" href="https://community.plotly.com/t/is-it-possible-to-use-add-scattergeo-to-add-text-labels-to-a-map-created-with-px-choropleth-map-not-px-choropleth/91543">https://community.plotly.com/t/is-it-possible-to-use-add-scattergeo-to-add-text-labels-to-a-map-created-with-px-choropleth-map-not-px-choropleth/91543</a> ); if I find a fix, I will update my code accordingly. In the meantime, if you absolutely must add labels to a <em>tiled</em> choropleth map, consider using the Folium library instead.</p>
+<section id="creating-tiled-state-level-maps">
+<h3>Creating tiled state-level maps<a class="headerlink" href="#creating-tiled-state-level-maps" title="Link to this heading">#</a></h3>
+<p>Finally, we’ll create two tiled state-level maps, one HTML based and one PNG based, that display total population growth between 2011 and 2021. These maps will also include state-level data labels.</p>
+<p><strong>Note</strong>: This code often (but not always) produces the following error when attempting to save the PNG-based map:</p>
+<p><code class="docutils literal notranslate"><span class="pre">ValueError:</span> <span class="pre">Transform</span> <span class="pre">failed</span> <span class="pre">with</span> <span class="pre">error</span> <span class="pre">code</span> <span class="pre">525:</span> <span class="pre">Map</span> <span class="pre">error.</span></code></p>
+<p>This only seems to occur when attempting to save tile-based maps with labels. There has been some discussion of this error online, but I wasn’t able to find a solution. (However, I found at one point that, after exiting and restarting JupyterLab, the error message disappeared and I was able to save the PNG copy of the map successfully.)</p>
+<p>If you need to save a PNG version of a labeled choropleth map and are getting this error on your end also, consider using <code class="docutils literal notranslate"><span class="pre">gen_choropleth()</span></code> rather than <code class="docutils literal notranslate"><span class="pre">gen_choropleth_map()</span></code>. You should able to create a PNG file via Selenium (see the Folium mapping sections for relevant code). (If you don’t need to automate this step, you could of course also just open up the map in a web browser, then generate a screenshot yourself.)</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">filename</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;state_pop_pct_growth_</span><span class="si">{</span><span class="n">year_range_start</span><span class="si">}</span><span class="se">\</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">options_dict_list</span> <span class="o">=</span> <span class="p">[{</span><span class="s1">&#39;zoom&#39;</span><span class="p">:</span><span class="mf">4.3</span><span class="p">,</span> <span class="s1">&#39;save_static&#39;</span><span class="p">:</span><span class="kc">False</span><span class="p">,</span> 
+                      <span class="s1">&#39;save_html&#39;</span><span class="p">:</span><span class="kc">True</span><span class="p">,</span> <span class="s1">&#39;title&#39;</span><span class="p">:</span><span class="s1">&#39;&#39;</span><span class="p">},</span>
+<span class="p">{</span><span class="s1">&#39;zoom&#39;</span><span class="p">:</span><span class="mf">5.4</span><span class="p">,</span> <span class="s1">&#39;save_html&#39;</span><span class="p">:</span><span class="kc">False</span><span class="p">,</span> <span class="s1">&#39;save_static&#39;</span><span class="p">:</span><span class="kc">True</span><span class="p">,</span>
+ <span class="s1">&#39;title&#39;</span><span class="p">:</span><span class="sa">f</span><span class="s1">&#39;Population % Change by </span><span class="se">\</span>
+<span class="s1">State from </span><span class="si">{</span><span class="n">year_range_start</span><span class="si">}</span><span class="s1"> to </span><span class="si">{</span><span class="n">year_range_end</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">}]</span>
+<span class="n">filename</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;state_pop_pct_growth_</span><span class="si">{</span><span class="n">year_range_start</span><span class="si">}</span><span class="se">\</span>
 <span class="s1">-</span><span class="si">{</span><span class="n">year_range_end</span><span class="si">}</span><span class="s1">_tiled&#39;</span>
-<span class="n">fig</span> <span class="o">=</span> <span class="n">gen_choropleth_map</span><span class="p">(</span>
-    <span class="n">original_gdf</span><span class="o">=</span><span class="n">gdf_states_and_growth_stats</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;State&#39;</span><span class="p">),</span> 
-    <span class="n">geojson_col</span><span class="o">=</span><span class="s1">&#39;geometry&#39;</span><span class="p">,</span> 
-    <span class="n">location_name_col</span><span class="o">=</span><span class="s1">&#39;State&#39;</span><span class="p">,</span>
-    <span class="n">data_col</span><span class="o">=</span><span class="n">data_col</span><span class="p">,</span> <span class="n">extra_hover_cols</span><span class="o">=</span><span class="n">extra_hover_data</span><span class="p">,</span> 
-    <span class="n">color_continuous_scale</span><span class="o">=</span><span class="n">custom_color_scale</span><span class="p">,</span>
-    <span class="n">title</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;Population % Change by </span><span class="se">\</span>
-<span class="s1">State from </span><span class="si">{</span><span class="n">year_range_start</span><span class="si">}</span><span class="s1"> to </span><span class="si">{</span><span class="n">year_range_end</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span>
-    <span class="n">colormap_type</span><span class="o">=</span><span class="s1">&#39;percentile&#39;</span><span class="p">,</span>
-    <span class="n">colorscale_tick_count</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
-    <span class="n">tick_round_value</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
-    <span class="n">static_file_folder</span><span class="o">=</span><span class="n">static_file_folder</span><span class="p">,</span>
-    <span class="n">html_file_folder</span><span class="o">=</span><span class="n">html_file_folder</span><span class="p">,</span>
-    <span class="n">filename</span><span class="o">=</span><span class="n">filename</span><span class="p">,</span>
-    <span class="n">custom_colorbar_title</span><span class="o">=</span><span class="s1">&#39;% Change&#39;</span><span class="p">,</span>
-    <span class="n">add_labels</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> 
-    <span class="n">screenshot_label_font_size</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
-    <span class="n">zoom</span><span class="o">=</span><span class="mf">5.4</span><span class="p">,</span>
-    <span class="n">save_static</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-    <span class="n">save_html</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-<span class="n">debug</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">options_dict</span> <span class="ow">in</span> <span class="n">options_dict_list</span><span class="p">:</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">gdf</span> <span class="o">=</span> <span class="n">gen_choropleth_map</span><span class="p">(</span>
+            <span class="n">original_gdf</span><span class="o">=</span><span class="n">gdf_states_and_growth_stats</span><span class="p">,</span>
+            <span class="n">geojson_col</span><span class="o">=</span><span class="s1">&#39;geometry&#39;</span><span class="p">,</span> 
+            <span class="n">location_name_col</span><span class="o">=</span><span class="s1">&#39;State&#39;</span><span class="p">,</span>
+            <span class="n">data_col</span><span class="o">=</span><span class="n">data_col</span><span class="p">,</span> <span class="n">extra_hover_cols</span><span class="o">=</span><span class="n">extra_hover_data</span><span class="p">,</span> 
+            <span class="n">color_continuous_scale</span><span class="o">=</span><span class="n">custom_color_scale</span><span class="p">,</span>
+            <span class="n">title</span><span class="o">=</span><span class="n">options_dict</span><span class="p">[</span><span class="s1">&#39;title&#39;</span><span class="p">],</span>
+            <span class="n">colormap_type</span><span class="o">=</span><span class="s1">&#39;percentile&#39;</span><span class="p">,</span>
+            <span class="n">colorscale_tick_count</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+            <span class="n">tick_round_value</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+            <span class="n">label_round_value</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+            <span class="n">revise_state_label_points</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+            <span class="n">static_file_folder</span><span class="o">=</span><span class="n">static_file_folder</span><span class="p">,</span>
+            <span class="n">html_file_folder</span><span class="o">=</span><span class="n">html_file_folder</span><span class="p">,</span>
+            <span class="n">filename</span><span class="o">=</span><span class="n">filename</span><span class="p">,</span>
+            <span class="n">custom_colorbar_title</span><span class="o">=</span><span class="s1">&#39;% Change&#39;</span><span class="p">,</span>
+            <span class="n">add_labels</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> 
+            <span class="n">zoom</span><span class="o">=</span><span class="n">options_dict</span><span class="p">[</span><span class="s1">&#39;zoom&#39;</span><span class="p">],</span>
+                <span class="n">save_static</span> <span class="o">=</span> <span class="n">options_dict</span><span class="p">[</span><span class="s1">&#39;save_static&#39;</span><span class="p">],</span>
+                <span class="n">save_html</span> <span class="o">=</span> <span class="n">options_dict</span><span class="p">[</span><span class="s1">&#39;save_html&#39;</span><span class="p">])</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Failed to generate map. (This happens at times when </span><span class="se">\</span>
+<span class="s2">attempting to save screenshots of tiled choropleth maps with labels; </span><span class="se">\</span>
+<span class="s2">I&#39;m not sure why.)&quot;</span><span class="p">)</span>
 
-<span class="c1"># Displaying the static image created within the final entry in </span>
-<span class="c1"># the for loop:</span>
+<span class="c1"># If the function failed to save the PNG-optimized map, the copy shown </span>
+<span class="c1"># below will be a previously-generated one.</span>
 <span class="n">wadi</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="n">static_file_folder</span><span class="o">+</span><span class="s1">&#39;/&#39;</span><span class="o">+</span><span class="n">filename</span><span class="p">,</span> <span class="n">generate_image</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-<span class="n">display_type</span><span class="o">=</span><span class="n">display_type</span><span class="p">)</span>
+     <span class="n">display_type</span><span class="o">=</span><span class="n">display_type</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="../_images/af1fcfe87d9fa5428a915ed38ec1363d8377dc5c9033ab1c93d6e69b2cba2ee8.png"><img alt="../_images/af1fcfe87d9fa5428a915ed38ec1363d8377dc5c9033ab1c93d6e69b2cba2ee8.png" src="../_images/af1fcfe87d9fa5428a915ed38ec1363d8377dc5c9033ab1c93d6e69b2cba2ee8.png" style="width: 720px;" /></a>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Failed to generate map. (This happens at times when attempting to save screenshots of tiled choropleth maps with labels; I&#39;m not sure why.)
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="../_images/a1566849b6c7f03da96cfa762022974bcc2212845b8ede782502f92fd8257268.png"><img alt="../_images/a1566849b6c7f03da96cfa762022974bcc2212845b8ede782502f92fd8257268.png" src="../_images/a1566849b6c7f03da96cfa762022974bcc2212845b8ede782502f92fd8257268.png" style="width: 720px;" /></a>
 </div>
 </div>
-<p>That’s it for this notebook! We could have covered other map types as well, such as maps that show individual points, but the lessons that you’ve learned here–and the source code in ‘plotly_choropleth_map_functions.py’–should prove useful for all sorts of visualization projects.</p>
+</section>
+</section>
+<section id="saving-geodataframes">
+<h2>Saving GeoDataFrames<a class="headerlink" href="#saving-geodataframes" title="Link to this heading">#</a></h2>
+<p>If you need to reuse a GeoDataFrame in another script, you can save it as a .json file via Geopandas’ <code class="docutils literal notranslate"><span class="pre">to_file()</span></code> function. (This function’s documentation page is located at <a class="reference external" href="https://geopandas.org/en/v0.14.4/docs/reference/api/geopandas.GeoDataFrame.to_file.html">https://geopandas.org/en/v0.14.4/docs/reference/api/geopandas.GeoDataFrame.to_file.html</a> .)</p>
+<p>Here’s an example of this function in use:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">gdf_states_and_growth_stats</span><span class="p">[[</span>
+    <span class="s1">&#39;State&#39;</span><span class="p">,</span> <span class="s1">&#39;2011-2021 Total_Pop % Change&#39;</span><span class="p">,</span> 
+    <span class="s1">&#39;geometry&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">to_file</span><span class="p">(</span>
+    <span class="s1">&#39;states_and_growth_stats_subset.json&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>(This file can then get read back into a GeoDataFrame via Geopandas’ <code class="docutils literal notranslate"><span class="pre">read_file()</span></code> function.)</p>
+<p>That’s it for this notebook! We could have covered other map types as well, such as ones that show individual points, but the lessons that you’ve learned here–and the source code in ‘plotly_choropleth_map_functions.py’–should prove useful for all sorts of visualization projects.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">end_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
@@ -1938,12 +1865,11 @@ Name: 2011-2021 Total_Pop % Change Percentile, Length: 11, dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Finished running script in 43.818 seconds.
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Finished running script in 40.02 seconds.
 </pre></div>
 </div>
 </div>
 </div>
-</section>
 </section>
 <div class="toctree-wrapper compound">
 </div>
@@ -2024,19 +1950,22 @@ Name: 2011-2021 Total_Pop % Change Percentile, Length: 11, dtype: float64
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-map-with-a-percentile-scale">Creating map with a percentile scale</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#specifying-how-many-data-points-we-d-like-to-include-within-our-color-scale">Specifying how many data points we’d like to include within our color scale</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#using-quantile-increment-to-specify-which-quantiles-to-retrieve">Using <code class="docutils literal notranslate"><span class="pre">quantile_increment</span></code> to specify which quantiles to retrieve</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#finding-the-actual-percentile-ranks-within-our-dataframe-that-correspond-to-these-quantiles">Finding the actual percentile ranks within our DataFrame that correspond to these quantiles:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#finding-the-actual-percentile-ranks-within-our-dataframe-that-correspond-to-these-quantiles">Finding the actual percentile ranks within our DataFrame that correspond to these quantiles</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#rendering-an-improved-percentile-based-choropleth-map">Rendering an improved percentile-based choropleth map</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mapping-25-to-29-year-old-population-growth-at-the-county-level">Mapping 25-to-29-year-old population growth at the county level</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#performing-simliar-steps-to-map-state-level-growth-data">Performing simliar steps to map state-level growth data</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rendering-our-state-level-maps">Rendering our state-level maps</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#performing-simliar-steps-to-map-state-level-growth-data">Performing simliar steps to map state-level growth data</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#rendering-state-level-maps">Rendering state-level maps</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-tiled-choropleth-maps">Creating tiled choropleth maps</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-a-simple-tiled-map">Creating a simple tiled map</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-tiled-choropleth-maps-via-a-for-loop">Creating tiled choropleth maps via a for loop</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-a-tiled-state-level-map">Creating a tiled state-level map</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-tiled-state-level-maps">Creating tiled state-level maps</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#saving-geodataframes">Saving GeoDataFrames</a></li>
 </ul>
   </nav></div>
 

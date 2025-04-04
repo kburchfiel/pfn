@@ -656,7 +656,8 @@
 <span class="k">def</span><span class="w"> </span><span class="nf">post_map</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="n">gdf</span><span class="p">,</span> <span class="n">margin_list</span><span class="p">,</span> <span class="n">colorbar_len</span><span class="p">,</span> <span class="n">colormap_type</span><span class="p">,</span>
             <span class="n">custom_colorbar_title</span><span class="p">,</span> <span class="n">data_col</span><span class="p">,</span>
             <span class="n">percentile_quantile_list</span><span class="p">,</span> <span class="n">score_list</span><span class="p">,</span> <span class="n">add_labels</span><span class="p">,</span>
-            <span class="n">label_round_value</span><span class="p">,</span> <span class="n">revise_state_label_points</span><span class="p">):</span>
+            <span class="n">label_round_value</span><span class="p">,</span> <span class="n">revise_state_label_points</span><span class="p">,</span>
+            <span class="n">label_addition_method</span><span class="p">):</span>
 
 <span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    This function is called by gen_choropleth() and gen_choropleth_map()</span>
@@ -717,6 +718,11 @@
         <span class="n">gdf</span><span class="p">[</span><span class="n">label_col</span><span class="p">]</span> <span class="o">=</span> <span class="n">gdf</span><span class="p">[</span><span class="n">data_col</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">label_round_value</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">gdf</span><span class="p">[</span><span class="n">label_col</span><span class="p">]</span> <span class="o">=</span> <span class="n">gdf</span><span class="p">[</span><span class="n">label_col</span><span class="p">]</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">label_round_value</span><span class="p">)</span>
+        <span class="c1"># Now that the label column has been rounded, it should be </span>
+        <span class="c1"># converted to a string; otherwise, the labels may not appear</span>
+        <span class="c1"># correctly (depending on what function is being used to </span>
+        <span class="c1"># add them).</span>
+        <span class="n">gdf</span><span class="p">[</span><span class="n">label_col</span><span class="p">]</span> <span class="o">=</span> <span class="n">gdf</span><span class="p">[</span><span class="n">label_col</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;str&#39;</span><span class="p">)</span>
     
         <span class="c1"># Determining points within each region that can serve as </span>
         <span class="c1"># text label locations:</span>
@@ -747,31 +753,85 @@
             
             <span class="n">gdf</span><span class="o">.</span><span class="n">at</span><span class="p">[</span><span class="s1">&#39;Louisiana&#39;</span><span class="p">,</span> <span class="s1">&#39;label_lat&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">30.5</span>
             <span class="n">gdf</span><span class="o">.</span><span class="n">at</span><span class="p">[</span><span class="s1">&#39;Louisiana&#39;</span><span class="p">,</span> <span class="s1">&#39;label_lon&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mf">92.54</span>
+
+        <span class="c1"># Adding labels to the map using the function specified by</span>
+        <span class="c1"># label_addition_method:</span>
         
+        <span class="k">if</span> <span class="n">label_addition_method</span> <span class="o">==</span> <span class="s1">&#39;scattergeo&#39;</span><span class="p">:</span>
+            <span class="c1"># This code was based mostly on</span>
+            <span class="c1"># https://plotly.com/python/scatter-plots-on-</span>
+            <span class="c1"># maps/#simple-us-airports-map .</span>
+    
+            <span class="n">fig</span><span class="o">.</span><span class="n">add_scattergeo</span><span class="p">(</span>
+                <span class="n">text</span><span class="o">=</span><span class="n">gdf</span><span class="p">[</span><span class="n">label_col</span><span class="p">],</span>
+                <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;text&#39;</span><span class="p">,</span>
+                <span class="n">lat</span><span class="o">=</span><span class="n">gdf</span><span class="p">[</span><span class="s1">&#39;label_lat&#39;</span><span class="p">],</span>
+                <span class="n">lon</span><span class="o">=</span><span class="n">gdf</span><span class="p">[</span><span class="s1">&#39;label_lon&#39;</span><span class="p">])</span>
+            <span class="c1"># The following code for disabling hover labels (so that</span>
+            <span class="c1"># they don&#39;t interfere with existing hover values) </span>
+            <span class="c1"># was based on:</span>
+            <span class="c1"># https://plotly.com/python/reference/scattergeo/ </span>
+            <span class="n">fig</span><span class="o">.</span><span class="n">update_traces</span><span class="p">(</span><span class="n">hoverinfo</span> <span class="o">=</span> <span class="s1">&#39;skip&#39;</span><span class="p">,</span> <span class="n">selector</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+                <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;scattergeo&#39;</span><span class="p">))</span>
+        
+        <span class="k">elif</span> <span class="n">label_addition_method</span> <span class="o">==</span> <span class="s1">&#39;scattermap&#39;</span><span class="p">:</span>
 
-        <span class="c1"># This code was based mostly on</span>
-        <span class="c1"># https://plotly.com/python/scatter-plots-on-</span>
-        <span class="c1"># maps/#simple-us-airports-map .</span>
-        <span class="n">fig</span><span class="o">.</span><span class="n">add_scattergeo</span><span class="p">(</span>
-            <span class="n">text</span><span class="o">=</span><span class="n">gdf</span><span class="p">[</span><span class="n">label_col</span><span class="p">],</span>
-            <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;text&#39;</span><span class="p">,</span>
-            <span class="n">lat</span><span class="o">=</span><span class="n">gdf</span><span class="p">[</span><span class="s1">&#39;label_lat&#39;</span><span class="p">],</span>
-            <span class="n">lon</span><span class="o">=</span><span class="n">gdf</span><span class="p">[</span><span class="s1">&#39;label_lon&#39;</span><span class="p">])</span>
+            <span class="n">fig</span><span class="o">.</span><span class="n">add_traces</span><span class="p">(</span><span class="n">go</span><span class="o">.</span><span class="n">Scattermap</span><span class="p">(</span>
+                <span class="n">text</span><span class="o">=</span><span class="n">gdf</span><span class="p">[</span><span class="n">label_col</span><span class="p">],</span>
+                <span class="n">lat</span><span class="o">=</span><span class="n">gdf</span><span class="p">[</span><span class="s1">&#39;label_lat&#39;</span><span class="p">],</span>
+                <span class="n">lon</span><span class="o">=</span><span class="n">gdf</span><span class="p">[</span><span class="s1">&#39;label_lon&#39;</span><span class="p">],</span>
+                <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;text&#39;</span><span class="p">,</span>
+                <span class="n">hoverinfo</span><span class="o">=</span><span class="s1">&#39;skip&#39;</span><span class="p">,</span>
+                <span class="n">showlegend</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                <span class="p">))</span>
+            <span class="c1"># This add_traces() call is based on a response by</span>
+            <span class="c1"># r-beginners at </span>
+            <span class="c1"># https://community.plotly.com/t/is-it-possible-to-use-add-</span>
+            <span class="c1"># scattergeo-to-add-text-labels-to-a-map-created-with-px-</span>
+            <span class="c1"># choropleth-map-not-px-choropleth/91543/2 .</span>
+            
+            <span class="c1"># The hoverinfo = &#39;skip&#39; code came from the scattermap </span>
+            <span class="c1"># documentation at:</span>
+            <span class="c1"># https://plotly.com/python/reference/scattermap/</span>
 
-        <span class="c1"># Disabling hover functionality for these text labels (as they</span>
-        <span class="c1"># can interfere with the pre-existing labels):</span>
-        <span class="n">fig</span><span class="o">.</span><span class="n">update_traces</span><span class="p">(</span><span class="n">hoverinfo</span> <span class="o">=</span> <span class="s1">&#39;skip&#39;</span><span class="p">,</span> <span class="n">selector</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
-            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;scattergeo&#39;</span><span class="p">))</span>
-    <span class="c1"># This code was based on</span>
-    <span class="c1"># https://plotly.com/python/reference/scattergeo/</span>
+            <span class="c1"># I also tried out the following method, which worked</span>
+            <span class="c1"># fairly well--except that hover data for these labels</span>
+            <span class="c1"># continued to appear (thus interfering with users&#39; ability</span>
+            <span class="c1"># to view other hover tooltips).</span>
+            
+            <span class="c1"># fig.add_traces(px.scatter_map(</span>
+            <span class="c1">#     gdf,</span>
+            <span class="c1">#     text=label_col,</span>
+            <span class="c1">#     lat=&#39;label_lat&#39;,</span>
+            <span class="c1">#     lon=&#39;label_lon&#39;,</span>
+            <span class="c1">#     map_style = &#39;white-bg&#39;,</span>
+            <span class="c1">#     ).update_traces(</span>
+            <span class="c1">#     mode=&#39;text&#39;, marker_allowoverlap=True, hovertext=&#39;&#39;, </span>
+            <span class="c1">#     hoverinfo=&#39;skip&#39;).data)</span>
+            
+            <span class="c1"># This method of adding a Plotly figure to an existing</span>
+            <span class="c1"># figure comes from StackOverflow user montol at</span>
+            <span class="c1"># https://stackoverflow.com/a/77888204/13097194 .</span>
 
+            <span class="c1"># It is meant to prevent these labels from appearing when the</span>
+            <span class="c1"># user hovers over them (as that can be distracting). However,</span>
+            <span class="c1"># this update doesn&#39;t appear to have an effect on the </span>
+            <span class="c1"># actual map. </span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Unrecognized label_addition_method passed </span><span class="se">\</span>
+<span class="s2">            to function.&quot;</span><span class="p">)</span>
+        
+        
+    
 <span class="k">def</span><span class="w"> </span><span class="nf">gen_choropleth</span><span class="p">(</span>
     <span class="n">original_gdf</span><span class="p">,</span> <span class="n">geojson_col</span><span class="p">,</span> <span class="n">data_col</span><span class="p">,</span> <span class="n">location_name_col</span><span class="p">,</span>
     <span class="n">extra_hover_cols</span><span class="o">=</span><span class="p">[],</span> <span class="n">color_continuous_scale</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> 
     <span class="n">scope</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">basemap_visible</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> 
     <span class="n">colormap_type</span><span class="o">=</span><span class="s1">&#39;linear&#39;</span><span class="p">,</span> <span class="n">colorscale_tick_count</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> 
     <span class="n">tick_round_value</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">custom_colorbar_title</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">add_labels</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> 
-    <span class="n">label_round_value</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">percentile_round_value</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">data_round_value</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+    <span class="n">label_round_value</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label_addition_method</span><span class="o">=</span><span class="s1">&#39;scattergeo&#39;</span><span class="p">,</span>
+    <span class="n">percentile_round_value</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">data_round_value</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
     <span class="n">save_html</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">save_static</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">static_file_folder</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span>
     <span class="n">html_file_folder</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">image_extension</span><span class="o">=</span><span class="s1">&#39;png&#39;</span><span class="p">,</span>
     <span class="n">include_plotlyjs</span><span class="o">=</span><span class="s1">&#39;cdn&#39;</span><span class="p">,</span> <span class="n">screenshot_label_font_size</span><span class="o">=</span><span class="mi">18</span><span class="p">,</span>
@@ -858,6 +918,12 @@
 <span class="sd">    decimal points, 2 for two decimal points, and so on.</span>
 <span class="sd">    Set to None to prevent these entries from getting rounded.</span>
 
+<span class="sd">    label_addition_method: Set to &#39;scattergeo&#39; to use add_scattergeo()</span>
+<span class="sd">    to add labels to maps; set to set to &#39;scattermap&#39; to use </span>
+<span class="sd">    go.scattermap() instead. (The former works great for the </span>
+<span class="sd">    non-tiled maps that gen_choropleth() creates; the latter appears </span>
+<span class="sd">    to work better for tiled maps generated within px.choropleth_map()).</span>
+<span class="sd"> </span>
 <span class="sd">    percentile_round_value: The value to pass to round() when creating </span>
 <span class="sd">    rounded copies of percentile data (thus improving the appearance of</span>
 <span class="sd">    these percentiles within the interactive map&#39;s tooltips). Set to </span>
@@ -960,7 +1026,7 @@
     <span class="n">post_map</span><span class="p">(</span><span class="n">fig</span><span class="o">=</span><span class="n">fig</span><span class="p">,</span> <span class="n">gdf</span><span class="o">=</span><span class="n">gdf</span><span class="p">,</span> <span class="n">margin_list</span><span class="o">=</span><span class="n">margin_list</span><span class="p">,</span> 
              <span class="n">colorbar_len</span><span class="o">=</span><span class="n">colorbar_len</span><span class="p">,</span> <span class="n">colormap_type</span><span class="o">=</span><span class="n">colormap_type</span><span class="p">,</span>
             <span class="n">custom_colorbar_title</span><span class="o">=</span><span class="n">custom_colorbar_title</span><span class="p">,</span> 
-             <span class="n">data_col</span><span class="o">=</span><span class="n">data_col</span><span class="p">,</span>
+            <span class="n">data_col</span><span class="o">=</span><span class="n">data_col</span><span class="p">,</span> <span class="n">label_addition_method</span><span class="o">=</span><span class="n">label_addition_method</span><span class="p">,</span>
             <span class="n">percentile_quantile_list</span><span class="o">=</span><span class="n">percentile_quantile_list</span><span class="p">,</span> 
             <span class="n">score_list</span><span class="o">=</span><span class="n">score_list</span><span class="p">,</span> <span class="n">add_labels</span><span class="o">=</span><span class="n">add_labels</span><span class="p">,</span>
             <span class="n">label_round_value</span><span class="o">=</span><span class="n">label_round_value</span><span class="p">,</span> 
@@ -1001,7 +1067,8 @@
     <span class="n">colormap_type</span><span class="o">=</span><span class="s1">&#39;linear&#39;</span><span class="p">,</span> 
     <span class="n">colorscale_tick_count</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">tick_round_value</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="n">custom_colorbar_title</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">add_labels</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> 
-    <span class="n">label_round_value</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">percentile_round_value</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">data_round_value</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+    <span class="n">label_round_value</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label_addition_method</span><span class="o">=</span><span class="s1">&#39;scattermap&#39;</span><span class="p">,</span>
+    <span class="n">percentile_round_value</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">data_round_value</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
     <span class="n">save_html</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">save_static</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">static_file_folder</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span>
     <span class="n">html_file_folder</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">image_extension</span><span class="o">=</span><span class="s1">&#39;png&#39;</span><span class="p">,</span>
     <span class="n">include_plotlyjs</span><span class="o">=</span><span class="s1">&#39;cdn&#39;</span><span class="p">,</span> <span class="n">screenshot_label_font_size</span><span class="o">=</span><span class="mi">18</span><span class="p">,</span>
@@ -1062,6 +1129,16 @@
 <span class="sd">    4. The screenshot_width and screenshot_height settings are</span>
 <span class="sd">    3840 and 2160, respectively, because I found that static tiled maps </span>
 <span class="sd">    appear clearer when higher width and height settings are applied.</span>
+
+<span class="sd">    NOTE: If you set add_labels to True, you may get an error message</span>
+<span class="sd">    when attempting to save the map as a PNG file via</span>
+<span class="sd">    update_and_save_plotly_map() (which this function calls). Thus, if you </span>
+<span class="sd">    don&#39;t need a static copy of your map, I recommend setting save_static</span>
+<span class="sd">    to False. If you *do* need a static copy, consider using</span>
+<span class="sd">    gen_choropleth() instead (as that function can save PNG versions of</span>
+<span class="sd">    labeled maps without any trouble); taking a screenshot manually;</span>
+<span class="sd">    or using Selenium to automate the screenshot generation process.</span>
+<span class="sd">    </span>
 <span class="sd">    &#39;&#39;&#39;</span>
 
     <span class="n">gdf</span><span class="p">,</span> <span class="n">score_list</span><span class="p">,</span> <span class="n">color</span><span class="p">,</span> <span class="n">percentile_quantile_list</span><span class="p">,</span> <span class="n">hover_data</span> <span class="o">=</span> <span class="n">pre_map</span><span class="p">(</span>
@@ -1082,13 +1159,13 @@
     <span class="n">opacity</span><span class="o">=</span><span class="n">opacity</span><span class="p">)</span>
 
     <span class="n">post_map</span><span class="p">(</span><span class="n">fig</span><span class="o">=</span><span class="n">fig</span><span class="p">,</span> <span class="n">gdf</span><span class="o">=</span><span class="n">gdf</span><span class="p">,</span> <span class="n">margin_list</span><span class="o">=</span><span class="n">margin_list</span><span class="p">,</span> 
-             <span class="n">colorbar_len</span><span class="o">=</span><span class="n">colorbar_len</span><span class="p">,</span> <span class="n">colormap_type</span><span class="o">=</span><span class="n">colormap_type</span><span class="p">,</span>
+            <span class="n">colorbar_len</span><span class="o">=</span><span class="n">colorbar_len</span><span class="p">,</span> <span class="n">colormap_type</span><span class="o">=</span><span class="n">colormap_type</span><span class="p">,</span>
             <span class="n">custom_colorbar_title</span><span class="o">=</span><span class="n">custom_colorbar_title</span><span class="p">,</span> 
-             <span class="n">data_col</span><span class="o">=</span><span class="n">data_col</span><span class="p">,</span>
+            <span class="n">data_col</span><span class="o">=</span><span class="n">data_col</span><span class="p">,</span> <span class="n">label_addition_method</span><span class="o">=</span><span class="n">label_addition_method</span><span class="p">,</span>
             <span class="n">percentile_quantile_list</span><span class="o">=</span><span class="n">percentile_quantile_list</span><span class="p">,</span> 
             <span class="n">score_list</span><span class="o">=</span><span class="n">score_list</span><span class="p">,</span> <span class="n">add_labels</span><span class="o">=</span><span class="n">add_labels</span><span class="p">,</span>
             <span class="n">label_round_value</span><span class="o">=</span><span class="n">label_round_value</span><span class="p">,</span> 
-             <span class="n">revise_state_label_points</span><span class="o">=</span><span class="n">revise_state_label_points</span><span class="p">)</span>       
+            <span class="n">revise_state_label_points</span><span class="o">=</span><span class="n">revise_state_label_points</span><span class="p">)</span>       
 
     <span class="k">if</span> <span class="p">(</span><span class="n">save_html</span> <span class="o">==</span> <span class="kc">True</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">save_static</span> <span class="o">==</span> <span class="kc">True</span><span class="p">):</span>
         <span class="n">update_and_save_plotly_map</span><span class="p">(</span>

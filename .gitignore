@@ -92,3 +92,4 @@ Mapping/states_and_growth_stats.json
 Mapping/geopandas_file_save_tests.ipynb
 Mapping/test_state_map_with_labels.html
 Mapping/test_state_map_with_labels.png
+create_pdflatex_and_html_book.sh
