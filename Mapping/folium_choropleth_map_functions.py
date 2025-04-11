@@ -1,7 +1,4 @@
 # Folium-based choropleth map functions
-# By Kenneth Burchfiel
-# Released under the MIT License
-
 
 import folium
 import geopandas
@@ -30,23 +27,23 @@ def cptt(
     starting_lat, starting_lon, gdf, 
     data_col, boundary_name_col,
     data_col_alias, boundary_name_alias,
-    zoom_start = 6, 
-    bin_type = 'linear', 
-    bin_count = 6, custom_threshold_list = [], 
-    color_scheme = 'RdYlBu',
-    tooltip_variable_list = [], tooltip_alias_list = [],
-    save_html = True, save_screenshot = True,
-    driver_window_width = 3000,
-    driver_window_height = 1688,
-    map_filename = 'map', html_map_folder = '',
-    png_map_folder = '',
-    geometry_col = 'geometry',
-    tiles = 'OpenStreetMap', choropleth_opacity = 0.6,
-    add_boundary_labels = False, boundary_label_lon_shift = 10,
-    boundary_label_lat_shift = 10, boundary_label_col = '',
-    round_boundary_labels = False,
-    boundary_label_round_val = 0,
-    delete_html_file = False): 
+    zoom_start=6, 
+    bin_type='linear', 
+    bin_count=6, custom_threshold_list=[], 
+    color_scheme='RdYlBu',
+    tooltip_variable_list=[], tooltip_alias_list=[],
+    save_html=True, save_screenshot=True,
+    driver_window_width=3000,
+    driver_window_height=1688,
+    map_filename='map', html_map_folder='',
+    png_map_folder='',
+    geometry_col='geometry',
+    tiles='OpenStreetMap', choropleth_opacity=0.6,
+    add_boundary_labels=False, boundary_label_lon_shift=10,
+    boundary_label_lat_shift=10, boundary_label_col='',
+    round_boundary_labels=False,
+    boundary_label_round_val=0,
+    delete_html_file=False): 
     
     '''This function creates a chorolpeth map with a set of tooltips
     via folium.GeoJson(). (cptt stands for 'chorolpeth and tooltip.' 
@@ -186,13 +183,14 @@ def cptt(
     # won't interfere with our mapping code:
     # {data_col} is surrounded by ` characters to make this code 
     # compatible with column names that contain spaces.
-    gdf_condensed.query(f"`{data_col}`.isna() == False", inplace = True)
+    gdf_condensed.query(f"`{data_col}`.isna() == False", inplace=True)
 
     # print(gdf_condensed.memory_usage(deep=True).sum() / 1000000)
 
     # Creating a blank map as the starting point for our choropleth:
     m = folium.Map([starting_lat, starting_lon], 
-                   zoom_start = zoom_start, tiles = tiles)
+                   zoom_start=zoom_start, tiles=tiles,
+                  zoom_control=False)
 
    
     # Adding labels to each boundary:
@@ -231,11 +229,11 @@ def cptt(
             if round_boundary_labels == True:
                 boundary_label = boundary_label.round(
                     boundary_label_round_val)
-            folium.Marker(location = gdf_condensed.iloc[i][
+            folium.Marker(location=gdf_condensed.iloc[i][
                           'boundary_label_reference_points'],
-                         icon = folium.features.DivIcon(
+                         icon=folium.features.DivIcon(
                              f"<b>{boundary_label}</b>",
-                         icon_anchor = (boundary_label_lon_shift, 
+                         icon_anchor=(boundary_label_lon_shift, 
                                         boundary_label_lat_shift))
                          ).add_to(m)
         # Part of the folium.Marker() call above is based on an example 
@@ -285,7 +283,7 @@ def cptt(
         # For instance, if you have three thresholds (0, 1, and 2),
         # two bins can be created from this list: 0-1 and 1-2.)
         bin_count = len(custom_threshold_list) - 1
-    color_range = color_brewer(color_scheme, n = bin_count)
+    color_range = color_brewer(color_scheme, n=bin_count)
     # Based on Choropleth() definition within
     # https://github.com/python-visualization/folium/blob/main/folium/
     # features.py
@@ -302,9 +300,9 @@ def cptt(
         # The number of bins will be derived from the number of 
         # colors in color_range.
         stepped_cm = StepColormap(
-            colors = color_range, 
-            vmin = gdf_condensed[data_col].min(),
-            vmax = gdf_condensed[data_col].max())
+            colors=color_range, 
+            vmin=gdf_condensed[data_col].min(),
+            vmax=gdf_condensed[data_col].max())
         # Based on: 
         # https://python-visualization.github.io/branca/colormap.html#
         # branca.colormap.StepColormap
@@ -333,9 +331,9 @@ def cptt(
         # The following approach works for both 'percentile' and 
         # 'custom' bin_type conditions.
         stepped_cm = StepColormap(
-            colors = color_range, 
-            vmin = bin_thresholds[0], vmax = bin_thresholds[-1],
-            index = bin_thresholds)
+            colors=color_range, 
+            vmin=bin_thresholds[0], vmax=bin_thresholds[-1],
+            index=bin_thresholds)
         # Based on the self.color_scale initialization within Folium's 
         # Choropleth()  source code (available at
         # https://github.com/python-visualization/folium/blob/main/
@@ -454,20 +452,20 @@ def create_map_and_screenshot(
     starting_lat, starting_lon, gdf, 
     data_col, boundary_name_col,
     data_col_alias, boundary_name_alias,
-    html_zoom_start = 5,
-    screenshot_zoom_start = 6, 
-    bin_type = 'linear', bin_count = 6, 
-    custom_threshold_list = [],
-    color_scheme = 'RdYlBu',
-    tooltip_variable_list = [], tooltip_alias_list = [],
-    map_filename = 'map', html_map_folder = '',
-    png_map_folder = '',
-    geometry_col = 'geometry',
-    tiles = 'OpenStreetMap', choropleth_opacity = 0.6,
-    add_boundary_labels = False, boundary_label_lon_shift = 10,
-    boundary_label_lat_shift = 10, boundary_label_col = '',
-    round_boundary_labels = False,
-    boundary_label_round_val = 0): 
+    html_zoom_start=5,
+    screenshot_zoom_start=6, 
+    bin_type='linear', bin_count=6, 
+    custom_threshold_list=[],
+    color_scheme='RdYlBu',
+    tooltip_variable_list=[], tooltip_alias_list=[],
+    map_filename='map', html_map_folder='',
+    png_map_folder='',
+    geometry_col='geometry',
+    tiles='OpenStreetMap', choropleth_opacity=0.6,
+    add_boundary_labels=False, boundary_label_lon_shift=10,
+    boundary_label_lat_shift=10, boundary_label_col='',
+    round_boundary_labels=False,
+    boundary_label_round_val=0): 
     '''This function calls cptt() twice in order to create separate PNG
     and HTML versions of a map. This approach allows separate zoom levels
     to be passed to each map, which can prevent one or both maps from 
@@ -483,30 +481,30 @@ def create_map_and_screenshot(
     # creating the screenshot; and then deleting the HTML copy of the map
     # (as we only needed it in order to create the screenshot):
     cptt(
-    starting_lat = starting_lat, 
-        starting_lon = starting_lon, gdf = gdf, 
-    data_col = data_col, boundary_name_col = boundary_name_col,
-    data_col_alias = data_col_alias, 
-        boundary_name_alias = boundary_name_alias,
-    zoom_start = screenshot_zoom_start, 
-    bin_type = bin_type, 
-    bin_count = bin_count, 
-    custom_threshold_list = custom_threshold_list, 
-    color_scheme = color_scheme,
-    tooltip_variable_list = tooltip_variable_list, 
-        tooltip_alias_list = tooltip_alias_list,
-    save_html = True, save_screenshot = True,
-    map_filename = map_filename, html_map_folder = html_map_folder,
-    png_map_folder = png_map_folder,
-    geometry_col = geometry_col,
-    tiles = tiles, choropleth_opacity = choropleth_opacity,
-    add_boundary_labels = add_boundary_labels, 
-        boundary_label_lon_shift = boundary_label_lon_shift,
-    boundary_label_lat_shift = boundary_label_lat_shift, 
-        boundary_label_col = boundary_label_col,
-    round_boundary_labels = round_boundary_labels,
-    boundary_label_round_val = boundary_label_round_val,
-    delete_html_file = True)
+    starting_lat=starting_lat, 
+        starting_lon = starting_lon, gdf=gdf, 
+    data_col=data_col, boundary_name_col=boundary_name_col,
+    data_col_alias=data_col_alias, 
+        boundary_name_alias=boundary_name_alias,
+    zoom_start=screenshot_zoom_start, 
+    bin_type=bin_type, 
+    bin_count=bin_count, 
+    custom_threshold_list=custom_threshold_list, 
+    color_scheme=color_scheme,
+    tooltip_variable_list=tooltip_variable_list, 
+        tooltip_alias_list=tooltip_alias_list,
+    save_html=True, save_screenshot=True,
+    map_filename=map_filename, html_map_folder=html_map_folder,
+    png_map_folder=png_map_folder,
+    geometry_col=geometry_col,
+    tiles=tiles, choropleth_opacity=choropleth_opacity,
+    add_boundary_labels=add_boundary_labels, 
+        boundary_label_lon_shift=boundary_label_lon_shift,
+    boundary_label_lat_shift=boundary_label_lat_shift, 
+        boundary_label_col=boundary_label_col,
+    round_boundary_labels=round_boundary_labels,
+    boundary_label_round_val=boundary_label_round_val,
+    delete_html_file=True)
 
     
     # Creating a copy of the map optimized for interactive viewing:
@@ -515,30 +513,30 @@ def create_map_and_screenshot(
     # Note that this code was called *after* the screenshot generation
     # code so that the latter's HTML map doesn't overwrite this one.
     m = cptt(
-    starting_lat = starting_lat, 
-        starting_lon = starting_lon, gdf = gdf, 
-    data_col = data_col, boundary_name_col = boundary_name_col,
-    data_col_alias = data_col_alias, 
-        boundary_name_alias = boundary_name_alias,
-    zoom_start = html_zoom_start, 
-    bin_type = bin_type, 
-    bin_count = bin_count, 
-    custom_threshold_list = custom_threshold_list, 
-    color_scheme = color_scheme,
-    tooltip_variable_list = tooltip_variable_list, 
-        tooltip_alias_list = tooltip_alias_list,
-    save_html = True, save_screenshot = False,
-    map_filename = map_filename, html_map_folder = html_map_folder,
-    png_map_folder = png_map_folder,
-    geometry_col = geometry_col,
-    tiles = tiles, choropleth_opacity = choropleth_opacity,
-    add_boundary_labels = add_boundary_labels, 
-        boundary_label_lon_shift = boundary_label_lon_shift,
-    boundary_label_lat_shift = boundary_label_lat_shift, 
-        boundary_label_col = boundary_label_col,
-    round_boundary_labels = round_boundary_labels,
-    boundary_label_round_val = boundary_label_round_val,
-    delete_html_file = False) 
+    starting_lat=starting_lat, 
+        starting_lon=starting_lon,gdf=gdf, 
+    data_col=data_col, boundary_name_col=boundary_name_col,
+    data_col_alias=data_col_alias, 
+        boundary_name_alias=boundary_name_alias,
+    zoom_start=html_zoom_start, 
+    bin_type=bin_type, 
+    bin_count=bin_count, 
+    custom_threshold_list=custom_threshold_list, 
+    color_scheme=color_scheme,
+    tooltip_variable_list=tooltip_variable_list, 
+        tooltip_alias_list=tooltip_alias_list,
+    save_html=True, save_screenshot=False,
+    map_filename=map_filename, html_map_folder=html_map_folder,
+    png_map_folder=png_map_folder,
+    geometry_col=geometry_col,
+    tiles=tiles, choropleth_opacity=choropleth_opacity,
+    add_boundary_labels=add_boundary_labels, 
+        boundary_label_lon_shift=boundary_label_lon_shift,
+    boundary_label_lat_shift=boundary_label_lat_shift, 
+        boundary_label_col=boundary_label_col,
+    round_boundary_labels=round_boundary_labels,
+    boundary_label_round_val=boundary_label_round_val,
+    delete_html_file=False) 
 
     # Returning the map:
     return m
