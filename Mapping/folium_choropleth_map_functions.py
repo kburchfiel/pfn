@@ -1,4 +1,4 @@
-# Folium-based choropleth map functions
+# Functions for generating Folium-based choropleth maps
 
 import folium
 import geopandas
@@ -20,15 +20,13 @@ from branca.colormap import StepColormap # From Folium's features.py
 # https://github.com/python-visualization/folium/blob/main/
 # folium/features.py
 
-
-
-
 def cptt(
     starting_lat, starting_lon, gdf, 
     data_col, boundary_name_col,
     data_col_alias, boundary_name_alias,
     zoom_start=6, 
     bin_type='linear', 
+    font_size='16px',
     bin_count=6, custom_threshold_list=[], 
     color_scheme='RdYlBu',
     tooltip_variable_list=[], tooltip_alias_list=[],
@@ -49,7 +47,7 @@ def cptt(
     via folium.GeoJson(). (cptt stands for 'chorolpeth and tooltip.' 
     Creating these two items together saves
     storage space versus building them individually.
-    The function also adds in boundary labels upon request.
+    The function also adds data labels to regions upon request.
 
     Note: Much of this function is based on the sample code found at 
     https://python-visualization.github.io/folium/latest/user_guide/
@@ -57,8 +55,8 @@ def cptt(
     and https://python-visualization.github.io/folium/latest/user_guide/
     geojson/geojson.html .
     
-    starting_lat, starting_lon, and zoom_start: the initial latitude,
-    longitude, and zoom to pass to folium.Map(), respectively. For maps
+    starting_lat and starting_lon: the initial latitude and
+    longitude, respectively, to pass to folium.Map(). For maps
     of the contiguous 48 US states, consider using a starting latitude 
     of 38 and a starting longitude of -95.
     
@@ -66,7 +64,7 @@ def cptt(
     data to visualize. Note that, in order to reduce the size of the 
     resulting map, gdf will be condensed to include only those columns 
     necessary for creating the map and adding in tooltips.
-    
+
     data_col: the column within gdf containing data to visualize.
     
     boundary_name_col: the column within gdf that displays names of
@@ -75,11 +73,8 @@ def cptt(
     data_col_alias and boundary_name_alias: The labels to use for
     data_col and county_boundary_name_col, respectively, within the 
     map's tooltips.
-        
-    tooltip_variable_list: A list of variables 
-    (other than boundary_name_col
-    and data_col, which will get added in automatically) 
-    to display within the tooltip.
+
+    zoom_start: The starting zoom setting to pass to folium.Map().
 
     bin_type: Set to 'linear' (the default argument) to create 
     equally spaced bins; 'percentile' to base choropleth colors on 
@@ -88,11 +83,14 @@ def cptt(
     be particularly useful when you wish to use the same set of bins for 
     multiple maps.)
 
+    font_size: The size to use for data labels and colorbar fonts. Note 
+    that increasing this size may cause colorbar labels to get cut off.
+
     bin_count: The number of separate colors to show within the map. This
-    parameter will be ignored when bin_type is set to 'custom.'
+    parameter will be ignored when bin_type is set to 'custom'.
 
     custom_threshold_list: A list of custom bin ranges to use for the map.
-    Will only get applied when bin_type is set to 'custom.'
+    Will only get applied when bin_type is set to 'custom'.
         
     color_scheme: The color scheme to use within the map (e.g. 'RdYlBu'). 
     Options can be found on https://colorbrewer2.org/ . 
@@ -101,10 +99,18 @@ def cptt(
     https://github.com/python-visualization/branca/blob/main/branca/
     utilities.py
 
+    tooltip_variable_list: A list of variables 
+    (other than boundary_name_col
+    and data_col, which will get added in automatically) 
+    to display within the tooltip.
+
+    tooltip_alias_list: The aliases to use for the variables within
+    tooltip_variable_list.
+
     save_html: set to True to save this map as an HTML file.
     
     save_screenshot: set to True in order to generate a screenshot of 
-    the map, then save it as a .PNG file. In order for this screenshot 
+    the map, then save it as a PNG file. In order for this screenshot 
     to get created, save_html must also be set to True.
 
     driver_window_width and driver_window_height: the default width and 
@@ -141,7 +147,9 @@ def cptt(
     boundary_label_lon_shift and boundary_label_lat_shift: Integers that 
     specify how far west and north to shift boundary labels so that they 
     appear more centered. (These values will get passed to the 
-    icon_anchor parameter of the DivIcons.)
+    icon_anchor parameter of the DivIcons.) Increases to the 
+    font_size argument should likely be followed by increases to 
+    boundary_label_lon_shift and_or boundary_label_lat_shift.
 
     boundary_label_col: The column to use as a source for boundary labels.
     You may choose to set this to be the same as data_col or boundary_name
@@ -157,19 +165,12 @@ def cptt(
     delete_html_file: set to True in order to delete the HTML file saved 
     by this function. (This can be useful when you are only calling this 
     function only to create a screenshot of a map. Once the screenshot 
-    has been saved, the original HTML file no longer needs to be 
+    has been saved, the original HTML file would no longer need to be 
     retained.) Note that, if save_html is set to False, the program 
     will *not* attempt to delete the HTML file, as it's likely that one 
     doesn't exist to begin with.
     '''
 
-    
-    # You can uncomment the following two print statements to compare
-    # the sizes of gdf and gdf_condensed.
-    
-    # print(gdf.memory_usage(deep=True).sum() / 1000000)
-    # See https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.
-    # memory_usage.html
 
     # Creating a condensed version of gdf that can serve as the basis for 
     # the map: (Condensing the DataFrame prevents unnecessary columns
@@ -179,19 +180,29 @@ def cptt(
     gdf_condensed = gdf.copy()[
     [boundary_name_col, data_col, geometry_col] + tooltip_variable_list]
 
+    # You can uncomment the following two print statements to compare
+    # the sizes of gdf and gdf_condensed.
+    
+    # print(gdf.memory_usage(deep=True).sum() / 1000000)
+    # See https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.
+    # memory_usage.html
+    
+    # print(gdf_condensed.memory_usage(deep=True).sum() / 1000000)
+
     # Removing any NaN data_col entries from our dataset so that they
     # won't interfere with our mapping code:
     # {data_col} is surrounded by ` characters to make this code 
     # compatible with column names that contain spaces.
     gdf_condensed.query(f"`{data_col}`.isna() == False", inplace=True)
 
-    # print(gdf_condensed.memory_usage(deep=True).sum() / 1000000)
-
     # Creating a blank map as the starting point for our choropleth:
     m = folium.Map([starting_lat, starting_lon], 
                    zoom_start=zoom_start, tiles=tiles,
-                  zoom_control=False)
-
+                  zoom_control=False, font_size=font_size)
+    # For more on the zoom_control variable, see
+    # https://github.com/python-visualization/folium/blob/main/docs/user_guide/map.md .
+    # This variable is set to False by default so that it won't show up 
+    # within screenshots of maps.
    
     # Adding labels to each boundary:
     # (Note: this code will work better for larger shapes, such as US 
@@ -202,6 +213,7 @@ def cptt(
     # the map.
 
     # Calculating reference points for adding labels to each boundary:
+    
     # The following code applies GeoPandas' representative_point() method
     # to calculate central points for each boundary that always lie within
     # that boundary. It then uses a list comprehension to create lists of
@@ -213,13 +225,13 @@ def cptt(
         gdf_condensed['boundary_label_reference_points'] = [
             [coord.y, coord.x] for coord in 
          gdf_condensed['geometry'].representative_point()]
+        
         # Documentation for representative_point(): 
         # https://geopandas.org/en/stable/docs/reference/api/geopandas.
         # GeoSeries.representative_point.html#geopandas.GeoSeries.
         # representative_point
         # x and y are attributes of Geoseries objects:
         # https://geopandas.org/en/stable/docs/reference/geoseries.html
-    
     
         # Using these reference points to add the values stored
         # in boundary_label_col as boundary labels:
@@ -237,16 +249,16 @@ def cptt(
                                         boundary_label_lat_shift))
                          ).add_to(m)
         # Part of the folium.Marker() call above is based on an example 
-        # by StackOverflow user 'r-beginners'
-        # (who pointed out that you could pass a DivIcon to the 'icon' 
+        # by StackOverflow user 'r-beginners',
+        # who pointed out that you could pass a DivIcon to the 'icon' 
         # parameter 
-        # within a Marker in order to add text labels to shapes). 
+        # within a Marker in order to add text labels to shapes. 
         # Source: https://stackoverflow.com/a/72588910/13097194
+        
         # The use of icon_anchor to adjust the labels' locations
-        # comes from the DivIcon documentation at:
+        # comes from the DivIcon documentation at
         # https://python-visualization.github.io/folium/latest/
-        # reference.html#folium.features.DivIcon
-    
+        # reference.html#folium.features.DivIcon .
     
     # Creating the tooltips:
 
@@ -255,7 +267,6 @@ def cptt(
 
     alias_list = [boundary_name_alias, 
                   data_col_alias] + tooltip_alias_list
-
     
     # print(tooltip_field_list, alias_list)
     
@@ -274,16 +285,18 @@ def cptt(
         max_width=800
     )
     
-    # Creating our set of colors to use for the choropleth map:
+    # Creating a set of colors to use for the choropleth map:
     if bin_type == 'custom': # In this case, bin_count will be overwritten
         # by the length of custom_threshold_list minus 1. (The number of
         # bins will always be one less than the number of thresholds, as 
         # two thresholds are needed to establish the boundaries for 
         # one bin.
         # For instance, if you have three thresholds (0, 1, and 2),
-        # two bins can be created from this list: 0-1 and 1-2.)
+        # two bins can be created from this list: 0 to 1 and 1 to 2.)
+        
         bin_count = len(custom_threshold_list) - 1
     color_range = color_brewer(color_scheme, n=bin_count)
+    
     # Based on Choropleth() definition within
     # https://github.com/python-visualization/folium/blob/main/folium/
     # features.py
@@ -292,7 +305,6 @@ def cptt(
     # to the end of the string (e.g. 'RdYlBu_r'). Source: 
     # https://github.com/python-visualization/branca/blob/main/branca
     # /utilities.py
-
 
     # Determining which colors to apply to each result:
     
@@ -326,7 +338,7 @@ def cptt(
 
         else:
             raise ValueError("bin_type must be set to 'linear', \
-'percentile, or 'custom.'")
+'percentile, or 'custom'.")
         
         # The following approach works for both 'percentile' and 
         # 'custom' bin_type conditions.
@@ -334,11 +346,10 @@ def cptt(
             colors=color_range, 
             vmin=bin_thresholds[0], vmax=bin_thresholds[-1],
             index=bin_thresholds)
-        # Based on the self.color_scale initialization within Folium's 
-        # Choropleth()  source code (available at
+        # This code is based on the self.color_scale initialization 
+        # within Folium's Choropleth() source code (available at
         # https://github.com/python-visualization/folium/blob/main/
         # folium/features.py )
-
     
     # The following code will both assign colors from StepColorMap
     # to each region *and* add in tooltips. This approach allows the
@@ -402,13 +413,13 @@ def cptt(
         # and
         # https://github.com/GoogleChrome/chrome-launcher/blob/
         # main/docs/chrome-flags-for-tools.md
+        
         # I learned about the necessity of using headless mode 
         # *somewhere* on  StackOverflow. Many answers to the question
         # linked below regarding generating screenshots reference it 
         # as an important step, for instance.
         # https://stackoverflow.com/questions/41721734/take-screenshot
         # -of-full-page-with-selenium-python-with-chromedriver/57338909
-
         
         # Launching the Selenium driver:
         driver = webdriver.Chrome(options=options) 
@@ -454,6 +465,8 @@ def create_map_and_screenshot(
     data_col_alias, boundary_name_alias,
     html_zoom_start=5,
     screenshot_zoom_start=6, 
+    font_size='16px',
+    screenshot_font_size='16px',
     bin_type='linear', bin_count=6, 
     custom_threshold_list=[],
     color_scheme='RdYlBu',
@@ -466,29 +479,36 @@ def create_map_and_screenshot(
     boundary_label_lat_shift=10, boundary_label_col='',
     round_boundary_labels=False,
     boundary_label_round_val=0): 
-    '''This function calls cptt() twice in order to create separate PNG
+    
+    '''
+    This function calls cptt() twice in order to create separate PNG
     and HTML versions of a map. This approach allows separate zoom levels
     to be passed to each map, which can prevent one or both maps from 
     displaying a non-ideal zoom level.
     
     html_zoom_start and screenshot_zoom_start: the zoom settings to use
     for the HTML and PNG maps, respectively.
+
+    font_size and screenshot_font_size: the font size settings to use
+    for the HTML and PNG maps, respectively.
     
     For information on other variables, consult the documentation within 
-    cptt().'''
+    cptt().
+    '''
 
     # Creating an HTML map optimized for generating a screenshot;
     # creating the screenshot; and then deleting the HTML copy of the map
     # (as we only needed it in order to create the screenshot):
     cptt(
     starting_lat=starting_lat, 
-        starting_lon = starting_lon, gdf=gdf, 
+        starting_lon=starting_lon, gdf=gdf, 
     data_col=data_col, boundary_name_col=boundary_name_col,
     data_col_alias=data_col_alias, 
         boundary_name_alias=boundary_name_alias,
     zoom_start=screenshot_zoom_start, 
     bin_type=bin_type, 
     bin_count=bin_count, 
+    font_size=screenshot_font_size,
     custom_threshold_list=custom_threshold_list, 
     color_scheme=color_scheme,
     tooltip_variable_list=tooltip_variable_list, 
@@ -512,6 +532,7 @@ def create_map_and_screenshot(
     # produce the screenshot in the earlier cptt() call got deleted.)
     # Note that this code was called *after* the screenshot generation
     # code so that the latter's HTML map doesn't overwrite this one.
+    
     m = cptt(
     starting_lat=starting_lat, 
         starting_lon=starting_lon,gdf=gdf, 
@@ -519,6 +540,7 @@ def create_map_and_screenshot(
     data_col_alias=data_col_alias, 
         boundary_name_alias=boundary_name_alias,
     zoom_start=html_zoom_start, 
+    font_size=font_size,
     bin_type=bin_type, 
     bin_count=bin_count, 
     custom_threshold_list=custom_threshold_list, 

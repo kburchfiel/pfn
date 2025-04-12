@@ -1,4 +1,4 @@
-# Plotly Choropleth Map Functions
+# Functions for generating Plotly-based choropleth maps
 
 import pandas as pd
 import geopandas
