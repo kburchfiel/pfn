@@ -8,7 +8,8 @@ import numpy as np
 from datetime import datetime, timedelta
 
 def weather_import(station_code, data_folder = ''):
-    '''This function retrieves NWS hourly weather data for the last 
+    '''This function retrieves National Weather Service (NWS) hourly 
+    weather data for the last 
     3 days for the station specified in station_code; adds it to
     pre-existing data (if any); and then saves this data to
     the folder specified in data_folder. 
@@ -19,9 +20,10 @@ def weather_import(station_code, data_folder = ''):
     else:
         post_folder_char = ''
     today = datetime.today().date()
-    retrieval_date = str(today) # The date that the current set of 3-day
-    # weather history data is being retrieved. Note that this date won't
+    retrieval_date = str(today) # The date on which the current set of 
+    # 3-day weather data is being retrieved. Note that this date won't
     # match the dates for earlier records within this dataset.
+    
     # Importing the latest set of hourly observations from the 
     # National Weather Service:
 
@@ -33,7 +35,6 @@ def weather_import(station_code, data_folder = ''):
     # header = 2 specifies that the third row in the DataFrame should be 
     # used as a header. (The first two rows' values are mostly duplicates
     # of this row's data.)
-
     
     df_3day_data = pd.read_html(
     f'https://forecast.weather.gov/data/obhistory/{station_code}.html',
@@ -50,6 +51,8 @@ def weather_import(station_code, data_folder = ''):
     original_time_col = [
         column for column in df_3day_data.columns if 'Time' in column][0]
 
+    # Extracting the time zone from this column, then converting it to
+    # uppercase:
     tz = original_time_col.split(' (')[1].split(')')[0].upper()
 
     df_3day_data.rename(columns={original_time_col:'Time', 'Date':'Day'}, 
@@ -129,13 +132,13 @@ def weather_import(station_code, data_folder = ''):
 _most_recent_3_day_data.csv', 
         index = False)
 
-    # Appending new data within this file to our historical dataset:
-
-    # Creating a historical copy of the 3-day dataset for the weather 
-    # station being evaluated if one does not exist already:
+    # Next, the function will append new data within this file to 
+    # a historical dataset. If such a dataset doesn't exist already,
+    # it will get created shortly.
     # Determining which argument to pass to os.listdir(): (This argument
-    # should be None if no data folder was provided so as not to raise
-    # an error.)
+    # should be None if no data_folder value was provided so as not 
+    # to raise an error.)
+    
     if len(data_folder) > 0:
         listdir_arg = data_folder
     else:
@@ -149,7 +152,7 @@ Initializing it as a copy of the 3-day dataset.")
             f'{data_folder}{post_folder_char}{station_code}\
 _historical_hourly_data.csv', index = False)
               
-
+    # Reading in historical weather data:
     
     df_historical_data = pd.read_csv(
         f'{data_folder}{post_folder_char}\
@@ -158,7 +161,7 @@ _historical_hourly_data.csv', index = False)
           len(df_historical_data))
     
     # Recreating df_3day_data by importing the .csv copy of the table 
-    # that we just created:
+    # that the function just created:
     
     # (This step may appear unnecessary, but it does help ensure that 
     #  both this data and that found in df_historical_data will use 
@@ -167,13 +170,13 @@ _historical_hourly_data.csv', index = False)
     df_3day_data = pd.read_csv(f'{data_folder}{post_folder_char}\
 {station_code}_most_recent_3_day_data.csv')
 
-    # Combining our previous historical data with our latest dataset 
-    # from the last 3 days:
+    # Combining historical data with the latest 3-day dataset:
     
     df_wx = pd.concat([df_historical_data, df_3day_data])
     # Storing the station code within the DataFrame:
     df_wx['Station'] = station_code
-    # Removing duplicate Date/Time entries:
+    
+    # The function will now remove duplicate Date/Time entries.
     
     # Calculating the 24-digit hour corresponding to each DataFrame:
     # (This code assumes that a 24-hour clock is being used to display
@@ -220,12 +223,10 @@ _historical_hourly_data.csv', index = False)
     for column in ['1 hr', '3 hr', '6 hr']:
         df_wx[column] = df_wx[
         column].fillna(0).copy()
-    
-    df_wx.tail()
-    
+       
     # Adding 'Precip' prefixes to the hourly precipitation rows; making the 
     # temperature and dew point column names more intuitive; and removing
-    # time zone data from the Time field:
+    # time zone data from the time field:
     df_wx.rename(columns = {
         '1 hr':'1-Hour Precip',
         '3 hr':'3-Hour Precip',
@@ -236,8 +237,7 @@ _historical_hourly_data.csv', index = False)
     original_time_col:'Time'},
          inplace = True)
     
-    # Sorting the table in chronological order so that our charts will
-    # be easier to interpret:
+    # Sorting the table in chronological order:
     
     df_wx.sort_values(['Date', 'Time'], inplace = True)
     df_wx.reset_index(drop=True,inplace=True)
@@ -282,8 +282,6 @@ _historical_hourly_data.csv', index = False)
         2, 'Date/Time', df_wx['Date'].astype('str') 
         + ' ' + df_wx['Time'].astype('str'))
     
-    df_wx.tail()
-
     # Saving this revised dataset to a .csv file so that it can be 
     # visualized and shared with others:
 

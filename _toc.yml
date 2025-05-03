@@ -53,6 +53,7 @@ parts:
     - file: 'Online_Visualizations/PFN_Dash_App_Demo/readme'
       sections: 
         - file: 'Book_Specific_Materials/PFN_Dash_App_Demo_py_nb'
+    - file: 'Book_Specific_Materials/conclusion_to_book'
   - caption: 'Appendix'
     chapters:
     - file: 'Appendix/nvcu_db_gen'
