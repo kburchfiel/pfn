@@ -1,4 +1,4 @@
-# Simple Enrollment Dashboard
+# Simple Interactive Dashboard
 # By Kenneth Burchfiel
 # Released under the MIT License
 
@@ -31,7 +31,7 @@ layout = dbc.Container([
     filter options, allowing the user to create a variety of custom views.
 
     This dashboard is not as versatile or flexible as those that apply the 
-    Dash-Pivottable library (e.g. the 'Dash pivottable survey results' 
+    Dash-Pivottable library (e.g. the 'Dash Pivottable (Survey Results)' 
     dashboard), but it can still serve as a helpful introduction 
     to some of Dash's core features.
 
@@ -41,29 +41,28 @@ layout = dbc.Container([
     to create a more condensed layout that accommodates a range of 
     screen sizes. This library is also used in certain other dashboards 
     within this app.
-    
-    '''), lg = 9)),
+    '''), lg=9)),
     dbc.Row([
-        dbc.Col(html.H5("Comparison Options:"), lg = 3),
+        dbc.Col(html.H5("Comparison Options:"), lg=3),
     dbc.Col(dcc.Dropdown(['College', 'Level', 
                   'College and Level', 'Level and College', 
                   'All Students'], 'College and Level', 
-                 id = 'simple_enrollment_index'), lg = 2)
+                 id='simple_enrollment_index'), lg=2)
            ]),
     dbc.Row([
-        dbc.Col(html.H5("College Filter:"), lg = 3),
+        dbc.Col(html.H5("College Filter:"), lg=3),
     dbc.Col(
         dcc.Dropdown(df_curr_enrollment['College'].unique(),
                  df_curr_enrollment['College'].unique(),
-                 multi = True,
-                id = 'college_filter'), lg = 3),
+                 multi=True,
+                id='college_filter'), lg=3),
         ]),
     dbc.Row([
-        dbc.Col(html.H5("Level Filter:"), lg = 3),
+        dbc.Col(html.H5("Level Filter:"), lg=3),
     dbc.Col(dcc.Dropdown(df_curr_enrollment['Level'].unique(),
                  df_curr_enrollment['Level'].unique(),
-                 multi = True,
-                id = 'level_filter'), lg = 3)
+                 multi=True,
+                id='level_filter'), lg=3)
     ]),
     # For more information about the multi-dropdown option,
     # see https://dash.plotly.com/dash-core-components/dropdown
@@ -128,14 +127,12 @@ def display_graph(pivot_index, college_filter, level_filter):
     # Creating a pivot table that can serve as the basis for our 
     # enrollment chart:
     df_simple_enrollment_pivot = df_curr_enrollment_for_chart.pivot_table(
-    index = index,
-    values = 'Enrollment', aggfunc = 'sum').reset_index()
+    index=index,
+    values='Enrollment', aggfunc='sum').reset_index()
     
     # Creating this chart:
     fig_simple_enrollment = px.bar(df_simple_enrollment_pivot, 
-       x = x, y = 'Enrollment', color = color,
-      text_auto = '.0f', barmode = barmode,
-      title = f'NVCU Enrollment by {pivot_index}')
+       x=x, y='Enrollment', color=color,
+      text_auto='.0f', barmode=barmode,
+      title=f'NVCU Enrollment by {pivot_index}')
     return fig_simple_enrollment
-    
-

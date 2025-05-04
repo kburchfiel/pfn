@@ -4,10 +4,10 @@
 # Note that Nader Elshehabi's code (on which this code was based)
 # was released under the MIT license:
 # https://github.com/naderelshehabi/dash-flask-login
-# Ken Burchfiel incorporated some additional code from 
+# I incorporated some additional code from 
 # https://dash.plotly.com/urls and https://dash-bootstrap-components.
-# opensource.faculty.ai/docs/quickstart/ ;
-# he also made minor edits to the display text.
+# opensource.faculty.ai/docs/quickstart/ ; in addition, I made 
+# minor edits to the display text.
 
 """
  CREDIT: This code was originally adapted for Pages based on Nader 
@@ -29,7 +29,6 @@ Dash Basic Auth:
 
 """
 
-
 import os
 from flask import Flask, request, redirect, session, jsonify, \
 url_for, render_template
@@ -41,8 +40,7 @@ from dash import dcc, html, Input, Output, State, ALL
 import dash_bootstrap_components as dbc # See
 # https://dash-bootstrap-components.opensource.faculty.ai/docs/quickstart/
 
-
-# Exposing the Flask Server to enable configuring it for logging in
+# Exposing the Flask Server so that it can be configured for logging in
 # Note that this code will be used in place of 
 # server = app.server , which we used within our Simple_App_Without_Login
 # app.
@@ -110,7 +108,7 @@ app = dash.Dash(
 # https://dash-bootstrap-components.opensource.faculty.ai/docs/quickstart/
 
 # Keep this out of source code repository - save in a file or a database
-#  passwords should be encrypted
+# passwords should be encrypted
 VALID_USERNAME_PASSWORD = {"test": "test", "hello": "world"}
 
 
@@ -118,19 +116,17 @@ VALID_USERNAME_PASSWORD = {"test": "test", "hello": "world"}
 # the user session cookie
 # server.config.update(SECRET_KEY=os.getenv("SECRET_KEY"))
 server.config.update(SECRET_KEY="insecureplaceholder")
-# Definitely don't use the above approach in a real-world applicaiton!
+# Definitely don't use the above approach in a real-world application!
 
 # Login manager object will be used to login / logout users
 login_manager = LoginManager()
 login_manager.init_app(server)
 login_manager.login_view = "/login"
 
-
 class User(UserMixin):
     # User data model. It has to have at least self.id as a minimum
     def __init__(self, username):
         self.id = username
-
 
 @login_manager.user_loader
 def load_user(username):
@@ -169,7 +165,7 @@ app.layout = html.Div(
     #     ) for page in dash.page_registry.values()
     # ]),
 
-        # This variant of the above commented-out code places all
+        # The following variant of the above commented-out code places all
         # pages on the same line (though, if the window isn't wide enough,
         # some pages may get placed on separate lines). It updates
         # automatically to incorporate page additions and deletions,

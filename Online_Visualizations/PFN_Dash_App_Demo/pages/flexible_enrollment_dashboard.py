@@ -12,6 +12,10 @@ import dash_bootstrap_components as dbc
 
 from data_import import df_curr_enrollment
 import plotly.express as px
+
+# The following auto_pivot_and_graph code was featured 
+# within the Pivot and Graph Functions section of PFN.
+
 from auto_pivot_and_graph import autopivot_plus_bar
 from import_layout import import_layout
 
@@ -31,6 +35,10 @@ cols_to_exclude = [
     'Student ID', 'Matriculation Number', 'Enrollment']
 comparison_list = list(
     set(df_curr_enrollment.columns) - set(cols_to_exclude))
+# Converting a list of items into a set can make it easier to remove
+# a group of items from that set. For more on this data type, see
+# https://docs.python.org/3/tutorial/datastructures.html#sets .
+
 color_list = comparison_list.copy() # These lists can contain
 # the same values.
 
@@ -46,6 +54,8 @@ filter_cols = ['College', 'Level', 'Gender']
 # For instance, 'College' will map to 'College_filter.') 
 
 # Configuring the page's layout:
+# The import_layout() function will make it easier to create the
+# central part of the page's layout.
 # (Note the use of + to combine different lists of layout components
 # together.)
 
@@ -62,14 +72,14 @@ layout = dbc.Container([
     of the page's layout.
     
     '''), lg = 9))] +
-    import_layout(df = df_curr_enrollment, 
+    import_layout(df=df_curr_enrollment, 
                   comparison_list=comparison_list,
-                 comparison_default = comparison_default,
-                 color_list = color_list,
-                 color_default = color_default, 
-                  filter_cols = filter_cols) +
+                 comparison_default=comparison_default,
+                 color_list=color_list,
+                 color_default=color_default, 
+                  filter_cols=filter_cols) +
     # For more information about the multi-dropdown option,
-    # see https://dash.plotly.com/dash-core-components/dropdown
+    # see https://dash.plotly.com/dash-core-components/dropdown . 
     [dcc.Graph(id='flexible_enrollment_graph')] + 
     [dcc.Graph(id='flexible_enrollment_table')]
 ) 
@@ -87,7 +97,7 @@ layout = dbc.Container([
     Input('Gender_filter', 'value')
 )
 
-# The following function calls autopivot_plus_bar to convert
+# The following function calls autopivot_plus_bar() to convert
 # the input values specified above into a bar chart:
 def display_graph(x_vars, color, college_filter, 
                   level_filter, gender_filter):
@@ -108,13 +118,13 @@ def display_graph(x_vars, color, college_filter,
     # the chart title will begin with 'Enrollment'
     # rather than 'Total Enrollment.'
     bar_graph, table = autopivot_plus_bar(
-        df = df_curr_enrollment, y = 'Enrollment', 
-        aggfunc = 'sum', x_vars = x_vars, color = color,
-    x_vars_to_exclude = ['Level For Sorting'], 
-        overall_data_name = 'All Data',
-    weight_col = None, filter_tuple_list = filter_tuple_list,
-    custom_aggfunc_name = '', create_table = True,
-    text_auto = '.0f')
+        df=df_curr_enrollment, y='Enrollment', 
+        aggfunc='sum', x_vars=x_vars, color=color,
+    x_vars_to_exclude=['Level For Sorting'], 
+        overall_data_name='All Data',
+    weight_col=None, filter_tuple_list=filter_tuple_list,
+    custom_aggfunc_name='', create_table=True,
+    text_auto='.0f')
 
     print(table)
 

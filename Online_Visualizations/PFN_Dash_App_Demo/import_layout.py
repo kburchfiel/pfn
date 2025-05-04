@@ -26,7 +26,7 @@ def import_layout(df, comparison_list, comparison_default,
     '''
 
     df_layout = df.copy() # This step ensures that this function
-    # will not make any changes to df.
+    # will not make any changes to the original DataFrame.
 
     # Initializing the layout that will be returned to
     # the Dash app code:
@@ -57,5 +57,4 @@ def import_layout(df, comparison_list, comparison_default,
 
     # print("Layout:",layout) # May be useful for debugging
 
-    
     return layout

@@ -12,17 +12,17 @@ import plotly.express as px
 import plotly.graph_objects as go
 from dash import dash_table
 
-def autopivot(df, y, aggfunc, x_vars = [], 
-                     color = None, x_vars_to_exclude = [],
-                    overall_data_name = 'All Data',
-             weight_col = None, filter_tuple_list = [],
-             convert_x_vars_to_strings = True):
-    '''This function will create a pivot table of df that can be used 
-    within a Plotly graph. It will also return x, y, color, and barmode 
-    variables that can get incorporated within Plotly charts. (Storing 
-    the charting code within a separate function makes autopivot more 
-    versatile, as its output can then be used as the basis for multiple 
-    chart types.)
+def autopivot(df, y, aggfunc, x_vars=[], color=None, 
+              x_vars_to_exclude=[], overall_data_name='All Data',
+             weight_col=None, filter_tuple_list=[],
+             convert_x_vars_to_strings=True):
+    '''
+    This function will create a pivot table of df that can be used 
+    as the data source for Plotly graphs. It will also return x, y, 
+    color, and barmode variables that can get incorporated within 
+    these graphs. (Storing the charting code within a separate function 
+    makes autopivot() more versatile, as its output can then be used 
+    as the basis for multiple chart types.)
 
     This function has been designed to work with varying lengths of x_vars
     (i.e. multiple numbers of x variables), including a length of 0. 
@@ -57,10 +57,10 @@ def autopivot(df, y, aggfunc, x_vars = [],
     it needs to be.
 
     If a variable within x_vars_to_exclude isn't present in your x_vars 
-    listor your color argument, it will get ignored by the function and 
-    thus shouldn't cause any issues.
+    list or your color argument, it will get ignored by the function;
+    thus, its presence within x_vars_to_exclude shouldn't cause any issues.
     
-    overall_data_name: When x_vars is empty, autopivot will group all
+    overall_data_name: When x_vars is empty, autopivot() will group all
     data into a single row. overall_data_name specifies the name that you 
     would like to give to this data point.    
 
@@ -76,7 +76,7 @@ def autopivot(df, y, aggfunc, x_vars = [],
     convert_x_vars_to_strings: if True, the function will convert
     all x variables not found in x_vars_to_exclude to strings.
     (This can improve the appearance of any graphs that make use of
-    the pivot table created by this function.
+    the pivot table created by this function.)
     '''
 
     # Creating a copy of the initial dataset in order to ensure that the 
@@ -87,7 +87,7 @@ def autopivot(df, y, aggfunc, x_vars = [],
     # of filter_tuple_list:
     for pair in filter_tuple_list:
         df_for_pivot.query(
-            f"`{pair[0]}` in {pair[1]}", inplace = True)
+            f"`{pair[0]}` in {pair[1]}", inplace=True)
 
     # Determining which x variables will appear in the final chart:
     x_vars_for_chart = list(set(x_vars) - set(x_vars_to_exclude))
@@ -123,9 +123,9 @@ def autopivot(df, y, aggfunc, x_vars = [],
         if weight_col is not None: # In this case, a weighted average
             # of all data within the table will be created.
             df_pivot = df_for_pivot.pivot_table(
-            index = overall_data_name, 
-                values = [f'{y}_*_{weight_col}', weight_col], 
-            aggfunc = 'sum').reset_index()
+            index=overall_data_name, 
+                values=[f'{y}_*_{weight_col}', weight_col], 
+            aggfunc='sum').reset_index()
             # Calculating the weighted average of y by dividing
             # the y_*_weight_col field by its corresponding group size:
             df_pivot[y] = (df_pivot[f'{y}_*_{weight_col}'] 
@@ -133,17 +133,16 @@ def autopivot(df, y, aggfunc, x_vars = [],
         
         else:
             df_pivot = df_for_pivot.pivot_table(
-                index = overall_data_name, values = y, 
-                aggfunc = aggfunc).reset_index()
-        x_val_name = overall_data_name
-        color = overall_data_name
-        barmode = 'relative'
-        index = [overall_data_name] # This value won't be used
+                index=overall_data_name, values=y, 
+                aggfunc=aggfunc).reset_index()
+        x_val_name=overall_data_name
+        color=overall_data_name
+        barmode='relative'
+        index=[overall_data_name] # This value won't be used
         # within autopivot() (defined below), but it will still
         # get created here in order to prevent scripts that expect it to 
         # be returned from crashing.
         
-       
     else:    
         # If the color variable is also present in x_vars and more than 
         # one variable is present within the set of x vars to be charted*, 
@@ -152,17 +151,17 @@ def autopivot(df, y, aggfunc, x_vars = [],
         # (If the only x variable to be charted is also the color 
         # variable, we won't want to remove it from x_vars; otherwise, 
         # we'd end up with an empty list of x variables.)
+        
         # *This set (defined above as x_vars_for_chart) excludes any 
         # variables also present in x_vars_to_exclude. This will prevent 
         # the function from removing a color variable from x_vars that 
         # would have been the only variable left in x_vars following the 
         # removal of the variable to exclude (which would cause the 
         # function to crash).
-        
         # (For example: suppose our color variable were 'Season'; 
         # our x_vars contents were ['Season', 'Season_for_Sorting'];
         # and our x_vars_to_exclude list were ['Season_for_Sorting']. If
-        # we chose to remove the color variable from x_vars contents
+        # we chose to remove the color variable from x_vars
         # because it contained more than one variable, we'd end up with
         # an empty x_vars list once 'Season_for_Sorting' got removed. 
         # Removing this variable to exclude from our list of x vars to 
@@ -184,22 +183,21 @@ def autopivot(df, y, aggfunc, x_vars = [],
         if color is not None and color not in index:
             index.append(color)
     
-        print("index prior to pivot_table() call:",index)
-        
+        print("index prior to pivot_table() call:", index)
 
         if weight_col is not None: # In this case, weighted averages
             # will be calculated.
             df_pivot = df_for_pivot.pivot_table(
-                index = index, values = [
+                index=index, values=[
                     f'{y}_*_{weight_col}', weight_col], 
-                aggfunc = 'sum').reset_index()           
+                aggfunc='sum').reset_index()           
             df_pivot[y] = (
                 df_pivot[f'{y}_*_{weight_col}'] / df_pivot[weight_col])
             
         else:
             df_pivot = df_for_pivot.pivot_table(
-                index = index, values = y, 
-                aggfunc = aggfunc).reset_index()
+                index=index, values=y, 
+                aggfunc=aggfunc).reset_index()
     
         # Now that the pivot table has been created, the variables
         # in x_vars_to_exclude can be removed from our x_vars list, our 
@@ -230,7 +228,6 @@ def autopivot(df, y, aggfunc, x_vars = [],
                 df_pivot[x_val_name] 
                 + '/' + df_pivot[x_vars[i]].astype('str'))
     
-        
         # If there are fewer than two unique variables to be graphed, 
         # we'll want to set the barmode argument to 'relative' so that, 
         # in the event we create a bar chart, the bars won't be far 
@@ -259,13 +256,13 @@ def autopivot(df, y, aggfunc, x_vars = [],
     index, aggfunc
 
 def autobar(df_pivot, x_val_name, y, color, barmode, x_var_count, 
-            index, aggfunc, custom_aggfunc_name = None,
-           text_auto = '.2f'):
+            index, aggfunc, custom_aggfunc_name=None,
+           text_auto='.2f'):
     '''This function creates a bar graph of a pivot table (such as one
     created within autopivot()). 
-    Most arguments arguments for this function
+    Most arguments for this function
     correspond to the values returned by autopivot(); more information on
-    each can be found within that function.
+    those arguments can be found within that function.
 
     custom_aggfunc_name: A string to use in place of the aggregate
     function name in the chart title. (The general chart title format
@@ -297,7 +294,7 @@ def autobar(df_pivot, x_val_name, y, color, barmode, x_var_count,
     # these four scenarios. (Note that 'index' is used rather than 
     # 'x_vars' because the former variable includes both our x variables 
     # and (if present) our color variable, and both of these should be 
-    # incorporated into the title.
+    # incorporated into the title.)
 
     # Determining how to represent the aggregate function within 
     # titles:
@@ -340,16 +337,16 @@ by {index[0]} and {index[1]}"
     if len(df_pivot) > 0:
         # The following code will still work if color is set to None.
         fig = px.bar(df_pivot, x = x_val_name, y = y, 
-               color = color, barmode = barmode,
-               text_auto = text_auto, title = plot_title)
+               color=color, barmode=barmode,
+               text_auto=text_auto, title=plot_title)
     else: # In this case, there's no data to plot,
         # so an empty figure will be returned instead.
         fig = px.bar(title=plot_title)
     if x_var_count == 0: # In this case, the x axis tick, x axis title, 
         # and legend entry will all be the same, so we can hide two 
         # of those elements.
-        fig.update_layout(showlegend = False,
-                         xaxis_title = None)
+        fig.update_layout(showlegend=False,
+                         xaxis_title=None)
     return fig
 
 def autotable(df_pivot):
@@ -364,7 +361,7 @@ def autotable(df_pivot):
         header=dict(values=list(df_pivot.columns),
                     fill_color='lightgray',
                     align='left'),
-        cells=dict(values = [df_pivot[column] 
+        cells=dict(values=[df_pivot[column] 
                 for column in df_pivot.columns],
                    fill_color='white',
                    align='left'))
@@ -374,34 +371,35 @@ def autotable(df_pivot):
 
 
 def autopivot_plus_bar(
-    df, y, aggfunc, x_vars = [], color = None, 
-    x_vars_to_exclude = [], overall_data_name = 'All Data',
-    weight_col = None, filter_tuple_list = [],
-    custom_aggfunc_name = None, convert_x_vars_to_strings = True,
-    create_table = False, text_auto = '.2f'):
+    df, y, aggfunc, x_vars=[], color=None, 
+    x_vars_to_exclude=[], overall_data_name='All Data',
+    weight_col=None, filter_tuple_list=[],
+    custom_aggfunc_name=None, convert_x_vars_to_strings=True,
+    create_table=False, text_auto='.2f'):
     '''This function calls both autopivot() and autobar(), thus 
     simplifying the process of using both functions within a script. 
-    See autopivot() and autobar()'s individual function definitions 
-    for more documentation on each.
+    Almost all of the variables within this function correspond to
+    autopivot() and autobar() variables with the same name; consult
+    those functions' definitions for explanations of them.
     
     create_table: set to True to return a table along with the bar 
     graph.'''
         
     df_pivot, x_val_name, y, color, barmode, x_var_count, \
-    index, aggfunc = autopivot(
-        df = df, y = y, aggfunc = aggfunc, 
-        x_vars = x_vars, color = color, 
-        x_vars_to_exclude = x_vars_to_exclude,
-        overall_data_name = overall_data_name, weight_col = weight_col,
-    filter_tuple_list = filter_tuple_list,
+    index, aggfunc=autopivot(
+        df=df, y=y, aggfunc=aggfunc, 
+        x_vars=x_vars, color=color, 
+        x_vars_to_exclude=x_vars_to_exclude,
+        overall_data_name=overall_data_name, weight_col=weight_col,
+    filter_tuple_list=filter_tuple_list,
     convert_x_vars_to_strings=convert_x_vars_to_strings)
 
     fig_bar = autobar(
-        df_pivot = df_pivot, x_val_name = x_val_name, y = y, 
-        color = color, barmode = barmode, x_var_count = x_var_count, 
-        index = index, aggfunc = aggfunc, 
+        df_pivot=df_pivot, x_val_name=x_val_name, y=y, 
+        color=color, barmode=barmode, x_var_count=x_var_count, 
+        index=index, aggfunc=aggfunc, 
         custom_aggfunc_name=custom_aggfunc_name,
-    text_auto = text_auto)
+    text_auto=text_auto)
 
     if create_table == False:
         return fig_bar
@@ -412,7 +410,3 @@ def autopivot_plus_bar(
         table = autotable(df_pivot)
         
         return fig_bar, table
-
-    
-
-

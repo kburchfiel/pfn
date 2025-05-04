@@ -3,15 +3,22 @@
 # By Kenneth Burchfiel
 # Released under the MIT License
 
+# This app features a graph of recent weather data,
+# along with a menu that allows users to specify the metric being
+# displayed; the weather stations for which to display it; and 
+# the number of days to plot within the graph. When viewers change
+# the selections within the menu, the weather graph will update
+# automatically. 
+
 # Note: the Cloud Run-hosted copy of this app can be found 
 # at https://simpleappwithoutlogin-470317599391.us-central1.run.app/ .
 
-# (See readme for more information on the code used to connect
+# (Seethe  readme for more information on the code used to connect
 # to a Google Sheets workbook with recent weather data)
 
 # Parts of the following code were based on the Dash app tutorial
 # at https://dash.plotly.com/tutorial ; the Dash callbacks documentation at
-# https://dash.plotly.com/basic-callbacks; the online Dash deployment
+# https://dash.plotly.com/basic-callbacks ; the online Dash deployment
 # guide at https://dash.plotly.com/deployment ; the Dash Bootstrap intro at
 # https://dash-bootstrap-components.opensource.faculty.ai/docs/quickstart/ 
 # ; and the Dash Bootstrap Layout documentation at
@@ -19,14 +26,16 @@
 # .faculty.ai/docs/components/layout/ .
 
 import gspread
+
+# From https://pypi.org/project/gspread-dataframe/
 from gspread_dataframe import get_as_dataframe
+
 from dash import Dash, html, dcc, dash_table, callback, Input, Output
 import plotly.express as px
 import pandas as pd
 import dash_bootstrap_components as dbc
 from datetime import datetime, timedelta
 
-# From https://pypi.org/project/gspread-dataframe/
 print("Initializing gspread using service account key stored within \
 Cloud Run secrets volume:")
 
@@ -41,7 +50,7 @@ if local_data_import == False:
 # was helpful in drafting the following line. 
 
     gc = gspread.service_account(
-    filename='/svcacctsecret/kjb3server_service_account')
+    filename = '/svcacctsecret/kjb3server_service_account')
     wb = gc.open_by_key('17aDJ3mg49-n0IEnDgN7ZB85pO87fiUpkZPULYDB8dmo')
 
 # Note: the code above will only run successfully when the app is
@@ -62,7 +71,9 @@ updated.csv')[-960:])
         ws = wb.worksheet(station)
         wx_df_list.append(get_as_dataframe(ws)[-960:]) # Importing up to
         # 40 days of data for each station (in order to keep the charts
-        # readable)
+        # readable) . The sheets may already only show 40 days' worth
+        # of data, but it won't hurt to keep the [-960:] filter in place
+        # in case their format changes in the future.
 
 # Combining these station-specific tables into a single DataFrame:
 
@@ -71,18 +82,19 @@ df_wx = pd.concat([df for df in wx_df_list])
 df_wx['Date/Time'] = pd.to_datetime(df_wx['Date/Time'])
 print(df_wx.tail())
 
-# Creating a condensed copy of df_wx for 
-# incorporation in a DataTable:
-# (This table will also be sorted in descending chronological order
-# in order to display the most recent metrics first.)
 
 current_date = datetime.today()
 
-app = Dash(external_stylesheets=[dbc.themes.BOOTSTRAP])
+app=Dash(external_stylesheets = [dbc.themes.BOOTSTRAP])
 server = app.server
 
+# Specifying the layout of our webpage:
+# This layout will include various row and column elements within
+# an overarching dbc.Container element. It also features a 
+# viewer-customizable graph that will get created later within this script.
+
 # The dcc.Markdown() code below was based on
-# https://dash.plotly.com/dash-core-components/markdown
+# https://dash.plotly.com/dash-core-components/markdown .
 
 app.layout = dbc.Container(
     [dbc.Row(dcc.Markdown('''
@@ -95,7 +107,7 @@ Online_Visualizations/Simple_App_Without_Login/app.py).
 
 The NWS data displayed within this notebook was accessed via
 [this Google Sheets file](https://docs.google.com/spreadsheets/d/\
-17aDJ3mg49-n0IEnDgN7ZB85pO87fiUpkZPULYDB8dmo/edit?gid=0#gid=0). 
+17aDJ3mg49-n0IEnDgN7ZB85pO87fiUpkZPULYDB8dmo). 
 This file gets updated with new NWS data
 on an hourly basis via [this script](https://github.com/kburchfiel/\
 pfn/blob/main/Updating_Online_Spreadsheets/\
@@ -106,38 +118,47 @@ Updating_Online_Spreadsheets/weather_import.py).
 A more complex \
 Dash app can be found within [this part of PFN]\
 (https://github.com/kburchfiel/pfn/tree/main/\
-Online_Visualizations/PFN_Dash_App_Demo).
+Online_Visualizations/PFN_Dash_App_Demo).''')),
 
-    
-    ''')),
+# Note that many of the following dbc.Row() objects contain multiple
+# dbc.Col() objects. This allows for a more concise set of headers
+# and options. The 'md=' elements specify how wide certain elements 
+# should be within larger screens; when the app is accessed via smaller
+# screens (such as cell phones), these elements will get rearranged
+# for easier viewing.
+     
 dbc.Row([
     dbc.Col(
-        dcc.Markdown('**Metric**:'), md = 2),
+        dcc.Markdown('**Metric**:'), md=2),
     dbc.Col(
         dcc.Dropdown(
-    options = ['Temp', 'Dew Point', 
+    options=['Temp', 'Dew Point', 
 '1-Hour Precip', 'Rolling 3-Hour Precip', 'Rolling 6-Hour Precip',
 'Rolling 12-Hour Precip', 'Rolling 24-Hour Precip',
-'Altimeter (in.)', 'Windspeed'], value = 'Temp', id = 'metric'), 
-        md = 3)]),
+'Altimeter (in.)', 'Windspeed'], value='Temp', id='metric'), 
+        md=3)]),
  dbc.Row([
-     dbc.Col(dcc.Markdown('**Stations:**'), md = 2),
+     dbc.Col(dcc.Markdown('**Stations:**'), md=2),
      dbc.Col(dcc.Dropdown(['KCHO', 'KIAD', 'KOKV'], 
                       ['KCHO', 'KIAD', 'KOKV'], 
                           multi=True,
-                     id = 'station_list'),  md = 4)]),
+                     id='station_list'),  md=4)]),
 dbc.Row([dbc.Col(dcc.Markdown('**Days to Include:**'), 
-                md = 2),
-        dbc.Col(dcc.Slider(1, 40, 3, value = 10, 
+                md=2),
+        dbc.Col(dcc.Slider(1, 40, 3, value=10, 
         # I had originally used one-day increments for the slider,
        # but this resulted in overlapping text on mobile displays.
-                   id = 'days_to_include'))]),
-dbc.Row(dcc.Graph(id = 'fig')),                                   
- dbc.Row(dcc.Markdown("By Kenneth Burchfiel"))])
+                   id='days_to_include'))]),
+# The following Graph object will get created via the plot_graph()
+     # function shown below. This function allows users' choices
+     # within the menu defined above to shape the appearance of the 
+     # chart.
+dbc.Row(dcc.Graph(id='fig')),                                   
+dbc.Row(dcc.Markdown("By Kenneth Burchfiel"))])
 
 
 # Defining a callback function that, given the inputs specified
-# above, can plot and return a graph of weather data:
+# above, plots and returns a graph of weather data:
 @callback(
     Output('fig', 'figure'),
     Input('metric', 'value'),
@@ -147,9 +168,9 @@ dbc.Row(dcc.Graph(id = 'fig')),
 def plot_graph(metric, station_list, days_to_include):
     # Determining the earliest point at which data should be displayed:
     data_cutoff = str(current_date - timedelta(
-        days = days_to_include))
+        days=days_to_include))
 
-    # Modifying the title so that it's gramatically correct when
+    # Modifying the title so that it's grammatically correct when
     # only one day of data is being displayed:
     if days_to_include == 1:
         day_title_component = 'Past Day'
@@ -159,18 +180,18 @@ def plot_graph(metric, station_list, days_to_include):
     fig = px.line(
         df_wx.query("(Station in @station_list) \
     & (`Date/Time` >= @data_cutoff)"), 
-        x = 'Date/Time', y = metric,
-        color = 'Station',
-        title = f"{metric} Over {day_title_component}")
+        x='Date/Time', y=metric,
+        color='Station',
+        title=f"{metric} Over {day_title_component}")
     
     # Updating y axis title based on the selected metric:
-    fig.update_layout(xaxis_title = 'Date')
+    fig.update_layout(xaxis_title='Date')
     if metric in ['Temp', 'Dew Point']:
-        fig.update_layout(yaxis_title = 'Degrees (F)')
+        fig.update_layout(yaxis_title='Degrees (F)')
     if metric == 'Windspeed':
-        fig.update_layout(yaxis_title = 'Windspeed (mph)')
+        fig.update_layout(yaxis_title='Windspeed (mph)')
     if 'Precip' in metric:
-        fig.update_layout(yaxis_title = 'Precipitation (in.)')
+        fig.update_layout(yaxis_title='Precipitation (in.)')
     return fig
 
 

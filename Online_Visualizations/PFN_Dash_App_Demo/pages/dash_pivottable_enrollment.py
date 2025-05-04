@@ -3,37 +3,30 @@
 
 # Much of this code derives from 
 # https://github.com/plotly/dash-pivottable/blob/master/usage.py
-# and https://dash.plotly.com/urls .
-
+# and https://dash.plotly.com/urls (which provides useful information
+# on the Dash Pages feature that this app uses extensively).
 
 import dash
 from dash import html, callback, Input, Output
 import dash_pivottable
 import pandas as pd
+
+# Importing current enrollment data:
 from data_import import df_curr_enrollment
 
-# Reading in enrollment data:
-
-# df_curr_enrollment = pd.read_csv(
-#     'https://raw.githubusercontent.com/kburchfiel/\
-# pfn/main/Appendix/curr_enrollment.csv')
-
-
 # Note that the 'data' entry below should take the form of a list of lists
-# or list of dicts, rather than a DataFrame. (For reference, see
+# or dicts rather than a DataFrame. (For reference, see
 # https://github.com/plotly/react-pivottable/#accepted-formats-for-data)
 # Therefore, we'll need to convert our DataFrame into this format
 # before we can run the code.
 # It's possible to convert a DataFrame into a list of lists,
-# but I believe the easiest solution is to use to_dict(orient = 'records')
+# but I believe the easiest solution is to use to_dict(orient='records')
 # to convert the DataFrame into a list of dictionaries.
 
 lod_curr_enrollment = df_curr_enrollment.to_dict(
-    orient = 'records')
-# lod = 'list of dicts'
+    orient='records') # lod = 'list of dicts'
 
-
-dash.register_page(__name__, path = '/dash_pivottable_enrollment') # 
+dash.register_page(__name__, path='/dash_pivottable_enrollment') # 
 
 layout = html.Div([
     dash_pivottable.PivotTable(

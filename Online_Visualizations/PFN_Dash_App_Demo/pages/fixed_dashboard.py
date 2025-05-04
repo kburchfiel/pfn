@@ -1,4 +1,4 @@
-# Sample fixed dashboard
+# Sample Fixed Dashboard
 # By Kenneth Burchfiel
 # Released under the MIT License
 
@@ -12,39 +12,36 @@ import plotly.express as px
 # by college and level graph:
 
 df_enrollment_by_college_and_level = df_curr_enrollment.pivot_table(
-    index = ['College', 'Level For Sorting', 'Level'],
-    values = 'Enrollment', aggfunc = 'sum').reset_index()
+    index=['College', 'Level For Sorting', 'Level'],
+    values='Enrollment', aggfunc='sum').reset_index()
 
 # Creating a graph of this pivot table:
 fig_enrollment_by_college_and_level = px.bar(
     df_enrollment_by_college_and_level, 
-       x = 'College', y = 'Enrollment', color = 'Level',
-      barmode = 'group',
-      text_auto = '.0f',
-      title = 'NVCU Enrollment by College and Level')
+       x='College', y='Enrollment', color='Level',
+      barmode='group',
+      text_auto='.0f',
+      title='NVCU Enrollment by College and Level')
 
 # Performing the same steps for simpler charts that show enrollment
 # by college and by level (but not both):
 df_enrollment_by_college = df_curr_enrollment.pivot_table(
-    index = ['College'],
-    values = 'Enrollment', aggfunc = 'sum').reset_index()
+    index=['College'],
+    values='Enrollment', aggfunc='sum').reset_index()
 
 fig_enrollment_by_college = px.bar(df_enrollment_by_college, 
-       x = 'College', y = 'Enrollment', color = 'College',
-      text_auto = '.0f',
-      title = 'NVCU Enrollment by College')
+    x='College', y='Enrollment', color='College',
+    text_auto='.0f',
+    title='NVCU Enrollment by College')
 
 df_enrollment_by_level = df_curr_enrollment.pivot_table(
-    index = ['Level For Sorting', 'Level'],
-    values = 'Enrollment', aggfunc = 'sum').reset_index()
+    index=['Level For Sorting', 'Level'],
+    values='Enrollment', aggfunc='sum').reset_index()
 
 fig_enrollment_by_level = px.bar(df_enrollment_by_level, 
-       x = 'Level', y = 'Enrollment', color = 'Level',
-      text_auto = '.0f',
-      title = 'NVCU Enrollment by Level')
-
-
-
+       x='Level', y='Enrollment', color='Level',
+      text_auto='.0f',
+      title='NVCU Enrollment by Level')
 
 dash.register_page(__name__, path='/fixed_dashboard')
 

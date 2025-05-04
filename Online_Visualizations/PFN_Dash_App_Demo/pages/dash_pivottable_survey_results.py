@@ -1,8 +1,8 @@
 # This code shows how to use the dash-pivottable library to easily create 
 # an interactive survey results dashboard.
 
-# For additional documentation, see enrollment_pivot.py.
-
+# For a bit more documentation on this code, see
+# dash_pivottable_enrollment.py .
 
 import dash
 from dash import html, callback, Input, Output
@@ -17,12 +17,10 @@ import pandas as pd
 
 from data_import import df_survey_results_extra_data
 
-
 lod_survey_results_extra_data = df_survey_results_extra_data.to_dict(
-    orient = 'records')
+    orient='records')
 
-
-dash.register_page(__name__, path = '/dash_pivottable_survey_results')
+dash.register_page(__name__, path='/dash_pivottable_survey_results')
 
 layout = html.Div([
     dash_pivottable.PivotTable(
@@ -42,7 +40,6 @@ layout = html.Div([
     )
 ])
 
-
 @callback(Output('output', 'children'),
               [Input('table', 'cols'),
                Input('table', 'rows'),
@@ -50,6 +47,7 @@ layout = html.Div([
                Input('table', 'colOrder'),
                Input('table', 'aggregatorName'),
                Input('table', 'rendererName')])
+
 def display_props(cols, rows, row_order, col_order, aggregator, renderer):
     return [
         html.P(str(cols), id='columns'),

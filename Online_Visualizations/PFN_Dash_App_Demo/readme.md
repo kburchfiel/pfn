@@ -2,14 +2,18 @@
 
 ## Readme
 
-**Note:** For more background information on this section of Python for Nonprofits, Dash Apps, and Google Cloud deployment steps, visit the corresponding readme within Online_Visualizations/Simple_App_Without_Login. (Items explained within that readme often won't be discussed here.)
+**Note:** Visit the corresponding readme within Online_Visualizations/Simple_App_Without_Login for more background information on this section of Python for Nonprofits; Dash apps; and Google Cloud deployment steps. (Items explained within that readme often won't be discussed here.)
 
-**Visit https://pfndashappdemo-ymc7cs3r5q-uc.a.run.app/ to view the Google Cloud Run-hosted version of this app.** *(If no one has accessed the app recently, it will take several seconds to load, as the app is set to run on demand in order to save costs.)*
+In addition, to view the Google Cloud Run-hosted version of this app, visit https://pfndashappdemo-ymc7cs3r5q-uc.a.run.app/ .
 
-This project demonstrates how to use Dash to create various types of interactive online visualizations; these range from simple charts to more complex interactive setups. Both the Flask-Login and Dash-Pivottable libraries are featured within this project.
+The Simple_App_Without_Login project was meant to provide a basic overview of Dash's functionality; this project, on the other hand, is meant to provide a more detailed overview of Dash's capabilities. The interactive online visualizations featured within this app range from simple charts to more complex setups. The app also makes use of both the Flask-Login and Dash-Pivottable libraries.
 
-The **Fixed Dashboard** (https://pfndashappdemo-ymc7cs3r5q-uc.a.run.app/fixed_dashboard) page shows a very simple 
-dashboard setup that lacks user-defined filter and comparison settings. 
+### Dashboards 
+
+Unlike the Simple_App_Without_Login project, this app features multiple dashboards, each of which occupies its own page.
+
+The **Fixed Dashboard** (https://pfndashappdemo-ymc7cs3r5q-uc.a.run.app/fixed_dashboard) page 
+shows a very simple dashboard setup that lacks user-defined filter and comparison settings. 
 
 ![](page_screenshots/fixed_dashboard.png)
 
@@ -23,15 +27,15 @@ is rather limited.
 The **Flexible Survey Results** (https://pfndashappdemo-ymc7cs3r5q-uc.a.run.app/flexible_survey_results_dashboard) and 
 **Flexible Enrollment** (https://pfndashappdemo-ymc7cs3r5q-uc.a.run.app/flexible_enrollment_dashboard) dashboard pages
 allow for a wide range of comparison and color options. These options are 
-made possible by the autopivot() and autobar() functions found within 
-`auto_pivot_and_graph.py` (https://github.com/kburchfiel/pfn/blob/main/Online_Visualizations/PFN_Dash_App_Demo/auto_pivot_and_graph.py). (You may also find these functions useful for 
-developing standlone Plotly charts.)
+made possible by the `autopivot()` and ``autobar()` functions found within 
+'auto_pivot_and_graph.py' (https://github.com/kburchfiel/pfn/blob/main/Online_Visualizations/PFN_Dash_App_Demo/auto_pivot_and_graph.py). 
+(You may also find these functions useful for developing standlone Plotly charts.)
 
 The Flexible Enrollment Dashboard also makes use of an import_layout() 
-function (stored within `import_layout.py` (https://github.com/kburchfiel/pfn/blob/main/Online_Visualizations/PFN_Dash_App_Demo/import_layout.py)) 
+function (stored within 'import_layout.py' (https://github.com/kburchfiel/pfn/blob/main/Online_Visualizations/PFN_Dash_App_Demo/import_layout.py)) 
 in order to reduce the amount of code needed to define
 the page's structure and menu options. In addition, this dashboard
-applies the autotable() function in `auto_pivot_and_graph.py` to display
+applies the `autotable()` function in 'auto_pivot_and_graph.py' to display
 a tabular view of the data featured in the graph.
 
 ![](page_screenshots/flexible_enrollment_dashboard.png)
@@ -47,7 +51,7 @@ be found within the **Dash Pivottable (Enrollment)** (https://pfndashappdemo-ymc
 
 1. I made use of a standalone Jupyter notebook (notebook_for_testing.ipynb, available at https://github.com/kburchfiel/pfn/blob/main/Online_Visualizations/PFN_Dash_App_Demo/notebook_for_testing.ipynb) to test out code before integrating it into my Dash app files.
 
-1. The source data is imported from GitHub. A more realistic approach would retrieve data from an online database; however, that would cause this project to incur a monthly database hosting expense.
+1. The source data is imported from GitHub. A more realistic approach would retrieve data from an online database; however, the GitHub-based approach is simpler and cheaper.
 
 ### Project structure
 
@@ -55,45 +59,30 @@ The files and folders in this app are arranged as follows:
 
 (Folders have '/' suffixes.)
 
-pages/
-
-----home_page.py
-
-----fixed_dashboard.py
-
-----simple_interactive_dashboard.py
-
-----flexible_survey_results_dashboard.py
-
-----flexible_enrollment_dashboard.py
-
-----dash_pivottable_enrollment.py
-
-----dash_pivottable_survey_results.py
-
-templates/
-
-----login.html
-
-app.py
-
-auto_pivot_and_graph.py
-
-data_import.py
-
-import_layout.py
-
-Procfile
-
-readme.md [this file]
-
-requirements.txt
+    PFN_Dash_App_Demo/
+    ----pages/
+    --------home_page.py
+    --------fixed_dashboard.py
+    --------simple_interactive_dashboard.py
+    --------flexible_survey_results_dashboard.py
+    --------flexible_enrollment_dashboard.py
+    --------dash_pivottable_enrollment.py
+    --------dash_pivottable_survey_results.py
+    ----templates/
+    --------login.html
+    ----app.py
+    ----auto_pivot_and_graph.py
+    ----data_import.py
+    ----import_layout.py
+    ----Procfile
+    ----readme.md [this file]
+    ----requirements.txt
 
 ### Development and setup notes
 
 Some of the code in this folder was derived from jinnyzor's post at https://community.plotly.com/t/dash-app-pages-with-flask-login-flow-using-flask/69507/38 . Jinnyzor wrote regarding that post at (https://community.plotly.com/t/dash-app-pages-with-flask-login-flow-using-flask/69507/55) that "this is free to use, no license." I am very grateful to jinnyzor (and to Nader Elshehabi (https://github.com/naderelshehabi/dash-flask-login)) for allowing us to use their code!
 
-Some code also derives from that found in the Dash Pages documentation (https://dash.plotly.com/urls).
+Some code also derives from that found in the Dash Pages documentation (https://dash.plotly.com/urls). Dash Pages allows for multiple pages to get shown within a single Dash app.
 
 #### Steps for hosting this Dash app (with Flask-Login functionality) on Google Cloud Run
 
@@ -121,5 +110,4 @@ Werkzeug==3.0.6
 4. Copied the version numbers for each locally-hosted library into my requirements.txt file
 5. Redeployed the app--which, thankfully, now worked fine
 
-
-2. It's worth highlighting that, whereas the app within the Simple_App_Without_Login folder contained the line `server = app.server` (as indicated by the deployment guide at https://dash.plotly.com/deployment), this app will instead use `server = Flask(__name__)` due to the incorporation of Flask-Login.
+It's worth highlighting that, whereas the app within the Simple_App_Without_Login folder contained the line `server = app.server` (as indicated by the deployment guide at https://dash.plotly.com/deployment), this app will instead use `server = Flask(__name__)` due to the incorporation of Flask-Login.
