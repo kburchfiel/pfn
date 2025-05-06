@@ -43,7 +43,7 @@ Python for Nonprofits is designed to be read from the start to the finish, much 
 
 2. You can download the entire project, then open `docs/index.html` within the downloaded folder. This will launch an HTML-based version of the book that includes a built-in table of contents. (Note: I used [Jupyter Book](https://jupyterbook.org/en/stable/intro.html) to create both the PDF- and HTML-based versions of the book.) I do plan to make this HTML-based book available online as well, but I'll first need to work out some bugs with [the online version](https://kburchfiel.github.io/pfn/README.html).
 
-3. You can go through the Jupyter Notebooks, Markdown documents, and Python files that comprise PFN one by one. (The suggested order for doing so is provided below.) If you choose this method, I would still encourage you to first download the project, as you'll then be able to run the files locally.
+3. You can go through the Jupyter Notebooks, Markdown documents, and Python files that comprise PFN one by one. (The suggested order for doing so is provided below within the Table of Contents section.) If you choose this method, I would still encourage you to first download the project, as you'll then be able to run the files locally.
 
 *Note: When running these notebooks on your own computer, you may want to confirm that the `render_for_pdf` setting within the `Appendix/helper_funcs.py` file is set to False. That way, many visualizations will appear in interactive HTML rather than static PNG format. (If `render_for_pdf` was initially set to True, you'll need to rerun each section after changing it to False in order for that change to take effect.)*
 
