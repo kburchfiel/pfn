@@ -39,7 +39,7 @@ Visualizations are just one component of Python for Nonprofits, but I did want t
 
 Python for Nonprofits is designed to be read from the start to the finish, much like a book. (Indeed, there is a PDF book version of this code available [at this link](https://github.com/kburchfiel/pfn/tree/main/Print_Book/pfn_book.pdf). The book has been released under the MIT License, just like the rest of the project.) If you'd like to use PFN in this manner, you can choose from the following options:
 
-1. You can download and read through the PDF book that I linked to above.
+1. You can download and read through the PDF book that I linked to above. [If you'd like, you can also order a print copy [via this link](https://www.lulu.com/shop/kenneth-burchfiel/python-for-nonprofits/paperback/product-yv5m8jz.html). I do receive some income from this option, but I certainly don't expect most readers to pay for this product. You're also welcome to print out your own copy, of course.]
 
 2. You can download the entire project, then open `docs/index.html` within the downloaded folder. This will launch an HTML-based version of the book that includes a built-in table of contents. (Note: I used [Jupyter Book](https://jupyterbook.org/en/stable/intro.html) to create both the PDF- and HTML-based versions of the book.) I do plan to make this HTML-based book available online as well, but I'll first need to work out some bugs with [the online version](https://kburchfiel.github.io/pfn/README.html).
 
