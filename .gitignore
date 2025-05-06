@@ -93,3 +93,8 @@ Mapping/geopandas_file_save_tests.ipynb
 Mapping/test_state_map_with_labels.html
 Mapping/test_state_map_with_labels.png
 create_pdflatex_and_html_book.sh
+Print_Book/pfn_book_with_copyright_page.pdf
+Print_Book/pfn_copyright_page.svg
+Print_Book/pfn_copyright_page.pdf
+Print_Book/isbn_978-1-300-28888-6.png
+Print_Book/isbn_978-1-300-28888-6.svg

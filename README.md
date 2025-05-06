@@ -131,4 +131,7 @@ Happy coding!
 
 --Ken
 
+![](Introduction/kjb3_pfn.jpg)
+
+(Special thanks to my lovely wife for taking this picture.)
 

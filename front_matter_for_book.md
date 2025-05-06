@@ -36,3 +36,7 @@ I had a great time putting Python for Nonprofits together, and I hope that you f
 Happy coding!
 
 --Ken
+
+![](Introduction/kjb3_pfn.jpg)
+
+(Special thanks to my lovely wife for taking this picture.)

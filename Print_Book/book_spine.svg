@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="0.89999998in"
+   height="11in"
+   viewBox="0 0 22.86 279.4"
+   version="1.1"
+   id="svg1770"
+   inkscape:version="1.2.2 (b0a8486541, 2022-12-01)"
+   sodipodi:docname="book_spine.svg"
+   inkscape:export-filename="book_spine.png"
+   inkscape:export-xdpi="300"
+   inkscape:export-ydpi="300"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1772"
+     pagecolor="#000040"
+     bordercolor="#eeeeee"
+     borderopacity="1"
+     inkscape:showpageshadow="0"
+     inkscape:pageopacity="1"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#505050"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="0.76791526"
+     inkscape:cx="238.30754"
+     inkscape:cy="561.25985"
+     inkscape:window-width="1920"
+     inkscape:window-height="1048"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs1767">
+    <rect
+       x="55.521892"
+       y="111.51789"
+       width="955.7445"
+       height="134.71127"
+       id="rect1893" />
+    <rect
+       x="55.521893"
+       y="111.51789"
+       width="955.74451"
+       height="134.71127"
+       id="rect1893-3" />
+  </defs>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <text
+       xml:space="preserve"
+       transform="matrix(0,0.61360237,-0.61360237,0,88.047429,-247.5631)"
+       id="text1891"
+       style="font-style:italic;font-weight:bold;font-size:21.3333px;font-family:'Liberation Serif';-inkscape-font-specification:'Liberation Serif Bold Italic';text-align:center;white-space:pre;shape-inside:url(#rect1893);display:inline;fill:#ffffff;stroke:#ffffff;stroke-width:0;stroke-dasharray:none"><tspan
+         x="433.03955"
+         y="130.36209"
+         id="tspan4170"><tspan
+           style="font-style:normal;-inkscape-font-specification:'Liberation Serif Bold'"
+           id="tspan4168">Python for Nonprofits</tspan></tspan></text>
+    <text
+       xml:space="preserve"
+       transform="matrix(0,0.61360237,-0.61360237,0,84.65235,-89.177824)"
+       id="text1891-6"
+       style="font-style:italic;font-weight:bold;font-size:13.7983px;font-family:'Liberation Serif';-inkscape-font-specification:'Liberation Serif Bold Italic';text-align:center;white-space:pre;shape-inside:url(#rect1893-3);display:inline;fill:#ffffff;stroke:#ffffff;stroke-width:0;stroke-dasharray:none"><tspan
+         x="482.24283"
+         y="123.76524"
+         id="tspan4174"><tspan
+           style="font-style:normal;font-weight:normal;-inkscape-font-specification:'Liberation Serif'"
+           id="tspan4172">Kenneth Burchfiel</tspan></tspan></text>
+  </g>
+</svg>
