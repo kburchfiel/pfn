@@ -214,6 +214,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../Book_Specific_Materials/PFN_Dash_App_Demo_py_nb.html">Source code for PFN Dash App Demo</a></li>
 </ul>
 </details></li>
+<li class="toctree-l1"><a class="reference internal" href="../Book_Specific_Materials/conclusion_to_book.html">Conclusion: Now the fun begins!</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendix</span></p>
 <ul class="nav bd-sidenav">
@@ -364,6 +365,7 @@
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction">Introduction</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gathering-our-net-migration-data">Gathering our net migration data</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#calculating-total-net-migration-across-all-years-within-the-dataset">Calculating total net migration across all years within the dataset</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#adding-percentile-data-to-each-dataset">Adding percentile data to each dataset</a></li>
@@ -386,9 +388,10 @@
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#converting-this-second-mapping-approach-into-a-function">Converting this second mapping approach into a function</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#calling-this-function-separately-for-html-and-png-maps">Calling this function separately for HTML and PNG maps</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#applying-these-functions-to-create-html-and-png-versions-of-our-net-migration-by-county-map-with-optimized-zoom-levels">Applying these functions to create HTML and PNG versions of our net migration by county map with optimized zoom levels</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#calling-create-map-and-screenshot-again-to-create-state-level-net-migration-maps-in-html-and-png-form">Calling create_map_and_screenshot() again to create state-level net migration maps in HTML and PNG form</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#calling-create-map-and-screenshot-again-to-create-state-level-net-migration-maps-in-html-and-png-form">Calling <code class="docutils literal notranslate"><span class="pre">create_map_and_screenshot()</span></code> again to create state-level net migration maps in HTML and PNG form</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion">Conclusion</a></li>
 </ul>
             </nav>
         </div>
@@ -404,24 +407,25 @@
 <h1>Creating Choropleth Maps with Folium<a class="headerlink" href="#creating-choropleth-maps-with-folium" title="Link to this heading">#</a></h1>
 <p>By Kenneth Burchfiel</p>
 <p>Released under the MIT license</p>
-<p><em>Note: If the Plotly library meets your mapping needs, feel free to skip this section and focus on choropleth_maps.ipynb instead. If you’re curious about an alternative mapping tool, though, read on!</em></p>
+<p><em>Note: If the Plotly library meets your mapping needs, feel free to skip this section and focus on the mapping code shown in choropleth_maps.ipynb instead. If you’re curious about an alternative mapping tool, though, read on!</em></p>
 <p><em>I had originally planned to base PFN’s mapping code on Folium; however, I then realized that Plotly had some significant advantages for my own mapping work, so I went ahead and created a Plotly-based mapping notebook also. Both libraries are fantastic tools, and you may very well find that Folium is a better fit for your projects.</em></p>
-<p><em>Also, you can find Google Sites-hosted copies of two interactive maps shown within this notebook via the following links:</em></p>
-<p><em><a class="reference external" href="https://sites.google.com/view/pfn2-choropleth-maps/net-migration-by-county?authuser=0">Link to Net Migration by County map</a></em></p>
-<p><em><a class="reference external" href="https://sites.google.com/view/pfn2-choropleth-maps/net-migration-by-state?authuser=0">Link to Net Migration by State map</a></em></p>
-<p>This code shows how to use Python’s Folium library to generate choropleth maps of county- and state-level net domestic migration rates (which I’ll often refer to as ‘domestic migration’ or ‘net migration’ to save space). The first part of the code demonstrates how to use Folium’s built-in <code class="docutils literal notranslate"><span class="pre">folium.choropleth()</span></code> function; the second part demonstrates how to create a more efficient version of this same choropleth map using a custom function.</p>
+<p><em>Also, you can find GitHub pages-hosted copies of two interactive maps shown within this notebook via the following links:</em></p>
+<p><em>Net Migration by County map: <a class="reference external" href="https://kburchfiel.github.io/simple_static_site/maps/net_migration_rate_county_2020-2024.html">https://kburchfiel.github.io/simple_static_site/maps/net_migration_rate_county_2020-2024.html</a></em></p>
+<p><em>Link to Net Migration by State map: <a class="reference external" href="https://kburchfiel.github.io/simple_static_site/maps/net_migration_rate_state_2020-2024.html">https://kburchfiel.github.io/simple_static_site/maps/net_migration_rate_state_2020-2024.html</a></em></p>
+<p>The Static Sites section of Python for Nonprofits will explain how these interactive maps were made available online.</p>
+<section id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Link to this heading">#</a></h2>
+<p>This notebook shows how to use Python’s Folium library to generate choropleth maps of county- and state-level net domestic migration rates (which I’ll often refer to as ‘domestic migration’ or ‘net migration’ to save space). The first part of the code demonstrates how to use Folium’s built-in <code class="docutils literal notranslate"><span class="pre">folium.choropleth()</span></code> function; the second part demonstrates how to create a more efficient version of this same choropleth map using a custom function.</p>
 <p><strong>A quick overview of domestic net migration</strong></p>
-<p>Domestic net migration data comprises movements from one part of a country to another. For instance, if someone moves from Fairfax County, VA to Harris County, TX, Fairfax County’s net migration totals for the year would decrease by 1 whereas Harris County’s would increase by 1. Note that international migration, births, and deaths do <em>not</em> factor into net migration totals. By focusing only on movements within the US, this data offers an intriguing look into which parts of a country are attracting pre-existing residents–and which are failing to attract (or retain) them.</p>
-<p>Let’s say that NVCU’s seniors want to know which parts of the country are particularly popular areas to which to move. In order to help answer this question, you’ve decided to create county-level net domestic migration maps. (The seniors will need to interpret this analysis with caution: for instance, they might not necessarily want to move to a place whose high net domestic migration rates are driven by retirees. Then again, that might be the <em>perfect</em> destination for a college grad who loves playing bridge and pickleball!)</p>
-<p>Our analyses within this notebook will use net migration <em>rates</em> (i.e. net migration totals divided by population totals) rather than nominal net migration counts because the former measure better reflects individuals’ likelihood of moving to or from a given region. For instance, a county with 1 million residents and a positive net migration total of 2,000 would be a less ‘hot’ destination than a one with 100,000 residents and a net migration total of 1,000. The latter county’s total net migration is 50% that of the former’s, but its rate (1000 / 100,000, or 1%) is five times that of the larger county’s (2,000 / 1,000,000, or 0.2%), thus indicating a greater interest in moving there relative to its size.</p>
-<p>Determining whether to display HTML and PNG maps within the notebook’s output:
-(These maps can also be accessed within the ‘maps’ and ‘map_screenshots’ folders.)</p>
+<p>Domestic net migration entails movements from one part of a country to another. For instance, if someone moves from Fairfax County, VA to Harris County, TX, Fairfax County’s net migration totals for the year would decrease by 1 whereas Harris County’s would increase by 1. Note that international migration, births, and deaths do <em>not</em> factor into net migration totals. By focusing only on movements within the US, this data offers an intriguing look into which parts of a country are attracting pre-existing residents–and which are failing to attract (or retain) them.</p>
+<p>Let’s say that NVCU’s seniors want to know which parts of the country are particularly popular areas to which to relocate. In order to help answer this question, you’ve decided to create county-level net domestic migration maps. (The seniors will need to interpret this analysis with caution: for instance, they might not necessarily want to move to a place whose high net domestic migration rates are driven by retirees. Then again, that might be the <em>perfect</em> destination for a college grad who loves playing bridge and pickleball!)</p>
+<p>Our analyses within this notebook will use net migration <em>rates</em> (i.e. net migration totals divided by population totals) rather than nominal net migration counts because the former measure better reflects individuals’ likelihood of moving to or from a given region. For instance, a county with 1 million residents and a positive net migration total of 2,000 would be a less ‘hot’ destination than a one with 100,000 residents and a net migration total of 1,000. The latter county’s total net migration is 50% that of the former’s, but its rate (1000 / 100,000, or 1%) is five times that of the larger county’s (2,000 / 1,000,000, or 0.2%), thus indicating a greater interest in moving there.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
 <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;../Appendix&#39;</span><span class="p">)</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">helper_funcs</span><span class="w"> </span><span class="kn">import</span> <span class="n">config_notebook</span><span class="p">,</span> <span class="n">wadi</span>
-<span class="n">display_type</span> <span class="o">=</span> <span class="n">config_notebook</span><span class="p">(</span><span class="n">display_max_columns</span> <span class="o">=</span> <span class="mi">5</span><span class="p">)</span>
+<span class="n">display_type</span> <span class="o">=</span> <span class="n">config_notebook</span><span class="p">(</span><span class="n">display_max_columns</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -449,13 +453,10 @@
 <span class="c1"># correctly within JupyterLab Desktop right after the library was </span>
 <span class="c1"># installed; however, when I restarted my kernel and then restarted </span>
 <span class="c1"># JupyterLab Desktop, it ended up working fine. (Restarting JupyterLab </span>
-<span class="c1"># Desktop alone probably would have resolved this issue.)</span>
-
+<span class="c1"># Desktop alone would likely have resolved this issue also.)</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
-
 <span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
-
 <span class="kn">import</span><span class="w"> </span><span class="nn">branca.colormap</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">cm</span>
 <span class="c1"># From https://python-visualization.github.io/folium/latest/</span>
 <span class="c1"># advanced_guide/colormaps.html#StepColormap</span>
@@ -467,21 +468,28 @@
 </div>
 </div>
 </div>
+</section>
 <section id="gathering-our-net-migration-data">
 <h2>Gathering our net migration data<a class="headerlink" href="#gathering-our-net-migration-data" title="Link to this heading">#</a></h2>
-<p>The ‘co-est2023-alldata.csv’ file, located within the same folder as this code, contains net migration data for US states and counties during the 2020-2023 time period. I found this data on the Census site’s <a class="reference external" href="https://www.census.gov/data/tables/time-series/demo/popest/2020s-counties-total.html"><strong>County Population Totals and Components of Change: 2020-2023</strong></a> page. The dataset is listed under a relatively long title:</p>
-<p><em>Annual Resident Population Estimates, Estimated Components of Resident Population Change, and Rates of the Components of Resident Population Change for States and Counties: April 1, 2020 to July 1, 2023 (CO-EST2023-alldata)</em></p>
-<p>Definitions of each column within this file can be found within CO-EST2023-ALLDATA.pdf, which I also downloaded from the aforementioned website to this section’s folder.</p>
-<p>You may want to check the Census website to see whether a later version of the file exists. As long as that newer file matches the format of ‘co-est2023-alldata.csv’, the rest of this code should still work correctly (provided that you update the following cell with the new filename).</p>
+<p>The ‘co-est2024-alldata.csv’ file, located within the same folder as this code, contains net migration data for US states and counties during the 2020-2024 time period. I found this data on the Census site’s <strong>County Population Totals and Components of Change: 2020-2024</strong> (<a class="reference external" href="https://www.census.gov/data/tables/time-series/demo/popest/2020s-counties-total.html">https://www.census.gov/data/tables/time-series/demo/popest/2020s-counties-total.html</a>) page. The dataset is listed under a relatively long title:</p>
+<p><em>Annual Resident Population Estimates, Estimated Components of Resident Population Change, and Rates of the Components of Resident Population Change for States and Counties: April 1, 2020 to July 1, 2024 (CO-EST2024-ALLDATA)</em></p>
+<p>Definitions of each column within this file can be found within CO-EST2024-ALLDATA.pdf, which I also downloaded from the aforementioned website to this section’s folder. (You can find the download link right above the Excel file link; it’s titled ‘File Layout.’)</p>
+<p>You may want to check the Census website to see whether a later version of the file exists. As long as that newer file matches the format of ‘co-est2024-alldata.csv’, you shouldn’t need to make many additional tweaks to the code for it to process that new file correctly. (You will, however, need to update the following cell with the new filename.)</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_nm</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span>
-    <span class="s1">&#39;co-est2023-alldata.csv&#39;</span><span class="p">,</span> 
-    <span class="n">encoding</span> <span class="o">=</span> <span class="s1">&#39;latin_1&#39;</span><span class="p">)</span> <span class="c1"># nm = &#39;net migration. </span>
+    <span class="s1">&#39;co-est2024-alldata.csv&#39;</span><span class="p">,</span> 
+    <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;latin_1&#39;</span><span class="p">)</span> <span class="c1"># nm = &#39;net migration. </span>
 <span class="c1"># This dataset contains other population data as well, but we&#39;ll mostly </span>
 <span class="c1"># use its net migration totals.</span>
 <span class="c1"># I needed to add in &#39;encoding = latin_1&#39; because </span>
 <span class="c1"># the default encoding setting produced an error message.</span>
+
+<span class="c1"># Moving state and county names over to the left in order to</span>
+<span class="c1"># make the output easier to interpret:</span>
+<span class="n">df_nm</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;STNAME&#39;</span><span class="p">,</span> <span class="n">df_nm</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;STNAME&#39;</span><span class="p">))</span>
+<span class="n">df_nm</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;CTNAME&#39;</span><span class="p">,</span> <span class="n">df_nm</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;CTYNAME&#39;</span><span class="p">))</span>
+
 <span class="n">df_nm</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -505,63 +513,63 @@
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>SUMLEV</th>
-      <th>REGION</th>
+      <th>STNAME</th>
+      <th>CTNAME</th>
       <th>...</th>
-      <th>RNETMIG2022</th>
       <th>RNETMIG2023</th>
+      <th>RNETMIG2024</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>0</th>
-      <td>40</td>
-      <td>3</td>
+      <td>Alabama</td>
+      <td>Alabama</td>
       <td>...</td>
-      <td>6.486978</td>
-      <td>7.096186</td>
+      <td>8.424880</td>
+      <td>8.134207</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>50</td>
-      <td>3</td>
+      <td>Alabama</td>
+      <td>Autauga County</td>
       <td>...</td>
-      <td>8.896064</td>
-      <td>8.745044</td>
+      <td>10.035616</td>
+      <td>14.159147</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>50</td>
-      <td>3</td>
+      <td>Alabama</td>
+      <td>Baldwin County</td>
       <td>...</td>
-      <td>29.985390</td>
-      <td>28.377843</td>
+      <td>30.022929</td>
+      <td>29.648158</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>50</td>
-      <td>3</td>
+      <td>Alabama</td>
+      <td>Barbour County</td>
       <td>...</td>
-      <td>9.708935</td>
-      <td>-1.298570</td>
+      <td>-0.769761</td>
+      <td>-8.326191</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>50</td>
-      <td>3</td>
+      <td>Alabama</td>
+      <td>Bibb County</td>
       <td>...</td>
-      <td>-13.620476</td>
-      <td>-3.101199</td>
+      <td>-3.418959</td>
+      <td>16.988312</td>
     </tr>
   </tbody>
 </table>
-<p>5 rows × 67 columns</p>
+<p>5 rows × 83 columns</p>
 </div></div></div>
 </div>
 <section id="calculating-total-net-migration-across-all-years-within-the-dataset">
 <h3>Calculating total net migration across all years within the dataset<a class="headerlink" href="#calculating-total-net-migration-across-all-years-within-the-dataset" title="Link to this heading">#</a></h3>
-<p>As specified within the ALLDATA.pdf file, ‘DOMESTICMIG’ columns show net domestic migration values. Note that there’s a column for each year, and that all but one of these years begins on July 1 and ends on June 30. (The one exception is DOMESTICMIG2020, which uses a date range of 2020-04-01 to 2020-06-30).</p>
-<p>For our choropleth map, we’ll look into net migration across the entire date range in the dataset (e.g. 2020-04-01 to the latest date available). As of 2024-05-24, we had data up to June 30, 2023, but the Census will probably provide data for additional years in the future.</p>
+<p>As specified within CO-EST2024-ALLDATA.pdf, ‘DOMESTICMIG’ columns show net domestic migration values. There’s a standalone column for each year, and all but one of these columns includes data from July 1 of one year to June 30 of the next year. (The one exception is DOMESTICMIG2020, which uses a shorter range of 2020-04-01 to 2020-06-30).</p>
+<p>For our choropleth map, we’ll look into net migration across the entire date range in the dataset (e.g. 2020-04-01 to the latest date available). As of April 2025, the Census had provided data up to June 30, 2024, but they should make data for later years available in the future.</p>
 <p>Therefore, rather than explicitly specifying the years available within our code, we’ll instead add in Python code that determines the first and last years with net migration data. This <em>should</em> make it easier to update the code with a later dataset. (I say ‘should’ because, if the Census Bureau decides to change the column names within this dataset, we’ll need to rewrite the code anyway to handle those new columns.)</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -580,7 +588,11 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;DOMESTICMIG2020&#39;, &#39;DOMESTICMIG2021&#39;, &#39;DOMESTICMIG2022&#39;, &#39;DOMESTICMIG2023&#39;]
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;DOMESTICMIG2020&#39;,
+ &#39;DOMESTICMIG2021&#39;,
+ &#39;DOMESTICMIG2022&#39;,
+ &#39;DOMESTICMIG2023&#39;,
+ &#39;DOMESTICMIG2024&#39;]
 </pre></div>
 </div>
 </div>
@@ -596,7 +608,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(&#39;2020&#39;, &#39;2023&#39;)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(&#39;2020&#39;, &#39;2024&#39;)
 </pre></div>
 </div>
 </div>
@@ -606,7 +618,7 @@
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Adding all of the net migration values within nm_cols together:</span>
 <span class="n">df_nm</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">first_nm_year</span><span class="si">}</span><span class="s1">-</span><span class="si">{</span><span class="n">last_nm_year</span><span class="si">}</span><span class="s1"> Total Domestic </span><span class="se">\</span>
-<span class="s1">Net Migration&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_nm</span><span class="p">[</span><span class="n">nm_cols</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
+<span class="s1">Net Migration&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_nm</span><span class="p">[</span><span class="n">nm_cols</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 
 <span class="c1"># Creating our domestic migration rate column:</span>
 <span class="c1"># Saving this column name to a variable will make it easier to incorporate</span>
@@ -649,57 +661,57 @@
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>SUMLEV</th>
-      <th>REGION</th>
+      <th>STNAME</th>
+      <th>CTNAME</th>
       <th>...</th>
-      <th>2020-2023 Total Domestic Net Migration</th>
-      <th>2020-2023 Total Domestic Net Migration as % of 2020 Population</th>
+      <th>2020-2024 Total Domestic Net Migration</th>
+      <th>2020-2024 Total Domestic Net Migration as % of 2020 Population</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>0</th>
-      <td>40</td>
-      <td>3</td>
+      <td>Alabama</td>
+      <td>Alabama</td>
       <td>...</td>
-      <td>96538</td>
-      <td>1.921424</td>
+      <td>119132</td>
+      <td>2.370612</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>50</td>
-      <td>3</td>
+      <td>Alabama</td>
+      <td>Autauga County</td>
       <td>...</td>
-      <td>1340</td>
-      <td>2.278563</td>
+      <td>2052</td>
+      <td>3.489796</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>50</td>
-      <td>3</td>
+      <td>Alabama</td>
+      <td>Baldwin County</td>
       <td>...</td>
-      <td>22425</td>
-      <td>9.675624</td>
+      <td>28757</td>
+      <td>12.407720</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>50</td>
-      <td>3</td>
+      <td>Alabama</td>
+      <td>Barbour County</td>
       <td>...</td>
-      <td>-307</td>
-      <td>-1.216854</td>
+      <td>-539</td>
+      <td>-2.136684</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>50</td>
-      <td>3</td>
+      <td>Alabama</td>
+      <td>Bibb County</td>
       <td>...</td>
-      <td>-219</td>
-      <td>-0.982019</td>
+      <td>148</td>
+      <td>0.664154</td>
     </tr>
   </tbody>
 </table>
-<p>5 rows × 69 columns</p>
+<p>5 rows × 85 columns</p>
 </div></div></div>
 </div>
 <p>This table contains both county-specific and statewide data. Rows with COUNTY values of 0 represent statewide totals; therefore, we can create county- and state-level versions of this dataset by selecting rows that have non-zero and zero COUNTY values, respectively.</p>
@@ -730,57 +742,57 @@
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>SUMLEV</th>
-      <th>REGION</th>
+      <th>STNAME</th>
+      <th>CTNAME</th>
       <th>...</th>
-      <th>2020-2023 Total Domestic Net Migration</th>
-      <th>2020-2023 Total Domestic Net Migration as % of 2020 Population</th>
+      <th>2020-2024 Total Domestic Net Migration</th>
+      <th>2020-2024 Total Domestic Net Migration as % of 2020 Population</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>1</th>
-      <td>50</td>
-      <td>3</td>
+      <td>Alabama</td>
+      <td>Autauga County</td>
       <td>...</td>
-      <td>1340</td>
-      <td>2.278563</td>
+      <td>2052</td>
+      <td>3.489796</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>50</td>
-      <td>3</td>
+      <td>Alabama</td>
+      <td>Baldwin County</td>
       <td>...</td>
-      <td>22425</td>
-      <td>9.675624</td>
+      <td>28757</td>
+      <td>12.407720</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>50</td>
-      <td>3</td>
+      <td>Alabama</td>
+      <td>Barbour County</td>
       <td>...</td>
-      <td>-307</td>
-      <td>-1.216854</td>
+      <td>-539</td>
+      <td>-2.136684</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>50</td>
-      <td>3</td>
+      <td>Alabama</td>
+      <td>Bibb County</td>
       <td>...</td>
-      <td>-219</td>
-      <td>-0.982019</td>
+      <td>148</td>
+      <td>0.664154</td>
     </tr>
     <tr>
       <th>5</th>
-      <td>50</td>
-      <td>3</td>
+      <td>Alabama</td>
+      <td>Blount County</td>
       <td>...</td>
-      <td>1109</td>
-      <td>1.875528</td>
+      <td>1519</td>
+      <td>2.568916</td>
     </tr>
   </tbody>
 </table>
-<p>5 rows × 69 columns</p>
+<p>5 rows × 85 columns</p>
 </div></div></div>
 </div>
 <div class="cell docutils container">
@@ -809,57 +821,57 @@
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>SUMLEV</th>
-      <th>REGION</th>
+      <th>STNAME</th>
+      <th>CTNAME</th>
       <th>...</th>
-      <th>2020-2023 Total Domestic Net Migration</th>
-      <th>2020-2023 Total Domestic Net Migration as % of 2020 Population</th>
+      <th>2020-2024 Total Domestic Net Migration</th>
+      <th>2020-2024 Total Domestic Net Migration as % of 2020 Population</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>0</th>
-      <td>40</td>
-      <td>3</td>
+      <td>Alabama</td>
+      <td>Alabama</td>
       <td>...</td>
-      <td>96538</td>
-      <td>1.921424</td>
+      <td>119132</td>
+      <td>2.370612</td>
     </tr>
     <tr>
       <th>68</th>
-      <td>40</td>
-      <td>4</td>
+      <td>Alaska</td>
+      <td>Alaska</td>
       <td>...</td>
-      <td>-17356</td>
-      <td>-2.366596</td>
+      <td>-19564</td>
+      <td>-2.667594</td>
     </tr>
     <tr>
       <th>99</th>
-      <td>40</td>
-      <td>4</td>
+      <td>Arizona</td>
+      <td>Arizona</td>
       <td>...</td>
-      <td>218247</td>
-      <td>3.049036</td>
+      <td>252654</td>
+      <td>3.529619</td>
     </tr>
     <tr>
       <th>115</th>
-      <td>40</td>
-      <td>3</td>
+      <td>Arkansas</td>
+      <td>Arkansas</td>
       <td>...</td>
-      <td>57290</td>
-      <td>1.902381</td>
+      <td>68640</td>
+      <td>2.279223</td>
     </tr>
     <tr>
       <th>191</th>
-      <td>40</td>
-      <td>4</td>
+      <td>California</td>
+      <td>California</td>
       <td>...</td>
-      <td>-1197950</td>
-      <td>-3.029854</td>
+      <td>-1465116</td>
+      <td>-3.703934</td>
     </tr>
   </tbody>
 </table>
-<p>5 rows × 69 columns</p>
+<p>5 rows × 85 columns</p>
 </div></div></div>
 </div>
 </section>
@@ -875,7 +887,7 @@
 
 <span class="k">for</span> <span class="n">df</span> <span class="ow">in</span> <span class="p">[</span><span class="n">df_nm_state</span><span class="p">,</span> <span class="n">df_nm_county</span><span class="p">]:</span> <span class="c1"># Using a for loop allows us to </span>
     <span class="c1"># apply the same code to our state and county DataFrames.</span>
-    <span class="n">df</span><span class="p">[</span><span class="n">percentile_col</span><span class="p">]</span> <span class="o">=</span> <span class="mi">100</span> <span class="o">*</span> <span class="n">df</span><span class="p">[</span><span class="n">total_nm_rate_col</span><span class="p">]</span><span class="o">.</span><span class="n">rank</span><span class="p">(</span><span class="n">pct</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+    <span class="n">df</span><span class="p">[</span><span class="n">percentile_col</span><span class="p">]</span> <span class="o">=</span> <span class="mi">100</span> <span class="o">*</span> <span class="n">df</span><span class="p">[</span><span class="n">total_nm_rate_col</span><span class="p">]</span><span class="o">.</span><span class="n">rank</span><span class="p">(</span><span class="n">pct</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="c1"># See https://pandas.pydata.org/pandas-docs/stable/reference/api/</span>
     <span class="c1"># pandas.DataFrame.rank.html</span>
 
@@ -902,65 +914,65 @@
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>SUMLEV</th>
-      <th>REGION</th>
+      <th>STNAME</th>
+      <th>CTNAME</th>
       <th>...</th>
-      <th>2020-2023 Total Domestic Net Migration as % of 2020 Population</th>
-      <th>2020-2023 Domestic Net Migration Percentile</th>
+      <th>2020-2024 Total Domestic Net Migration as % of 2020 Population</th>
+      <th>2020-2024 Domestic Net Migration Percentile</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>1</th>
-      <td>50</td>
-      <td>3</td>
+      <td>Alabama</td>
+      <td>Autauga County</td>
       <td>...</td>
-      <td>2.278563</td>
-      <td>68.225191</td>
+      <td>3.489796</td>
+      <td>73.282443</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>50</td>
-      <td>3</td>
+      <td>Alabama</td>
+      <td>Baldwin County</td>
       <td>...</td>
-      <td>9.675624</td>
-      <td>96.660305</td>
+      <td>12.407720</td>
+      <td>97.519084</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>50</td>
-      <td>3</td>
+      <td>Alabama</td>
+      <td>Barbour County</td>
       <td>...</td>
-      <td>-1.216854</td>
-      <td>22.073791</td>
+      <td>-2.136684</td>
+      <td>16.634860</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>50</td>
-      <td>3</td>
+      <td>Alabama</td>
+      <td>Bibb County</td>
       <td>...</td>
-      <td>-0.982019</td>
-      <td>24.809160</td>
+      <td>0.664154</td>
+      <td>46.978372</td>
     </tr>
     <tr>
       <th>5</th>
-      <td>50</td>
-      <td>3</td>
+      <td>Alabama</td>
+      <td>Blount County</td>
       <td>...</td>
-      <td>1.875528</td>
-      <td>64.408397</td>
+      <td>2.568916</td>
+      <td>66.221374</td>
     </tr>
   </tbody>
 </table>
-<p>5 rows × 70 columns</p>
+<p>5 rows × 86 columns</p>
 </div></div></div>
 </div>
-<p>Let’s now take a look at the states with the highest and lowest net migration rates in our dataset. (You’ll need to scroll to the right to see the actual rates and percentiles.)</p>
+<p>Let’s now take a look at the states with the highest and lowest net migration rates in our dataset.</p>
 <p>Highest rates:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_nm_state</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span>
-    <span class="n">percentile_col</span><span class="p">,</span> <span class="n">ascending</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+    <span class="n">percentile_col</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -983,64 +995,64 @@
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>SUMLEV</th>
-      <th>REGION</th>
+      <th>STNAME</th>
+      <th>CTNAME</th>
       <th>...</th>
-      <th>2020-2023 Total Domestic Net Migration as % of 2020 Population</th>
-      <th>2020-2023 Domestic Net Migration Percentile</th>
+      <th>2020-2024 Total Domestic Net Migration as % of 2020 Population</th>
+      <th>2020-2024 Domestic Net Migration Percentile</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>565</th>
-      <td>40</td>
-      <td>4</td>
+      <td>Idaho</td>
+      <td>Idaho</td>
       <td>...</td>
-      <td>5.671907</td>
+      <td>6.543819</td>
       <td>100.000000</td>
     </tr>
     <tr>
       <th>2358</th>
-      <td>40</td>
-      <td>3</td>
+      <td>South Carolina</td>
+      <td>South Carolina</td>
       <td>...</td>
-      <td>4.846318</td>
+      <td>6.153527</td>
       <td>98.039216</td>
     </tr>
     <tr>
       <th>1626</th>
-      <td>40</td>
-      <td>4</td>
+      <td>Montana</td>
+      <td>Montana</td>
       <td>...</td>
-      <td>4.467998</td>
+      <td>4.934072</td>
       <td>96.078431</td>
     </tr>
     <tr>
       <th>325</th>
-      <td>40</td>
-      <td>3</td>
+      <td>Delaware</td>
+      <td>Delaware</td>
       <td>...</td>
-      <td>3.885869</td>
+      <td>4.682738</td>
       <td>94.117647</td>
     </tr>
     <tr>
       <th>331</th>
-      <td>40</td>
-      <td>3</td>
+      <td>Florida</td>
+      <td>Florida</td>
       <td>...</td>
-      <td>3.801438</td>
+      <td>4.051974</td>
       <td>92.156863</td>
     </tr>
   </tbody>
 </table>
-<p>5 rows × 70 columns</p>
+<p>5 rows × 86 columns</p>
 </div></div></div>
 </div>
 <p>Lowest rates:</p>
-<p><em>Note that, while the percentile for the highest state is 100, the lowest state’s percentile is 1.96 (100 / 51). I believe this is because Pandas calculated each entry’s percentile as the percentage of entries that are <em>equal to</em> or lower than all entries within the dataset. Therefore, since the lowest entry’s percentile is at least equal to itself, its percentile won’t be 0. This isn’t the only way to define percentiles, but it works well enough for our purposes.</em></p>
+<p><em>Note that, while the percentile for the highest state is 100, the lowest state’s percentile is ~1.96 (100 / 51). I believe this is because Pandas calculated each entry’s percentile as the percentage of entries that are <em>equal to</em> or lower than all entries within the dataset. Therefore, since the lowest entry’s percentile is at least equal to itself, its percentile won’t be 0. This isn’t the only way to define percentiles, but it works well enough for our purposes.</em></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_nm_state</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">percentile_col</span><span class="p">,</span> <span class="n">ascending</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_nm_state</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">percentile_col</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -1063,57 +1075,57 @@
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>SUMLEV</th>
-      <th>REGION</th>
+      <th>STNAME</th>
+      <th>CTNAME</th>
       <th>...</th>
-      <th>2020-2023 Total Domestic Net Migration as % of 2020 Population</th>
-      <th>2020-2023 Domestic Net Migration Percentile</th>
+      <th>2020-2024 Total Domestic Net Migration as % of 2020 Population</th>
+      <th>2020-2024 Domestic Net Migration Percentile</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>1862</th>
-      <td>40</td>
-      <td>1</td>
+      <td>New York</td>
+      <td>New York</td>
       <td>...</td>
-      <td>-4.369181</td>
+      <td>-4.782320</td>
       <td>1.960784</td>
     </tr>
     <tr>
       <th>329</th>
-      <td>40</td>
-      <td>3</td>
+      <td>District of Columbia</td>
+      <td>District of Columbia</td>
       <td>...</td>
-      <td>-4.126181</td>
+      <td>-4.253530</td>
       <td>3.921569</td>
     </tr>
     <tr>
       <th>191</th>
-      <td>40</td>
-      <td>4</td>
+      <td>California</td>
+      <td>California</td>
       <td>...</td>
-      <td>-3.029854</td>
+      <td>-3.703934</td>
       <td>5.882353</td>
     </tr>
     <tr>
       <th>559</th>
-      <td>40</td>
-      <td>4</td>
+      <td>Hawaii</td>
+      <td>Hawaii</td>
       <td>...</td>
-      <td>-2.863378</td>
+      <td>-3.487643</td>
       <td>7.843137</td>
     </tr>
     <tr>
       <th>610</th>
-      <td>40</td>
-      <td>2</td>
+      <td>Illinois</td>
+      <td>Illinois</td>
       <td>...</td>
-      <td>-2.844218</td>
+      <td>-3.260506</td>
       <td>9.803922</td>
     </tr>
   </tbody>
 </table>
-<p>5 rows × 70 columns</p>
+<p>5 rows × 86 columns</p>
 </div></div></div>
 </div>
 <p>We’ll now perform the same analysis for counties. However, in order to prevent unusual migration patterns within smaller counties from skewing our results, we’ll limit our results to counties that had at least 100,000 residents in 2020.</p>
@@ -1134,7 +1146,7 @@
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_nm_county</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;POPESTIMATE2020 &gt;= 100000&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span>
-    <span class="n">percentile_col</span><span class="p">,</span> <span class="n">ascending</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+    <span class="n">percentile_col</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -1157,63 +1169,63 @@
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>SUMLEV</th>
-      <th>REGION</th>
+      <th>STNAME</th>
+      <th>CTNAME</th>
       <th>...</th>
-      <th>2020-2023 Total Domestic Net Migration as % of 2020 Population</th>
-      <th>2020-2023 Domestic Net Migration Percentile</th>
+      <th>2020-2024 Total Domestic Net Migration as % of 2020 Population</th>
+      <th>2020-2024 Domestic Net Migration Percentile</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>2697</th>
-      <td>50</td>
-      <td>3</td>
+      <td>Texas</td>
+      <td>Kaufman County</td>
       <td>...</td>
-      <td>25.596840</td>
+      <td>31.722975</td>
       <td>100.000000</td>
     </tr>
     <tr>
       <th>391</th>
-      <td>50</td>
-      <td>3</td>
+      <td>Florida</td>
+      <td>Sumter County</td>
       <td>...</td>
-      <td>21.892944</td>
+      <td>25.347391</td>
       <td>99.968193</td>
     </tr>
     <tr>
-      <th>2767</th>
-      <td>50</td>
-      <td>3</td>
+      <th>1935</th>
+      <td>North Carolina</td>
+      <td>Brunswick County</td>
       <td>...</td>
-      <td>20.253329</td>
-      <td>99.936387</td>
-    </tr>
-    <tr>
-      <th>2614</th>
-      <td>50</td>
-      <td>3</td>
-      <td>...</td>
-      <td>20.129665</td>
+      <td>24.743030</td>
       <td>99.904580</td>
     </tr>
     <tr>
-      <th>1935</th>
-      <td>50</td>
-      <td>3</td>
+      <th>2614</th>
+      <td>Texas</td>
+      <td>Comal County</td>
       <td>...</td>
-      <td>19.072387</td>
+      <td>24.380365</td>
+      <td>99.872774</td>
+    </tr>
+    <tr>
+      <th>2767</th>
+      <td>Texas</td>
+      <td>Rockwall County</td>
+      <td>...</td>
+      <td>24.278855</td>
       <td>99.840967</td>
     </tr>
   </tbody>
 </table>
-<p>5 rows × 70 columns</p>
+<p>5 rows × 86 columns</p>
 </div></div></div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_nm_county</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;POPESTIMATE2020 &gt;= 100000&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span>
-    <span class="n">percentile_col</span><span class="p">,</span> <span class="n">ascending</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+    <span class="n">percentile_col</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -1236,57 +1248,57 @@
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>SUMLEV</th>
-      <th>REGION</th>
+      <th>STNAME</th>
+      <th>CTNAME</th>
       <th>...</th>
-      <th>2020-2023 Total Domestic Net Migration as % of 2020 Population</th>
-      <th>2020-2023 Domestic Net Migration Percentile</th>
+      <th>2020-2024 Total Domestic Net Migration as % of 2020 Population</th>
+      <th>2020-2024 Domestic Net Migration Percentile</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>1865</th>
-      <td>50</td>
-      <td>1</td>
+      <td>New York</td>
+      <td>Bronx County</td>
       <td>...</td>
-      <td>-10.586540</td>
+      <td>-12.349480</td>
       <td>0.445293</td>
     </tr>
     <tr>
       <th>1886</th>
-      <td>50</td>
-      <td>1</td>
+      <td>New York</td>
+      <td>Kings County</td>
       <td>...</td>
-      <td>-8.905899</td>
-      <td>0.604326</td>
+      <td>-9.744925</td>
+      <td>0.858779</td>
     </tr>
     <tr>
       <th>229</th>
-      <td>50</td>
-      <td>4</td>
+      <td>California</td>
+      <td>San Francisco County</td>
       <td>...</td>
-      <td>-8.816523</td>
-      <td>0.636132</td>
+      <td>-9.608922</td>
+      <td>0.922392</td>
     </tr>
     <tr>
       <th>1903</th>
-      <td>50</td>
-      <td>1</td>
+      <td>New York</td>
+      <td>Queens County</td>
       <td>...</td>
-      <td>-8.672521</td>
-      <td>0.763359</td>
+      <td>-9.416053</td>
+      <td>1.017812</td>
     </tr>
     <tr>
-      <th>1253</th>
-      <td>50</td>
-      <td>1</td>
+      <th>1625</th>
+      <td>Missouri</td>
+      <td>St. Louis city</td>
       <td>...</td>
-      <td>-7.983719</td>
-      <td>0.954198</td>
+      <td>-9.335669</td>
+      <td>1.113232</td>
     </tr>
   </tbody>
 </table>
-<p>5 rows × 70 columns</p>
+<p>5 rows × 86 columns</p>
 </div></div></div>
 </div>
 </section>
@@ -1296,27 +1308,12 @@
 <p>(See choropleth_maps.ipynb for more information on this step.)</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Reading in our shapefile data:</span>
-<span class="n">gdf_counties</span> <span class="o">=</span> <span class="n">geopandas</span><span class="o">.</span><span class="n">read_file</span><span class="p">(</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">gdf_counties</span> <span class="o">=</span> <span class="n">geopandas</span><span class="o">.</span><span class="n">read_file</span><span class="p">(</span>
     <span class="s1">&#39;shapefiles/cb_2023_us_county_500k/cb_2023_us_county_500k.shp&#39;</span><span class="p">)</span>
-<span class="c1"># This abbreviation of &#39;GeoDataFrame&#39; as &#39;gdf&#39; derives from</span>
-<span class="c1"># https://geopandas.org/en/stable/docs/reference/api/geopandas.</span>
-<span class="c1"># GeoDataFrame.html</span>
 
-<span class="c1"># The current versions of the county outlines would result in a very large </span>
-<span class="c1"># output file (e.g. around 42 MB).</span>
-<span class="c1"># We can reduce this file size (and the time required to generate and </span>
-<span class="c1"># save the map) by simplifying the county outlines.</span>
-<span class="c1"># I found a tolerance argument of 0.005 to work well for this project,</span>
-<span class="c1"># but feel free to experiment with larger or smaller values.</span>
-<span class="n">gdf_counties</span><span class="p">[</span><span class="s1">&#39;geometry&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">gdf_counties</span><span class="p">[</span><span class="s1">&#39;geometry&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">simplify</span><span class="p">(</span>
-    <span class="n">tolerance</span> <span class="o">=</span> <span class="mf">0.005</span><span class="p">)</span>
-<span class="c1"># Source: https://geopandas.org/en/stable/docs/reference/api/geopandas.</span>
-<span class="c1"># GeoSeries.simplify.html</span>
+<span class="n">gdf_counties</span><span class="p">[</span><span class="s1">&#39;geometry&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">gdf_counties</span><span class="p">[</span><span class="s1">&#39;geometry&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">simplify_coverage</span><span class="p">(</span>
+    <span class="n">tolerance</span><span class="o">=</span><span class="mf">0.005</span><span class="p">)</span>
 
-<span class="c1"># Adding a column that combines County and State names: (This will help </span>
-<span class="c1"># prevent the code from confusing counties in different states with </span>
-<span class="c1"># the same name.)</span>
 <span class="n">gdf_counties</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;County/State&#39;</span><span class="p">,</span> <span class="n">gdf_counties</span><span class="p">[</span><span class="s1">&#39;NAMELSAD&#39;</span><span class="p">]</span> 
                     <span class="o">+</span> <span class="s1">&#39;, &#39;</span> <span class="o">+</span> <span class="n">gdf_counties</span><span class="p">[</span><span class="s1">&#39;STUSPS&#39;</span><span class="p">])</span>
 <span class="n">gdf_counties</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
@@ -1356,7 +1353,7 @@
       <td>01</td>
       <td>...</td>
       <td>1132887203</td>
-      <td>POLYGON ((-88.02858 30.22676, -87.96685 30.235...</td>
+      <td>POLYGON ((-88.0089 30.68343, -88.001 30.69829,...</td>
     </tr>
     <tr>
       <th>1</th>
@@ -1364,7 +1361,7 @@
       <td>01</td>
       <td>...</td>
       <td>4795415</td>
-      <td>POLYGON ((-85.71209 31.19727, -85.69231 31.210...</td>
+      <td>POLYGON ((-85.41743 31.31497, -85.37493 31.314...</td>
     </tr>
     <tr>
       <th>2</th>
@@ -1372,7 +1369,7 @@
       <td>01</td>
       <td>...</td>
       <td>50523213</td>
-      <td>POLYGON ((-85.74803 31.61918, -85.73117 31.629...</td>
+      <td>POLYGON ((-85.65767 31.88028, -85.65691 31.891...</td>
     </tr>
     <tr>
       <th>3</th>
@@ -1380,7 +1377,7 @@
       <td>01</td>
       <td>...</td>
       <td>24634880</td>
-      <td>POLYGON ((-88.42145 32.30868, -88.34043 32.991...</td>
+      <td>POLYGON ((-88.38886 32.57812, -88.37334 32.711...</td>
     </tr>
     <tr>
       <th>4</th>
@@ -1388,7 +1385,7 @@
       <td>05</td>
       <td>...</td>
       <td>36848741</td>
-      <td>POLYGON ((-94.04343 33.55158, -94.00037 33.564...</td>
+      <td>POLYGON ((-94.04343 33.55158, -94.02273 33.556...</td>
     </tr>
   </tbody>
 </table>
@@ -1408,13 +1405,13 @@
 </div>
 </div>
 </div>
-<p>Since there are far fewer states than there are counties, our state dataset won’t require as much processing time as our county dataset. In addition, maps that show only data at the state level will generally take up less storage space. One disadvantage of these maps, though, is that the state-level data will hide interesting variations in net migration data at the county level.</p>
+<p>Next, we’ll import state-level boundaries:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">gdf_states</span> <span class="o">=</span> <span class="n">geopandas</span><span class="o">.</span><span class="n">read_file</span><span class="p">(</span>
     <span class="s1">&#39;shapefiles/cb_2023_us_state_500k/cb_2023_us_state_500k.shp&#39;</span><span class="p">)</span>
-<span class="n">gdf_states</span><span class="p">[</span><span class="s1">&#39;geometry&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">gdf_states</span><span class="p">[</span><span class="s1">&#39;geometry&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">simplify</span><span class="p">(</span>
-    <span class="n">tolerance</span> <span class="o">=</span> <span class="mf">0.005</span><span class="p">)</span>
+<span class="n">gdf_states</span><span class="p">[</span><span class="s1">&#39;geometry&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">gdf_states</span><span class="p">[</span><span class="s1">&#39;geometry&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">simplify_coverage</span><span class="p">(</span>
+    <span class="n">tolerance</span><span class="o">=</span><span class="mf">0.005</span><span class="p">)</span>
 <span class="n">gdf_states</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -1452,7 +1449,7 @@
       <td>00897535</td>
       <td>...</td>
       <td>726463919</td>
-      <td>POLYGON ((-109.05004 31.3325, -109.04522 36.99...</td>
+      <td>POLYGON ((-109.04522 36.99908, -108.9544 36.99...</td>
     </tr>
     <tr>
       <th>1</th>
@@ -1468,7 +1465,7 @@
       <td>01779778</td>
       <td>...</td>
       <td>20291770234</td>
-      <td>MULTIPOLYGON (((-118.60442 33.47855, -118.5386...</td>
+      <td>MULTIPOLYGON (((-118.58594 33.47382, -118.5703...</td>
     </tr>
     <tr>
       <th>3</th>
@@ -1476,7 +1473,7 @@
       <td>01779786</td>
       <td>...</td>
       <td>2384223544</td>
-      <td>MULTIPOLYGON (((-89.41728 36.49901, -89.37637 ...</td>
+      <td>MULTIPOLYGON (((-89.13268 36.9822, -89.16645 3...</td>
     </tr>
     <tr>
       <th>4</th>
@@ -1484,7 +1481,7 @@
       <td>01779775</td>
       <td>...</td>
       <td>4582326383</td>
-      <td>MULTIPOLYGON (((-88.05338 30.50699, -88.03867 ...</td>
+      <td>MULTIPOLYGON (((-88.05338 30.50699, -88.0351 3...</td>
     </tr>
   </tbody>
 </table>
@@ -1493,14 +1490,14 @@
 </div>
 <section id="merging-shape-and-demographic-data-tables-together">
 <h3>Merging shape and demographic data tables together<a class="headerlink" href="#merging-shape-and-demographic-data-tables-together" title="Link to this heading">#</a></h3>
-<p>Creating a table that stores both demographic and state data may make graphing tasks easier. Therefore, we’ll now merge gdf_counties and df_nm_county together using their state and county ID columns as keys. In order to make this process easier, we’ll rename gdf_counties’ copies of these ID fields and change their values to integers in the following cell.</p>
+<p>Creating a table that stores both demographic and state data often makes graphing tasks easier. Therefore, we’ll now merge <code class="docutils literal notranslate"><span class="pre">gdf_counties</span></code> and <code class="docutils literal notranslate"><span class="pre">df_nm_county</span></code> together using their state and county ID columns as keys. In order to make this process easier, we’ll rename <code class="docutils literal notranslate"><span class="pre">gdf_counties</span></code>’ copies of these ID fields and change their values to integers in the following cell.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Renaming the ID fields within gdf_counties so that they match the </span>
 <span class="c1"># names of their corresponding fields within df_nm_county:</span>
 <span class="n">gdf_counties</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span>
     <span class="n">columns</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;STATEFP&#39;</span><span class="p">:</span><span class="s1">&#39;STATE&#39;</span><span class="p">,</span> 
-    <span class="s1">&#39;COUNTYFP&#39;</span><span class="p">:</span><span class="s1">&#39;COUNTY&#39;</span><span class="p">},</span> <span class="n">inplace</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+    <span class="s1">&#39;COUNTYFP&#39;</span><span class="p">:</span><span class="s1">&#39;COUNTY&#39;</span><span class="p">},</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="c1"># df_nm_county&#39;s ID fields are stored as integers, so in order to</span>
 <span class="c1"># prevent the merge from failing to match integer- and string-formatted </span>
 <span class="c1"># numbers we&#39;ll convert these to integers as well: </span>
@@ -1549,7 +1546,7 @@
       <td>1</td>
       <td>...</td>
       <td>1132887203</td>
-      <td>POLYGON ((-88.02858 30.22676, -87.96685 30.235...</td>
+      <td>POLYGON ((-88.0089 30.68343, -88.001 30.69829,...</td>
     </tr>
     <tr>
       <th>1</th>
@@ -1557,7 +1554,7 @@
       <td>1</td>
       <td>...</td>
       <td>4795415</td>
-      <td>POLYGON ((-85.71209 31.19727, -85.69231 31.210...</td>
+      <td>POLYGON ((-85.41743 31.31497, -85.37493 31.314...</td>
     </tr>
     <tr>
       <th>2</th>
@@ -1565,7 +1562,7 @@
       <td>1</td>
       <td>...</td>
       <td>50523213</td>
-      <td>POLYGON ((-85.74803 31.61918, -85.73117 31.629...</td>
+      <td>POLYGON ((-85.65767 31.88028, -85.65691 31.891...</td>
     </tr>
     <tr>
       <th>3</th>
@@ -1573,7 +1570,7 @@
       <td>1</td>
       <td>...</td>
       <td>24634880</td>
-      <td>POLYGON ((-88.42145 32.30868, -88.34043 32.991...</td>
+      <td>POLYGON ((-88.38886 32.57812, -88.37334 32.711...</td>
     </tr>
     <tr>
       <th>4</th>
@@ -1581,27 +1578,20 @@
       <td>5</td>
       <td>...</td>
       <td>36848741</td>
-      <td>POLYGON ((-94.04343 33.55158, -94.00037 33.564...</td>
+      <td>POLYGON ((-94.04343 33.55158, -94.02273 33.556...</td>
     </tr>
   </tbody>
 </table>
 <p>5 rows × 14 columns</p>
 </div></div></div>
 </div>
-<p>We’re now ready to merge our shapefile and net migration data together:</p>
-<p><strong>Note</strong>: merging the DataFrame onto the GeoDataFrame ensures that the resulting file is also a GeoDataFrame–which will prove useful in our mapping code. (If we instead merged the GeoDataFrame onto our DataFrame, we’d end up with a DataFrame.)</p>
+<p>We’re now ready to merge our countyllevel boundary and net migration data together:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">gdf_counties_and_stats</span> <span class="o">=</span> <span class="n">gdf_counties</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span>
     <span class="n">df_nm_county</span><span class="p">,</span> 
-    <span class="n">on</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;STATE&#39;</span><span class="p">,</span> <span class="s1">&#39;COUNTY&#39;</span><span class="p">])</span>
-<span class="c1"># Because we did not specify an argument for the &#39;how&#39; parameter, </span>
-<span class="c1"># the default &#39;inner&#39; option will be used. This option will </span>
-<span class="c1"># exclude any counties that either (1) aren&#39;t present</span>
-<span class="c1"># in the net migration stats table or (2) don&#39;t have a shape defined. </span>
-<span class="c1"># This will prevent our mapping code from (1) showing counties with </span>
-<span class="c1"># missing net migration data and (2) attempting</span>
-<span class="c1"># to map a county that lacks a a corresponding outline.</span>
+    <span class="n">on</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;STATE&#39;</span><span class="p">,</span> <span class="s1">&#39;COUNTY&#39;</span><span class="p">])</span>
+
 <span class="n">gdf_counties_and_stats</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -1628,8 +1618,8 @@
       <th>County/State</th>
       <th>STATE</th>
       <th>...</th>
-      <th>2020-2023 Total Domestic Net Migration as % of 2020 Population</th>
-      <th>2020-2023 Domestic Net Migration Percentile</th>
+      <th>2020-2024 Total Domestic Net Migration as % of 2020 Population</th>
+      <th>2020-2024 Domestic Net Migration Percentile</th>
     </tr>
   </thead>
   <tbody>
@@ -1638,44 +1628,44 @@
       <td>Baldwin County, AL</td>
       <td>1</td>
       <td>...</td>
-      <td>9.675624</td>
-      <td>96.660305</td>
+      <td>12.407720</td>
+      <td>97.519084</td>
     </tr>
     <tr>
       <th>1</th>
       <td>Houston County, AL</td>
       <td>1</td>
       <td>...</td>
-      <td>1.472920</td>
-      <td>58.842239</td>
+      <td>1.929803</td>
+      <td>61.195929</td>
     </tr>
     <tr>
       <th>2</th>
       <td>Barbour County, AL</td>
       <td>1</td>
       <td>...</td>
-      <td>-1.216854</td>
-      <td>22.073791</td>
+      <td>-2.136684</td>
+      <td>16.634860</td>
     </tr>
     <tr>
       <th>3</th>
       <td>Sumter County, AL</td>
       <td>1</td>
       <td>...</td>
-      <td>-3.880428</td>
-      <td>6.424936</td>
+      <td>-4.601799</td>
+      <td>6.743003</td>
     </tr>
     <tr>
       <th>4</th>
       <td>Miller County, AR</td>
       <td>5</td>
       <td>...</td>
-      <td>0.523486</td>
-      <td>46.024173</td>
+      <td>0.363884</td>
+      <td>43.097964</td>
     </tr>
   </tbody>
 </table>
-<p>5 rows × 82 columns</p>
+<p>5 rows × 98 columns</p>
 </div></div></div>
 </div>
 <p>Performing the same merge process for our state-level boundary and net migration DataFrames:</p>
@@ -1695,7 +1685,7 @@
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">gdf_states_and_stats</span> <span class="o">=</span> <span class="n">gdf_states</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span>
-    <span class="n">df_nm_state</span><span class="p">,</span> <span class="n">on</span> <span class="o">=</span> <span class="s1">&#39;State&#39;</span><span class="p">)</span>
+    <span class="n">df_nm_state</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="s1">&#39;State&#39;</span><span class="p">)</span>
 <span class="n">gdf_states_and_stats</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -1722,8 +1712,8 @@
       <th>STATEFP</th>
       <th>STATENS</th>
       <th>...</th>
-      <th>2020-2023 Total Domestic Net Migration as % of 2020 Population</th>
-      <th>2020-2023 Domestic Net Migration Percentile</th>
+      <th>2020-2024 Total Domestic Net Migration as % of 2020 Population</th>
+      <th>2020-2024 Domestic Net Migration Percentile</th>
     </tr>
   </thead>
   <tbody>
@@ -1732,23 +1722,23 @@
       <td>35</td>
       <td>00897535</td>
       <td>...</td>
-      <td>-0.287505</td>
-      <td>47.058824</td>
+      <td>-0.377039</td>
+      <td>41.176471</td>
     </tr>
     <tr>
       <th>1</th>
       <td>46</td>
       <td>01785534</td>
       <td>...</td>
-      <td>2.200485</td>
-      <td>80.392157</td>
+      <td>2.409981</td>
+      <td>78.431373</td>
     </tr>
     <tr>
       <th>2</th>
       <td>06</td>
       <td>01779778</td>
       <td>...</td>
-      <td>-3.029854</td>
+      <td>-3.703934</td>
       <td>5.882353</td>
     </tr>
     <tr>
@@ -1756,7 +1746,7 @@
       <td>21</td>
       <td>01779786</td>
       <td>...</td>
-      <td>0.501321</td>
+      <td>0.638683</td>
       <td>58.823529</td>
     </tr>
     <tr>
@@ -1764,97 +1754,19 @@
       <td>01</td>
       <td>01779775</td>
       <td>...</td>
-      <td>1.921424</td>
-      <td>74.509804</td>
+      <td>2.370612</td>
+      <td>76.470588</td>
     </tr>
   </tbody>
 </table>
-<p>5 rows × 79 columns</p>
-</div></div></div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_nm_state</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>SUMLEV</th>
-      <th>REGION</th>
-      <th>...</th>
-      <th>2020-2023 Total Domestic Net Migration as % of 2020 Population</th>
-      <th>2020-2023 Domestic Net Migration Percentile</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>40</td>
-      <td>3</td>
-      <td>...</td>
-      <td>1.921424</td>
-      <td>74.509804</td>
-    </tr>
-    <tr>
-      <th>68</th>
-      <td>40</td>
-      <td>4</td>
-      <td>...</td>
-      <td>-2.366596</td>
-      <td>13.725490</td>
-    </tr>
-    <tr>
-      <th>99</th>
-      <td>40</td>
-      <td>4</td>
-      <td>...</td>
-      <td>3.049036</td>
-      <td>88.235294</td>
-    </tr>
-    <tr>
-      <th>115</th>
-      <td>40</td>
-      <td>3</td>
-      <td>...</td>
-      <td>1.902381</td>
-      <td>72.549020</td>
-    </tr>
-    <tr>
-      <th>191</th>
-      <td>40</td>
-      <td>4</td>
-      <td>...</td>
-      <td>-3.029854</td>
-      <td>5.882353</td>
-    </tr>
-  </tbody>
-</table>
-<p>5 rows × 70 columns</p>
+<p>5 rows × 95 columns</p>
 </div></div></div>
 </div>
 </section>
 </section>
 <section id="creating-a-choropleth-map-with-interactive-tooltips">
 <h2>Creating a choropleth map with interactive tooltips<a class="headerlink" href="#creating-a-choropleth-map-with-interactive-tooltips" title="Link to this heading">#</a></h2>
-<p>We can now create a choropleth map that shows net migration data by county. However, if we feed our entire gdf_counties_and_stats DataFrame into the mapping code, the resulting HTML file will be much larger than necessary, as it will include a number of columns that aren’t actually necessary in creating our map. Therefore, we’ll use a condensed version of gdf_counties_and_stats as a basis for this map instead.</p>
+<p>We can now create a choropleth map that shows net migration data by county. However, if we feed our entire <code class="docutils literal notranslate"><span class="pre">gdf_counties_and_stats</span></code> DataFrame into the mapping code, the resulting HTML file will be much larger than necessary, as it will include a number of columns that aren’t actually necessary in creating our map. Therefore, we’ll use a condensed version of <code class="docutils literal notranslate"><span class="pre">gdf_counties_and_stats</span></code> as a basis for this map instead.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Storing columns that we&#39;ll need to retain within</span>
@@ -1892,45 +1804,45 @@
       <th></th>
       <th>geometry</th>
       <th>County/State</th>
-      <th>2020-2023 Total Domestic Net Migration as % of 2020 Population</th>
-      <th>2020-2023 Domestic Net Migration Percentile</th>
+      <th>2020-2024 Total Domestic Net Migration as % of 2020 Population</th>
+      <th>2020-2024 Domestic Net Migration Percentile</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>0</th>
-      <td>POLYGON ((-88.02858 30.22676, -87.96685 30.235...</td>
+      <td>POLYGON ((-88.0089 30.68343, -88.001 30.69829,...</td>
       <td>Baldwin County, AL</td>
-      <td>9.675624</td>
-      <td>96.660305</td>
+      <td>12.407720</td>
+      <td>97.519084</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>POLYGON ((-85.71209 31.19727, -85.69231 31.210...</td>
+      <td>POLYGON ((-85.41743 31.31497, -85.37493 31.314...</td>
       <td>Houston County, AL</td>
-      <td>1.472920</td>
-      <td>58.842239</td>
+      <td>1.929803</td>
+      <td>61.195929</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>POLYGON ((-85.74803 31.61918, -85.73117 31.629...</td>
+      <td>POLYGON ((-85.65767 31.88028, -85.65691 31.891...</td>
       <td>Barbour County, AL</td>
-      <td>-1.216854</td>
-      <td>22.073791</td>
+      <td>-2.136684</td>
+      <td>16.634860</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>POLYGON ((-88.42145 32.30868, -88.34043 32.991...</td>
+      <td>POLYGON ((-88.38886 32.57812, -88.37334 32.711...</td>
       <td>Sumter County, AL</td>
-      <td>-3.880428</td>
-      <td>6.424936</td>
+      <td>-4.601799</td>
+      <td>6.743003</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>POLYGON ((-94.04343 33.55158, -94.00037 33.564...</td>
+      <td>POLYGON ((-94.04343 33.55158, -94.02273 33.556...</td>
       <td>Miller County, AR</td>
-      <td>0.523486</td>
-      <td>46.024173</td>
+      <td>0.363884</td>
+      <td>43.097964</td>
     </tr>
   </tbody>
 </table>
@@ -1949,23 +1861,23 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;{&quot;type&quot;: &quot;FeatureCollection&quot;, &quot;features&quot;: [{&quot;id&quot;: &quot;0&quot;, &quot;type&quot;: &quot;Feature&quot;, &quot;properties&quot;: {&quot;County/State&quot;: &quot;Baldwin County, AL&quot;, &quot;2020-2023 Total Domestic Net Migration as % of 2020 Population&quot;: 9.675623899761831, &quot;2020-2023 Domestic Net Migration Percentile&quot;: 96.66030534351145}, &quot;geometry&quot;: {&quot;type&quot;: &quot;Polygon&quot;, &quot;coordinates&quot;: [[[-88.02858, 30.226763], [-87.966847, 30.235618], [-87.936041, 30.261469], [-87.893201, 30.239237], [-87.78775, 30.254244], [-87.768003, 30.262455], [-87.747171, 30.287768],&#39;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;{&quot;type&quot;: &quot;FeatureCollection&quot;, &quot;features&quot;: [{&quot;id&quot;: &quot;0&quot;, &quot;type&quot;: &quot;Feature&quot;, &quot;properties&quot;: {&quot;County/State&quot;: &quot;Baldwin County, AL&quot;, &quot;2020-2024 Total Domestic Net Migration as % of 2020 Population&quot;: 12.407719822062676, &quot;2020-2024 Domestic Net Migration Percentile&quot;: 97.51908396946564}, &quot;geometry&quot;: {&quot;type&quot;: &quot;Polygon&quot;, &quot;coordinates&quot;: [[[-88.0089012750009, 30.6834340138575], [-88.000997, 30.698289], [-88.003415, 30.708296], [-88.014897, 30.722989], [-88.014218, 30.737935], [-88.026319, 30.753358], [-88.02&#39;
 </pre></div>
 </div>
 </div>
 </div>
-<p>The ‘County/State’ column in this output is preceded by ‘Feature’ and ‘properties.’ Meanwhile, the choropleth example <a class="reference external" href="https://python-visualization.github.io/folium/latest/user_guide/geojson/choropleth.html">found in the Folium documentation</a> uses ‘<a class="reference external" href="http://feature.id">feature.id</a>’ as the key_on value. Here’s what the beginning of <a class="reference external" href="https://raw.githubusercontent.com/python-visualization/folium-example-data/main/us_states.json"><em>that</em> GeoJson file</a> looks like:</p>
+<p>The ‘County/State’ column in this output is preceded by ‘Feature’ and ‘properties.’ Meanwhile, the choropleth example found in the Folium documentation (<a class="reference external" href="https://python-visualization.github.io/folium/latest/user_guide/geojson/choropleth.html">https://python-visualization.github.io/folium/latest/user_guide/geojson/choropleth.html</a>) uses ‘<a class="reference external" href="http://feature.id">feature.id</a>’ as the key_on value. Here’s what the beginning of <em>that</em> GeoJson file (available at <a class="reference external" href="https://raw.githubusercontent.com/python-visualization/folium-example-data/main/us_states.json">https://raw.githubusercontent.com/python-visualization/folium-example-data/main/us_states.json</a>) looks like:</p>
 <blockquote>
 <div><p>{“type”:”FeatureCollection”,”features”:[
 {“type”:”Feature”,”id”:”AL”,”properties”:{“name”:”Alabama”},”geometry”:{“type”:”Polygon”,”coordinates”:[[[-87.359296,35.00118],</p>
 </div></blockquote>
 <p>Note that ‘id’ is the column with state data (as it’s a state-level choropleth map), and that ‘properties’ comes <em>after</em> this value (whereas, in our GeoJson file, ‘properties’ comes <em>before</em> our county column). Therefore, we can make an educated guess that ‘feature.properties.County/State’ is the right value to pass to the key_on column, and thankfully this guess is correct!</p>
-<p>(<a class="reference external" href="https://python-visualization.github.io/folium/latest/reference.html">Folium’s API reference</a> also hints at this solution by listing ‘feature.properties.statename’ as an example of a key_on value.</p>
-<p>In my experience, figuring out what value to use for the ‘key_on’ argument is one of the trickier parts of using Folium’s Choropleth feature. If you’re having trouble with this step, my advice would be to always look at the GeoJson version of your GeoDataFrame and see what values precede it, then incorporate those values (‘feature’, ‘properties’, etc.) into your entry.</p>
+<p>(Folium’s API reference (<a class="reference external" href="https://python-visualization.github.io/folium/latest/reference.html">https://python-visualization.github.io/folium/latest/reference.html</a>) also hints at this solution by listing ‘feature.properties.statename’ as an example of a key_on value.</p>
+<p>In my experience, figuring out what value to use for the <code class="docutils literal notranslate"><span class="pre">key_on</span></code> argument is one of the trickier parts of using Folium’s Choropleth feature. If you’re having trouble with this step, my advice would be to always look at the GeoJson version of your GeoDataFrame and see what values precede it, then incorporate those values (‘feature’, ‘properties’, etc.) into your entry.</p>
 <section id="creating-our-bin-ranges">
 <h3>Creating our bin ranges<a class="headerlink" href="#creating-our-bin-ranges" title="Link to this heading">#</a></h3>
-<p>By default, folium.Choropleth() will group regions into 6 colored bins; the ranges from these bins will stretch, in equal segments, from the lowest to the highest value. However, because some counties have very high or low net migration rates, this approach will cause our map to look relatively dull, since most counties will be in one of the middle bins.</p>
-<p>Therefore, a better setup will be to base our bin ranges on percentiles, as this will result in a relatively equal number of counties’ appearing in each bin. (The bins will no longer be equally sized, but that’s not an issue in this case.) We can easily determine these bins’ cutoff points using pandas’ quantile() function:</p>
+<p>By default, <code class="docutils literal notranslate"><span class="pre">folium.Choropleth()</span></code> will group regions into 6 colored bins; the ranges from these bins will stretch, in equal segments, from the lowest to the highest value. However, because some counties have very high or low net migration rates, this approach will cause our map to look relatively dull, since most counties will be in one of the middle bins.</p>
+<p>Therefore, a better setup will be to base our bin ranges on percentiles, as this will result in a relatively equal number of counties’ appearing in each bin. (The bins will no longer be equally sized, but that’s not an issue in this case.) We can easily determine these bins’ cutoff points using pandas’ <code class="docutils literal notranslate"><span class="pre">quantile()</span></code> function:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">bin_thresholds</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">gdf_counties_and_stats_condensed</span><span class="p">[</span>
@@ -1979,22 +1891,23 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[-26.57727350868145,
- -2.8124548451811697,
- -1.3842847014410304,
- -0.57942086570913,
- 0.10509734758955473,
- 0.803350933220706,
- 1.5648502030833924,
- 2.497913057064161,
- 3.8660584451404807,
- 5.966706571952004,
- 25.59683979436641]
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[-27.225850807837745,
+ -3.4013516546785283,
+ -1.7437151273033404,
+ -0.6659052943888464,
+ 0.11248213244181439,
+ 0.8985046040638296,
+ 1.8161218075640675,
+ 3.0710299250141335,
+ 4.698758779840584,
+ 7.261236045002715,
+ 31.72297529759857]
 </pre></div>
 </div>
 </div>
 </div>
-<p>We can now finally create our choropleth map! (Note: I commented out the output of this and other Folium maps so that this notebook would be small enough to display correctly on GitHub. However, if you’re running this notebook locally on your computer, you can uncomment the ‘m’ at the end of the cell see what this map actually looks like.)</p>
+<p>(A simpler, but less flexible means of accounting for outliers in our dataset would be to set <code class="docutils literal notranslate"><span class="pre">use_jenks</span></code> within <code class="docutils literal notranslate"><span class="pre">px.Choropleth()</span></code> to True. For more details on this argmuent, see <a class="reference external" href="https://python-visualization.github.io/folium/latest/reference.html#folium.features.Choropleth">https://python-visualization.github.io/folium/latest/reference.html#folium.features.Choropleth</a> .</p>
+<p>We can now finally create our choropleth map: (A static copy of this map will be displayed shortly.)</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># The following code is based on: </span>
@@ -2010,17 +1923,22 @@
 <span class="c1"># within the choropleth documentation, but it still works fine.</span>
 
 
-<span class="n">m</span> <span class="o">=</span> <span class="n">folium</span><span class="o">.</span><span class="n">Map</span><span class="p">([</span><span class="mi">38</span><span class="p">,</span> <span class="o">-</span><span class="mi">95</span><span class="p">],</span> <span class="n">zoom_start</span><span class="o">=</span><span class="mi">6</span><span class="p">)</span>
+<span class="n">m</span> <span class="o">=</span> <span class="n">folium</span><span class="o">.</span><span class="n">Map</span><span class="p">([</span><span class="mi">38</span><span class="p">,</span> <span class="o">-</span><span class="mi">95</span><span class="p">],</span> <span class="n">zoom_start</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">zoom_control</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
+
+<span class="c1"># Disabling the Zoom control will make our screenshot of this map</span>
+<span class="c1"># a bit cleaner.</span>
 
 <span class="n">folium</span><span class="o">.</span><span class="n">Choropleth</span><span class="p">(</span>
     <span class="n">geo_data</span><span class="o">=</span><span class="n">gdf_counties_and_stats_condensed</span><span class="p">,</span>
     <span class="n">data</span><span class="o">=</span><span class="n">gdf_counties_and_stats_condensed</span><span class="p">,</span>
-    <span class="n">bins</span> <span class="o">=</span> <span class="n">bin_thresholds</span><span class="p">,</span>
+    <span class="n">bins</span><span class="o">=</span><span class="n">bin_thresholds</span><span class="p">,</span>
+    <span class="n">zoom_control</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
     <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="n">county_boundary_name_col</span><span class="p">,</span> <span class="n">total_nm_rate_col</span><span class="p">],</span>
     <span class="n">key_on</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;feature.properties.</span><span class="si">{</span><span class="n">county_boundary_name_col</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span>
-    <span class="n">fill_color</span> <span class="o">=</span> <span class="s1">&#39;RdYlGn&#39;</span><span class="p">,</span>
-    <span class="n">fillOpacity</span> <span class="o">=</span> <span class="mf">0.6</span>
+    <span class="n">fill_color</span><span class="o">=</span><span class="s1">&#39;RdYlGn&#39;</span><span class="p">,</span>
+    <span class="n">fillOpacity</span><span class="o">=</span><span class="mf">0.75</span>
 <span class="p">)</span><span class="o">.</span><span class="n">add_to</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+
 
 <span class="n">m</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s1">&#39;maps/basic_choropleth.html&#39;</span><span class="p">)</span> <span class="c1"># Useful for file size comparisons;</span>
 <span class="c1"># an updated copy of this map that also contains tooltips will be shown</span>
@@ -2079,9 +1997,6 @@
 
 <span class="c1"># We&#39;ll now go ahead and save the map:</span>
 
-<span class="c1"># m.save(&#39;maps/choropleth_with_tooltips.html&#39;) # Useful for file size</span>
-<span class="c1"># # comparisons</span>
-
 <span class="n">m</span><span class="o">.</span><span class="n">save</span><span class="p">(</span>
     <span class="sa">f</span><span class="s1">&#39;maps/net_migration_rate_county_</span><span class="si">{</span><span class="n">first_nm_year</span><span class="si">}</span><span class="s1">-</span><span class="si">{</span><span class="n">last_nm_year</span><span class="si">}</span><span class="s1">.html&#39;</span><span class="p">)</span>
 </pre></div>
@@ -2091,20 +2006,22 @@
 </section>
 <section id="saving-a-screenshot-of-this-map">
 <h3>Saving a screenshot of this map<a class="headerlink" href="#saving-a-screenshot-of-this-map" title="Link to this heading">#</a></h3>
-<p>The Plotly charting library makes saving static copies of charts simple: we can just call write_image(). Folium doesn’t yet have this sort of functionality, but thankfully, it’s still possible to create static copies of its map files. We’ll just need to run some Selenium code that opens a web browser; navigates to our map; and then saves a screenshot of the map to a PNG file. The following code shows how to accomplish these steps.</p>
-<p>(Note: I have found that Selenium may not work correctly when running a script <em>right after</em> installing it. Therefore, if you just installed Selenium and the following cell crashes, try exiting out of your Jupyter Notebook application; reopening it; and then rerunning this script.)</p>
+<p>The Plotly charting library makes saving static copies of charts simple: we can just call its <code class="docutils literal notranslate"><span class="pre">write_image()</span></code> function. Folium doesn’t yet have this sort of functionality, but thankfully, it’s still possible to create static copies of its map files. We’ll just need to run some Selenium code that opens a web browser; navigates to our map; and then saves a screenshot of the map to a PNG file. The following code shows how to accomplish these steps.</p>
+<p>(Note: I have found that Selenium may not work correctly when running a script <em>right after</em> installing it. Therefore, if you just installed Selenium and the following cell crashes, try exiting out of JupyterLab Desktop or whatever Jupyter Notebook viewer you’re using; reopening it; and then rerunning this script.)</p>
 <p>If your error message reads, in part, <code class="docutils literal notranslate"><span class="pre">NoSuchDriverException:</span> <span class="pre">Message:</span> <span class="pre">Unable</span> <span class="pre">to</span> <span class="pre">obtain</span> <span class="pre">driver</span> <span class="pre">for</span> <span class="pre">chrome</span></code>, these instructions still apply. Selenium <em>should</em> be able to obtain the driver on its own–but you may just need to close and reopen your notebook before it can do so.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">options</span> <span class="o">=</span> <span class="n">webdriver</span><span class="o">.</span><span class="n">ChromeOptions</span><span class="p">()</span>
 <span class="c1"># Source: </span>
 <span class="c1"># https://www.selenium.dev/documentation/webdriver/browsers/chrome/</span>
+
 <span class="n">options</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--window-size=3000,1688&#39;</span><span class="p">)</span> <span class="c1"># I found that this window</span>
 <span class="c1"># size, along with a starting zoom of 6 within our mapping code,</span>
 <span class="c1"># created a relatively detailed map of the contiguous 48 US states. </span>
 <span class="c1"># If you&#39;d like to create an even more detailed map, consider setting </span>
 <span class="c1"># your starting zoom to 7 and your window size to 6000,3375.</span>
-<span class="n">options</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--headless&#39;</span><span class="p">)</span> <span class="c1"># In my experience, this addition </span>
+
+<span class="n">options</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--headless&#39;</span><span class="p">)</span> <span class="c1"># This addition </span>
 <span class="c1"># (which prevents the Selenium-driven browser from displaying on your </span>
 <span class="c1"># computer) was necessary for allowing 4K screenshots to get saved</span>
 <span class="c1"># as 3840x2160-pixel images. Without this line, the screenshots would </span>
@@ -2114,12 +2031,12 @@
 <span class="c1"># and</span>
 <span class="c1"># https://github.com/GoogleChrome/chrome-launcher/blob/main/docs/</span>
 <span class="c1"># chrome-flags-for-tools.md</span>
+
 <span class="c1"># I learned about the necessity of using headless mode *somewhere* on </span>
 <span class="c1"># StackOverflow. Many answers to this question regarding generating </span>
 <span class="c1"># screenshots reference it as an important step, for instance:</span>
 <span class="c1"># https://stackoverflow.com/questions/41721734/take-screenshot-of-</span>
 <span class="c1"># full-page-with-selenium-python-with-chromedriver/57338909</span>
-
 
 <span class="c1"># Launching our Selenium driver:</span>
 <span class="n">driver</span> <span class="o">=</span> <span class="n">webdriver</span><span class="o">.</span><span class="n">Chrome</span><span class="p">(</span><span class="n">options</span><span class="o">=</span><span class="n">options</span><span class="p">)</span> 
@@ -2139,8 +2056,10 @@
 <span class="c1"># (which, by itself wouldn&#39;t be compatible with Selenium)</span>
 <span class="c1"># into an absolute path. (Note that &#39;/&#39; still works on Windows, at least</span>
 <span class="c1"># in my experience.) </span>
+
 <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="c1"># Helps ensure that the browser has enough time to download</span>
 <span class="c1"># map contents from the tile provider</span>
+
 <span class="c1"># Taking our screenshot and then saving it as a PNG image:</span>
 
 <span class="n">driver</span><span class="o">.</span><span class="n">get_screenshot_as_file</span><span class="p">(</span>
@@ -2157,31 +2076,32 @@
 </div>
 </div>
 </div>
-<p>Here’s a look at the map:</p>
+<p>Now that we’ve saved our screenshot, we can finally take a look at our map:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wadi</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;map_screenshots/net_migration_rate_county_</span><span class="se">\</span>
 <span class="si">{</span><span class="n">first_nm_year</span><span class="si">}</span><span class="s1">-</span><span class="si">{</span><span class="n">last_nm_year</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span>
-     <span class="n">generate_image</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">display_type</span> <span class="o">=</span> <span class="n">display_type</span><span class="p">)</span>
+     <span class="n">generate_image</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">display_type</span><span class="o">=</span><span class="n">display_type</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="../_images/f8f69617b4ad43bba5b85ed0f7ce4227dc98445f2ff91c9bcd821023c6937f9e.png"><img alt="../_images/f8f69617b4ad43bba5b85ed0f7ce4227dc98445f2ff91c9bcd821023c6937f9e.png" src="../_images/f8f69617b4ad43bba5b85ed0f7ce4227dc98445f2ff91c9bcd821023c6937f9e.png" style="width: 720px;" /></a>
+<a class="reference internal image-reference" href="../_images/571d426f946c3383d2d3c50c106136aba367c24a8ecb746563fd7713bf155499.png"><img alt="../_images/571d426f946c3383d2d3c50c106136aba367c24a8ecb746563fd7713bf155499.png" src="../_images/571d426f946c3383d2d3c50c106136aba367c24a8ecb746563fd7713bf155499.png" style="width: 720px;" /></a>
 </div>
 </div>
+<p>Note that the colorbar in the top right is rather small. (The relative size of this colorbar is larger within HTML-based Folium maps.) If having such a small colorbar within static map copies is unacceptable for your use case, consider using Plotly instead–which makes the process of updating choropleth legends much easier.</p>
 </section>
 <section id="the-drawback-of-the-choropleth-mapping-approach-shown-above">
 <h3>The drawback of the choropleth mapping approach shown above<a class="headerlink" href="#the-drawback-of-the-choropleth-mapping-approach-shown-above" title="Link to this heading">#</a></h3>
 <p>We now have a choropleth map that shows additional information when the user hovers over a given county. That’s great! However, although this means of creating our map is relatively simple (and a good introduction to the use of Folium), it does have one significant flaw: it results in unnecessarily large file sizes.</p>
-<p>On my computer, the first version of the map (with no tooltips) was around 6.23 MB in size. Once tooltips were added in, this map nearly doubled in size to 12.4 MB. This increase occurred because we added many items to the underlying HTML file twice, including our county boundaries.</p>
-<p>Now, 12 MB isn’t that large of a file, but the larger your maps get, the harder (and potentially more expensive) it is to host them online, and the longer they’ll take to load. (For instance, Google Sites currently limits single embedded HTML files to 15 MB in size, so our 12-megabyte map is getting pretty close to that limit.) If you’re working with zip code-level data, this doubling in size could become a major issue and might even prevent the HTML version of your map from loading at all.</p>
-<p>Therefore, I’ll now demonstrate a method that bypasses Folium’s Choropleth map class and instead allows the same set of borders to be used for tooltips and region colors. The map created with this method will be only 6.23 MB in size, yet it will still have the same interactive tooltips as the map we just created.</p>
+<p>On my computer, the first version of the map (with no tooltips) was around 6.5 MB in size. Once tooltips were added in, this map doubled in size to 13.0 MB. This increase occurred because we added many items to the underlying HTML file twice, including our county boundaries.</p>
+<p>Now, 13 MB isn’t that large of a file, but the larger your maps get, the harder (and potentially more expensive) it is to host them online, and the longer they’ll take to load. If you’re working with zip code-level data, this doubling in size could become a major issue.</p>
+<p>Therefore, I’ll now demonstrate a method that bypasses Folium’s Choropleth map class and instead allows the same set of borders to be used for tooltips and region colors. The map created with this method will be only 6.5 MB in size, yet it will still have the same interactive tooltips as the map we just created.</p>
 </section>
 </section>
 <section id="creating-a-more-efficient-version-of-this-map">
 <h2>Creating a more efficient version of this map<a class="headerlink" href="#creating-a-more-efficient-version-of-this-map" title="Link to this heading">#</a></h2>
-<p>In order to create a choropleth map without relying on Folium’s Choropleth class, we’ll need to develop a color map that we can use to assign different colors to different net migration values. I borrowed from the folium.Choropleth() source code in order to determine how best to accomplish this.</p>
+<p>In order to create a choropleth map without relying on Folium’s Choropleth class, we’ll need to develop a colormap that we can use to assign different colors to different net migration values. I borrowed from the <code class="docutils literal notranslate"><span class="pre">folium.Choropleth()</span></code> source code in order to determine how best to accomplish this.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">color_range</span> <span class="o">=</span> <span class="n">color_brewer</span><span class="p">(</span><span class="s1">&#39;RdYlBu&#39;</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">10</span><span class="p">)</span>
@@ -2234,7 +2154,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_html"><svg height="40" width="450"><line x1="0" y1="15" x2="0" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="1" y1="15" x2="1" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="2" y1="15" x2="2" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="3" y1="15" x2="3" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="4" y1="15" x2="4" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="5" y1="15" x2="5" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="6" y1="15" x2="6" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="7" y1="15" x2="7" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="8" y1="15" x2="8" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="9" y1="15" x2="9" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="10" y1="15" x2="10" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="11" y1="15" x2="11" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="12" y1="15" x2="12" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="13" y1="15" x2="13" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="14" y1="15" x2="14" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="15" y1="15" x2="15" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="16" y1="15" x2="16" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="17" y1="15" x2="17" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="18" y1="15" x2="18" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="19" y1="15" x2="19" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="20" y1="15" x2="20" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="21" y1="15" x2="21" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="22" y1="15" x2="22" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="23" y1="15" x2="23" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="24" y1="15" x2="24" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="25" y1="15" x2="25" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="26" y1="15" x2="26" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="27" y1="15" x2="27" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="28" y1="15" x2="28" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="29" y1="15" x2="29" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="30" y1="15" x2="30" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="31" y1="15" x2="31" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="32" y1="15" x2="32" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="33" y1="15" x2="33" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="34" y1="15" x2="34" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="35" y1="15" x2="35" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="36" y1="15" x2="36" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="37" y1="15" x2="37" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="38" y1="15" x2="38" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="39" y1="15" x2="39" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="40" y1="15" x2="40" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="41" y1="15" x2="41" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="42" y1="15" x2="42" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="43" y1="15" x2="43" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="44" y1="15" x2="44" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="45" y1="15" x2="45" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="46" y1="15" x2="46" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="47" y1="15" x2="47" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="48" y1="15" x2="48" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="49" y1="15" x2="49" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="50" y1="15" x2="50" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="51" y1="15" x2="51" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="52" y1="15" x2="52" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="53" y1="15" x2="53" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="54" y1="15" x2="54" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="55" y1="15" x2="55" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="56" y1="15" x2="56" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="57" y1="15" x2="57" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="58" y1="15" x2="58" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="59" y1="15" x2="59" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="60" y1="15" x2="60" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="61" y1="15" x2="61" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="62" y1="15" x2="62" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="63" y1="15" x2="63" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="64" y1="15" x2="64" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="65" y1="15" x2="65" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="66" y1="15" x2="66" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="67" y1="15" x2="67" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="68" y1="15" x2="68" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="69" y1="15" x2="69" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="70" y1="15" x2="70" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="71" y1="15" x2="71" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="72" y1="15" x2="72" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="73" y1="15" x2="73" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="74" y1="15" x2="74" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="75" y1="15" x2="75" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="76" y1="15" x2="76" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="77" y1="15" x2="77" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="78" y1="15" x2="78" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="79" y1="15" x2="79" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="80" y1="15" x2="80" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="81" y1="15" x2="81" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="82" y1="15" x2="82" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="83" y1="15" x2="83" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="84" y1="15" x2="84" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="85" y1="15" x2="85" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="86" y1="15" x2="86" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="87" y1="15" x2="87" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="88" y1="15" x2="88" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="89" y1="15" x2="89" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="90" y1="15" x2="90" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="91" y1="15" x2="91" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="92" y1="15" x2="92" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="93" y1="15" x2="93" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="94" y1="15" x2="94" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="95" y1="15" x2="95" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="96" y1="15" x2="96" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="97" y1="15" x2="97" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="98" y1="15" x2="98" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="99" y1="15" x2="99" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="100" y1="15" x2="100" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="101" y1="15" x2="101" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="102" y1="15" x2="102" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="103" y1="15" x2="103" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="104" y1="15" x2="104" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="105" y1="15" x2="105" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="106" y1="15" x2="106" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="107" y1="15" x2="107" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="108" y1="15" x2="108" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="109" y1="15" x2="109" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="110" y1="15" x2="110" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="111" y1="15" x2="111" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="112" y1="15" x2="112" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="113" y1="15" x2="113" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="114" y1="15" x2="114" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="115" y1="15" x2="115" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="116" y1="15" x2="116" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="117" y1="15" x2="117" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="118" y1="15" x2="118" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="119" y1="15" x2="119" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="120" y1="15" x2="120" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="121" y1="15" x2="121" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="122" y1="15" x2="122" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="123" y1="15" x2="123" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="124" y1="15" x2="124" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="125" y1="15" x2="125" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="126" y1="15" x2="126" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="127" y1="15" x2="127" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="128" y1="15" x2="128" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="129" y1="15" x2="129" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="130" y1="15" x2="130" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="131" y1="15" x2="131" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="132" y1="15" x2="132" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="133" y1="15" x2="133" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="134" y1="15" x2="134" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="135" y1="15" x2="135" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="136" y1="15" x2="136" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="137" y1="15" x2="137" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="138" y1="15" x2="138" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="139" y1="15" x2="139" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="140" y1="15" x2="140" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="141" y1="15" x2="141" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="142" y1="15" x2="142" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="143" y1="15" x2="143" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="144" y1="15" x2="144" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="145" y1="15" x2="145" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="146" y1="15" x2="146" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="147" y1="15" x2="147" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="148" y1="15" x2="148" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="149" y1="15" x2="149" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="150" y1="15" x2="150" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="151" y1="15" x2="151" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="152" y1="15" x2="152" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="153" y1="15" x2="153" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="154" y1="15" x2="154" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="155" y1="15" x2="155" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="156" y1="15" x2="156" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="157" y1="15" x2="157" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="158" y1="15" x2="158" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="159" y1="15" x2="159" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="160" y1="15" x2="160" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="161" y1="15" x2="161" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="162" y1="15" x2="162" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="163" y1="15" x2="163" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="164" y1="15" x2="164" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="165" y1="15" x2="165" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="166" y1="15" x2="166" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="167" y1="15" x2="167" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="168" y1="15" x2="168" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="169" y1="15" x2="169" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="170" y1="15" x2="170" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="171" y1="15" x2="171" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="172" y1="15" x2="172" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="173" y1="15" x2="173" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="174" y1="15" x2="174" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="175" y1="15" x2="175" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="176" y1="15" x2="176" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="177" y1="15" x2="177" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="178" y1="15" x2="178" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="179" y1="15" x2="179" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="180" y1="15" x2="180" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="181" y1="15" x2="181" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="182" y1="15" x2="182" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="183" y1="15" x2="183" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="184" y1="15" x2="184" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="185" y1="15" x2="185" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="186" y1="15" x2="186" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="187" y1="15" x2="187" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="188" y1="15" x2="188" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="189" y1="15" x2="189" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="190" y1="15" x2="190" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="191" y1="15" x2="191" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="192" y1="15" x2="192" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="193" y1="15" x2="193" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="194" y1="15" x2="194" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="195" y1="15" x2="195" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="196" y1="15" x2="196" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="197" y1="15" x2="197" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="198" y1="15" x2="198" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="199" y1="15" x2="199" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="200" y1="15" x2="200" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="201" y1="15" x2="201" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="202" y1="15" x2="202" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="203" y1="15" x2="203" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="204" y1="15" x2="204" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="205" y1="15" x2="205" y2="27" style="stroke:#d73027ff;stroke-width:2;" /><line x1="206" y1="15" x2="206" y2="27" style="stroke:#d73027ff;stroke-width:2;" /><line x1="207" y1="15" x2="207" y2="27" style="stroke:#d73027ff;stroke-width:2;" /><line x1="208" y1="15" x2="208" y2="27" style="stroke:#d73027ff;stroke-width:2;" /><line x1="209" y1="15" x2="209" y2="27" style="stroke:#d73027ff;stroke-width:2;" /><line x1="210" y1="15" x2="210" y2="27" style="stroke:#d73027ff;stroke-width:2;" /><line x1="211" y1="15" x2="211" y2="27" style="stroke:#d73027ff;stroke-width:2;" /><line x1="212" y1="15" x2="212" y2="27" style="stroke:#d73027ff;stroke-width:2;" /><line x1="213" y1="15" x2="213" y2="27" style="stroke:#d73027ff;stroke-width:2;" /><line x1="214" y1="15" x2="214" y2="27" style="stroke:#d73027ff;stroke-width:2;" /><line x1="215" y1="15" x2="215" y2="27" style="stroke:#d73027ff;stroke-width:2;" /><line x1="216" y1="15" x2="216" y2="27" style="stroke:#d73027ff;stroke-width:2;" /><line x1="217" y1="15" x2="217" y2="27" style="stroke:#f46d43ff;stroke-width:2;" /><line x1="218" y1="15" x2="218" y2="27" style="stroke:#f46d43ff;stroke-width:2;" /><line x1="219" y1="15" x2="219" y2="27" style="stroke:#f46d43ff;stroke-width:2;" /><line x1="220" y1="15" x2="220" y2="27" style="stroke:#f46d43ff;stroke-width:2;" /><line x1="221" y1="15" x2="221" y2="27" style="stroke:#f46d43ff;stroke-width:2;" /><line x1="222" y1="15" x2="222" y2="27" style="stroke:#f46d43ff;stroke-width:2;" /><line x1="223" y1="15" x2="223" y2="27" style="stroke:#f46d43ff;stroke-width:2;" /><line x1="224" y1="15" x2="224" y2="27" style="stroke:#fdae61ff;stroke-width:2;" /><line x1="225" y1="15" x2="225" y2="27" style="stroke:#fdae61ff;stroke-width:2;" /><line x1="226" y1="15" x2="226" y2="27" style="stroke:#fdae61ff;stroke-width:2;" /><line x1="227" y1="15" x2="227" y2="27" style="stroke:#fdae61ff;stroke-width:2;" /><line x1="228" y1="15" x2="228" y2="27" style="stroke:#fdae61ff;stroke-width:2;" /><line x1="229" y1="15" x2="229" y2="27" style="stroke:#fdae61ff;stroke-width:2;" /><line x1="230" y1="15" x2="230" y2="27" style="stroke:#fee090ff;stroke-width:2;" /><line x1="231" y1="15" x2="231" y2="27" style="stroke:#fee090ff;stroke-width:2;" /><line x1="232" y1="15" x2="232" y2="27" style="stroke:#fee090ff;stroke-width:2;" /><line x1="233" y1="15" x2="233" y2="27" style="stroke:#fee090ff;stroke-width:2;" /><line x1="234" y1="15" x2="234" y2="27" style="stroke:#fee090ff;stroke-width:2;" /><line x1="235" y1="15" x2="235" y2="27" style="stroke:#fee090ff;stroke-width:2;" /><line x1="236" y1="15" x2="236" y2="27" style="stroke:#e0f3f8ff;stroke-width:2;" /><line x1="237" y1="15" x2="237" y2="27" style="stroke:#e0f3f8ff;stroke-width:2;" /><line x1="238" y1="15" x2="238" y2="27" style="stroke:#e0f3f8ff;stroke-width:2;" /><line x1="239" y1="15" x2="239" y2="27" style="stroke:#e0f3f8ff;stroke-width:2;" /><line x1="240" y1="15" x2="240" y2="27" style="stroke:#e0f3f8ff;stroke-width:2;" /><line x1="241" y1="15" x2="241" y2="27" style="stroke:#e0f3f8ff;stroke-width:2;" /><line x1="242" y1="15" x2="242" y2="27" style="stroke:#e0f3f8ff;stroke-width:2;" /><line x1="243" y1="15" x2="243" y2="27" style="stroke:#abd9e9ff;stroke-width:2;" /><line x1="244" y1="15" x2="244" y2="27" style="stroke:#abd9e9ff;stroke-width:2;" /><line x1="245" y1="15" x2="245" y2="27" style="stroke:#abd9e9ff;stroke-width:2;" /><line x1="246" y1="15" x2="246" y2="27" style="stroke:#abd9e9ff;stroke-width:2;" /><line x1="247" y1="15" x2="247" y2="27" style="stroke:#abd9e9ff;stroke-width:2;" /><line x1="248" y1="15" x2="248" y2="27" style="stroke:#abd9e9ff;stroke-width:2;" /><line x1="249" y1="15" x2="249" y2="27" style="stroke:#abd9e9ff;stroke-width:2;" /><line x1="250" y1="15" x2="250" y2="27" style="stroke:#abd9e9ff;stroke-width:2;" /><line x1="251" y1="15" x2="251" y2="27" style="stroke:#74add1ff;stroke-width:2;" /><line x1="252" y1="15" x2="252" y2="27" style="stroke:#74add1ff;stroke-width:2;" /><line x1="253" y1="15" x2="253" y2="27" style="stroke:#74add1ff;stroke-width:2;" /><line x1="254" y1="15" x2="254" y2="27" style="stroke:#74add1ff;stroke-width:2;" /><line x1="255" y1="15" x2="255" y2="27" style="stroke:#74add1ff;stroke-width:2;" /><line x1="256" y1="15" x2="256" y2="27" style="stroke:#74add1ff;stroke-width:2;" /><line x1="257" y1="15" x2="257" y2="27" style="stroke:#74add1ff;stroke-width:2;" /><line x1="258" y1="15" x2="258" y2="27" style="stroke:#74add1ff;stroke-width:2;" /><line x1="259" y1="15" x2="259" y2="27" style="stroke:#74add1ff;stroke-width:2;" /><line x1="260" y1="15" x2="260" y2="27" style="stroke:#74add1ff;stroke-width:2;" /><line x1="261" y1="15" x2="261" y2="27" style="stroke:#74add1ff;stroke-width:2;" /><line x1="262" y1="15" x2="262" y2="27" style="stroke:#4575b4ff;stroke-width:2;" /><line x1="263" y1="15" x2="263" y2="27" style="stroke:#4575b4ff;stroke-width:2;" /><line x1="264" y1="15" x2="264" y2="27" style="stroke:#4575b4ff;stroke-width:2;" /><line x1="265" y1="15" x2="265" y2="27" style="stroke:#4575b4ff;stroke-width:2;" /><line x1="266" y1="15" x2="266" y2="27" style="stroke:#4575b4ff;stroke-width:2;" /><line x1="267" y1="15" x2="267" y2="27" style="stroke:#4575b4ff;stroke-width:2;" /><line x1="268" y1="15" x2="268" y2="27" style="stroke:#4575b4ff;stroke-width:2;" /><line x1="269" y1="15" x2="269" y2="27" style="stroke:#4575b4ff;stroke-width:2;" /><line x1="270" y1="15" x2="270" y2="27" style="stroke:#4575b4ff;stroke-width:2;" /><line x1="271" y1="15" x2="271" y2="27" style="stroke:#4575b4ff;stroke-width:2;" /><line x1="272" y1="15" x2="272" y2="27" style="stroke:#4575b4ff;stroke-width:2;" /><line x1="273" y1="15" x2="273" y2="27" style="stroke:#4575b4ff;stroke-width:2;" /><line x1="274" y1="15" x2="274" y2="27" style="stroke:#4575b4ff;stroke-width:2;" /><line x1="275" y1="15" x2="275" y2="27" style="stroke:#4575b4ff;stroke-width:2;" /><line x1="276" y1="15" x2="276" y2="27" style="stroke:#4575b4ff;stroke-width:2;" /><line x1="277" y1="15" x2="277" y2="27" style="stroke:#4575b4ff;stroke-width:2;" /><line x1="278" y1="15" x2="278" y2="27" style="stroke:#4575b4ff;stroke-width:2;" /><line x1="279" y1="15" x2="279" y2="27" style="stroke:#4575b4ff;stroke-width:2;" /><line x1="280" y1="15" x2="280" y2="27" style="stroke:#4575b4ff;stroke-width:2;" /><line x1="281" y1="15" x2="281" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="282" y1="15" x2="282" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="283" y1="15" x2="283" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="284" y1="15" x2="284" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="285" y1="15" x2="285" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="286" y1="15" x2="286" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="287" y1="15" x2="287" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="288" y1="15" x2="288" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="289" y1="15" x2="289" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="290" y1="15" x2="290" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="291" y1="15" x2="291" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="292" y1="15" x2="292" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="293" y1="15" x2="293" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="294" y1="15" x2="294" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="295" y1="15" x2="295" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="296" y1="15" x2="296" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="297" y1="15" x2="297" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="298" y1="15" x2="298" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="299" y1="15" x2="299" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="300" y1="15" x2="300" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="301" y1="15" x2="301" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="302" y1="15" x2="302" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="303" y1="15" x2="303" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="304" y1="15" x2="304" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="305" y1="15" x2="305" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="306" y1="15" x2="306" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="307" y1="15" x2="307" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="308" y1="15" x2="308" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="309" y1="15" x2="309" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="310" y1="15" x2="310" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="311" y1="15" x2="311" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="312" y1="15" x2="312" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="313" y1="15" x2="313" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="314" y1="15" x2="314" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="315" y1="15" x2="315" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="316" y1="15" x2="316" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="317" y1="15" x2="317" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="318" y1="15" x2="318" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="319" y1="15" x2="319" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="320" y1="15" x2="320" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="321" y1="15" x2="321" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="322" y1="15" x2="322" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="323" y1="15" x2="323" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="324" y1="15" x2="324" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="325" y1="15" x2="325" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="326" y1="15" x2="326" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="327" y1="15" x2="327" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="328" y1="15" x2="328" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="329" y1="15" x2="329" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="330" y1="15" x2="330" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="331" y1="15" x2="331" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="332" y1="15" x2="332" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="333" y1="15" x2="333" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="334" y1="15" x2="334" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="335" y1="15" x2="335" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="336" y1="15" x2="336" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="337" y1="15" x2="337" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="338" y1="15" x2="338" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="339" y1="15" x2="339" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="340" y1="15" x2="340" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="341" y1="15" x2="341" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="342" y1="15" x2="342" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="343" y1="15" x2="343" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="344" y1="15" x2="344" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="345" y1="15" x2="345" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="346" y1="15" x2="346" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="347" y1="15" x2="347" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="348" y1="15" x2="348" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="349" y1="15" x2="349" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="350" y1="15" x2="350" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="351" y1="15" x2="351" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="352" y1="15" x2="352" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="353" y1="15" x2="353" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="354" y1="15" x2="354" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="355" y1="15" x2="355" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="356" y1="15" x2="356" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="357" y1="15" x2="357" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="358" y1="15" x2="358" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="359" y1="15" x2="359" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="360" y1="15" x2="360" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="361" y1="15" x2="361" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="362" y1="15" x2="362" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="363" y1="15" x2="363" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="364" y1="15" x2="364" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="365" y1="15" x2="365" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="366" y1="15" x2="366" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="367" y1="15" x2="367" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="368" y1="15" x2="368" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="369" y1="15" x2="369" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="370" y1="15" x2="370" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="371" y1="15" x2="371" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="372" y1="15" x2="372" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="373" y1="15" x2="373" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="374" y1="15" x2="374" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="375" y1="15" x2="375" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="376" y1="15" x2="376" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="377" y1="15" x2="377" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="378" y1="15" x2="378" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="379" y1="15" x2="379" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="380" y1="15" x2="380" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="381" y1="15" x2="381" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="382" y1="15" x2="382" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="383" y1="15" x2="383" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="384" y1="15" x2="384" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="385" y1="15" x2="385" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="386" y1="15" x2="386" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="387" y1="15" x2="387" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="388" y1="15" x2="388" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="389" y1="15" x2="389" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="390" y1="15" x2="390" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="391" y1="15" x2="391" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="392" y1="15" x2="392" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="393" y1="15" x2="393" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="394" y1="15" x2="394" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="395" y1="15" x2="395" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="396" y1="15" x2="396" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="397" y1="15" x2="397" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="398" y1="15" x2="398" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="399" y1="15" x2="399" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="400" y1="15" x2="400" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="401" y1="15" x2="401" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="402" y1="15" x2="402" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="403" y1="15" x2="403" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="404" y1="15" x2="404" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="405" y1="15" x2="405" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="406" y1="15" x2="406" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="407" y1="15" x2="407" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="408" y1="15" x2="408" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="409" y1="15" x2="409" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="410" y1="15" x2="410" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="411" y1="15" x2="411" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="412" y1="15" x2="412" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="413" y1="15" x2="413" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="414" y1="15" x2="414" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="415" y1="15" x2="415" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="416" y1="15" x2="416" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="417" y1="15" x2="417" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="418" y1="15" x2="418" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="419" y1="15" x2="419" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="420" y1="15" x2="420" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="421" y1="15" x2="421" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="422" y1="15" x2="422" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="423" y1="15" x2="423" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="424" y1="15" x2="424" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="425" y1="15" x2="425" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="426" y1="15" x2="426" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="427" y1="15" x2="427" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="428" y1="15" x2="428" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="429" y1="15" x2="429" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="430" y1="15" x2="430" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="431" y1="15" x2="431" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="432" y1="15" x2="432" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="433" y1="15" x2="433" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="434" y1="15" x2="434" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="435" y1="15" x2="435" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="436" y1="15" x2="436" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="437" y1="15" x2="437" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="438" y1="15" x2="438" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="439" y1="15" x2="439" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="440" y1="15" x2="440" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="441" y1="15" x2="441" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="442" y1="15" x2="442" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="443" y1="15" x2="443" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="444" y1="15" x2="444" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="445" y1="15" x2="445" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="446" y1="15" x2="446" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="447" y1="15" x2="447" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="448" y1="15" x2="448" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="449" y1="15" x2="449" y2="27" style="stroke:#313695ff;stroke-width:2;" /><text x="0" y="38" style="text-anchor:start; font-size:11px; font:Arial; fill:black">-26.57727350868145</text><text x="75" y="38"; style="text-anchor:middle; font-size:11px; font:Arial; fill:black">-17.9</text><text x="150" y="38"; style="text-anchor:middle; font-size:11px; font:Arial; fill:black">-9.2</text><text x="225" y="38"; style="text-anchor:middle; font-size:11px; font:Arial; fill:black">-0.5</text><text x="300" y="38"; style="text-anchor:middle; font-size:11px; font:Arial; fill:black">8.2</text><text x="375" y="38"; style="text-anchor:middle; font-size:11px; font:Arial; fill:black">16.9</text><text x="450" y="38" style="text-anchor:end; font-size:11px; font:Arial; fill:black">25.59683979436641</text><text x="0" y="12" style="font-size:11px; font:Arial; fill:black"></text></svg></div></div>
+<div class="output text_html"><svg height="40" width="450"><line x1="0" y1="15" x2="0" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="1" y1="15" x2="1" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="2" y1="15" x2="2" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="3" y1="15" x2="3" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="4" y1="15" x2="4" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="5" y1="15" x2="5" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="6" y1="15" x2="6" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="7" y1="15" x2="7" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="8" y1="15" x2="8" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="9" y1="15" x2="9" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="10" y1="15" x2="10" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="11" y1="15" x2="11" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="12" y1="15" x2="12" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="13" y1="15" x2="13" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="14" y1="15" x2="14" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="15" y1="15" x2="15" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="16" y1="15" x2="16" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="17" y1="15" x2="17" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="18" y1="15" x2="18" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="19" y1="15" x2="19" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="20" y1="15" x2="20" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="21" y1="15" x2="21" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="22" y1="15" x2="22" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="23" y1="15" x2="23" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="24" y1="15" x2="24" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="25" y1="15" x2="25" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="26" y1="15" x2="26" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="27" y1="15" x2="27" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="28" y1="15" x2="28" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="29" y1="15" x2="29" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="30" y1="15" x2="30" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="31" y1="15" x2="31" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="32" y1="15" x2="32" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="33" y1="15" x2="33" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="34" y1="15" x2="34" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="35" y1="15" x2="35" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="36" y1="15" x2="36" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="37" y1="15" x2="37" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="38" y1="15" x2="38" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="39" y1="15" x2="39" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="40" y1="15" x2="40" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="41" y1="15" x2="41" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="42" y1="15" x2="42" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="43" y1="15" x2="43" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="44" y1="15" x2="44" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="45" y1="15" x2="45" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="46" y1="15" x2="46" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="47" y1="15" x2="47" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="48" y1="15" x2="48" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="49" y1="15" x2="49" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="50" y1="15" x2="50" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="51" y1="15" x2="51" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="52" y1="15" x2="52" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="53" y1="15" x2="53" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="54" y1="15" x2="54" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="55" y1="15" x2="55" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="56" y1="15" x2="56" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="57" y1="15" x2="57" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="58" y1="15" x2="58" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="59" y1="15" x2="59" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="60" y1="15" x2="60" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="61" y1="15" x2="61" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="62" y1="15" x2="62" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="63" y1="15" x2="63" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="64" y1="15" x2="64" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="65" y1="15" x2="65" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="66" y1="15" x2="66" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="67" y1="15" x2="67" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="68" y1="15" x2="68" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="69" y1="15" x2="69" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="70" y1="15" x2="70" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="71" y1="15" x2="71" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="72" y1="15" x2="72" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="73" y1="15" x2="73" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="74" y1="15" x2="74" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="75" y1="15" x2="75" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="76" y1="15" x2="76" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="77" y1="15" x2="77" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="78" y1="15" x2="78" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="79" y1="15" x2="79" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="80" y1="15" x2="80" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="81" y1="15" x2="81" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="82" y1="15" x2="82" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="83" y1="15" x2="83" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="84" y1="15" x2="84" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="85" y1="15" x2="85" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="86" y1="15" x2="86" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="87" y1="15" x2="87" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="88" y1="15" x2="88" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="89" y1="15" x2="89" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="90" y1="15" x2="90" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="91" y1="15" x2="91" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="92" y1="15" x2="92" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="93" y1="15" x2="93" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="94" y1="15" x2="94" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="95" y1="15" x2="95" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="96" y1="15" x2="96" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="97" y1="15" x2="97" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="98" y1="15" x2="98" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="99" y1="15" x2="99" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="100" y1="15" x2="100" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="101" y1="15" x2="101" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="102" y1="15" x2="102" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="103" y1="15" x2="103" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="104" y1="15" x2="104" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="105" y1="15" x2="105" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="106" y1="15" x2="106" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="107" y1="15" x2="107" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="108" y1="15" x2="108" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="109" y1="15" x2="109" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="110" y1="15" x2="110" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="111" y1="15" x2="111" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="112" y1="15" x2="112" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="113" y1="15" x2="113" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="114" y1="15" x2="114" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="115" y1="15" x2="115" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="116" y1="15" x2="116" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="117" y1="15" x2="117" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="118" y1="15" x2="118" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="119" y1="15" x2="119" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="120" y1="15" x2="120" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="121" y1="15" x2="121" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="122" y1="15" x2="122" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="123" y1="15" x2="123" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="124" y1="15" x2="124" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="125" y1="15" x2="125" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="126" y1="15" x2="126" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="127" y1="15" x2="127" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="128" y1="15" x2="128" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="129" y1="15" x2="129" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="130" y1="15" x2="130" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="131" y1="15" x2="131" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="132" y1="15" x2="132" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="133" y1="15" x2="133" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="134" y1="15" x2="134" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="135" y1="15" x2="135" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="136" y1="15" x2="136" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="137" y1="15" x2="137" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="138" y1="15" x2="138" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="139" y1="15" x2="139" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="140" y1="15" x2="140" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="141" y1="15" x2="141" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="142" y1="15" x2="142" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="143" y1="15" x2="143" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="144" y1="15" x2="144" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="145" y1="15" x2="145" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="146" y1="15" x2="146" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="147" y1="15" x2="147" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="148" y1="15" x2="148" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="149" y1="15" x2="149" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="150" y1="15" x2="150" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="151" y1="15" x2="151" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="152" y1="15" x2="152" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="153" y1="15" x2="153" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="154" y1="15" x2="154" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="155" y1="15" x2="155" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="156" y1="15" x2="156" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="157" y1="15" x2="157" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="158" y1="15" x2="158" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="159" y1="15" x2="159" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="160" y1="15" x2="160" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="161" y1="15" x2="161" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="162" y1="15" x2="162" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="163" y1="15" x2="163" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="164" y1="15" x2="164" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="165" y1="15" x2="165" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="166" y1="15" x2="166" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="167" y1="15" x2="167" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="168" y1="15" x2="168" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="169" y1="15" x2="169" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="170" y1="15" x2="170" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="171" y1="15" x2="171" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="172" y1="15" x2="172" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="173" y1="15" x2="173" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="174" y1="15" x2="174" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="175" y1="15" x2="175" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="176" y1="15" x2="176" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="177" y1="15" x2="177" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="178" y1="15" x2="178" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="179" y1="15" x2="179" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="180" y1="15" x2="180" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="181" y1="15" x2="181" y2="27" style="stroke:#a50026ff;stroke-width:2;" /><line x1="182" y1="15" x2="182" y2="27" style="stroke:#d73027ff;stroke-width:2;" /><line x1="183" y1="15" x2="183" y2="27" style="stroke:#d73027ff;stroke-width:2;" /><line x1="184" y1="15" x2="184" y2="27" style="stroke:#d73027ff;stroke-width:2;" /><line x1="185" y1="15" x2="185" y2="27" style="stroke:#d73027ff;stroke-width:2;" /><line x1="186" y1="15" x2="186" y2="27" style="stroke:#d73027ff;stroke-width:2;" /><line x1="187" y1="15" x2="187" y2="27" style="stroke:#d73027ff;stroke-width:2;" /><line x1="188" y1="15" x2="188" y2="27" style="stroke:#d73027ff;stroke-width:2;" /><line x1="189" y1="15" x2="189" y2="27" style="stroke:#d73027ff;stroke-width:2;" /><line x1="190" y1="15" x2="190" y2="27" style="stroke:#d73027ff;stroke-width:2;" /><line x1="191" y1="15" x2="191" y2="27" style="stroke:#d73027ff;stroke-width:2;" /><line x1="192" y1="15" x2="192" y2="27" style="stroke:#d73027ff;stroke-width:2;" /><line x1="193" y1="15" x2="193" y2="27" style="stroke:#d73027ff;stroke-width:2;" /><line x1="194" y1="15" x2="194" y2="27" style="stroke:#d73027ff;stroke-width:2;" /><line x1="195" y1="15" x2="195" y2="27" style="stroke:#f46d43ff;stroke-width:2;" /><line x1="196" y1="15" x2="196" y2="27" style="stroke:#f46d43ff;stroke-width:2;" /><line x1="197" y1="15" x2="197" y2="27" style="stroke:#f46d43ff;stroke-width:2;" /><line x1="198" y1="15" x2="198" y2="27" style="stroke:#f46d43ff;stroke-width:2;" /><line x1="199" y1="15" x2="199" y2="27" style="stroke:#f46d43ff;stroke-width:2;" /><line x1="200" y1="15" x2="200" y2="27" style="stroke:#f46d43ff;stroke-width:2;" /><line x1="201" y1="15" x2="201" y2="27" style="stroke:#f46d43ff;stroke-width:2;" /><line x1="202" y1="15" x2="202" y2="27" style="stroke:#f46d43ff;stroke-width:2;" /><line x1="203" y1="15" x2="203" y2="27" style="stroke:#fdae61ff;stroke-width:2;" /><line x1="204" y1="15" x2="204" y2="27" style="stroke:#fdae61ff;stroke-width:2;" /><line x1="205" y1="15" x2="205" y2="27" style="stroke:#fdae61ff;stroke-width:2;" /><line x1="206" y1="15" x2="206" y2="27" style="stroke:#fdae61ff;stroke-width:2;" /><line x1="207" y1="15" x2="207" y2="27" style="stroke:#fdae61ff;stroke-width:2;" /><line x1="208" y1="15" x2="208" y2="27" style="stroke:#fdae61ff;stroke-width:2;" /><line x1="209" y1="15" x2="209" y2="27" style="stroke:#fee090ff;stroke-width:2;" /><line x1="210" y1="15" x2="210" y2="27" style="stroke:#fee090ff;stroke-width:2;" /><line x1="211" y1="15" x2="211" y2="27" style="stroke:#fee090ff;stroke-width:2;" /><line x1="212" y1="15" x2="212" y2="27" style="stroke:#fee090ff;stroke-width:2;" /><line x1="213" y1="15" x2="213" y2="27" style="stroke:#fee090ff;stroke-width:2;" /><line x1="214" y1="15" x2="214" y2="27" style="stroke:#fee090ff;stroke-width:2;" /><line x1="215" y1="15" x2="215" y2="27" style="stroke:#e0f3f8ff;stroke-width:2;" /><line x1="216" y1="15" x2="216" y2="27" style="stroke:#e0f3f8ff;stroke-width:2;" /><line x1="217" y1="15" x2="217" y2="27" style="stroke:#e0f3f8ff;stroke-width:2;" /><line x1="218" y1="15" x2="218" y2="27" style="stroke:#e0f3f8ff;stroke-width:2;" /><line x1="219" y1="15" x2="219" y2="27" style="stroke:#e0f3f8ff;stroke-width:2;" /><line x1="220" y1="15" x2="220" y2="27" style="stroke:#e0f3f8ff;stroke-width:2;" /><line x1="221" y1="15" x2="221" y2="27" style="stroke:#e0f3f8ff;stroke-width:2;" /><line x1="222" y1="15" x2="222" y2="27" style="stroke:#abd9e9ff;stroke-width:2;" /><line x1="223" y1="15" x2="223" y2="27" style="stroke:#abd9e9ff;stroke-width:2;" /><line x1="224" y1="15" x2="224" y2="27" style="stroke:#abd9e9ff;stroke-width:2;" /><line x1="225" y1="15" x2="225" y2="27" style="stroke:#abd9e9ff;stroke-width:2;" /><line x1="226" y1="15" x2="226" y2="27" style="stroke:#abd9e9ff;stroke-width:2;" /><line x1="227" y1="15" x2="227" y2="27" style="stroke:#abd9e9ff;stroke-width:2;" /><line x1="228" y1="15" x2="228" y2="27" style="stroke:#abd9e9ff;stroke-width:2;" /><line x1="229" y1="15" x2="229" y2="27" style="stroke:#abd9e9ff;stroke-width:2;" /><line x1="230" y1="15" x2="230" y2="27" style="stroke:#abd9e9ff;stroke-width:2;" /><line x1="231" y1="15" x2="231" y2="27" style="stroke:#74add1ff;stroke-width:2;" /><line x1="232" y1="15" x2="232" y2="27" style="stroke:#74add1ff;stroke-width:2;" /><line x1="233" y1="15" x2="233" y2="27" style="stroke:#74add1ff;stroke-width:2;" /><line x1="234" y1="15" x2="234" y2="27" style="stroke:#74add1ff;stroke-width:2;" /><line x1="235" y1="15" x2="235" y2="27" style="stroke:#74add1ff;stroke-width:2;" /><line x1="236" y1="15" x2="236" y2="27" style="stroke:#74add1ff;stroke-width:2;" /><line x1="237" y1="15" x2="237" y2="27" style="stroke:#74add1ff;stroke-width:2;" /><line x1="238" y1="15" x2="238" y2="27" style="stroke:#74add1ff;stroke-width:2;" /><line x1="239" y1="15" x2="239" y2="27" style="stroke:#74add1ff;stroke-width:2;" /><line x1="240" y1="15" x2="240" y2="27" style="stroke:#74add1ff;stroke-width:2;" /><line x1="241" y1="15" x2="241" y2="27" style="stroke:#74add1ff;stroke-width:2;" /><line x1="242" y1="15" x2="242" y2="27" style="stroke:#74add1ff;stroke-width:2;" /><line x1="243" y1="15" x2="243" y2="27" style="stroke:#74add1ff;stroke-width:2;" /><line x1="244" y1="15" x2="244" y2="27" style="stroke:#4575b4ff;stroke-width:2;" /><line x1="245" y1="15" x2="245" y2="27" style="stroke:#4575b4ff;stroke-width:2;" /><line x1="246" y1="15" x2="246" y2="27" style="stroke:#4575b4ff;stroke-width:2;" /><line x1="247" y1="15" x2="247" y2="27" style="stroke:#4575b4ff;stroke-width:2;" /><line x1="248" y1="15" x2="248" y2="27" style="stroke:#4575b4ff;stroke-width:2;" /><line x1="249" y1="15" x2="249" y2="27" style="stroke:#4575b4ff;stroke-width:2;" /><line x1="250" y1="15" x2="250" y2="27" style="stroke:#4575b4ff;stroke-width:2;" /><line x1="251" y1="15" x2="251" y2="27" style="stroke:#4575b4ff;stroke-width:2;" /><line x1="252" y1="15" x2="252" y2="27" style="stroke:#4575b4ff;stroke-width:2;" /><line x1="253" y1="15" x2="253" y2="27" style="stroke:#4575b4ff;stroke-width:2;" /><line x1="254" y1="15" x2="254" y2="27" style="stroke:#4575b4ff;stroke-width:2;" /><line x1="255" y1="15" x2="255" y2="27" style="stroke:#4575b4ff;stroke-width:2;" /><line x1="256" y1="15" x2="256" y2="27" style="stroke:#4575b4ff;stroke-width:2;" /><line x1="257" y1="15" x2="257" y2="27" style="stroke:#4575b4ff;stroke-width:2;" /><line x1="258" y1="15" x2="258" y2="27" style="stroke:#4575b4ff;stroke-width:2;" /><line x1="259" y1="15" x2="259" y2="27" style="stroke:#4575b4ff;stroke-width:2;" /><line x1="260" y1="15" x2="260" y2="27" style="stroke:#4575b4ff;stroke-width:2;" /><line x1="261" y1="15" x2="261" y2="27" style="stroke:#4575b4ff;stroke-width:2;" /><line x1="262" y1="15" x2="262" y2="27" style="stroke:#4575b4ff;stroke-width:2;" /><line x1="263" y1="15" x2="263" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="264" y1="15" x2="264" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="265" y1="15" x2="265" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="266" y1="15" x2="266" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="267" y1="15" x2="267" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="268" y1="15" x2="268" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="269" y1="15" x2="269" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="270" y1="15" x2="270" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="271" y1="15" x2="271" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="272" y1="15" x2="272" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="273" y1="15" x2="273" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="274" y1="15" x2="274" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="275" y1="15" x2="275" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="276" y1="15" x2="276" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="277" y1="15" x2="277" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="278" y1="15" x2="278" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="279" y1="15" x2="279" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="280" y1="15" x2="280" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="281" y1="15" x2="281" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="282" y1="15" x2="282" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="283" y1="15" x2="283" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="284" y1="15" x2="284" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="285" y1="15" x2="285" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="286" y1="15" x2="286" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="287" y1="15" x2="287" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="288" y1="15" x2="288" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="289" y1="15" x2="289" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="290" y1="15" x2="290" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="291" y1="15" x2="291" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="292" y1="15" x2="292" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="293" y1="15" x2="293" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="294" y1="15" x2="294" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="295" y1="15" x2="295" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="296" y1="15" x2="296" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="297" y1="15" x2="297" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="298" y1="15" x2="298" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="299" y1="15" x2="299" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="300" y1="15" x2="300" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="301" y1="15" x2="301" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="302" y1="15" x2="302" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="303" y1="15" x2="303" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="304" y1="15" x2="304" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="305" y1="15" x2="305" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="306" y1="15" x2="306" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="307" y1="15" x2="307" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="308" y1="15" x2="308" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="309" y1="15" x2="309" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="310" y1="15" x2="310" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="311" y1="15" x2="311" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="312" y1="15" x2="312" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="313" y1="15" x2="313" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="314" y1="15" x2="314" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="315" y1="15" x2="315" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="316" y1="15" x2="316" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="317" y1="15" x2="317" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="318" y1="15" x2="318" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="319" y1="15" x2="319" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="320" y1="15" x2="320" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="321" y1="15" x2="321" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="322" y1="15" x2="322" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="323" y1="15" x2="323" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="324" y1="15" x2="324" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="325" y1="15" x2="325" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="326" y1="15" x2="326" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="327" y1="15" x2="327" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="328" y1="15" x2="328" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="329" y1="15" x2="329" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="330" y1="15" x2="330" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="331" y1="15" x2="331" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="332" y1="15" x2="332" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="333" y1="15" x2="333" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="334" y1="15" x2="334" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="335" y1="15" x2="335" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="336" y1="15" x2="336" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="337" y1="15" x2="337" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="338" y1="15" x2="338" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="339" y1="15" x2="339" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="340" y1="15" x2="340" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="341" y1="15" x2="341" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="342" y1="15" x2="342" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="343" y1="15" x2="343" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="344" y1="15" x2="344" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="345" y1="15" x2="345" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="346" y1="15" x2="346" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="347" y1="15" x2="347" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="348" y1="15" x2="348" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="349" y1="15" x2="349" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="350" y1="15" x2="350" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="351" y1="15" x2="351" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="352" y1="15" x2="352" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="353" y1="15" x2="353" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="354" y1="15" x2="354" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="355" y1="15" x2="355" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="356" y1="15" x2="356" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="357" y1="15" x2="357" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="358" y1="15" x2="358" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="359" y1="15" x2="359" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="360" y1="15" x2="360" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="361" y1="15" x2="361" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="362" y1="15" x2="362" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="363" y1="15" x2="363" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="364" y1="15" x2="364" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="365" y1="15" x2="365" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="366" y1="15" x2="366" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="367" y1="15" x2="367" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="368" y1="15" x2="368" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="369" y1="15" x2="369" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="370" y1="15" x2="370" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="371" y1="15" x2="371" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="372" y1="15" x2="372" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="373" y1="15" x2="373" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="374" y1="15" x2="374" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="375" y1="15" x2="375" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="376" y1="15" x2="376" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="377" y1="15" x2="377" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="378" y1="15" x2="378" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="379" y1="15" x2="379" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="380" y1="15" x2="380" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="381" y1="15" x2="381" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="382" y1="15" x2="382" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="383" y1="15" x2="383" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="384" y1="15" x2="384" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="385" y1="15" x2="385" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="386" y1="15" x2="386" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="387" y1="15" x2="387" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="388" y1="15" x2="388" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="389" y1="15" x2="389" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="390" y1="15" x2="390" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="391" y1="15" x2="391" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="392" y1="15" x2="392" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="393" y1="15" x2="393" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="394" y1="15" x2="394" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="395" y1="15" x2="395" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="396" y1="15" x2="396" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="397" y1="15" x2="397" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="398" y1="15" x2="398" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="399" y1="15" x2="399" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="400" y1="15" x2="400" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="401" y1="15" x2="401" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="402" y1="15" x2="402" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="403" y1="15" x2="403" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="404" y1="15" x2="404" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="405" y1="15" x2="405" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="406" y1="15" x2="406" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="407" y1="15" x2="407" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="408" y1="15" x2="408" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="409" y1="15" x2="409" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="410" y1="15" x2="410" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="411" y1="15" x2="411" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="412" y1="15" x2="412" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="413" y1="15" x2="413" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="414" y1="15" x2="414" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="415" y1="15" x2="415" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="416" y1="15" x2="416" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="417" y1="15" x2="417" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="418" y1="15" x2="418" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="419" y1="15" x2="419" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="420" y1="15" x2="420" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="421" y1="15" x2="421" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="422" y1="15" x2="422" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="423" y1="15" x2="423" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="424" y1="15" x2="424" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="425" y1="15" x2="425" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="426" y1="15" x2="426" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="427" y1="15" x2="427" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="428" y1="15" x2="428" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="429" y1="15" x2="429" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="430" y1="15" x2="430" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="431" y1="15" x2="431" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="432" y1="15" x2="432" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="433" y1="15" x2="433" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="434" y1="15" x2="434" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="435" y1="15" x2="435" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="436" y1="15" x2="436" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="437" y1="15" x2="437" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="438" y1="15" x2="438" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="439" y1="15" x2="439" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="440" y1="15" x2="440" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="441" y1="15" x2="441" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="442" y1="15" x2="442" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="443" y1="15" x2="443" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="444" y1="15" x2="444" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="445" y1="15" x2="445" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="446" y1="15" x2="446" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="447" y1="15" x2="447" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="448" y1="15" x2="448" y2="27" style="stroke:#313695ff;stroke-width:2;" /><line x1="449" y1="15" x2="449" y2="27" style="stroke:#313695ff;stroke-width:2;" /><text x="0" y="38" style="text-anchor:start; font-size:11px; font:Arial; fill:black">-27.225850807837745</text><text x="75" y="38"; style="text-anchor:middle; font-size:11px; font:Arial; fill:black">-17.4</text><text x="150" y="38"; style="text-anchor:middle; font-size:11px; font:Arial; fill:black">-7.6</text><text x="225" y="38"; style="text-anchor:middle; font-size:11px; font:Arial; fill:black">2.2</text><text x="300" y="38"; style="text-anchor:middle; font-size:11px; font:Arial; fill:black">12.1</text><text x="375" y="38"; style="text-anchor:middle; font-size:11px; font:Arial; fill:black">21.9</text><text x="450" y="38" style="text-anchor:end; font-size:11px; font:Arial; fill:black">31.72297529759857</text><text x="0" y="12" style="font-size:11px; font:Arial; fill:black"></text></svg></div></div>
 </div>
 <p>We can apply this colormap to determine the colors corresponding to a given net migration value as follows:</p>
 <div class="cell docutils container">
@@ -2320,8 +2240,9 @@
 </section>
 <section id="converting-this-second-mapping-approach-into-a-function">
 <h3>Converting this second mapping approach into a function<a class="headerlink" href="#converting-this-second-mapping-approach-into-a-function" title="Link to this heading">#</a></h3>
-<p>In order to make this code easier to apply to other datasets, I converted it into a function (<code class="docutils literal notranslate"><span class="pre">cptt()</span></code>) by replacing hardcoded values with variables. (This is often how I create functions: I start with a working example that uses built-in values, then make that example more flexible by substituting variable names for those values.) <strong>This function is located within folium_choropleth_map_functions.py; I placed it there so that it could be more easily called by different notebooks.</strong></p>
-<p>I also added code to this function that allows a selected column’s data to be displayed directly atop each boundary. This code works much better for state-level data (which we’ll graph later) than county-level data, since the latter shapes are too small to accommodate these labels at a nationwide zoom level.</p>
+<p>In order to make this code easier to apply to other datasets, I converted it into a function (<code class="docutils literal notranslate"><span class="pre">cptt()</span></code>) by replacing hardcoded values with variables. (This is often how I create functions: I start with a working example that uses built-in values, then make that example more flexible by substituting variable names for those values.)</p>
+<p><code class="docutils literal notranslate"><span class="pre">cptt()</span></code> can be found within ‘folium_choropleth_map_functions.py’; I placed it there so that it could be more easily called by different notebooks.</p>
+<p>I also added code to this function that allows a selected column’s data to be displayed directly atop each boundary by default; this eliminates the need to first hover over a state to view its corresponding metric (which isn’t possible for static maps anyway). This code works much better for state-level data (which we’ll graph later) than county-level data, since the latter shapes are too small to accommodate these labels at a nationwide zoom level.</p>
 </section>
 <section id="calling-this-function-separately-for-html-and-png-maps">
 <h3>Calling this function separately for HTML and PNG maps<a class="headerlink" href="#calling-this-function-separately-for-html-and-png-maps" title="Link to this heading">#</a></h3>
@@ -2355,25 +2276,25 @@
 <span class="c1"># gdf argument.</span>
 
 <span class="n">m</span> <span class="o">=</span> <span class="n">create_map_and_screenshot</span><span class="p">(</span>
-    <span class="n">starting_lat</span> <span class="o">=</span> <span class="mi">38</span><span class="p">,</span> <span class="n">starting_lon</span> <span class="o">=</span> <span class="o">-</span><span class="mi">95</span><span class="p">,</span> 
-    <span class="n">html_zoom_start</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span>
-    <span class="n">screenshot_zoom_start</span> <span class="o">=</span> <span class="mi">6</span><span class="p">,</span>
-    <span class="n">gdf</span> <span class="o">=</span> <span class="n">gdf_counties_and_stats</span><span class="p">,</span> 
-    <span class="n">data_col</span> <span class="o">=</span> <span class="n">total_nm_rate_col</span><span class="p">,</span> 
-    <span class="n">boundary_name_col</span> <span class="o">=</span> <span class="n">county_boundary_name_col</span><span class="p">,</span>
-    <span class="n">data_col_alias</span> <span class="o">=</span> <span class="n">data_col_alias</span><span class="p">,</span> <span class="n">boundary_name_alias</span> <span class="o">=</span> <span class="s1">&#39;County:&#39;</span><span class="p">,</span>
-    <span class="n">tooltip_variable_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">percentile_col</span><span class="p">],</span> 
-         <span class="n">tooltip_alias_list</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Percentile:&#39;</span><span class="p">],</span>
-    <span class="n">bin_type</span> <span class="o">=</span> <span class="s1">&#39;percentile&#39;</span><span class="p">,</span> <span class="n">bin_count</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span> <span class="n">color_scheme</span> <span class="o">=</span> <span class="s1">&#39;RdYlBu&#39;</span><span class="p">,</span>
-        <span class="n">map_filename</span> <span class="o">=</span> <span class="n">map_filename</span><span class="p">,</span>
-        <span class="n">html_map_folder</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span><span class="o">+</span><span class="s1">&#39;/maps&#39;</span><span class="p">,</span>
-        <span class="n">png_map_folder</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span><span class="o">+</span><span class="s1">&#39;/map_screenshots&#39;</span><span class="p">)</span>
+    <span class="n">starting_lat</span><span class="o">=</span><span class="mi">38</span><span class="p">,</span> <span class="n">starting_lon</span><span class="o">=-</span><span class="mi">95</span><span class="p">,</span> 
+    <span class="n">html_zoom_start</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+    <span class="n">screenshot_zoom_start</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span>
+    <span class="n">gdf</span><span class="o">=</span><span class="n">gdf_counties_and_stats</span><span class="p">,</span> 
+    <span class="n">data_col</span><span class="o">=</span><span class="n">total_nm_rate_col</span><span class="p">,</span> 
+    <span class="n">boundary_name_col</span><span class="o">=</span><span class="n">county_boundary_name_col</span><span class="p">,</span>
+    <span class="n">data_col_alias</span><span class="o">=</span><span class="n">data_col_alias</span><span class="p">,</span> <span class="n">boundary_name_alias</span><span class="o">=</span><span class="s1">&#39;County:&#39;</span><span class="p">,</span>
+    <span class="n">tooltip_variable_list</span><span class="o">=</span><span class="p">[</span><span class="n">percentile_col</span><span class="p">],</span> 
+         <span class="n">tooltip_alias_list</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Percentile:&#39;</span><span class="p">],</span>
+    <span class="n">bin_type</span><span class="o">=</span><span class="s1">&#39;percentile&#39;</span><span class="p">,</span> <span class="n">bin_count</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">color_scheme</span><span class="o">=</span><span class="s1">&#39;RdYlBu&#39;</span><span class="p">,</span>
+        <span class="n">map_filename</span><span class="o">=</span><span class="n">map_filename</span><span class="p">,</span>
+        <span class="n">html_map_folder</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span><span class="o">+</span><span class="s1">&#39;/maps&#39;</span><span class="p">,</span>
+        <span class="n">png_map_folder</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span><span class="o">+</span><span class="s1">&#39;/map_screenshots&#39;</span><span class="p">)</span>
 <span class="c1"># Note the use of os.getcwd() to convert the relative paths to the &#39;maps&#39;</span>
 <span class="c1"># and &#39;map_screenshots&#39; folders into full paths.</span>
 
 <span class="n">wadi</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;map_screenshots/net_migration_rate_county_</span><span class="se">\</span>
 <span class="si">{</span><span class="n">first_nm_year</span><span class="si">}</span><span class="s1">-</span><span class="si">{</span><span class="n">last_nm_year</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span>
-     <span class="n">generate_image</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">display_type</span> <span class="o">=</span> <span class="n">display_type</span><span class="p">)</span>
+     <span class="n">generate_image</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">display_type</span><span class="o">=</span><span class="n">display_type</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -2384,13 +2305,14 @@
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Removed HTML copy of map.
 </pre></div>
 </div>
-<a class="reference internal image-reference" href="../_images/770e48ec1c400f3a83ea90097c821e4764a25081b77487419bc3c851ed065124.png"><img alt="../_images/770e48ec1c400f3a83ea90097c821e4764a25081b77487419bc3c851ed065124.png" src="../_images/770e48ec1c400f3a83ea90097c821e4764a25081b77487419bc3c851ed065124.png" style="width: 720px;" /></a>
+<a class="reference internal image-reference" href="../_images/4806e5f46fa918a71a80e2ae839f3e0ff3ca00c4a06f95b38088e71a7181d5cc.png"><img alt="../_images/4806e5f46fa918a71a80e2ae839f3e0ff3ca00c4a06f95b38088e71a7181d5cc.png" src="../_images/4806e5f46fa918a71a80e2ae839f3e0ff3ca00c4a06f95b38088e71a7181d5cc.png" style="width: 720px;" /></a>
 </div>
 </div>
 </section>
 <section id="calling-create-map-and-screenshot-again-to-create-state-level-net-migration-maps-in-html-and-png-form">
-<h3>Calling create_map_and_screenshot() again to create state-level net migration maps in HTML and PNG form<a class="headerlink" href="#calling-create-map-and-screenshot-again-to-create-state-level-net-migration-maps-in-html-and-png-form" title="Link to this heading">#</a></h3>
+<h3>Calling <code class="docutils literal notranslate"><span class="pre">create_map_and_screenshot()</span></code> again to create state-level net migration maps in HTML and PNG form<a class="headerlink" href="#calling-create-map-and-screenshot-again-to-create-state-level-net-migration-maps-in-html-and-png-form" title="Link to this heading">#</a></h3>
 <p>For demonstration purposes, I set the ‘tiles’ argument to None in order to create a clean and simple map without any underlying tile data. Since there won’t be anything to show under the choropleth boundaries, we can set choropleth_opacity to 1, resulting in a more vivid map.</p>
+<p>(Note that one drawback of this tileless map, relative to the Plotly option found within <code class="docutils literal notranslate"><span class="pre">choropleth_maps.ipnyb()</span></code>, is that Alaska and Hawaii aren’t added to the southwest corner of the map.)</p>
 <p>I also chose to add net migration rates as boundary labels. In order to make the labels a bit easier to read, I switched the color scheme from RdYlBu to RdYlGn.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -2403,6 +2325,8 @@
     <span class="n">starting_lat</span> <span class="o">=</span> <span class="mi">38</span><span class="p">,</span> <span class="n">starting_lon</span> <span class="o">=</span> <span class="o">-</span><span class="mi">95</span><span class="p">,</span> 
     <span class="n">html_zoom_start</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span>
     <span class="n">screenshot_zoom_start</span><span class="o">=</span> <span class="mi">6</span><span class="p">,</span> 
+    <span class="n">font_size</span> <span class="o">=</span> <span class="s1">&#39;16px&#39;</span><span class="p">,</span>
+    <span class="n">screenshot_font_size</span><span class="o">=</span><span class="s1">&#39;16px&#39;</span><span class="p">,</span>
     <span class="n">gdf</span> <span class="o">=</span> <span class="n">gdf_states_and_stats</span><span class="p">,</span> 
     <span class="n">data_col</span> <span class="o">=</span> <span class="n">total_nm_rate_col</span><span class="p">,</span> 
     <span class="n">boundary_name_col</span> <span class="o">=</span> <span class="n">state_boundary_name_col</span><span class="p">,</span>
@@ -2432,10 +2356,15 @@
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Removed HTML copy of map.
 </pre></div>
 </div>
-<a class="reference internal image-reference" href="../_images/4c1415403ea56549bfc2d2581312d1cbc91d2ebe71f5c60d1470b0de57a30e3a.png"><img alt="../_images/4c1415403ea56549bfc2d2581312d1cbc91d2ebe71f5c60d1470b0de57a30e3a.png" src="../_images/4c1415403ea56549bfc2d2581312d1cbc91d2ebe71f5c60d1470b0de57a30e3a.png" style="width: 720px;" /></a>
+<a class="reference internal image-reference" href="../_images/48053bdd5d6794c52cf6d534cc9e64f12c78cc4c42ada22b5663ef5f6178af16.png"><img alt="../_images/48053bdd5d6794c52cf6d534cc9e64f12c78cc4c42ada22b5663ef5f6178af16.png" src="../_images/48053bdd5d6794c52cf6d534cc9e64f12c78cc4c42ada22b5663ef5f6178af16.png" style="width: 720px;" /></a>
 </div>
 </div>
-<p>That’s it for this notebook! I would have liked to keep this section simpler, but building choropleth maps can get a little complex, especially if you wish to bypass folium.Chorolpeth(). I hope you’ll find both this notebook and the functions shown within folium_choropleth_map_functions.py useful for your own mapping projects.</p>
+<p>The labels in the screenshot, like the colorbar in the top right, are admittedly quite small. (Their size can be increased via the <code class="docutils literal notranslate"><span class="pre">screenshot_font_size</span></code> argument within <code class="docutils literal notranslate"><span class="pre">create_map_and_screenshot()</span></code>; however, this change may then cause the colorbar label text to get cut off.) Fortunately, the fonts will appear larger within the HTML version of the map.</p>
+</section>
+</section>
+<section id="conclusion">
+<h2>Conclusion<a class="headerlink" href="#conclusion" title="Link to this heading">#</a></h2>
+<p>That’s it for this notebook! I would have liked to keep this section simpler, but building choropleth maps can get a little complex, especially if you wish to bypass <code class="docutils literal notranslate"><span class="pre">folium.Chorolpeth()</span></code>. I hope you’ll find both this notebook and the functions shown within ‘folium_choropleth_map_functions.py’ useful for your own mapping projects. (I do recommend reviewing that file as well so that you’ll better understand how the final maps within this notebook were created.)</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">program_end_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
@@ -2445,12 +2374,11 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Finished running program in 22.046 seconds.
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Finished running program in 24.751 seconds.
 </pre></div>
 </div>
 </div>
 </div>
-</section>
 </section>
 <div class="toctree-wrapper compound">
 </div>
@@ -2521,6 +2449,7 @@
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction">Introduction</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gathering-our-net-migration-data">Gathering our net migration data</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#calculating-total-net-migration-across-all-years-within-the-dataset">Calculating total net migration across all years within the dataset</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#adding-percentile-data-to-each-dataset">Adding percentile data to each dataset</a></li>
@@ -2543,9 +2472,10 @@
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#converting-this-second-mapping-approach-into-a-function">Converting this second mapping approach into a function</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#calling-this-function-separately-for-html-and-png-maps">Calling this function separately for HTML and PNG maps</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#applying-these-functions-to-create-html-and-png-versions-of-our-net-migration-by-county-map-with-optimized-zoom-levels">Applying these functions to create HTML and PNG versions of our net migration by county map with optimized zoom levels</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#calling-create-map-and-screenshot-again-to-create-state-level-net-migration-maps-in-html-and-png-form">Calling create_map_and_screenshot() again to create state-level net migration maps in HTML and PNG form</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#calling-create-map-and-screenshot-again-to-create-state-level-net-migration-maps-in-html-and-png-form">Calling <code class="docutils literal notranslate"><span class="pre">create_map_and_screenshot()</span></code> again to create state-level net migration maps in HTML and PNG form</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion">Conclusion</a></li>
 </ul>
   </nav></div>
 

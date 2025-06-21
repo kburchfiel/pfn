@@ -2,7 +2,7 @@
 
 ## Introduction to the Online Visualizations section of Python for Nonprofits
 
-PFN's Online Visualizations section will demonstrate how to host visualizations online via Dash, a powerful Python library made by the same team that develops Plotly.
+PFN's Online Visualizations section will demonstrate how to host visualizations online via Dash, a powerful Python library made by the same organization that develops Plotly.
 
 Two separate Dash apps will be featured in this section:
 
@@ -12,27 +12,29 @@ Two separate Dash apps will be featured in this section:
 
 These apps take the form of a series of files, most of which (but not all) are .py scripts. In order to get them to run successfully on your own computer, it's very important to (1) consult their corresponding documentation closely and (2) use the same folder structure that is shown within the Python for Nonprofits GitHub page.
 
-It's *also* important to note that **you may incur some costs when deploying Dash apps online via Google Cloud Run** (the method shown within these notebooks). I have found the costs to be quite small on my end (literally pennies a month), but more complex and widely accessed apps will of course incur higher costs. If you want to avoid these costs, you can simply run these apps locally on your own machine. 
-
+Also, if you're new to Dash, I do recommend reading the corresponding documentation at https://dash.plotly.com . This documentation was a huge help to me when I was first learning how to create Dash apps, and while I've included *some* comments on the code contained within this section, it's really not a substitute for the official Dash tutorial.
 
 ## The 'Simple App Without Login' project itself
 
 ### Readme
 
-(Note: the Cloud Run-hosted version of this app can be found at https://simpleappwithoutlogin-470317599391.us-central1.run.app/ .)
+(Note: the Cloud Run-hosted version of this app can be found at https://simpleappwithoutlogin-470317599391.us-central1.run.app/ . *(If no one has accessed the app recently, it will take several seconds to load, as the app is set to run on demand in order to save costs.)*)
 
-This folder provides sample code for a Dash app that can be deployed to Cloud Run. This code was based on the app deployment steps found in https://dash.plotly.com/deployment and https://cloud.google.com/run/docs/quickstarts/build-and-deploy/deploy-python-service . (The Plotly walkthrough shows how to deploy a Dash app to Heroku, and the Cloud Run walkthrough shows how to deploy a Flask App to Cloud Run; by taking bits from each, you can then learn how to deploy a *Dash* app to *Cloud Run.* :)
+This folder provides sample code for a Dash app that can be deployed to Cloud Run. This code was based on the app deployment steps found in https://dash.plotly.com/deployment and https://cloud.google.com/run/docs/quickstarts/build-and-deploy/deploy-python-service . (The Plotly walkthrough shows how to deploy a Dash app to Heroku, and the Cloud Run walkthrough shows how to deploy a Flask App to Cloud Run; by taking bits from each, you can then learn how to deploy a *Dash* app to *Cloud Run.*)
 
 #### Development and setup notes
 
-1. The dash-bootstrap-components (https://dash-bootstrap-components.opensource.faculty.ai/docs/components/layout/) library is used extensively within many of these dashboards. It's a great option for making your dashboards more aesthetically pleasing *and* more flexible.
+1. The dash-bootstrap-components (https://dash-bootstrap-components.opensource.faculty.ai/docs/components/layout/) library is used extensively within both of this section's Dash apps. It's a great option for making your dashboards more aesthetically pleasing *and* more flexible.
 
-1. This app is hosted on Google Cloud Run, though you can also host it locally by cloning this project. See the following section for more guidance on hosting Dash apps within Cloud Run.
+2. This app is hosted on Google Cloud Run, though you can also host it locally by cloning this project. See the following section for more guidance on hosting Dash apps within Cloud Run.
 
+It's *also* important to note that **you may incur some costs when deploying Dash apps online via Google Cloud Run**. I have found the costs to be quite small on my end (literally pennies a month), but more complex and widely accessed apps will of course incur higher costs. If you want to avoid these costs, you can simply run these apps locally on your own machine. 
 
 #### Rationale for hosting this Dash app on Google Cloud Run
 
 Heroku, an alternative site for hosting Dash apps, offers maximum monthly spending caps, which could help you control your costs; however, it's possible that the minimum amount you would pay on Herkou would be higher than your minimum on Cloud Run. (This is why I chose to deploy this app to Cloud Run rather than Heroku.) Heroku pricing information can be found at https://www.heroku.com/pricing .</h2>
+
+Dash apps can be hosted via other providers as well, such as Azure--so make sure to look into various hosting options before deciding where to deploy your own project.
 
 #### Steps for deploying this app to Cloud Run
 
@@ -48,7 +50,7 @@ Heroku, an alternative site for hosting Dash apps, offers maximum monthly spendi
 
 5. If you need to install the Google Cloud Command Line Interface (CLI), you can do so at (https://cloud.google.com/sdk/docs/install. I deselected the 'Bundled Python' component during the installation process since (not surprisingly) I already had Python present on my computer.
 
-I also used the following contents in place of the recommended requirements.txt values:
+I also used the following contents in place of the recommended 'requirements.txt' values:
 
 ```
 gspread
@@ -60,11 +62,11 @@ gunicorn
 dash-bootstrap-components
 ```
 
-(These libraries will be imported from pip. Therefore, in order to determine what format of their name to use, visit the library on Pypi and then enter the text following the 'pip install' example. For instance, on the gspread-dataframe PyPI page (https://pypi.org/project/gspread-dataframe/), you'll see `pip install gspread-dataframe` as the recommended installation command; therefore, add `gspread-dataframe` to the requirements.txt page rather than `gspread-dataframe` (its name within conda) or `gspread_dataframe` (its name within `app.py`).
+(These libraries will be imported from pip. Therefore, in order to determine what format of their name to use, visit the library on PyPI and then enter the text following the 'pip install' example. For instance, on the gspread-dataframe PyPI page (https://pypi.org/project/gspread-dataframe/), you'll see `pip install gspread-dataframe` as the recommended installation command; therefore, add `gspread-dataframe` to the requirements.txt page rather than `gspread_dataframe` (its name within this app's Python file).
 
 (Also note that entering `gcloud run deploy --source .` (don't forget the space and period at the end!) rather than `gcloud run deploy` saves you a step during the deployment process.)
 
-The Google Cloud Region Picker (https://cloud.withgoogle.com/region-picker/) site can help you determine where to host your app. (When prompted for my region choice, I entered `us-central1`. Note that the numbers corresponding to regions can change over time, so if you want to enter a number for the region selection instead, just make sure it still corresponds to your desired area!)
+The Google Cloud Region Picker (https://cloud.withgoogle.com/region-picker/) site can help you determine where to host your app. (When prompted for my region choice, I entered `us-central1`. Note that the numbers corresponding to regions can change over time, so if you want to enter a number for the region selection instead, just make sure it still corresponds to your desired option!)
 
 4. You'll also want to add a file named Procfile (no extension) with the following text:
 
@@ -72,7 +74,7 @@ The Google Cloud Region Picker (https://cloud.withgoogle.com/region-picker/) sit
 
 (This line came from https://dash.plotly.com/deployment .)
 
-I was prompted to enter this line after seeing the following error message within my Google Cloud Console log:
+I was prompted to add this Procfile after seeing the following error message within my Google Cloud Console log:
 
 `Step #1: [builder] failed to build: for Python, provide a main.py file or set an entrypoint with "GOOGLE_ENTRYPOINT" env var or by creating a "Procfile" file"`
 
@@ -81,11 +83,11 @@ I was prompted to enter this line after seeing the following error message withi
 `Service [simpleappwithoutlogin] revision [simpleappwithoutlogin-00012-55f] has been deployed and is serving 100 percent of traffic.
 Service URL: https://simpleappwithoutlogin-470317599391.us-central1.run.app`
 
-To confirm that your page is operating correctly, visit its service URL (e.g. https://simpleappwithoutlogin-470317599391.us-central1.run.app/ for this app). Ideally, you'll see the same screen that you would when deploying the app locally. 
+To confirm that your page is operating correctly, visit its service URL (e.g. https://simpleappwithoutlogin-470317599391.us-central1.run.app/ for this app). Ideally, you'll see the same content that you would when deploying the app locally. 
 
-If you instead see a black screen with 'Service Unavailable' at the top left corner, don't panic! (I got this screen many, many times when learning how to upload Dash apps to the cloud.) This message simply means that something about your deployment that is not quite correct. Perhaps you forgot to include a library within requirements.txt that your script uses, for instance. Make sure to check your logs (available at https://console.cloud.google.com/logs/) for clues as to what might be going wrong with your script.
+If you instead see a black screen with 'Service Unavailable' at the top left corner, don't panic! (I got this screen many, many times when learning how to upload Dash apps to the cloud.) This message simply means that something about your deployment is not quite correct. Perhaps you forgot to include a library within 'requirements.txt' that your script uses, for instance. Make sure to check your logs (available at https://console.cloud.google.com/logs/) for clues as to what might be going wrong with your script.
 
-(For example, seeing "ModuleNotFoundError: No module named 'pandas'" within my log after one failed deployment made me realize that I had forgotten to add pandas to my requirements.txt file.)
+(For example, seeing "ModuleNotFoundError: No module named 'pandas'" within my log after one failed deployment made me realize that I had forgotten to add pandas to my 'requirements.txt' file.)
 
 If you receive a message like "service account 13371337-compute@developer.gserviceaccount.com does not have access to the bucket," try entering `gcloud auth login` and redoing the login procedure (as suggested by StackOverflow user Lee here: https://stackoverflow.com/a/70377891/13097194 ).
 
@@ -93,11 +95,11 @@ If you receive a message like "service account 13371337-compute@developer.gservi
 
 #### Using a Cloud Run secret to retrieve data from a Google Sheets document
 
-This app retrieves data from a Google Sheets file called 'Hourly VA Weather Data'; it's located at https://docs.google.com/spreadsheets/d/17aDJ3mg49-n0IEnDgN7ZB85pO87fiUpkZPULYDB8dmo/edit?usp=sharing; this file gets updated on an hourly basis by a laptop running updatintg_online_spreadsheets.py within the Updating Online Spreadsheets section of Python for Nonprofits. (Reference that section for more information about using gspread.) 
+This app retrieves data from a Google Sheets file called 'Hourly VA Weather Data'; it's located at https://docs.google.com/spreadsheets/d/17aDJ3mg49-n0IEnDgN7ZB85pO87fiUpkZPULYDB8dmo/edit?usp=sharing . This file gets updated on an hourly basis by a laptop running 'updating_online_spreadsheets.py' within the Updating Online Spreadsheets section of Python for Nonprofits. (Reference that section for more information about using gspread.) 
 
 In order for the app to connect to that spreadsheet, it retrieves a set of Google service account credentials (which are required for retrieving data from Google Sheets) from a secret stored within a Cloud Run volume. I referenced https://cloud.google.com/run/docs/configuring/services/secrets in the process of enabling this functionality. Secrets can be accessed by Cloud Run either through a path to a volume or through an environment variable; although I chose the former, the latter might actually be more straightforward to set up. 
 
-In order to get this code to work, you'll want to follow the same steps shown within the above link to add your own service account to Cloud Run. You'll also need to make sure that your compute service account has been granted the Secret Manager Secret Accessor role. More information about that step can be found at https://cloud.google.com/secret-manager/docs/manage-access-to-secrets .
+In order to get this code to work on your end, you may first need to create your own copy of this Google Sheets file (so that you can share it with your own service account). You'll then need to follow the same steps shown within the above link to add your own service account to Cloud Run. You'll also need to make sure that your compute service account has been granted the Secret Manager Secret Accessor role. More information about that step can be found at https://cloud.google.com/secret-manager/docs/manage-access-to-secrets .
 
 If you decide to access your secret through a volume, you can find the path to enter within your code by clicking on your Cloud Run service; selecting 'Edit & Deploy New Revision'; and clicking on 'VOLUME MOUNTS' within the Edit Container menu. The path to use within your code (in my case, '/svcacctsecret/kjb3server_service_account' was listed under 'Mount path.'
 
@@ -106,16 +108,13 @@ If you decide to access your secret through a volume, you can find the path to e
 Using your built-in Cloud Run service account should allow you to bypass the hassle of storing a service account key as a secret. However, it's still ideal to learn how to use Cloud Run secrets in case you'll ever need to connect to a SQL database within a Dash app. (You could store that database's password as a secret, which should be much more secure than storing it as plain text within your code.)
 
 
-#### Folder structure
+#### Folder structure of this Dash app
 
 (Note that Procfile is a file without a specified extension rather than a folder.)
 
-
-readme.md [this file]
-
-app.py
-
-Procfile
-
-requirements.txt
+    Simple_App_Without_Login/
+    ----readme.md [this file]
+    ----app.py
+    ----Procfile
+    ----requirements.txt
 

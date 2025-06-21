@@ -213,6 +213,7 @@
 <li class="toctree-l2"><a class="reference internal" href="PFN_Dash_App_Demo_py_nb.html">Source code for PFN Dash App Demo</a></li>
 </ul>
 </details></li>
+<li class="toctree-l1"><a class="reference internal" href="conclusion_to_book.html">Conclusion: Now the fun begins!</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendix</span></p>
 <ul class="current nav bd-sidenav">
@@ -367,17 +368,10 @@
                   
   <section class="tex2jax_ignore mathjax_ignore" id="helper-funcs-py">
 <h1>helper_funcs.py<a class="headerlink" href="#helper-funcs-py" title="Link to this heading">#</a></h1>
-<p>By Kenneth Burchfiel</p>
-<p>Released under the MIT license</p>
-<p>This notebook contains ‘helper’ functions that will prove useful for multiple sections of Python for Nonprofits.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Helper functions that will prove useful for multiple sections of</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Helper functions that proved useful for multiple sections of</span>
 <span class="c1"># Python for Nonprofits</span>
-
-<span class="c1"># By Kenneth Burchfiel</span>
-
-<span class="c1"># Released under the MIT license</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">IPython.display</span><span class="w"> </span><span class="kn">import</span> <span class="n">Image</span> <span class="c1"># Based on </span>
 <span class="c1"># a StackOverflow answer from &#39;zach&#39; at</span>
@@ -387,20 +381,20 @@
 <span class="n">render_for_pdf</span> <span class="o">=</span> <span class="kc">True</span> <span class="c1"># Setting this variable here, and passing it to the</span>
 <span class="c1"># config_notebook() function defined below by default, makes it easier </span>
 <span class="c1"># to update the output of multiple notebooks (i.e. when running</span>
-<span class="c1"># jupyter-book code to produce either PDF or HTML versions of </span>
+<span class="c1"># Jupyter Book code to produce either PDF or HTML versions of </span>
 <span class="c1"># Python for Nonprofits).</span>
 
 <span class="k">def</span><span class="w"> </span><span class="nf">config_notebook</span><span class="p">(</span><span class="n">render_for_pdf</span><span class="o">=</span><span class="n">render_for_pdf</span><span class="p">,</span> 
-                    <span class="n">display_max_columns</span> <span class="o">=</span> <span class="mi">6</span><span class="p">,</span>
-                   <span class="n">display_max_rows</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span>
-                   <span class="n">debug</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
+                    <span class="n">display_max_columns</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span>
+                   <span class="n">display_max_rows</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+                   <span class="n">debug</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    This function helps modify several settings in order to prepare</span>
 <span class="sd">    a Jupyter notebook for either print or HTML display.</span>
 <span class="sd">    </span>
 <span class="sd">    render_for_pdf: set to True to optimize notebook outputs for PDF</span>
 <span class="sd">    display. (This setting can also improve the appearance of notebooks</span>
-<span class="sd">    on GitHub. Set to False to optimize notebooks outputs for interactive</span>
+<span class="sd">    on GitHub.) Set to False to optimize notebooks outputs for interactive</span>
 <span class="sd">    viewing. Note that, unless this value is specified by the caller,</span>
 <span class="sd">    the render_for_pdf value within helper_funcs.py will be passed</span>
 <span class="sd">    to this function.</span>
@@ -438,7 +432,7 @@
          <span class="n">width</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">include_plotlyjs</span><span class="o">=</span><span class="s1">&#39;cdn&#39;</span><span class="p">,</span>
          <span class="n">display_type</span><span class="o">=</span><span class="s1">&#39;html&#39;</span><span class="p">,</span> <span class="n">display_width</span><span class="o">=</span><span class="mi">720</span><span class="p">,</span> <span class="n">html_path_prefix</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span>
          <span class="n">static_path_prefix</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> 
-         <span class="n">generate_image</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">display_image</span> <span class="o">=</span> <span class="kc">True</span><span class="p">):</span>
+         <span class="n">generate_image</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">display_image</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&#39;&#39;&#39;This function saves the Plotly figure passed to &#39;fig&#39; to the </span>
 <span class="sd">    destination represented by &#39;file_path&#39;, then displays it as either</span>
 <span class="sd">    an .html or .png file depending on the value of display_type. It can</span>

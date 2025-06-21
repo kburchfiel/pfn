@@ -214,6 +214,7 @@
 <li class="toctree-l2"><a class="reference internal" href="PFN_Dash_App_Demo_py_nb.html">Source code for PFN Dash App Demo</a></li>
 </ul>
 </details></li>
+<li class="toctree-l1"><a class="reference internal" href="conclusion_to_book.html">Conclusion: Now the fun begins!</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendix</span></p>
 <ul class="nav bd-sidenav">
@@ -368,6 +369,7 @@
                   
   <section class="tex2jax_ignore mathjax_ignore" id="weather-import-py">
 <h1>weather_import.py<a class="headerlink" href="#weather-import-py" title="Link to this heading">#</a></h1>
+<p>Here’s a copy of the Python code that the <code class="docutils literal notranslate"><span class="pre">updating_online_spreadsheets</span></code> script uses to import and retrieve weather data. Feel free to skip over it if you’re eager to move onto the Dash apps component of Python for Nonprofits, as it doesn’t directly relate to Google Sheets uploads. However, it does provide examples of date and time data processing that might prove helpful for some of your own projects.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Weather Data Import</span>
@@ -380,7 +382,8 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timedelta</span>
 
 <span class="k">def</span><span class="w"> </span><span class="nf">weather_import</span><span class="p">(</span><span class="n">station_code</span><span class="p">,</span> <span class="n">data_folder</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;This function retrieves NWS hourly weather data for the last </span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;This function retrieves National Weather Service (NWS) hourly </span>
+<span class="sd">    weather data for the last </span>
 <span class="sd">    3 days for the station specified in station_code; adds it to</span>
 <span class="sd">    pre-existing data (if any); and then saves this data to</span>
 <span class="sd">    the folder specified in data_folder. </span>
@@ -391,9 +394,10 @@
     <span class="k">else</span><span class="p">:</span>
         <span class="n">post_folder_char</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
     <span class="n">today</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">today</span><span class="p">()</span><span class="o">.</span><span class="n">date</span><span class="p">()</span>
-    <span class="n">retrieval_date</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">today</span><span class="p">)</span> <span class="c1"># The date that the current set of 3-day</span>
-    <span class="c1"># weather history data is being retrieved. Note that this date won&#39;t</span>
+    <span class="n">retrieval_date</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">today</span><span class="p">)</span> <span class="c1"># The date on which the current set of </span>
+    <span class="c1"># 3-day weather data is being retrieved. Note that this date won&#39;t</span>
     <span class="c1"># match the dates for earlier records within this dataset.</span>
+    
     <span class="c1"># Importing the latest set of hourly observations from the </span>
     <span class="c1"># National Weather Service:</span>
 
@@ -405,7 +409,6 @@
     <span class="c1"># header = 2 specifies that the third row in the DataFrame should be </span>
     <span class="c1"># used as a header. (The first two rows&#39; values are mostly duplicates</span>
     <span class="c1"># of this row&#39;s data.)</span>
-
     
     <span class="n">df_3day_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_html</span><span class="p">(</span>
     <span class="sa">f</span><span class="s1">&#39;https://forecast.weather.gov/data/obhistory/</span><span class="si">{</span><span class="n">station_code</span><span class="si">}</span><span class="s1">.html&#39;</span><span class="p">,</span>
@@ -422,6 +425,8 @@
     <span class="n">original_time_col</span> <span class="o">=</span> <span class="p">[</span>
         <span class="n">column</span> <span class="k">for</span> <span class="n">column</span> <span class="ow">in</span> <span class="n">df_3day_data</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="s1">&#39;Time&#39;</span> <span class="ow">in</span> <span class="n">column</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
 
+    <span class="c1"># Extracting the time zone from this column, then converting it to</span>
+    <span class="c1"># uppercase:</span>
     <span class="n">tz</span> <span class="o">=</span> <span class="n">original_time_col</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39; (&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;)&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
 
     <span class="n">df_3day_data</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="n">original_time_col</span><span class="p">:</span><span class="s1">&#39;Time&#39;</span><span class="p">,</span> <span class="s1">&#39;Date&#39;</span><span class="p">:</span><span class="s1">&#39;Day&#39;</span><span class="p">},</span> 
@@ -501,13 +506,13 @@
 <span class="s1">_most_recent_3_day_data.csv&#39;</span><span class="p">,</span> 
         <span class="n">index</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
 
-    <span class="c1"># Appending new data within this file to our historical dataset:</span>
-
-    <span class="c1"># Creating a historical copy of the 3-day dataset for the weather </span>
-    <span class="c1"># station being evaluated if one does not exist already:</span>
+    <span class="c1"># Next, the function will append new data within this file to </span>
+    <span class="c1"># a historical dataset. If such a dataset doesn&#39;t exist already,</span>
+    <span class="c1"># it will get created shortly.</span>
     <span class="c1"># Determining which argument to pass to os.listdir(): (This argument</span>
-    <span class="c1"># should be None if no data folder was provided so as not to raise</span>
-    <span class="c1"># an error.)</span>
+    <span class="c1"># should be None if no data_folder value was provided so as not </span>
+    <span class="c1"># to raise an error.)</span>
+    
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">data_folder</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
         <span class="n">listdir_arg</span> <span class="o">=</span> <span class="n">data_folder</span>
     <span class="k">else</span><span class="p">:</span>
@@ -521,7 +526,7 @@
             <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">data_folder</span><span class="si">}{</span><span class="n">post_folder_char</span><span class="si">}{</span><span class="n">station_code</span><span class="si">}</span><span class="se">\</span>
 <span class="s1">_historical_hourly_data.csv&#39;</span><span class="p">,</span> <span class="n">index</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
               
-
+    <span class="c1"># Reading in historical weather data:</span>
     
     <span class="n">df_historical_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span>
         <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">data_folder</span><span class="si">}{</span><span class="n">post_folder_char</span><span class="si">}</span><span class="se">\</span>
@@ -530,7 +535,7 @@
           <span class="nb">len</span><span class="p">(</span><span class="n">df_historical_data</span><span class="p">))</span>
     
     <span class="c1"># Recreating df_3day_data by importing the .csv copy of the table </span>
-    <span class="c1"># that we just created:</span>
+    <span class="c1"># that the function just created:</span>
     
     <span class="c1"># (This step may appear unnecessary, but it does help ensure that </span>
     <span class="c1">#  both this data and that found in df_historical_data will use </span>
@@ -539,13 +544,13 @@
     <span class="n">df_3day_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">data_folder</span><span class="si">}{</span><span class="n">post_folder_char</span><span class="si">}</span><span class="se">\</span>
 <span class="si">{</span><span class="n">station_code</span><span class="si">}</span><span class="s1">_most_recent_3_day_data.csv&#39;</span><span class="p">)</span>
 
-    <span class="c1"># Combining our previous historical data with our latest dataset </span>
-    <span class="c1"># from the last 3 days:</span>
+    <span class="c1"># Combining historical data with the latest 3-day dataset:</span>
     
     <span class="n">df_wx</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">df_historical_data</span><span class="p">,</span> <span class="n">df_3day_data</span><span class="p">])</span>
     <span class="c1"># Storing the station code within the DataFrame:</span>
     <span class="n">df_wx</span><span class="p">[</span><span class="s1">&#39;Station&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">station_code</span>
-    <span class="c1"># Removing duplicate Date/Time entries:</span>
+    
+    <span class="c1"># The function will now remove duplicate Date/Time entries.</span>
     
     <span class="c1"># Calculating the 24-digit hour corresponding to each DataFrame:</span>
     <span class="c1"># (This code assumes that a 24-hour clock is being used to display</span>
@@ -592,12 +597,10 @@
     <span class="k">for</span> <span class="n">column</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;1 hr&#39;</span><span class="p">,</span> <span class="s1">&#39;3 hr&#39;</span><span class="p">,</span> <span class="s1">&#39;6 hr&#39;</span><span class="p">]:</span>
         <span class="n">df_wx</span><span class="p">[</span><span class="n">column</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_wx</span><span class="p">[</span>
         <span class="n">column</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-    
-    <span class="n">df_wx</span><span class="o">.</span><span class="n">tail</span><span class="p">()</span>
-    
+       
     <span class="c1"># Adding &#39;Precip&#39; prefixes to the hourly precipitation rows; making the </span>
     <span class="c1"># temperature and dew point column names more intuitive; and removing</span>
-    <span class="c1"># time zone data from the Time field:</span>
+    <span class="c1"># time zone data from the time field:</span>
     <span class="n">df_wx</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span> <span class="o">=</span> <span class="p">{</span>
         <span class="s1">&#39;1 hr&#39;</span><span class="p">:</span><span class="s1">&#39;1-Hour Precip&#39;</span><span class="p">,</span>
         <span class="s1">&#39;3 hr&#39;</span><span class="p">:</span><span class="s1">&#39;3-Hour Precip&#39;</span><span class="p">,</span>
@@ -608,8 +611,7 @@
     <span class="n">original_time_col</span><span class="p">:</span><span class="s1">&#39;Time&#39;</span><span class="p">},</span>
          <span class="n">inplace</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
     
-    <span class="c1"># Sorting the table in chronological order so that our charts will</span>
-    <span class="c1"># be easier to interpret:</span>
+    <span class="c1"># Sorting the table in chronological order:</span>
     
     <span class="n">df_wx</span><span class="o">.</span><span class="n">sort_values</span><span class="p">([</span><span class="s1">&#39;Date&#39;</span><span class="p">,</span> <span class="s1">&#39;Time&#39;</span><span class="p">],</span> <span class="n">inplace</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
     <span class="n">df_wx</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -654,8 +656,6 @@
         <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;Date/Time&#39;</span><span class="p">,</span> <span class="n">df_wx</span><span class="p">[</span><span class="s1">&#39;Date&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;str&#39;</span><span class="p">)</span> 
         <span class="o">+</span> <span class="s1">&#39; &#39;</span> <span class="o">+</span> <span class="n">df_wx</span><span class="p">[</span><span class="s1">&#39;Time&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;str&#39;</span><span class="p">))</span>
     
-    <span class="n">df_wx</span><span class="o">.</span><span class="n">tail</span><span class="p">()</span>
-
     <span class="c1"># Saving this revised dataset to a .csv file so that it can be </span>
     <span class="c1"># visualized and shared with others:</span>
 

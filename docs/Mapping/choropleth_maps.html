@@ -214,6 +214,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../Book_Specific_Materials/PFN_Dash_App_Demo_py_nb.html">Source code for PFN Dash App Demo</a></li>
 </ul>
 </details></li>
+<li class="toctree-l1"><a class="reference internal" href="../Book_Specific_Materials/conclusion_to_book.html">Conclusion: Now the fun begins!</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendix</span></p>
 <ul class="nav bd-sidenav">
@@ -370,7 +371,10 @@
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#importing-growth-data-for-us-counties">Importing growth data for US counties</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-an-initial-choropleth-map-with-a-linear-scale">Creating an initial choropleth map with a linear scale</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-an-initial-choropleth-map-with-a-linear-scale">Creating an initial choropleth map with a linear scale</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#simplifying-regional-boundaries">Simplifying regional boundaries</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-map-with-a-percentile-scale">Creating map with a percentile scale</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#specifying-how-many-data-points-we-d-like-to-include-within-our-color-scale">Specifying how many data points we’d like to include within our color scale</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#using-quantile-increment-to-specify-which-quantiles-to-retrieve">Using <code class="docutils literal notranslate"><span class="pre">quantile_increment</span></code> to specify which quantiles to retrieve</a></li>
@@ -454,18 +458,19 @@
 <p><strong>Note</strong>: I chose to import <em>2021</em> shapefiles because copies for later years did not contain the original Connecticut counties found within my corresponding population growth dataset. If your own dataset references Connecticut’s planning regions (<a class="reference external" href="https://en.wikipedia.org/wiki/Councils_of_governments_in_Connecticut">https://en.wikipedia.org/wiki/Councils_of_governments_in_Connecticut</a>) rather than counties, you’ll most likely want to use a county dataset from 2022 or later.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">gdf_counties</span> <span class="o">=</span> <span class="n">geopandas</span><span class="o">.</span><span class="n">read_file</span><span class="p">(</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Reading in our shapefile data:</span>
+
+<span class="n">gdf_counties</span> <span class="o">=</span> <span class="n">geopandas</span><span class="o">.</span><span class="n">read_file</span><span class="p">(</span>
     <span class="s1">&#39;shapefiles/cb_2021_us_county_500k/cb_2021_us_county_500k.shp&#39;</span><span class="p">)</span>
 
-<span class="c1"># Simplifying boundaries:</span>
-<span class="c1"># You can experiment with different &#39;tolerance&#39; arguments to find the</span>
-<span class="c1"># right balance between accuracy and size/rendering speed for your project.</span>
-<span class="c1"># 0.005 tends to be my preferred default setting.</span>
-<span class="n">gdf_counties</span><span class="p">[</span><span class="s1">&#39;geometry&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">gdf_counties</span><span class="p">[</span><span class="s1">&#39;geometry&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">simplify</span><span class="p">(</span>
-    <span class="n">tolerance</span> <span class="o">=</span> <span class="mf">0.005</span><span class="p">)</span>
+<span class="c1"># This abbreviation of &#39;GeoDataFrame&#39; as &#39;gdf&#39; derives from</span>
+<span class="c1"># https://geopandas.org/en/stable/docs/reference/api/geopandas.</span>
+<span class="c1"># GeoDataFrame.html</span>
 
 <span class="c1"># Creating a column that combines county names and long state names:</span>
-<span class="c1"># (This column can then serve as a key for an upcoming merge.)</span>
+<span class="c1"># (This will help prevent the code from confusing counties in </span>
+<span class="c1"># different states with the same name. This column can also then serve </span>
+<span class="c1"># as a key for an upcoming merge.)</span>
 <span class="c1"># &#39;STATE_NAME&#39; is used rather than &#39;STUSPS&#39; for the state </span>
 <span class="c1"># component of this column so that the column will match the format used </span>
 <span class="c1"># within our demographic dataset.</span>
@@ -509,7 +514,7 @@
       <td>20</td>
       <td>...</td>
       <td>32047392</td>
-      <td>POLYGON ((-96.96169 39.22008, -96.95872 39.566...</td>
+      <td>POLYGON ((-96.96095 39.2867, -96.96106 39.2885...</td>
     </tr>
     <tr>
       <th>1</th>
@@ -517,7 +522,7 @@
       <td>19</td>
       <td>...</td>
       <td>8723135</td>
-      <td>POLYGON ((-94.47121 40.57082, -94.47078 40.899...</td>
+      <td>POLYGON ((-94.47167 40.81254, -94.47166 40.819...</td>
     </tr>
     <tr>
       <th>2</th>
@@ -533,7 +538,7 @@
       <td>16</td>
       <td>...</td>
       <td>191364281</td>
-      <td>POLYGON ((-111.63452 42.57034, -111.60312 42.5...</td>
+      <td>POLYGON ((-111.63452 42.57034, -111.6301 42.57...</td>
     </tr>
     <tr>
       <th>4</th>
@@ -541,7 +546,7 @@
       <td>55</td>
       <td>...</td>
       <td>87549529</td>
-      <td>POLYGON ((-92.08384 44.412, -92.04391 44.51238...</td>
+      <td>POLYGON ((-92.08384 44.412, -92.0831 44.41426,...</td>
     </tr>
   </tbody>
 </table>
@@ -588,7 +593,7 @@
       <td>09</td>
       <td>...</td>
       <td>276863144</td>
-      <td>MULTIPOLYGON (((-72.2239 41.29346, -72.22523 4...</td>
+      <td>MULTIPOLYGON (((-72.22593 41.29384, -72.22523 ...</td>
     </tr>
     <tr>
       <th>306</th>
@@ -596,7 +601,7 @@
       <td>09</td>
       <td>...</td>
       <td>549280913</td>
-      <td>MULTIPOLYGON (((-73.21763 41.14235, -73.21499 ...</td>
+      <td>MULTIPOLYGON (((-73.21717 41.14391, -73.21611 ...</td>
     </tr>
     <tr>
       <th>911</th>
@@ -604,7 +609,7 @@
       <td>09</td>
       <td>...</td>
       <td>180679141</td>
-      <td>POLYGON ((-72.75294 41.5925, -72.71454 41.6043...</td>
+      <td>POLYGON ((-72.75294 41.5925, -72.74284 41.5944...</td>
     </tr>
     <tr>
       <th>935</th>
@@ -612,7 +617,7 @@
       <td>09</td>
       <td>...</td>
       <td>667604268</td>
-      <td>MULTIPOLYGON (((-72.76143 41.24233, -72.75886 ...</td>
+      <td>MULTIPOLYGON (((-72.76143 41.24233, -72.75973 ...</td>
     </tr>
     <tr>
       <th>2245</th>
@@ -620,7 +625,7 @@
       <td>09</td>
       <td>...</td>
       <td>21478813</td>
-      <td>POLYGON ((-72.25208 41.72706, -72.19813 41.728...</td>
+      <td>POLYGON ((-72.25208 41.72706, -72.25264 41.728...</td>
     </tr>
   </tbody>
 </table>
@@ -721,12 +726,22 @@ any issues.)</p>
 <p>5 rows × 75 columns</p>
 </div></div></div>
 </div>
-<p>Merging our Census data into our county shapefiles:</p>
+<p>Next, we’ll merge our Census data into our county boundaries table.</p>
+<p><strong>Note</strong>: merging the DataFrame onto the GeoDataFrame ensures that the resulting file is also a GeoDataFrame–which will prove useful in our mapping code. (If we instead merged the GeoDataFrame onto our DataFrame, we’d end up with a DataFrame.)</p>
 <p>(We could also have used state and county codes for this merge; however, I prefer to merge on names when possible, as there’s always a chance that codes within two different datasets might refer to different regions.)</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">gdf_counties_and_growth_stats</span> <span class="o">=</span> <span class="n">gdf_counties</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span>
-    <span class="n">df_acs_county_growth</span><span class="p">,</span> <span class="n">on</span> <span class="o">=</span> <span class="s1">&#39;County/State&#39;</span><span class="p">,</span> <span class="n">how</span> <span class="o">=</span> <span class="s1">&#39;inner&#39;</span><span class="p">)</span>
+    <span class="n">df_acs_county_growth</span><span class="p">,</span> <span class="n">on</span> <span class="o">=</span> <span class="s1">&#39;County/State&#39;</span><span class="p">)</span>
+
+<span class="c1"># Because we did not specify an argument for the &#39;how&#39; parameter, </span>
+<span class="c1"># the default &#39;inner&#39; option will be used. This option will </span>
+<span class="c1"># exclude any counties that either (1) aren&#39;t present</span>
+<span class="c1"># in the population change table or (2) don&#39;t have a shape defined. </span>
+<span class="c1"># This will prevent our mapping code from (1) showing counties with </span>
+<span class="c1"># missing population growth data and (2) attempting</span>
+<span class="c1"># to map a county that lacks a a corresponding outline.</span>
+
 <span class="c1"># Limiting the results to just the 50 US states plus DC:</span>
 <span class="n">gdf_counties_and_growth_stats</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;STUSPS != &#39;PR&#39;&quot;</span><span class="p">,</span> <span class="n">inplace</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
 <span class="n">gdf_counties_and_growth_stats</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
@@ -883,14 +898,14 @@ any issues.)</p>
   <tbody>
     <tr>
       <th>McKenzie County, North Dakota</th>
-      <td>POLYGON ((-104.04531 47.33014, -104.04412 47.9...</td>
+      <td>POLYGON ((-104.04533 47.34345, -104.04486 47.3...</td>
       <td>119.770042</td>
       <td>100.000000</td>
       <td>1.0</td>
     </tr>
     <tr>
       <th>Williams County, North Dakota</th>
-      <td>POLYGON ((-104.04412 47.99608, -104.04758 48.6...</td>
+      <td>POLYGON ((-104.04821 48.59906, -104.04793 48.6...</td>
       <td>74.453416</td>
       <td>99.968122</td>
       <td>2.0</td>
@@ -904,14 +919,14 @@ any issues.)</p>
     </tr>
     <tr>
       <th>Blaine County, Nebraska</th>
-      <td>POLYGON ((-100.26762 42.08615, -99.68696 42.08...</td>
+      <td>POLYGON ((-100.26762 42.08615, -100.1676 42.08...</td>
       <td>-40.854701</td>
       <td>0.063755</td>
       <td>3136.0</td>
     </tr>
     <tr>
       <th>Kenedy County, Texas</th>
-      <td>MULTIPOLYGON (((-97.39839 26.86789, -97.38686 ...</td>
+      <td>MULTIPOLYGON (((-97.39839 26.86789, -97.39138 ...</td>
       <td>-48.000000</td>
       <td>0.031878</td>
       <td>3137.0</td>
@@ -955,6 +970,39 @@ any issues.)</p>
 </div>
 <div class="cell_output docutils container">
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;2011-2021 Total_Pop % Change&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<section id="simplifying-regional-boundaries">
+<h3>Simplifying regional boundaries<a class="headerlink" href="#simplifying-regional-boundaries" title="Link to this heading">#</a></h3>
+<p>The current versions of the county outlines would result in a very large output file (e.g. around 42 MB). We can reduce this file size (and the time required to generate and save the map) by simplifying the county outlines.</p>
+<p>Geopandas offers two options for simplifying these maps: (1) <code class="docutils literal notranslate"><span class="pre">simplify()</span></code> and (2) <code class="docutils literal notranslate"><span class="pre">simplify_coverage()</span></code>. <code class="docutils literal notranslate"><span class="pre">simplify()</span></code> works better with maps (like the ones we’re about to create) that use the ‘usa’ scope described above. For other maps, though, I recommend using <code class="docutils literal notranslate"><span class="pre">simplify_coverage()</span></code> because it preserves boundaries between regions. In other words, it prevents gaps or overlapping boundaries from appearing within your map.</p>
+<p>For both of these functions, you’ll need to modify the <code class="docutils literal notranslate"><span class="pre">tolerance</span></code> argument; lower values will result in more accurate, but larger (and potentially slower-loading) maps. 0.005 tends to be my preferred default setting.</p>
+<p>You’ll also need to have a recent version of the Shapely library involved in order for <code class="docutils literal notranslate"><span class="pre">simplify_coverage()</span></code> to work; consult any error message you receive upon running the following cell for more details.</p>
+<p>For more on these functions, see <a class="reference external" href="https://geopandas.org/en/stable/docs/reference/api/geopandas.GeoSeries.simplify_coverage.html">https://geopandas.org/en/stable/docs/reference/api/geopandas.GeoSeries.simplify_coverage.html</a> and <a class="reference external" href="https://geopandas.org/en/stable/docs/reference/api/geopandas.GeoSeries.simplify.html">https://geopandas.org/en/stable/docs/reference/api/geopandas.GeoSeries.simplify.html</a> .</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Creating a copy of gdf_counties_for_map that will use simplify_coverage(): </span>
+<span class="c1"># (This version will be ideal for the tiled maps that we&#39;ll create later</span>
+<span class="c1"># within this script.)</span>
+
+<span class="n">gdf_counties_and_growth_stats_for_tiled_maps</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">gdf_counties_and_growth_stats</span><span class="o">.</span><span class="n">copy</span><span class="p">())</span>
+<span class="n">gdf_counties_and_growth_stats_for_tiled_maps</span><span class="p">[</span><span class="s1">&#39;geometry&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">gdf_counties_and_growth_stats_for_tiled_maps</span><span class="p">[</span>
+<span class="s1">&#39;geometry&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">simplify_coverage</span><span class="p">(</span>
+    <span class="n">tolerance</span> <span class="o">=</span> <span class="mf">0.005</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Using simplify() to reduce the size of the geometry values within our</span>
+<span class="c1"># original gdf_counties_for_map GeoDataFrame):</span>
+<span class="n">gdf_counties_for_map</span><span class="p">[</span><span class="s1">&#39;geometry&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">gdf_counties_for_map</span><span class="p">[</span>
+<span class="s1">&#39;geometry&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">simplify</span><span class="p">(</span>
+    <span class="n">tolerance</span> <span class="o">=</span> <span class="mf">0.005</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1021,6 +1069,7 @@ Name: 2011-2021 Total_Pop % Change, dtype: float64
 </div>
 </div>
 </div>
+</section>
 </section>
 <section id="creating-map-with-a-percentile-scale">
 <h2>Creating map with a percentile scale<a class="headerlink" href="#creating-map-with-a-percentile-scale" title="Link to this heading">#</a></h2>
@@ -1408,12 +1457,12 @@ Name: 2011-2021 Total_Pop % Change Percentile, Length: 11, dtype: float64
 <span class="n">label_round_value</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 
 <span class="n">wadi</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="n">static_file_folder</span><span class="o">+</span><span class="s1">&#39;/&#39;</span><span class="o">+</span><span class="n">filename</span><span class="p">,</span> <span class="n">generate_image</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-     <span class="n">display_type</span><span class="o">=</span><span class="s1">&#39;png&#39;</span><span class="p">)</span>
+     <span class="n">display_type</span><span class="o">=</span><span class="n">display_type</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="../_images/5b55d859ffba080f69cf834e2f013c14a787abe69b6f1076b5cb68ff20dba422.png"><img alt="../_images/5b55d859ffba080f69cf834e2f013c14a787abe69b6f1076b5cb68ff20dba422.png" src="../_images/5b55d859ffba080f69cf834e2f013c14a787abe69b6f1076b5cb68ff20dba422.png" style="width: 720px;" /></a>
+<a class="reference internal image-reference" href="../_images/f0590659d57c719158d0948784edc8982f7d827cd46f96cc6faaeb5999c4c2d7.png"><img alt="../_images/f0590659d57c719158d0948784edc8982f7d827cd46f96cc6faaeb5999c4c2d7.png" src="../_images/f0590659d57c719158d0948784edc8982f7d827cd46f96cc6faaeb5999c4c2d7.png" style="width: 720px;" /></a>
 </div>
 </div>
 <p>Note that this map shows an even wider range in population growth rates than our previous one; this makes the use of percentile-based colors even more crucial here.</p>
@@ -1421,12 +1470,13 @@ Name: 2011-2021 Total_Pop % Change Percentile, Length: 11, dtype: float64
 <section id="performing-simliar-steps-to-map-state-level-growth-data">
 <h2>Performing simliar steps to map state-level growth data<a class="headerlink" href="#performing-simliar-steps-to-map-state-level-growth-data" title="Link to this heading">#</a></h2>
 <p>We’ll perform a similar set of steps to visualize population growth data at the state level.</p>
+<p>Importing state-level boundaries:</p>
+<p>Since there are far fewer states than there are counties, our state dataset won’t require as much processing time as our county dataset. In addition, maps that show only data at the state level will generally take up less storage space. One disadvantage of these maps, though, is that the state-level data will hide interesting variations that can be observed at the county level.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">gdf_states</span> <span class="o">=</span> <span class="n">geopandas</span><span class="o">.</span><span class="n">read_file</span><span class="p">(</span>
     <span class="s1">&#39;shapefiles/cb_2023_us_state_500k/cb_2023_us_state_500k.shp&#39;</span><span class="p">)</span>
-<span class="n">gdf_states</span><span class="p">[</span><span class="s1">&#39;geometry&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">gdf_states</span><span class="p">[</span><span class="s1">&#39;geometry&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">simplify</span><span class="p">(</span>
-    <span class="n">tolerance</span> <span class="o">=</span> <span class="mf">0.005</span><span class="p">)</span>
+
 
 <span class="n">gdf_states</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
@@ -1465,7 +1515,7 @@ Name: 2011-2021 Total_Pop % Change Percentile, Length: 11, dtype: float64
       <td>00897535</td>
       <td>...</td>
       <td>726463919</td>
-      <td>POLYGON ((-109.05004 31.3325, -109.04522 36.99...</td>
+      <td>POLYGON ((-109.05017 31.48, -109.04984 31.4995...</td>
     </tr>
     <tr>
       <th>1</th>
@@ -1473,7 +1523,7 @@ Name: 2011-2021 Total_Pop % Change Percentile, Length: 11, dtype: float64
       <td>01785534</td>
       <td>...</td>
       <td>3387709166</td>
-      <td>POLYGON ((-104.05788 44.9976, -104.03969 44.99...</td>
+      <td>POLYGON ((-104.05788 44.9976, -104.05078 44.99...</td>
     </tr>
     <tr>
       <th>2</th>
@@ -1481,7 +1531,7 @@ Name: 2011-2021 Total_Pop % Change Percentile, Length: 11, dtype: float64
       <td>01779778</td>
       <td>...</td>
       <td>20291770234</td>
-      <td>MULTIPOLYGON (((-118.60442 33.47855, -118.5386...</td>
+      <td>MULTIPOLYGON (((-118.60442 33.47855, -118.5987...</td>
     </tr>
     <tr>
       <th>3</th>
@@ -1489,7 +1539,7 @@ Name: 2011-2021 Total_Pop % Change Percentile, Length: 11, dtype: float64
       <td>01779786</td>
       <td>...</td>
       <td>2384223544</td>
-      <td>MULTIPOLYGON (((-89.41728 36.49901, -89.37637 ...</td>
+      <td>MULTIPOLYGON (((-89.40565 36.52816, -89.39868 ...</td>
     </tr>
     <tr>
       <th>4</th>
@@ -1497,7 +1547,7 @@ Name: 2011-2021 Total_Pop % Change Percentile, Length: 11, dtype: float64
       <td>01779775</td>
       <td>...</td>
       <td>4582326383</td>
-      <td>MULTIPOLYGON (((-88.05338 30.50699, -88.03867 ...</td>
+      <td>MULTIPOLYGON (((-88.05338 30.50699, -88.05109 ...</td>
     </tr>
   </tbody>
 </table>
@@ -1593,6 +1643,23 @@ Name: 2011-2021 Total_Pop % Change Percentile, Length: 11, dtype: float64
 <p>5 rows × 83 columns</p>
 </div></div></div>
 </div>
+<p>Calling <code class="docutils literal notranslate"><span class="pre">simplify_coverage()</span></code> (for tiled maps that we’ll create later in this script) and <code class="docutils literal notranslate"><span class="pre">simplify()</span></code> (for maps with the ‘usa’ scope argument) in order to reduce the complexity of our state boundaries:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">gdf_states_and_growth_stats_for_tiled_maps</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">gdf_states_and_growth_stats</span><span class="o">.</span><span class="n">copy</span><span class="p">())</span>
+<span class="n">gdf_states_and_growth_stats_for_tiled_maps</span><span class="p">[</span><span class="s1">&#39;geometry&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">gdf_states_and_growth_stats_for_tiled_maps</span><span class="p">[</span>
+    <span class="s1">&#39;geometry&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">simplify_coverage</span><span class="p">(</span>
+    <span class="n">tolerance</span> <span class="o">=</span> <span class="mf">0.005</span><span class="p">))</span>
+
+<span class="n">gdf_states_and_growth_stats</span><span class="p">[</span><span class="s1">&#39;geometry&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">gdf_states_and_growth_stats</span><span class="p">[</span><span class="s1">&#39;geometry&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">simplify</span><span class="p">(</span>
+    <span class="n">tolerance</span> <span class="o">=</span> <span class="mf">0.005</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
 <section id="rendering-state-level-maps">
 <h3>Rendering state-level maps<a class="headerlink" href="#rendering-state-level-maps" title="Link to this heading">#</a></h3>
 <p>We’ll first use <code class="docutils literal notranslate"><span class="pre">gen_choropleth()</span></code> to create a map of total population growth; next, we’ll map population growth for the 25-29 age range.</p>
@@ -1682,6 +1749,11 @@ Name: 2011-2021 Total_Pop % Change Percentile, Length: 11, dtype: float64
 <li><p><a class="reference external" href="https://opendatacommons.org/licenses/odbl/">https://opendatacommons.org/licenses/odbl/</a></p></li>
 <li><p><a class="reference external" href="https://osmfoundation.org/wiki/Licence/Licence_and_Legal_FAQ">https://osmfoundation.org/wiki/Licence/Licence_and_Legal_FAQ</a></p></li>
 </ul>
+<p>There are several promising free options for tile providers, including:</p>
+<ol class="arabic simple">
+<li><p><a class="reference external" href="http://openfreemap.org">openfreemap.org</a> (<a class="reference external" href="https://openfreemap.org/quick_start/">https://openfreemap.org/quick_start/</a>). To use the Bright style that OpenFreeMap provides, set your map_style argument to ‘<a class="reference external" href="https://tiles.openfreemap.org/styles/bright">https://tiles.openfreemap.org/styles/bright</a>’; other style options are available as well.</p></li>
+<li><p>The USGS offers public-domain map tiles. To see how to incorporate these into a Plotly map, visit <a class="reference external" href="https://plotly.com/python/tile-map-layers/#base-tiles-from-the-usgs-no-token-needed">https://plotly.com/python/tile-map-layers/#base-tiles-from-the-usgs-no-token-needed</a> .</p></li>
+</ol>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig_simple_cm</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">choropleth_map</span><span class="p">(</span><span class="n">map_style</span><span class="o">=</span><span class="s1">&#39;open-street-map&#39;</span><span class="p">,</span> <span class="n">zoom</span><span class="o">=</span><span class="mf">4.35</span><span class="p">,</span> 
@@ -1704,7 +1776,7 @@ Name: 2011-2021 Total_Pop % Change Percentile, Length: 11, dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="../_images/a8e2544ae5fdb6707684f55577fbf0ac3d8947076295db70063ce57302887a13.png"><img alt="../_images/a8e2544ae5fdb6707684f55577fbf0ac3d8947076295db70063ce57302887a13.png" src="../_images/a8e2544ae5fdb6707684f55577fbf0ac3d8947076295db70063ce57302887a13.png" style="width: 720px;" /></a>
+<a class="reference internal image-reference" href="../_images/a1b2919dd8baf1f3fc33381e5ab7041b738cfc5174568e6f20cf571f32821126.png"><img alt="../_images/a1b2919dd8baf1f3fc33381e5ab7041b738cfc5174568e6f20cf571f32821126.png" src="../_images/a1b2919dd8baf1f3fc33381e5ab7041b738cfc5174568e6f20cf571f32821126.png" style="width: 720px;" /></a>
 </div>
 </div>
 <p>This graphic differs from the ones created earlier in that it shows map data in the form of tiles. (The previous maps showed state and county outlines from the Census, but there were no tiles underlying them–just a blank background.)</p>
@@ -1751,7 +1823,7 @@ Name: 2011-2021 Total_Pop % Change Percentile, Length: 11, dtype: float64
     
     <span class="k">for</span> <span class="n">options_dict</span> <span class="ow">in</span> <span class="n">options_dict_list</span><span class="p">:</span>
         <span class="n">fig</span> <span class="o">=</span> <span class="n">gen_choropleth_map</span><span class="p">(</span>
-            <span class="n">original_gdf</span><span class="o">=</span><span class="n">gdf_counties_and_growth_stats</span><span class="p">,</span> 
+            <span class="n">original_gdf</span><span class="o">=</span><span class="n">gdf_counties_and_growth_stats_for_tiled_maps</span><span class="p">,</span> 
             <span class="n">geojson_col</span><span class="o">=</span><span class="s1">&#39;geometry&#39;</span><span class="p">,</span> 
             <span class="n">location_name_col</span><span class="o">=</span><span class="s1">&#39;County/State&#39;</span><span class="p">,</span>
             <span class="n">data_col</span><span class="o">=</span><span class="n">tiled_data_col</span><span class="p">,</span> <span class="n">extra_hover_cols</span><span class="o">=</span><span class="n">extra_hover_cols</span><span class="p">,</span> 
@@ -1777,7 +1849,66 @@ Name: 2011-2021 Total_Pop % Change Percentile, Length: 11, dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="../_images/e2f105de1af6a733e39ccc36d7e92225dbc3ddd8b5122c15fd9c67c5258f5e84.png"><img alt="../_images/e2f105de1af6a733e39ccc36d7e92225dbc3ddd8b5122c15fd9c67c5258f5e84.png" src="../_images/e2f105de1af6a733e39ccc36d7e92225dbc3ddd8b5122c15fd9c67c5258f5e84.png" style="width: 720px;" /></a>
+<a class="reference internal image-reference" href="../_images/a0828503d373a4c09af2135bd2534df6f03c2667a00af4a1b2349fc38d5422c8.png"><img alt="../_images/a0828503d373a4c09af2135bd2534df6f03c2667a00af4a1b2349fc38d5422c8.png" src="../_images/a0828503d373a4c09af2135bd2534df6f03c2667a00af4a1b2349fc38d5422c8.png" style="width: 720px;" /></a>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">pop_type</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;25-29_&#39;</span><span class="p">]:</span> <span class="c1"># These variables refer to all residents</span>
+    <span class="c1"># and residents aged 25-29, respectively. I chose these values</span>
+    <span class="c1"># so that they could be incorporated more easily into our </span>
+    <span class="c1"># map filenames.</span>
+    <span class="k">if</span> <span class="n">pop_type</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+        <span class="n">pop_type_for_title</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="n">tiled_data_col</span> <span class="o">=</span> <span class="n">data_col</span>
+        <span class="n">extra_hover_cols</span> <span class="o">=</span> <span class="n">extra_hover_data</span>
+    <span class="k">if</span> <span class="n">pop_type</span> <span class="o">==</span> <span class="s1">&#39;25-29_&#39;</span><span class="p">:</span>
+        <span class="n">pop_type_for_title</span> <span class="o">=</span> <span class="s1">&#39;25-29 Year-Old &#39;</span>
+        <span class="n">tiled_data_col</span> <span class="o">=</span> <span class="n">young_data_col</span>
+        <span class="n">extra_hover_cols</span> <span class="o">=</span> <span class="n">young_extra_hover_data</span>
+    
+    <span class="n">filename</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;county_</span><span class="si">{</span><span class="n">pop_type</span><span class="si">}</span><span class="s1">pop_pct_growth_</span><span class="si">{</span><span class="n">year_range_start</span><span class="si">}</span><span class="se">\</span>
+<span class="s1">-</span><span class="si">{</span><span class="n">year_range_end</span><span class="si">}</span><span class="s1">_tiled&#39;</span>
+    <span class="c1"># Specifying which arguments to use for our static and interactive </span>
+    <span class="c1"># maps:</span>
+    <span class="c1"># (The first set of options will be used for HTML-based maps, and </span>
+    <span class="c1"># the second set will be applied for PNG-based maps.)</span>
+    <span class="n">options_dict_list</span> <span class="o">=</span> <span class="p">[{</span><span class="s1">&#39;zoom&#39;</span><span class="p">:</span><span class="mf">4.3</span><span class="p">,</span> <span class="s1">&#39;save_static&#39;</span><span class="p">:</span><span class="kc">False</span><span class="p">,</span> 
+                          <span class="s1">&#39;save_html&#39;</span><span class="p">:</span><span class="kc">True</span><span class="p">,</span> <span class="s1">&#39;title&#39;</span><span class="p">:</span><span class="s1">&#39;&#39;</span><span class="p">},</span>
+    <span class="p">{</span><span class="s1">&#39;zoom&#39;</span><span class="p">:</span><span class="mf">5.4</span><span class="p">,</span> <span class="s1">&#39;save_html&#39;</span><span class="p">:</span><span class="kc">False</span><span class="p">,</span> <span class="s1">&#39;save_static&#39;</span><span class="p">:</span><span class="kc">True</span><span class="p">,</span>
+    <span class="s1">&#39;title&#39;</span><span class="p">:</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">pop_type_for_title</span><span class="si">}</span><span class="se">\</span>
+<span class="s1">Population % Change by County from </span><span class="si">{</span><span class="n">year_range_start</span><span class="si">}</span><span class="s1"> </span><span class="se">\</span>
+<span class="s1">to </span><span class="si">{</span><span class="n">year_range_end</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">}]</span>
+    
+    <span class="k">for</span> <span class="n">options_dict</span> <span class="ow">in</span> <span class="n">options_dict_list</span><span class="p">:</span>
+        <span class="n">fig</span> <span class="o">=</span> <span class="n">gen_choropleth_map</span><span class="p">(</span>
+            <span class="n">original_gdf</span><span class="o">=</span><span class="n">gdf_counties_and_growth_stats_for_tiled_maps</span><span class="p">,</span> 
+            <span class="n">geojson_col</span><span class="o">=</span><span class="s1">&#39;geometry&#39;</span><span class="p">,</span> 
+            <span class="n">location_name_col</span><span class="o">=</span><span class="s1">&#39;County/State&#39;</span><span class="p">,</span>
+            <span class="n">data_col</span><span class="o">=</span><span class="n">tiled_data_col</span><span class="p">,</span> <span class="n">extra_hover_cols</span><span class="o">=</span><span class="n">extra_hover_cols</span><span class="p">,</span> 
+            <span class="n">color_continuous_scale</span><span class="o">=</span><span class="n">custom_color_scale</span><span class="p">,</span>
+            <span class="n">title</span><span class="o">=</span><span class="n">options_dict</span><span class="p">[</span><span class="s1">&#39;title&#39;</span><span class="p">],</span>
+            <span class="n">colormap_type</span><span class="o">=</span><span class="s1">&#39;percentile&#39;</span><span class="p">,</span>
+            <span class="n">colorscale_tick_count</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span>
+            <span class="n">tick_round_value</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+            <span class="n">static_file_folder</span><span class="o">=</span><span class="n">static_file_folder</span><span class="p">,</span>
+            <span class="n">html_file_folder</span><span class="o">=</span><span class="n">html_file_folder</span><span class="p">,</span>
+            <span class="n">filename</span> <span class="o">=</span> <span class="n">filename</span><span class="p">,</span>
+        <span class="n">custom_colorbar_title</span> <span class="o">=</span> <span class="s1">&#39;% Change&#39;</span><span class="p">,</span>
+        <span class="n">add_labels</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> 
+            <span class="n">zoom</span> <span class="o">=</span> <span class="n">options_dict</span><span class="p">[</span><span class="s1">&#39;zoom&#39;</span><span class="p">],</span>
+            <span class="n">save_static</span> <span class="o">=</span> <span class="n">options_dict</span><span class="p">[</span><span class="s1">&#39;save_static&#39;</span><span class="p">],</span>
+            <span class="n">save_html</span> <span class="o">=</span> <span class="n">options_dict</span><span class="p">[</span><span class="s1">&#39;save_html&#39;</span><span class="p">])</span>
+    
+<span class="c1"># Displaying the static image created within the final entry in </span>
+<span class="c1"># the for loop:</span>
+<span class="n">wadi</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="n">static_file_folder</span><span class="o">+</span><span class="s1">&#39;/&#39;</span><span class="o">+</span><span class="n">filename</span><span class="p">,</span> <span class="n">generate_image</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+     <span class="n">display_type</span><span class="o">=</span><span class="n">display_type</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="../_images/a0828503d373a4c09af2135bd2534df6f03c2667a00af4a1b2349fc38d5422c8.png"><img alt="../_images/a0828503d373a4c09af2135bd2534df6f03c2667a00af4a1b2349fc38d5422c8.png" src="../_images/a0828503d373a4c09af2135bd2534df6f03c2667a00af4a1b2349fc38d5422c8.png" style="width: 720px;" /></a>
 </div>
 </div>
 </section>
@@ -1800,7 +1931,7 @@ Name: 2011-2021 Total_Pop % Change Percentile, Length: 11, dtype: float64
 <span class="k">for</span> <span class="n">options_dict</span> <span class="ow">in</span> <span class="n">options_dict_list</span><span class="p">:</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">gdf</span> <span class="o">=</span> <span class="n">gen_choropleth_map</span><span class="p">(</span>
-            <span class="n">original_gdf</span><span class="o">=</span><span class="n">gdf_states_and_growth_stats</span><span class="p">,</span>
+            <span class="n">original_gdf</span><span class="o">=</span><span class="n">gdf_states_and_growth_stats_for_tiled_maps</span><span class="p">,</span>
             <span class="n">geojson_col</span><span class="o">=</span><span class="s1">&#39;geometry&#39;</span><span class="p">,</span> 
             <span class="n">location_name_col</span><span class="o">=</span><span class="s1">&#39;State&#39;</span><span class="p">,</span>
             <span class="n">data_col</span><span class="o">=</span><span class="n">data_col</span><span class="p">,</span> <span class="n">extra_hover_cols</span><span class="o">=</span><span class="n">extra_hover_data</span><span class="p">,</span> 
@@ -1832,10 +1963,7 @@ Name: 2011-2021 Total_Pop % Change Percentile, Length: 11, dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Failed to generate map. (This happens at times when attempting to save screenshots of tiled choropleth maps with labels; I&#39;m not sure why.)
-</pre></div>
-</div>
-<a class="reference internal image-reference" href="../_images/a1566849b6c7f03da96cfa762022974bcc2212845b8ede782502f92fd8257268.png"><img alt="../_images/a1566849b6c7f03da96cfa762022974bcc2212845b8ede782502f92fd8257268.png" src="../_images/a1566849b6c7f03da96cfa762022974bcc2212845b8ede782502f92fd8257268.png" style="width: 720px;" /></a>
+<a class="reference internal image-reference" href="../_images/574e70878aa6bcf72c84417181a17b799e4b17e1efb1e41ad493f33e0f75470c.png"><img alt="../_images/574e70878aa6bcf72c84417181a17b799e4b17e1efb1e41ad493f33e0f75470c.png" src="../_images/574e70878aa6bcf72c84417181a17b799e4b17e1efb1e41ad493f33e0f75470c.png" style="width: 720px;" /></a>
 </div>
 </div>
 </section>
@@ -1849,7 +1977,7 @@ Name: 2011-2021 Total_Pop % Change Percentile, Length: 11, dtype: float64
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">gdf_states_and_growth_stats</span><span class="p">[[</span>
     <span class="s1">&#39;State&#39;</span><span class="p">,</span> <span class="s1">&#39;2011-2021 Total_Pop % Change&#39;</span><span class="p">,</span> 
     <span class="s1">&#39;geometry&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">to_file</span><span class="p">(</span>
-    <span class="s1">&#39;states_and_growth_stats_subset.json&#39;</span><span class="p">)</span>
+    <span class="s1">&#39;states_and_growth_stats_subset.geojson&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1865,7 +1993,7 @@ Name: 2011-2021 Total_Pop % Change Percentile, Length: 11, dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Finished running script in 40.02 seconds.
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Finished running script in 73.254 seconds.
 </pre></div>
 </div>
 </div>
@@ -1946,7 +2074,10 @@ Name: 2011-2021 Total_Pop % Change Percentile, Length: 11, dtype: float64
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#importing-growth-data-for-us-counties">Importing growth data for US counties</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-an-initial-choropleth-map-with-a-linear-scale">Creating an initial choropleth map with a linear scale</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-an-initial-choropleth-map-with-a-linear-scale">Creating an initial choropleth map with a linear scale</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#simplifying-regional-boundaries">Simplifying regional boundaries</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-map-with-a-percentile-scale">Creating map with a percentile scale</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#specifying-how-many-data-points-we-d-like-to-include-within-our-color-scale">Specifying how many data points we’d like to include within our color scale</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#using-quantile-increment-to-specify-which-quantiles-to-retrieve">Using <code class="docutils literal notranslate"><span class="pre">quantile_increment</span></code> to specify which quantiles to retrieve</a></li>

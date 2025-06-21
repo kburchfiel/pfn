@@ -63,7 +63,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'Book_Specific_Materials/PFN_Dash_App_Demo_py_nb';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="NVCU Database Generator" href="../Appendix/nvcu_db_gen.html" />
+    <link rel="next" title="Conclusion: Now the fun begins!" href="conclusion_to_book.html" />
     <link rel="prev" title="PFN Dash App Demo" href="../Online_Visualizations/PFN_Dash_App_Demo/readme.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -214,6 +214,7 @@
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">Source code for PFN Dash App Demo</a></li>
 </ul>
 </details></li>
+<li class="toctree-l1"><a class="reference internal" href="conclusion_to_book.html">Conclusion: Now the fun begins!</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendix</span></p>
 <ul class="nav bd-sidenav">
@@ -378,6 +379,7 @@
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#import-layout-py">import_layout.py</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#procfile">Procfile</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#requirements-txt">requirements.txt</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion">Conclusion</a></li>
 </ul>
             </nav>
         </div>
@@ -398,37 +400,30 @@
 
 <span class="c1"># Much of this code derives from </span>
 <span class="c1"># https://github.com/plotly/dash-pivottable/blob/master/usage.py</span>
-<span class="c1"># and https://dash.plotly.com/urls .</span>
-
+<span class="c1"># and https://dash.plotly.com/urls (which provides useful information</span>
+<span class="c1"># on the Dash Pages feature that this app uses extensively).</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">dash</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">dash</span><span class="w"> </span><span class="kn">import</span> <span class="n">html</span><span class="p">,</span> <span class="n">callback</span><span class="p">,</span> <span class="n">Input</span><span class="p">,</span> <span class="n">Output</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">dash_pivottable</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+
+<span class="c1"># Importing current enrollment data:</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">data_import</span><span class="w"> </span><span class="kn">import</span> <span class="n">df_curr_enrollment</span>
 
-<span class="c1"># Reading in enrollment data:</span>
-
-<span class="c1"># df_curr_enrollment = pd.read_csv(</span>
-<span class="c1">#     &#39;https://raw.githubusercontent.com/kburchfiel/\</span>
-<span class="c1"># pfn/main/Appendix/curr_enrollment.csv&#39;)</span>
-
-
 <span class="c1"># Note that the &#39;data&#39; entry below should take the form of a list of lists</span>
-<span class="c1"># or list of dicts, rather than a DataFrame. (For reference, see</span>
+<span class="c1"># or dicts rather than a DataFrame. (For reference, see</span>
 <span class="c1"># https://github.com/plotly/react-pivottable/#accepted-formats-for-data)</span>
 <span class="c1"># Therefore, we&#39;ll need to convert our DataFrame into this format</span>
 <span class="c1"># before we can run the code.</span>
 <span class="c1"># It&#39;s possible to convert a DataFrame into a list of lists,</span>
-<span class="c1"># but I believe the easiest solution is to use to_dict(orient = &#39;records&#39;)</span>
+<span class="c1"># but I believe the easiest solution is to use to_dict(orient=&#39;records&#39;)</span>
 <span class="c1"># to convert the DataFrame into a list of dictionaries.</span>
 
 <span class="n">lod_curr_enrollment</span> <span class="o">=</span> <span class="n">df_curr_enrollment</span><span class="o">.</span><span class="n">to_dict</span><span class="p">(</span>
-    <span class="n">orient</span> <span class="o">=</span> <span class="s1">&#39;records&#39;</span><span class="p">)</span>
-<span class="c1"># lod = &#39;list of dicts&#39;</span>
+    <span class="n">orient</span><span class="o">=</span><span class="s1">&#39;records&#39;</span><span class="p">)</span> <span class="c1"># lod = &#39;list of dicts&#39;</span>
 
-
-<span class="n">dash</span><span class="o">.</span><span class="n">register_page</span><span class="p">(</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">path</span> <span class="o">=</span> <span class="s1">&#39;/dash_pivottable_enrollment&#39;</span><span class="p">)</span> <span class="c1"># </span>
+<span class="n">dash</span><span class="o">.</span><span class="n">register_page</span><span class="p">(</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="s1">&#39;/dash_pivottable_enrollment&#39;</span><span class="p">)</span> <span class="c1"># </span>
 
 <span class="n">layout</span> <span class="o">=</span> <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">([</span>
     <span class="n">dash_pivottable</span><span class="o">.</span><span class="n">PivotTable</span><span class="p">(</span>
@@ -473,8 +468,8 @@
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># This code shows how to use the dash-pivottable library to easily create </span>
 <span class="c1"># an interactive survey results dashboard.</span>
 
-<span class="c1"># For additional documentation, see enrollment_pivot.py.</span>
-
+<span class="c1"># For a bit more documentation on this code, see</span>
+<span class="c1"># dash_pivottable_enrollment.py .</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">dash</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">dash</span><span class="w"> </span><span class="kn">import</span> <span class="n">html</span><span class="p">,</span> <span class="n">callback</span><span class="p">,</span> <span class="n">Input</span><span class="p">,</span> <span class="n">Output</span>
@@ -489,12 +484,10 @@
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">data_import</span><span class="w"> </span><span class="kn">import</span> <span class="n">df_survey_results_extra_data</span>
 
-
 <span class="n">lod_survey_results_extra_data</span> <span class="o">=</span> <span class="n">df_survey_results_extra_data</span><span class="o">.</span><span class="n">to_dict</span><span class="p">(</span>
-    <span class="n">orient</span> <span class="o">=</span> <span class="s1">&#39;records&#39;</span><span class="p">)</span>
+    <span class="n">orient</span><span class="o">=</span><span class="s1">&#39;records&#39;</span><span class="p">)</span>
 
-
-<span class="n">dash</span><span class="o">.</span><span class="n">register_page</span><span class="p">(</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">path</span> <span class="o">=</span> <span class="s1">&#39;/dash_pivottable_survey_results&#39;</span><span class="p">)</span>
+<span class="n">dash</span><span class="o">.</span><span class="n">register_page</span><span class="p">(</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="s1">&#39;/dash_pivottable_survey_results&#39;</span><span class="p">)</span>
 
 <span class="n">layout</span> <span class="o">=</span> <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">([</span>
     <span class="n">dash_pivottable</span><span class="o">.</span><span class="n">PivotTable</span><span class="p">(</span>
@@ -514,7 +507,6 @@
     <span class="p">)</span>
 <span class="p">])</span>
 
-
 <span class="nd">@callback</span><span class="p">(</span><span class="n">Output</span><span class="p">(</span><span class="s1">&#39;output&#39;</span><span class="p">,</span> <span class="s1">&#39;children&#39;</span><span class="p">),</span>
               <span class="p">[</span><span class="n">Input</span><span class="p">(</span><span class="s1">&#39;table&#39;</span><span class="p">,</span> <span class="s1">&#39;cols&#39;</span><span class="p">),</span>
                <span class="n">Input</span><span class="p">(</span><span class="s1">&#39;table&#39;</span><span class="p">,</span> <span class="s1">&#39;rows&#39;</span><span class="p">),</span>
@@ -522,6 +514,7 @@
                <span class="n">Input</span><span class="p">(</span><span class="s1">&#39;table&#39;</span><span class="p">,</span> <span class="s1">&#39;colOrder&#39;</span><span class="p">),</span>
                <span class="n">Input</span><span class="p">(</span><span class="s1">&#39;table&#39;</span><span class="p">,</span> <span class="s1">&#39;aggregatorName&#39;</span><span class="p">),</span>
                <span class="n">Input</span><span class="p">(</span><span class="s1">&#39;table&#39;</span><span class="p">,</span> <span class="s1">&#39;rendererName&#39;</span><span class="p">)])</span>
+
 <span class="k">def</span><span class="w"> </span><span class="nf">display_props</span><span class="p">(</span><span class="n">cols</span><span class="p">,</span> <span class="n">rows</span><span class="p">,</span> <span class="n">row_order</span><span class="p">,</span> <span class="n">col_order</span><span class="p">,</span> <span class="n">aggregator</span><span class="p">,</span> <span class="n">renderer</span><span class="p">):</span>
     <span class="k">return</span> <span class="p">[</span>
         <span class="n">html</span><span class="o">.</span><span class="n">P</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">cols</span><span class="p">),</span> <span class="nb">id</span><span class="o">=</span><span class="s1">&#39;columns&#39;</span><span class="p">),</span>
@@ -536,7 +529,7 @@
 </section>
 <section id="fixed-dashboard-py">
 <h2>fixed_dashboard.py<a class="headerlink" href="#fixed-dashboard-py" title="Link to this heading">#</a></h2>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Sample fixed dashboard</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Sample Fixed Dashboard</span>
 <span class="c1"># By Kenneth Burchfiel</span>
 <span class="c1"># Released under the MIT License</span>
 
@@ -550,39 +543,36 @@
 <span class="c1"># by college and level graph:</span>
 
 <span class="n">df_enrollment_by_college_and_level</span> <span class="o">=</span> <span class="n">df_curr_enrollment</span><span class="o">.</span><span class="n">pivot_table</span><span class="p">(</span>
-    <span class="n">index</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;College&#39;</span><span class="p">,</span> <span class="s1">&#39;Level For Sorting&#39;</span><span class="p">,</span> <span class="s1">&#39;Level&#39;</span><span class="p">],</span>
-    <span class="n">values</span> <span class="o">=</span> <span class="s1">&#39;Enrollment&#39;</span><span class="p">,</span> <span class="n">aggfunc</span> <span class="o">=</span> <span class="s1">&#39;sum&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+    <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;College&#39;</span><span class="p">,</span> <span class="s1">&#39;Level For Sorting&#39;</span><span class="p">,</span> <span class="s1">&#39;Level&#39;</span><span class="p">],</span>
+    <span class="n">values</span><span class="o">=</span><span class="s1">&#39;Enrollment&#39;</span><span class="p">,</span> <span class="n">aggfunc</span><span class="o">=</span><span class="s1">&#39;sum&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
 
 <span class="c1"># Creating a graph of this pivot table:</span>
 <span class="n">fig_enrollment_by_college_and_level</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span>
     <span class="n">df_enrollment_by_college_and_level</span><span class="p">,</span> 
-       <span class="n">x</span> <span class="o">=</span> <span class="s1">&#39;College&#39;</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="s1">&#39;Enrollment&#39;</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;Level&#39;</span><span class="p">,</span>
-      <span class="n">barmode</span> <span class="o">=</span> <span class="s1">&#39;group&#39;</span><span class="p">,</span>
-      <span class="n">text_auto</span> <span class="o">=</span> <span class="s1">&#39;.0f&#39;</span><span class="p">,</span>
-      <span class="n">title</span> <span class="o">=</span> <span class="s1">&#39;NVCU Enrollment by College and Level&#39;</span><span class="p">)</span>
+       <span class="n">x</span><span class="o">=</span><span class="s1">&#39;College&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;Enrollment&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;Level&#39;</span><span class="p">,</span>
+      <span class="n">barmode</span><span class="o">=</span><span class="s1">&#39;group&#39;</span><span class="p">,</span>
+      <span class="n">text_auto</span><span class="o">=</span><span class="s1">&#39;.0f&#39;</span><span class="p">,</span>
+      <span class="n">title</span><span class="o">=</span><span class="s1">&#39;NVCU Enrollment by College and Level&#39;</span><span class="p">)</span>
 
 <span class="c1"># Performing the same steps for simpler charts that show enrollment</span>
 <span class="c1"># by college and by level (but not both):</span>
 <span class="n">df_enrollment_by_college</span> <span class="o">=</span> <span class="n">df_curr_enrollment</span><span class="o">.</span><span class="n">pivot_table</span><span class="p">(</span>
-    <span class="n">index</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;College&#39;</span><span class="p">],</span>
-    <span class="n">values</span> <span class="o">=</span> <span class="s1">&#39;Enrollment&#39;</span><span class="p">,</span> <span class="n">aggfunc</span> <span class="o">=</span> <span class="s1">&#39;sum&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+    <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;College&#39;</span><span class="p">],</span>
+    <span class="n">values</span><span class="o">=</span><span class="s1">&#39;Enrollment&#39;</span><span class="p">,</span> <span class="n">aggfunc</span><span class="o">=</span><span class="s1">&#39;sum&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
 
 <span class="n">fig_enrollment_by_college</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">df_enrollment_by_college</span><span class="p">,</span> 
-       <span class="n">x</span> <span class="o">=</span> <span class="s1">&#39;College&#39;</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="s1">&#39;Enrollment&#39;</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;College&#39;</span><span class="p">,</span>
-      <span class="n">text_auto</span> <span class="o">=</span> <span class="s1">&#39;.0f&#39;</span><span class="p">,</span>
-      <span class="n">title</span> <span class="o">=</span> <span class="s1">&#39;NVCU Enrollment by College&#39;</span><span class="p">)</span>
+    <span class="n">x</span><span class="o">=</span><span class="s1">&#39;College&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;Enrollment&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;College&#39;</span><span class="p">,</span>
+    <span class="n">text_auto</span><span class="o">=</span><span class="s1">&#39;.0f&#39;</span><span class="p">,</span>
+    <span class="n">title</span><span class="o">=</span><span class="s1">&#39;NVCU Enrollment by College&#39;</span><span class="p">)</span>
 
 <span class="n">df_enrollment_by_level</span> <span class="o">=</span> <span class="n">df_curr_enrollment</span><span class="o">.</span><span class="n">pivot_table</span><span class="p">(</span>
-    <span class="n">index</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Level For Sorting&#39;</span><span class="p">,</span> <span class="s1">&#39;Level&#39;</span><span class="p">],</span>
-    <span class="n">values</span> <span class="o">=</span> <span class="s1">&#39;Enrollment&#39;</span><span class="p">,</span> <span class="n">aggfunc</span> <span class="o">=</span> <span class="s1">&#39;sum&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+    <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Level For Sorting&#39;</span><span class="p">,</span> <span class="s1">&#39;Level&#39;</span><span class="p">],</span>
+    <span class="n">values</span><span class="o">=</span><span class="s1">&#39;Enrollment&#39;</span><span class="p">,</span> <span class="n">aggfunc</span><span class="o">=</span><span class="s1">&#39;sum&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
 
 <span class="n">fig_enrollment_by_level</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">df_enrollment_by_level</span><span class="p">,</span> 
-       <span class="n">x</span> <span class="o">=</span> <span class="s1">&#39;Level&#39;</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="s1">&#39;Enrollment&#39;</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;Level&#39;</span><span class="p">,</span>
-      <span class="n">text_auto</span> <span class="o">=</span> <span class="s1">&#39;.0f&#39;</span><span class="p">,</span>
-      <span class="n">title</span> <span class="o">=</span> <span class="s1">&#39;NVCU Enrollment by Level&#39;</span><span class="p">)</span>
-
-
-
+       <span class="n">x</span><span class="o">=</span><span class="s1">&#39;Level&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;Enrollment&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;Level&#39;</span><span class="p">,</span>
+      <span class="n">text_auto</span><span class="o">=</span><span class="s1">&#39;.0f&#39;</span><span class="p">,</span>
+      <span class="n">title</span><span class="o">=</span><span class="s1">&#39;NVCU Enrollment by Level&#39;</span><span class="p">)</span>
 
 <span class="n">dash</span><span class="o">.</span><span class="n">register_page</span><span class="p">(</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="s1">&#39;/fixed_dashboard&#39;</span><span class="p">)</span>
 
@@ -622,6 +612,10 @@
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">data_import</span><span class="w"> </span><span class="kn">import</span> <span class="n">df_curr_enrollment</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">plotly.express</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">px</span>
+
+<span class="c1"># The following auto_pivot_and_graph code was featured </span>
+<span class="c1"># within the Pivot and Graph Functions section of PFN.</span>
+
 <span class="kn">from</span><span class="w"> </span><span class="nn">auto_pivot_and_graph</span><span class="w"> </span><span class="kn">import</span> <span class="n">autopivot_plus_bar</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">import_layout</span><span class="w"> </span><span class="kn">import</span> <span class="n">import_layout</span>
 
@@ -641,6 +635,10 @@
     <span class="s1">&#39;Student ID&#39;</span><span class="p">,</span> <span class="s1">&#39;Matriculation Number&#39;</span><span class="p">,</span> <span class="s1">&#39;Enrollment&#39;</span><span class="p">]</span>
 <span class="n">comparison_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span>
     <span class="nb">set</span><span class="p">(</span><span class="n">df_curr_enrollment</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span> <span class="o">-</span> <span class="nb">set</span><span class="p">(</span><span class="n">cols_to_exclude</span><span class="p">))</span>
+<span class="c1"># Converting a list of items into a set can make it easier to remove</span>
+<span class="c1"># a group of items from that set. For more on this data type, see</span>
+<span class="c1"># https://docs.python.org/3/tutorial/datastructures.html#sets .</span>
+
 <span class="n">color_list</span> <span class="o">=</span> <span class="n">comparison_list</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span> <span class="c1"># These lists can contain</span>
 <span class="c1"># the same values.</span>
 
@@ -656,6 +654,8 @@
 <span class="c1"># For instance, &#39;College&#39; will map to &#39;College_filter.&#39;) </span>
 
 <span class="c1"># Configuring the page&#39;s layout:</span>
+<span class="c1"># The import_layout() function will make it easier to create the</span>
+<span class="c1"># central part of the page&#39;s layout.</span>
 <span class="c1"># (Note the use of + to combine different lists of layout components</span>
 <span class="c1"># together.)</span>
 
@@ -672,14 +672,14 @@
 <span class="s1">    of the page&#39;s layout.</span>
 <span class="s1">    </span>
 <span class="s1">    &#39;&#39;&#39;</span><span class="p">),</span> <span class="n">lg</span> <span class="o">=</span> <span class="mi">9</span><span class="p">))]</span> <span class="o">+</span>
-    <span class="n">import_layout</span><span class="p">(</span><span class="n">df</span> <span class="o">=</span> <span class="n">df_curr_enrollment</span><span class="p">,</span> 
+    <span class="n">import_layout</span><span class="p">(</span><span class="n">df</span><span class="o">=</span><span class="n">df_curr_enrollment</span><span class="p">,</span> 
                   <span class="n">comparison_list</span><span class="o">=</span><span class="n">comparison_list</span><span class="p">,</span>
-                 <span class="n">comparison_default</span> <span class="o">=</span> <span class="n">comparison_default</span><span class="p">,</span>
-                 <span class="n">color_list</span> <span class="o">=</span> <span class="n">color_list</span><span class="p">,</span>
-                 <span class="n">color_default</span> <span class="o">=</span> <span class="n">color_default</span><span class="p">,</span> 
-                  <span class="n">filter_cols</span> <span class="o">=</span> <span class="n">filter_cols</span><span class="p">)</span> <span class="o">+</span>
+                 <span class="n">comparison_default</span><span class="o">=</span><span class="n">comparison_default</span><span class="p">,</span>
+                 <span class="n">color_list</span> <span class="n">color_list</span><span class="p">,</span>
+                 <span class="n">color_default</span><span class="o">=</span><span class="n">color_default</span><span class="p">,</span> 
+                  <span class="n">filter_cols</span><span class="o">=</span><span class="n">filter_cols</span><span class="p">)</span> <span class="o">+</span>
     <span class="c1"># For more information about the multi-dropdown option,</span>
-    <span class="c1"># see https://dash.plotly.com/dash-core-components/dropdown</span>
+    <span class="c1"># see https://dash.plotly.com/dash-core-components/dropdown . </span>
     <span class="p">[</span><span class="n">dcc</span><span class="o">.</span><span class="n">Graph</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s1">&#39;flexible_enrollment_graph&#39;</span><span class="p">)]</span> <span class="o">+</span> 
     <span class="p">[</span><span class="n">dcc</span><span class="o">.</span><span class="n">Graph</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s1">&#39;flexible_enrollment_table&#39;</span><span class="p">)]</span>
 <span class="p">)</span> 
@@ -697,7 +697,7 @@
     <span class="n">Input</span><span class="p">(</span><span class="s1">&#39;Gender_filter&#39;</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">)</span>
 <span class="p">)</span>
 
-<span class="c1"># The following function calls autopivot_plus_bar to convert</span>
+<span class="c1"># The following function calls autopivot_plus_bar() to convert</span>
 <span class="c1"># the input values specified above into a bar chart:</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">display_graph</span><span class="p">(</span><span class="n">x_vars</span><span class="p">,</span> <span class="n">color</span><span class="p">,</span> <span class="n">college_filter</span><span class="p">,</span> 
                   <span class="n">level_filter</span><span class="p">,</span> <span class="n">gender_filter</span><span class="p">):</span>
@@ -718,13 +718,13 @@
     <span class="c1"># the chart title will begin with &#39;Enrollment&#39;</span>
     <span class="c1"># rather than &#39;Total Enrollment.&#39;</span>
     <span class="n">bar_graph</span><span class="p">,</span> <span class="n">table</span> <span class="o">=</span> <span class="n">autopivot_plus_bar</span><span class="p">(</span>
-        <span class="n">df</span> <span class="o">=</span> <span class="n">df_curr_enrollment</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="s1">&#39;Enrollment&#39;</span><span class="p">,</span> 
-        <span class="n">aggfunc</span> <span class="o">=</span> <span class="s1">&#39;sum&#39;</span><span class="p">,</span> <span class="n">x_vars</span> <span class="o">=</span> <span class="n">x_vars</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="n">color</span><span class="p">,</span>
-    <span class="n">x_vars_to_exclude</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Level For Sorting&#39;</span><span class="p">],</span> 
-        <span class="n">overall_data_name</span> <span class="o">=</span> <span class="s1">&#39;All Data&#39;</span><span class="p">,</span>
-    <span class="n">weight_col</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">filter_tuple_list</span> <span class="o">=</span> <span class="n">filter_tuple_list</span><span class="p">,</span>
-    <span class="n">custom_aggfunc_name</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">create_table</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
-    <span class="n">text_auto</span> <span class="o">=</span> <span class="s1">&#39;.0f&#39;</span><span class="p">)</span>
+        <span class="n">df</span><span class="o">=</span><span class="n">df_curr_enrollment</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;Enrollment&#39;</span><span class="p">,</span> 
+        <span class="n">aggfunc</span><span class="o">=</span><span class="s1">&#39;sum&#39;</span><span class="p">,</span> <span class="n">x_vars</span><span class="o">=</span><span class="n">x_vars</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span>
+    <span class="n">x_vars_to_exclude</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Level For Sorting&#39;</span><span class="p">],</span> 
+        <span class="n">overall_data_name</span><span class="o">=</span><span class="s1">&#39;All Data&#39;</span><span class="p">,</span>
+    <span class="n">weight_col</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">filter_tuple_list</span><span class="o">=</span><span class="n">filter_tuple_list</span><span class="p">,</span>
+    <span class="n">custom_aggfunc_name</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">create_table</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">text_auto</span><span class="o">=</span><span class="s1">&#39;.0f&#39;</span><span class="p">)</span>
 
     <span class="nb">print</span><span class="p">(</span><span class="n">table</span><span class="p">)</span>
 
@@ -734,7 +734,7 @@
 </section>
 <section id="flexible-survey-results-dashboard-py">
 <h2>flexible_survey_results_dashboard.py<a class="headerlink" href="#flexible-survey-results-dashboard-py" title="Link to this heading">#</a></h2>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Flexible survey_results Dashboard</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Flexible Survey Results Dashboard</span>
 <span class="c1"># By Kenneth Burchfiel</span>
 <span class="c1"># Released under the MIT License</span>
 
@@ -742,6 +742,8 @@
 <span class="c1"># and https://dash.plotly.com/urls </span>
 <span class="c1"># and https://dash.plotly.com/minimal-app .</span>
 
+<span class="c1"># For a bit more documentation on this code, reference</span>
+<span class="c1"># flexible_enrollment_dashboard.py, which uses a very similar setup.</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">dash</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">dash</span><span class="w"> </span><span class="kn">import</span> <span class="n">html</span><span class="p">,</span> <span class="n">dcc</span><span class="p">,</span> <span class="n">callback</span><span class="p">,</span> <span class="n">Output</span><span class="p">,</span> <span class="n">Input</span>
@@ -755,49 +757,43 @@
 <span class="c1"># Configuring the page&#39;s layout:</span>
 <span class="n">layout</span> <span class="o">=</span> <span class="n">dbc</span><span class="o">.</span><span class="n">Container</span><span class="p">([</span>
     <span class="n">dbc</span><span class="o">.</span><span class="n">Row</span><span class="p">(</span><span class="n">dbc</span><span class="o">.</span><span class="n">Col</span><span class="p">(</span><span class="n">dcc</span><span class="o">.</span><span class="n">Markdown</span><span class="p">(</span><span class="s1">&#39;&#39;&#39;</span>
-
 <span class="s1">    # Flexible Interactive Survey Results Dashboard</span>
 <span class="s1">    </span>
 <span class="s1">    This dashboard provides a flexible overview of NVCU student survey </span>
-<span class="s1">    results. It utilizes the autopivot() and autobar() functions found within</span>
-<span class="s1">    auto_pivot_and_graph.py to allow for a wide range of display options.</span>
-<span class="s1">    </span>
-<span class="s1">    &#39;&#39;&#39;</span><span class="p">),</span> <span class="n">lg</span> <span class="o">=</span> <span class="mi">9</span><span class="p">)),</span>
+<span class="s1">    results. It utilizes the autopivot() and autobar() functions found </span>
+<span class="s1">    within auto_pivot_and_graph.py to allow for a wide range of </span>
+<span class="s1">    display options.</span>
+<span class="s1">    &#39;&#39;&#39;</span><span class="p">),</span> <span class="n">lg</span><span class="o">=</span><span class="mi">9</span><span class="p">)),</span>
     <span class="n">dbc</span><span class="o">.</span><span class="n">Row</span><span class="p">([</span>
-        <span class="n">dbc</span><span class="o">.</span><span class="n">Col</span><span class="p">(</span><span class="n">html</span><span class="o">.</span><span class="n">H5</span><span class="p">(</span><span class="s2">&quot;Comparison Options:&quot;</span><span class="p">),</span> <span class="n">lg</span> <span class="o">=</span> <span class="mi">3</span><span class="p">),</span>
+        <span class="n">dbc</span><span class="o">.</span><span class="n">Col</span><span class="p">(</span><span class="n">html</span><span class="o">.</span><span class="n">H5</span><span class="p">(</span><span class="s2">&quot;Comparison Options:&quot;</span><span class="p">),</span> <span class="n">lg</span><span class="o">=</span><span class="mi">3</span><span class="p">),</span>
     <span class="n">dbc</span><span class="o">.</span><span class="n">Col</span><span class="p">(</span><span class="n">dcc</span><span class="o">.</span><span class="n">Dropdown</span><span class="p">(</span>
         <span class="p">[</span><span class="s1">&#39;Starting Year&#39;</span><span class="p">,</span> <span class="s1">&#39;Season&#39;</span><span class="p">,</span> <span class="s1">&#39;Gender&#39;</span><span class="p">,</span> <span class="s1">&#39;Matriculation Year&#39;</span><span class="p">,</span>
        <span class="s1">&#39;College&#39;</span><span class="p">,</span> <span class="s1">&#39;Class Of&#39;</span><span class="p">,</span> <span class="s1">&#39;Level&#39;</span><span class="p">,</span> <span class="s1">&#39;Level For Sorting&#39;</span><span class="p">],</span> 
-        <span class="p">[</span><span class="s1">&#39;College&#39;</span><span class="p">,</span> <span class="s1">&#39;Season&#39;</span><span class="p">],</span> <span class="n">multi</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
-                 <span class="nb">id</span> <span class="o">=</span> <span class="s1">&#39;flexible_survey_results_index&#39;</span><span class="p">),</span> <span class="n">lg</span> <span class="o">=</span> <span class="mi">3</span><span class="p">),</span>
-        <span class="n">dbc</span><span class="o">.</span><span class="n">Col</span><span class="p">(</span><span class="n">html</span><span class="o">.</span><span class="n">H5</span><span class="p">(</span><span class="s2">&quot;Color Option:&quot;</span><span class="p">),</span> <span class="n">lg</span> <span class="o">=</span> <span class="mi">2</span><span class="p">),</span>
+        <span class="p">[</span><span class="s1">&#39;College&#39;</span><span class="p">,</span> <span class="s1">&#39;Season&#39;</span><span class="p">],</span> <span class="n">multi</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                 <span class="nb">id</span><span class="o">=</span><span class="s1">&#39;flexible_survey_results_index&#39;</span><span class="p">),</span> <span class="n">lg</span><span class="o">=</span><span class="mi">3</span><span class="p">),</span>
+        <span class="n">dbc</span><span class="o">.</span><span class="n">Col</span><span class="p">(</span><span class="n">html</span><span class="o">.</span><span class="n">H5</span><span class="p">(</span><span class="s2">&quot;Color Option:&quot;</span><span class="p">),</span> <span class="n">lg</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span>
     <span class="n">dbc</span><span class="o">.</span><span class="n">Col</span><span class="p">(</span><span class="n">dcc</span><span class="o">.</span><span class="n">Dropdown</span><span class="p">(</span>
         <span class="p">[</span><span class="s1">&#39;Starting Year&#39;</span><span class="p">,</span> <span class="s1">&#39;Season&#39;</span><span class="p">,</span> 
          <span class="s1">&#39;Score&#39;</span><span class="p">,</span> <span class="s1">&#39;Gender&#39;</span><span class="p">,</span> <span class="s1">&#39;Matriculation Year&#39;</span><span class="p">,</span>
        <span class="s1">&#39;College&#39;</span><span class="p">,</span> <span class="s1">&#39;Class Of&#39;</span><span class="p">,</span> <span class="s1">&#39;Level&#39;</span><span class="p">,</span> <span class="s1">&#39;Level For Sorting&#39;</span><span class="p">],</span> 
-        <span class="s1">&#39;Season&#39;</span><span class="p">,</span> <span class="nb">id</span> <span class="o">=</span> <span class="s1">&#39;flexible_survey_results_color&#39;</span><span class="p">),</span> <span class="n">lg</span> <span class="o">=</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="s1">&#39;Season&#39;</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="s1">&#39;flexible_survey_results_color&#39;</span><span class="p">),</span> <span class="n">lg</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
            <span class="p">]),</span>
     <span class="n">dbc</span><span class="o">.</span><span class="n">Row</span><span class="p">([</span>
-        <span class="n">dbc</span><span class="o">.</span><span class="n">Col</span><span class="p">(</span><span class="n">html</span><span class="o">.</span><span class="n">H5</span><span class="p">(</span><span class="s2">&quot;College Filter:&quot;</span><span class="p">),</span> <span class="n">lg</span> <span class="o">=</span> <span class="mi">3</span><span class="p">),</span>
+        <span class="n">dbc</span><span class="o">.</span><span class="n">Col</span><span class="p">(</span><span class="n">html</span><span class="o">.</span><span class="n">H5</span><span class="p">(</span><span class="s2">&quot;College Filter:&quot;</span><span class="p">),</span> <span class="n">lg</span><span class="o">=</span><span class="mi">3</span><span class="p">),</span>
     <span class="n">dbc</span><span class="o">.</span><span class="n">Col</span><span class="p">(</span>
         <span class="n">dcc</span><span class="o">.</span><span class="n">Dropdown</span><span class="p">(</span><span class="n">df_survey_results_extra_data</span><span class="p">[</span><span class="s1">&#39;College&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">(),</span>
                  <span class="n">df_survey_results_extra_data</span><span class="p">[</span><span class="s1">&#39;College&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">(),</span>
-                 <span class="n">multi</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
-                <span class="nb">id</span> <span class="o">=</span> <span class="s1">&#39;college_filter&#39;</span><span class="p">),</span> <span class="n">lg</span> <span class="o">=</span> <span class="mi">3</span><span class="p">),</span>
+                 <span class="n">multi</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                <span class="nb">id</span><span class="o">=</span><span class="s1">&#39;college_filter&#39;</span><span class="p">),</span> <span class="n">lg</span><span class="o">=</span><span class="mi">3</span><span class="p">),</span>
         <span class="p">]),</span>
     <span class="n">dbc</span><span class="o">.</span><span class="n">Row</span><span class="p">([</span>
-        <span class="n">dbc</span><span class="o">.</span><span class="n">Col</span><span class="p">(</span><span class="n">html</span><span class="o">.</span><span class="n">H5</span><span class="p">(</span><span class="s2">&quot;Level Filter:&quot;</span><span class="p">),</span> <span class="n">lg</span> <span class="o">=</span> <span class="mi">3</span><span class="p">),</span>
+        <span class="n">dbc</span><span class="o">.</span><span class="n">Col</span><span class="p">(</span><span class="n">html</span><span class="o">.</span><span class="n">H5</span><span class="p">(</span><span class="s2">&quot;Level Filter:&quot;</span><span class="p">),</span> <span class="n">lg</span><span class="o">=</span><span class="mi">3</span><span class="p">),</span>
     <span class="n">dbc</span><span class="o">.</span><span class="n">Col</span><span class="p">(</span><span class="n">dcc</span><span class="o">.</span><span class="n">Dropdown</span><span class="p">(</span><span class="n">df_survey_results_extra_data</span><span class="p">[</span><span class="s1">&#39;Level&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">(),</span>
                  <span class="n">df_survey_results_extra_data</span><span class="p">[</span><span class="s1">&#39;Level&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">(),</span>
-                 <span class="n">multi</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
-                <span class="nb">id</span> <span class="o">=</span> <span class="s1">&#39;level_filter&#39;</span><span class="p">),</span> <span class="n">lg</span> <span class="o">=</span> <span class="mi">3</span><span class="p">)</span>
+                 <span class="n">multi</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                <span class="nb">id</span><span class="o">=</span><span class="s1">&#39;level_filter&#39;</span><span class="p">),</span> <span class="n">lg</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
     <span class="p">]),</span>
-    <span class="c1"># For more information about the multi-dropdown option,</span>
-    <span class="c1"># see https://dash.plotly.com/dash-core-components/dropdown</span>
     <span class="n">dcc</span><span class="o">.</span><span class="n">Graph</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s1">&#39;flexible_survey_results_view&#39;</span><span class="p">)])</span>
-
-<span class="c1"># Configuring a callback that can convert the index and filter options</span>
-<span class="c1"># specified by the user into a custom chart:</span>
 
 <span class="nd">@callback</span><span class="p">(</span>
     <span class="n">Output</span><span class="p">(</span><span class="s1">&#39;flexible_survey_results_view&#39;</span><span class="p">,</span> <span class="s1">&#39;figure&#39;</span><span class="p">),</span>
@@ -807,13 +803,9 @@
     <span class="n">Input</span><span class="p">(</span><span class="s1">&#39;level_filter&#39;</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">)</span>
 <span class="p">)</span>
 
-<span class="c1"># The following function calls autopivot_plus_bar to convert</span>
-<span class="c1"># the input values specified above into a bar chart:</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">display_graph</span><span class="p">(</span><span class="n">x_vars</span><span class="p">,</span> <span class="n">color</span><span class="p">,</span> <span class="n">college_filter</span><span class="p">,</span> <span class="n">level_filter</span><span class="p">):</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">college_filter</span><span class="p">,</span><span class="n">level_filter</span><span class="p">)</span>
 
-    <span class="c1"># Creating a list of tuples that can be used to filter</span>
-    <span class="c1"># the output:</span>
     <span class="n">filter_tuple_list</span> <span class="o">=</span> <span class="p">[</span>
     <span class="p">(</span><span class="s1">&#39;College&#39;</span><span class="p">,</span> 
      <span class="n">college_filter</span><span class="p">),</span>
@@ -823,11 +815,11 @@
     <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;color contents and type:&#39;</span><span class="p">,</span><span class="n">color</span><span class="p">,</span><span class="nb">type</span><span class="p">(</span><span class="n">color</span><span class="p">))</span>
     
     <span class="k">return</span> <span class="n">autopivot_plus_bar</span><span class="p">(</span>
-        <span class="n">df</span> <span class="o">=</span> <span class="n">df_survey_results_extra_data</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="s1">&#39;Score&#39;</span><span class="p">,</span> 
-        <span class="n">aggfunc</span> <span class="o">=</span> <span class="s1">&#39;mean&#39;</span><span class="p">,</span> <span class="n">x_vars</span> <span class="o">=</span> <span class="n">x_vars</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="n">color</span><span class="p">,</span>
-    <span class="n">x_vars_to_exclude</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Level For Sorting&#39;</span><span class="p">],</span> 
-        <span class="n">overall_data_name</span> <span class="o">=</span> <span class="s1">&#39;All Data&#39;</span><span class="p">,</span>
-    <span class="n">weight_col</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">filter_tuple_list</span> <span class="o">=</span> <span class="n">filter_tuple_list</span><span class="p">)</span>
+        <span class="n">df</span><span class="o">=</span><span class="n">df_survey_results_extra_data</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;Score&#39;</span><span class="p">,</span> 
+        <span class="n">aggfunc</span><span class="o">=</span><span class="s1">&#39;mean&#39;</span><span class="p">,</span> <span class="n">x_vars</span><span class="o">=</span><span class="n">x_vars</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span>
+    <span class="n">x_vars_to_exclude</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Level For Sorting&#39;</span><span class="p">],</span> 
+        <span class="n">overall_data_name</span><span class="o">=</span><span class="s1">&#39;All Data&#39;</span><span class="p">,</span>
+    <span class="n">weight_col</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">filter_tuple_list</span><span class="o">=</span><span class="n">filter_tuple_list</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>
@@ -895,7 +887,7 @@
 </section>
 <section id="simple-interactive-dashboard-py">
 <h2>simple_interactive_dashboard.py<a class="headerlink" href="#simple-interactive-dashboard-py" title="Link to this heading">#</a></h2>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Simple Enrollment Dashboard</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Simple Interactive Dashboard</span>
 <span class="c1"># By Kenneth Burchfiel</span>
 <span class="c1"># Released under the MIT License</span>
 
@@ -928,7 +920,7 @@
 <span class="s1">    filter options, allowing the user to create a variety of custom views.</span>
 
 <span class="s1">    This dashboard is not as versatile or flexible as those that apply the </span>
-<span class="s1">    Dash-Pivottable library (e.g. the &#39;Dash pivottable survey results&#39; </span>
+<span class="s1">    Dash-Pivottable library (e.g. the &#39;Dash Pivottable (Survey Results)&#39; </span>
 <span class="s1">    dashboard), but it can still serve as a helpful introduction </span>
 <span class="s1">    to some of Dash&#39;s core features.</span>
 
@@ -938,29 +930,28 @@
 <span class="s1">    to create a more condensed layout that accommodates a range of </span>
 <span class="s1">    screen sizes. This library is also used in certain other dashboards </span>
 <span class="s1">    within this app.</span>
-<span class="s1">    </span>
-<span class="s1">    &#39;&#39;&#39;</span><span class="p">),</span> <span class="n">lg</span> <span class="o">=</span> <span class="mi">9</span><span class="p">)),</span>
+<span class="s1">    &#39;&#39;&#39;</span><span class="p">),</span> <span class="n">lg</span><span class="o">=</span><span class="mi">9</span><span class="p">)),</span>
     <span class="n">dbc</span><span class="o">.</span><span class="n">Row</span><span class="p">([</span>
-        <span class="n">dbc</span><span class="o">.</span><span class="n">Col</span><span class="p">(</span><span class="n">html</span><span class="o">.</span><span class="n">H5</span><span class="p">(</span><span class="s2">&quot;Comparison Options:&quot;</span><span class="p">),</span> <span class="n">lg</span> <span class="o">=</span> <span class="mi">3</span><span class="p">),</span>
+        <span class="n">dbc</span><span class="o">.</span><span class="n">Col</span><span class="p">(</span><span class="n">html</span><span class="o">.</span><span class="n">H5</span><span class="p">(</span><span class="s2">&quot;Comparison Options:&quot;</span><span class="p">),</span> <span class="n">lg</span><span class="o">=</span><span class="mi">3</span><span class="p">),</span>
     <span class="n">dbc</span><span class="o">.</span><span class="n">Col</span><span class="p">(</span><span class="n">dcc</span><span class="o">.</span><span class="n">Dropdown</span><span class="p">([</span><span class="s1">&#39;College&#39;</span><span class="p">,</span> <span class="s1">&#39;Level&#39;</span><span class="p">,</span> 
                   <span class="s1">&#39;College and Level&#39;</span><span class="p">,</span> <span class="s1">&#39;Level and College&#39;</span><span class="p">,</span> 
                   <span class="s1">&#39;All Students&#39;</span><span class="p">],</span> <span class="s1">&#39;College and Level&#39;</span><span class="p">,</span> 
-                 <span class="nb">id</span> <span class="o">=</span> <span class="s1">&#39;simple_enrollment_index&#39;</span><span class="p">),</span> <span class="n">lg</span> <span class="o">=</span> <span class="mi">2</span><span class="p">)</span>
+                 <span class="nb">id</span><span class="o">=</span><span class="s1">&#39;simple_enrollment_index&#39;</span><span class="p">),</span> <span class="n">lg</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
            <span class="p">]),</span>
     <span class="n">dbc</span><span class="o">.</span><span class="n">Row</span><span class="p">([</span>
-        <span class="n">dbc</span><span class="o">.</span><span class="n">Col</span><span class="p">(</span><span class="n">html</span><span class="o">.</span><span class="n">H5</span><span class="p">(</span><span class="s2">&quot;College Filter:&quot;</span><span class="p">),</span> <span class="n">lg</span> <span class="o">=</span> <span class="mi">3</span><span class="p">),</span>
+        <span class="n">dbc</span><span class="o">.</span><span class="n">Col</span><span class="p">(</span><span class="n">html</span><span class="o">.</span><span class="n">H5</span><span class="p">(</span><span class="s2">&quot;College Filter:&quot;</span><span class="p">),</span> <span class="n">lg</span><span class="o">=</span><span class="mi">3</span><span class="p">),</span>
     <span class="n">dbc</span><span class="o">.</span><span class="n">Col</span><span class="p">(</span>
         <span class="n">dcc</span><span class="o">.</span><span class="n">Dropdown</span><span class="p">(</span><span class="n">df_curr_enrollment</span><span class="p">[</span><span class="s1">&#39;College&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">(),</span>
                  <span class="n">df_curr_enrollment</span><span class="p">[</span><span class="s1">&#39;College&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">(),</span>
-                 <span class="n">multi</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
-                <span class="nb">id</span> <span class="o">=</span> <span class="s1">&#39;college_filter&#39;</span><span class="p">),</span> <span class="n">lg</span> <span class="o">=</span> <span class="mi">3</span><span class="p">),</span>
+                 <span class="n">multi</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                <span class="nb">id</span><span class="o">=</span><span class="s1">&#39;college_filter&#39;</span><span class="p">),</span> <span class="n">lg</span><span class="o">=</span><span class="mi">3</span><span class="p">),</span>
         <span class="p">]),</span>
     <span class="n">dbc</span><span class="o">.</span><span class="n">Row</span><span class="p">([</span>
-        <span class="n">dbc</span><span class="o">.</span><span class="n">Col</span><span class="p">(</span><span class="n">html</span><span class="o">.</span><span class="n">H5</span><span class="p">(</span><span class="s2">&quot;Level Filter:&quot;</span><span class="p">),</span> <span class="n">lg</span> <span class="o">=</span> <span class="mi">3</span><span class="p">),</span>
+        <span class="n">dbc</span><span class="o">.</span><span class="n">Col</span><span class="p">(</span><span class="n">html</span><span class="o">.</span><span class="n">H5</span><span class="p">(</span><span class="s2">&quot;Level Filter:&quot;</span><span class="p">),</span> <span class="n">lg</span><span class="o">=</span><span class="mi">3</span><span class="p">),</span>
     <span class="n">dbc</span><span class="o">.</span><span class="n">Col</span><span class="p">(</span><span class="n">dcc</span><span class="o">.</span><span class="n">Dropdown</span><span class="p">(</span><span class="n">df_curr_enrollment</span><span class="p">[</span><span class="s1">&#39;Level&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">(),</span>
                  <span class="n">df_curr_enrollment</span><span class="p">[</span><span class="s1">&#39;Level&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">(),</span>
-                 <span class="n">multi</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
-                <span class="nb">id</span> <span class="o">=</span> <span class="s1">&#39;level_filter&#39;</span><span class="p">),</span> <span class="n">lg</span> <span class="o">=</span> <span class="mi">3</span><span class="p">)</span>
+                 <span class="n">multi</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                <span class="nb">id</span><span class="o">=</span><span class="s1">&#39;level_filter&#39;</span><span class="p">),</span> <span class="n">lg</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
     <span class="p">]),</span>
     <span class="c1"># For more information about the multi-dropdown option,</span>
     <span class="c1"># see https://dash.plotly.com/dash-core-components/dropdown</span>
@@ -1025,18 +1016,15 @@
     <span class="c1"># Creating a pivot table that can serve as the basis for our </span>
     <span class="c1"># enrollment chart:</span>
     <span class="n">df_simple_enrollment_pivot</span> <span class="o">=</span> <span class="n">df_curr_enrollment_for_chart</span><span class="o">.</span><span class="n">pivot_table</span><span class="p">(</span>
-    <span class="n">index</span> <span class="o">=</span> <span class="n">index</span><span class="p">,</span>
-    <span class="n">values</span> <span class="o">=</span> <span class="s1">&#39;Enrollment&#39;</span><span class="p">,</span> <span class="n">aggfunc</span> <span class="o">=</span> <span class="s1">&#39;sum&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+    <span class="n">index</span><span class="o">=</span><span class="n">index</span><span class="p">,</span>
+    <span class="n">values</span><span class="o">=</span><span class="s1">&#39;Enrollment&#39;</span><span class="p">,</span> <span class="n">aggfunc</span><span class="o">=</span><span class="s1">&#39;sum&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
     
     <span class="c1"># Creating this chart:</span>
     <span class="n">fig_simple_enrollment</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">df_simple_enrollment_pivot</span><span class="p">,</span> 
-       <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="s1">&#39;Enrollment&#39;</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="n">color</span><span class="p">,</span>
-      <span class="n">text_auto</span> <span class="o">=</span> <span class="s1">&#39;.0f&#39;</span><span class="p">,</span> <span class="n">barmode</span> <span class="o">=</span> <span class="n">barmode</span><span class="p">,</span>
-      <span class="n">title</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;NVCU Enrollment by </span><span class="si">{</span><span class="n">pivot_index</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+       <span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;Enrollment&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span>
+      <span class="n">text_auto</span><span class="o">=</span><span class="s1">&#39;.0f&#39;</span><span class="p">,</span> <span class="n">barmode</span><span class="o">=</span><span class="n">barmode</span><span class="p">,</span>
+      <span class="n">title</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;NVCU Enrollment by </span><span class="si">{</span><span class="n">pivot_index</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">fig_simple_enrollment</span>
-    
-
-
 </pre></div>
 </div>
 </section>
@@ -1044,7 +1032,8 @@
 <h2>login.html<a class="headerlink" href="#login-html" title="Link to this heading">#</a></h2>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>&lt;!DOCTYPE html&gt;
 &lt;!-- Source: jinnyzor at https://community.plotly.com/t/dash-app-pages-
-with-flask-login-flow-using-flask/69507/38. Jinnyzor wrote later in this
+with-flask-login-flow-using-flask/69507/38. (I made some minor 
+additions to this code.) Jinnyzor wrote later in this
 thread that &quot;this is free to use, no license&quot;. --&gt;
 &lt;html lang=&quot;en&quot;&gt;
 &lt;head&gt;
@@ -1079,10 +1068,10 @@ thread that &quot;this is free to use, no license&quot;. --&gt;
 <span class="c1"># Note that Nader Elshehabi&#39;s code (on which this code was based)</span>
 <span class="c1"># was released under the MIT license:</span>
 <span class="c1"># https://github.com/naderelshehabi/dash-flask-login</span>
-<span class="c1"># Ken Burchfiel incorporated some additional code from </span>
+<span class="c1"># I incorporated some additional code from </span>
 <span class="c1"># https://dash.plotly.com/urls and https://dash-bootstrap-components.</span>
-<span class="c1"># opensource.faculty.ai/docs/quickstart/ ;</span>
-<span class="c1"># he also made minor edits to the display text.</span>
+<span class="c1"># opensource.faculty.ai/docs/quickstart/ ; in addition, I made </span>
+<span class="c1"># minor edits to the display text.</span>
 
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd"> CREDIT: This code was originally adapted for Pages based on Nader </span>
@@ -1104,7 +1093,6 @@ thread that &quot;this is free to use, no license&quot;. --&gt;
 
 <span class="sd">&quot;&quot;&quot;</span>
 
-
 <span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">flask</span><span class="w"> </span><span class="kn">import</span> <span class="n">Flask</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">redirect</span><span class="p">,</span> <span class="n">session</span><span class="p">,</span> <span class="n">jsonify</span><span class="p">,</span> \
 <span class="n">url_for</span><span class="p">,</span> <span class="n">render_template</span>
@@ -1116,8 +1104,7 @@ thread that &quot;this is free to use, no license&quot;. --&gt;
 <span class="kn">import</span><span class="w"> </span><span class="nn">dash_bootstrap_components</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">dbc</span> <span class="c1"># See</span>
 <span class="c1"># https://dash-bootstrap-components.opensource.faculty.ai/docs/quickstart/</span>
 
-
-<span class="c1"># Exposing the Flask Server to enable configuring it for logging in</span>
+<span class="c1"># Exposing the Flask Server so that it can be configured for logging in</span>
 <span class="c1"># Note that this code will be used in place of </span>
 <span class="c1"># server = app.server , which we used within our Simple_App_Without_Login</span>
 <span class="c1"># app.</span>
@@ -1185,7 +1172,7 @@ thread that &quot;this is free to use, no license&quot;. --&gt;
 <span class="c1"># https://dash-bootstrap-components.opensource.faculty.ai/docs/quickstart/</span>
 
 <span class="c1"># Keep this out of source code repository - save in a file or a database</span>
-<span class="c1">#  passwords should be encrypted</span>
+<span class="c1"># passwords should be encrypted</span>
 <span class="n">VALID_USERNAME_PASSWORD</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;test&quot;</span><span class="p">:</span> <span class="s2">&quot;test&quot;</span><span class="p">,</span> <span class="s2">&quot;hello&quot;</span><span class="p">:</span> <span class="s2">&quot;world&quot;</span><span class="p">}</span>
 
 
@@ -1193,19 +1180,17 @@ thread that &quot;this is free to use, no license&quot;. --&gt;
 <span class="c1"># the user session cookie</span>
 <span class="c1"># server.config.update(SECRET_KEY=os.getenv(&quot;SECRET_KEY&quot;))</span>
 <span class="n">server</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">SECRET_KEY</span><span class="o">=</span><span class="s2">&quot;insecureplaceholder&quot;</span><span class="p">)</span>
-<span class="c1"># Definitely don&#39;t use the above approach in a real-world applicaiton!</span>
+<span class="c1"># Definitely don&#39;t use the above approach in a real-world application!</span>
 
 <span class="c1"># Login manager object will be used to login / logout users</span>
 <span class="n">login_manager</span> <span class="o">=</span> <span class="n">LoginManager</span><span class="p">()</span>
 <span class="n">login_manager</span><span class="o">.</span><span class="n">init_app</span><span class="p">(</span><span class="n">server</span><span class="p">)</span>
 <span class="n">login_manager</span><span class="o">.</span><span class="n">login_view</span> <span class="o">=</span> <span class="s2">&quot;/login&quot;</span>
 
-
 <span class="k">class</span><span class="w"> </span><span class="nc">User</span><span class="p">(</span><span class="n">UserMixin</span><span class="p">):</span>
     <span class="c1"># User data model. It has to have at least self.id as a minimum</span>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">username</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="n">username</span>
-
 
 <span class="nd">@login_manager</span><span class="o">.</span><span class="n">user_loader</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">load_user</span><span class="p">(</span><span class="n">username</span><span class="p">):</span>
@@ -1244,7 +1229,7 @@ thread that &quot;this is free to use, no license&quot;. --&gt;
     <span class="c1">#     ) for page in dash.page_registry.values()</span>
     <span class="c1"># ]),</span>
 
-        <span class="c1"># This variant of the above commented-out code places all</span>
+        <span class="c1"># The following variant of the above commented-out code places all</span>
         <span class="c1"># pages on the same line (though, if the window isn&#39;t wide enough,</span>
         <span class="c1"># some pages may get placed on separate lines). It updates</span>
         <span class="c1"># automatically to incorporate page additions and deletions,</span>
@@ -1314,17 +1299,17 @@ thread that &quot;this is free to use, no license&quot;. --&gt;
 <span class="kn">import</span><span class="w"> </span><span class="nn">plotly.graph_objects</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">go</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">dash</span><span class="w"> </span><span class="kn">import</span> <span class="n">dash_table</span>
 
-<span class="k">def</span><span class="w"> </span><span class="nf">autopivot</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">aggfunc</span><span class="p">,</span> <span class="n">x_vars</span> <span class="o">=</span> <span class="p">[],</span> 
-                     <span class="n">color</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">x_vars_to_exclude</span> <span class="o">=</span> <span class="p">[],</span>
-                    <span class="n">overall_data_name</span> <span class="o">=</span> <span class="s1">&#39;All Data&#39;</span><span class="p">,</span>
-             <span class="n">weight_col</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">filter_tuple_list</span> <span class="o">=</span> <span class="p">[],</span>
-             <span class="n">convert_x_vars_to_strings</span> <span class="o">=</span> <span class="kc">True</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;This function will create a pivot table of df that can be used </span>
-<span class="sd">    within a Plotly graph. It will also return x, y, color, and barmode </span>
-<span class="sd">    variables that can get incorporated within Plotly charts. (Storing </span>
-<span class="sd">    the charting code within a separate function makes autopivot more </span>
-<span class="sd">    versatile, as its output can then be used as the basis for multiple </span>
-<span class="sd">    chart types.)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">autopivot</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">aggfunc</span><span class="p">,</span> <span class="n">x_vars</span><span class="o">=</span><span class="p">[],</span> <span class="n">color</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> 
+              <span class="n">x_vars_to_exclude</span><span class="o">=</span><span class="p">[],</span> <span class="n">overall_data_name</span><span class="o">=</span><span class="s1">&#39;All Data&#39;</span><span class="p">,</span>
+             <span class="n">weight_col</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">filter_tuple_list</span><span class="o">=</span><span class="p">[],</span>
+             <span class="n">convert_x_vars_to_strings</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    This function will create a pivot table of df that can be used </span>
+<span class="sd">    as the data source for Plotly graphs. It will also return x, y, </span>
+<span class="sd">    color, and barmode variables that can get incorporated within </span>
+<span class="sd">    these graphs. (Storing the charting code within a separate function </span>
+<span class="sd">    makes autopivot() more versatile, as its output can then be used </span>
+<span class="sd">    as the basis for multiple chart types.)</span>
 
 <span class="sd">    This function has been designed to work with varying lengths of x_vars</span>
 <span class="sd">    (i.e. multiple numbers of x variables), including a length of 0. </span>
@@ -1359,10 +1344,10 @@ thread that &quot;this is free to use, no license&quot;. --&gt;
 <span class="sd">    it needs to be.</span>
 
 <span class="sd">    If a variable within x_vars_to_exclude isn&#39;t present in your x_vars </span>
-<span class="sd">    listor your color argument, it will get ignored by the function and </span>
-<span class="sd">    thus shouldn&#39;t cause any issues.</span>
+<span class="sd">    list or your color argument, it will get ignored by the function;</span>
+<span class="sd">    thus, its presence within x_vars_to_exclude shouldn&#39;t cause any issues.</span>
 <span class="sd">    </span>
-<span class="sd">    overall_data_name: When x_vars is empty, autopivot will group all</span>
+<span class="sd">    overall_data_name: When x_vars is empty, autopivot() will group all</span>
 <span class="sd">    data into a single row. overall_data_name specifies the name that you </span>
 <span class="sd">    would like to give to this data point.    </span>
 
@@ -1378,7 +1363,7 @@ thread that &quot;this is free to use, no license&quot;. --&gt;
 <span class="sd">    convert_x_vars_to_strings: if True, the function will convert</span>
 <span class="sd">    all x variables not found in x_vars_to_exclude to strings.</span>
 <span class="sd">    (This can improve the appearance of any graphs that make use of</span>
-<span class="sd">    the pivot table created by this function.</span>
+<span class="sd">    the pivot table created by this function.)</span>
 <span class="sd">    &#39;&#39;&#39;</span>
 
     <span class="c1"># Creating a copy of the initial dataset in order to ensure that the </span>
@@ -1389,7 +1374,7 @@ thread that &quot;this is free to use, no license&quot;. --&gt;
     <span class="c1"># of filter_tuple_list:</span>
     <span class="k">for</span> <span class="n">pair</span> <span class="ow">in</span> <span class="n">filter_tuple_list</span><span class="p">:</span>
         <span class="n">df_for_pivot</span><span class="o">.</span><span class="n">query</span><span class="p">(</span>
-            <span class="sa">f</span><span class="s2">&quot;`</span><span class="si">{</span><span class="n">pair</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">` in </span><span class="si">{</span><span class="n">pair</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">inplace</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+            <span class="sa">f</span><span class="s2">&quot;`</span><span class="si">{</span><span class="n">pair</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">` in </span><span class="si">{</span><span class="n">pair</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
     <span class="c1"># Determining which x variables will appear in the final chart:</span>
     <span class="n">x_vars_for_chart</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">x_vars</span><span class="p">)</span> <span class="o">-</span> <span class="nb">set</span><span class="p">(</span><span class="n">x_vars_to_exclude</span><span class="p">))</span>
@@ -1425,9 +1410,9 @@ thread that &quot;this is free to use, no license&quot;. --&gt;
         <span class="k">if</span> <span class="n">weight_col</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span> <span class="c1"># In this case, a weighted average</span>
             <span class="c1"># of all data within the table will be created.</span>
             <span class="n">df_pivot</span> <span class="o">=</span> <span class="n">df_for_pivot</span><span class="o">.</span><span class="n">pivot_table</span><span class="p">(</span>
-            <span class="n">index</span> <span class="o">=</span> <span class="n">overall_data_name</span><span class="p">,</span> 
-                <span class="n">values</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">y</span><span class="si">}</span><span class="s1">_*_</span><span class="si">{</span><span class="n">weight_col</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">weight_col</span><span class="p">],</span> 
-            <span class="n">aggfunc</span> <span class="o">=</span> <span class="s1">&#39;sum&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+            <span class="n">index</span><span class="o">=</span><span class="n">overall_data_name</span><span class="p">,</span> 
+                <span class="n">values</span><span class="o">=</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">y</span><span class="si">}</span><span class="s1">_*_</span><span class="si">{</span><span class="n">weight_col</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">weight_col</span><span class="p">],</span> 
+            <span class="n">aggfunc</span><span class="o">=</span><span class="s1">&#39;sum&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
             <span class="c1"># Calculating the weighted average of y by dividing</span>
             <span class="c1"># the y_*_weight_col field by its corresponding group size:</span>
             <span class="n">df_pivot</span><span class="p">[</span><span class="n">y</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">df_pivot</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">y</span><span class="si">}</span><span class="s1">_*_</span><span class="si">{</span><span class="n">weight_col</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">]</span> 
@@ -1435,17 +1420,16 @@ thread that &quot;this is free to use, no license&quot;. --&gt;
         
         <span class="k">else</span><span class="p">:</span>
             <span class="n">df_pivot</span> <span class="o">=</span> <span class="n">df_for_pivot</span><span class="o">.</span><span class="n">pivot_table</span><span class="p">(</span>
-                <span class="n">index</span> <span class="o">=</span> <span class="n">overall_data_name</span><span class="p">,</span> <span class="n">values</span> <span class="o">=</span> <span class="n">y</span><span class="p">,</span> 
-                <span class="n">aggfunc</span> <span class="o">=</span> <span class="n">aggfunc</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
-        <span class="n">x_val_name</span> <span class="o">=</span> <span class="n">overall_data_name</span>
-        <span class="n">color</span> <span class="o">=</span> <span class="n">overall_data_name</span>
-        <span class="n">barmode</span> <span class="o">=</span> <span class="s1">&#39;relative&#39;</span>
-        <span class="n">index</span> <span class="o">=</span> <span class="p">[</span><span class="n">overall_data_name</span><span class="p">]</span> <span class="c1"># This value won&#39;t be used</span>
+                <span class="n">index</span><span class="o">=</span><span class="n">overall_data_name</span><span class="p">,</span> <span class="n">values</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> 
+                <span class="n">aggfunc</span><span class="o">=</span><span class="n">aggfunc</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+        <span class="n">x_val_name</span><span class="o">=</span><span class="n">overall_data_name</span>
+        <span class="n">color</span><span class="o">=</span><span class="n">overall_data_name</span>
+        <span class="n">barmode</span><span class="o">=</span><span class="s1">&#39;relative&#39;</span>
+        <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="n">overall_data_name</span><span class="p">]</span> <span class="c1"># This value won&#39;t be used</span>
         <span class="c1"># within autopivot() (defined below), but it will still</span>
         <span class="c1"># get created here in order to prevent scripts that expect it to </span>
         <span class="c1"># be returned from crashing.</span>
         
-       
     <span class="k">else</span><span class="p">:</span>    
         <span class="c1"># If the color variable is also present in x_vars and more than </span>
         <span class="c1"># one variable is present within the set of x vars to be charted*, </span>
@@ -1454,17 +1438,17 @@ thread that &quot;this is free to use, no license&quot;. --&gt;
         <span class="c1"># (If the only x variable to be charted is also the color </span>
         <span class="c1"># variable, we won&#39;t want to remove it from x_vars; otherwise, </span>
         <span class="c1"># we&#39;d end up with an empty list of x variables.)</span>
+        
         <span class="c1"># *This set (defined above as x_vars_for_chart) excludes any </span>
         <span class="c1"># variables also present in x_vars_to_exclude. This will prevent </span>
         <span class="c1"># the function from removing a color variable from x_vars that </span>
         <span class="c1"># would have been the only variable left in x_vars following the </span>
         <span class="c1"># removal of the variable to exclude (which would cause the </span>
         <span class="c1"># function to crash).</span>
-        
         <span class="c1"># (For example: suppose our color variable were &#39;Season&#39;; </span>
         <span class="c1"># our x_vars contents were [&#39;Season&#39;, &#39;Season_for_Sorting&#39;];</span>
         <span class="c1"># and our x_vars_to_exclude list were [&#39;Season_for_Sorting&#39;]. If</span>
-        <span class="c1"># we chose to remove the color variable from x_vars contents</span>
+        <span class="c1"># we chose to remove the color variable from x_vars</span>
         <span class="c1"># because it contained more than one variable, we&#39;d end up with</span>
         <span class="c1"># an empty x_vars list once &#39;Season_for_Sorting&#39; got removed. </span>
         <span class="c1"># Removing this variable to exclude from our list of x vars to </span>
@@ -1486,22 +1470,21 @@ thread that &quot;this is free to use, no license&quot;. --&gt;
         <span class="k">if</span> <span class="n">color</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">color</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">index</span><span class="p">:</span>
             <span class="n">index</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">color</span><span class="p">)</span>
     
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;index prior to pivot_table() call:&quot;</span><span class="p">,</span><span class="n">index</span><span class="p">)</span>
-        
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;index prior to pivot_table() call:&quot;</span><span class="p">,</span> <span class="n">index</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">weight_col</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span> <span class="c1"># In this case, weighted averages</span>
             <span class="c1"># will be calculated.</span>
             <span class="n">df_pivot</span> <span class="o">=</span> <span class="n">df_for_pivot</span><span class="o">.</span><span class="n">pivot_table</span><span class="p">(</span>
-                <span class="n">index</span> <span class="o">=</span> <span class="n">index</span><span class="p">,</span> <span class="n">values</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="n">index</span><span class="o">=</span><span class="n">index</span><span class="p">,</span> <span class="n">values</span><span class="o">=</span><span class="p">[</span>
                     <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">y</span><span class="si">}</span><span class="s1">_*_</span><span class="si">{</span><span class="n">weight_col</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">weight_col</span><span class="p">],</span> 
-                <span class="n">aggfunc</span> <span class="o">=</span> <span class="s1">&#39;sum&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>           
+                <span class="n">aggfunc</span><span class="o">=</span><span class="s1">&#39;sum&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>           
             <span class="n">df_pivot</span><span class="p">[</span><span class="n">y</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
                 <span class="n">df_pivot</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">y</span><span class="si">}</span><span class="s1">_*_</span><span class="si">{</span><span class="n">weight_col</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="n">df_pivot</span><span class="p">[</span><span class="n">weight_col</span><span class="p">])</span>
             
         <span class="k">else</span><span class="p">:</span>
             <span class="n">df_pivot</span> <span class="o">=</span> <span class="n">df_for_pivot</span><span class="o">.</span><span class="n">pivot_table</span><span class="p">(</span>
-                <span class="n">index</span> <span class="o">=</span> <span class="n">index</span><span class="p">,</span> <span class="n">values</span> <span class="o">=</span> <span class="n">y</span><span class="p">,</span> 
-                <span class="n">aggfunc</span> <span class="o">=</span> <span class="n">aggfunc</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+                <span class="n">index</span><span class="o">=</span><span class="n">index</span><span class="p">,</span> <span class="n">values</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> 
+                <span class="n">aggfunc</span><span class="o">=</span><span class="n">aggfunc</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
     
         <span class="c1"># Now that the pivot table has been created, the variables</span>
         <span class="c1"># in x_vars_to_exclude can be removed from our x_vars list, our </span>
@@ -1532,7 +1515,6 @@ thread that &quot;this is free to use, no license&quot;. --&gt;
                 <span class="n">df_pivot</span><span class="p">[</span><span class="n">x_val_name</span><span class="p">]</span> 
                 <span class="o">+</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="n">df_pivot</span><span class="p">[</span><span class="n">x_vars</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;str&#39;</span><span class="p">))</span>
     
-        
         <span class="c1"># If there are fewer than two unique variables to be graphed, </span>
         <span class="c1"># we&#39;ll want to set the barmode argument to &#39;relative&#39; so that, </span>
         <span class="c1"># in the event we create a bar chart, the bars won&#39;t be far </span>
@@ -1561,13 +1543,13 @@ thread that &quot;this is free to use, no license&quot;. --&gt;
     <span class="n">index</span><span class="p">,</span> <span class="n">aggfunc</span>
 
 <span class="k">def</span><span class="w"> </span><span class="nf">autobar</span><span class="p">(</span><span class="n">df_pivot</span><span class="p">,</span> <span class="n">x_val_name</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">color</span><span class="p">,</span> <span class="n">barmode</span><span class="p">,</span> <span class="n">x_var_count</span><span class="p">,</span> 
-            <span class="n">index</span><span class="p">,</span> <span class="n">aggfunc</span><span class="p">,</span> <span class="n">custom_aggfunc_name</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-           <span class="n">text_auto</span> <span class="o">=</span> <span class="s1">&#39;.2f&#39;</span><span class="p">):</span>
+            <span class="n">index</span><span class="p">,</span> <span class="n">aggfunc</span><span class="p">,</span> <span class="n">custom_aggfunc_name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+           <span class="n">text_auto</span><span class="o">=</span><span class="s1">&#39;.2f&#39;</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&#39;&#39;&#39;This function creates a bar graph of a pivot table (such as one</span>
 <span class="sd">    created within autopivot()). </span>
-<span class="sd">    Most arguments arguments for this function</span>
+<span class="sd">    Most arguments for this function</span>
 <span class="sd">    correspond to the values returned by autopivot(); more information on</span>
-<span class="sd">    each can be found within that function.</span>
+<span class="sd">    those arguments can be found within that function.</span>
 
 <span class="sd">    custom_aggfunc_name: A string to use in place of the aggregate</span>
 <span class="sd">    function name in the chart title. (The general chart title format</span>
@@ -1599,7 +1581,7 @@ thread that &quot;this is free to use, no license&quot;. --&gt;
     <span class="c1"># these four scenarios. (Note that &#39;index&#39; is used rather than </span>
     <span class="c1"># &#39;x_vars&#39; because the former variable includes both our x variables </span>
     <span class="c1"># and (if present) our color variable, and both of these should be </span>
-    <span class="c1"># incorporated into the title.</span>
+    <span class="c1"># incorporated into the title.)</span>
 
     <span class="c1"># Determining how to represent the aggregate function within </span>
     <span class="c1"># titles:</span>
@@ -1642,16 +1624,16 @@ thread that &quot;this is free to use, no license&quot;. --&gt;
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">df_pivot</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
         <span class="c1"># The following code will still work if color is set to None.</span>
         <span class="n">fig</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">df_pivot</span><span class="p">,</span> <span class="n">x</span> <span class="o">=</span> <span class="n">x_val_name</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">y</span><span class="p">,</span> 
-               <span class="n">color</span> <span class="o">=</span> <span class="n">color</span><span class="p">,</span> <span class="n">barmode</span> <span class="o">=</span> <span class="n">barmode</span><span class="p">,</span>
-               <span class="n">text_auto</span> <span class="o">=</span> <span class="n">text_auto</span><span class="p">,</span> <span class="n">title</span> <span class="o">=</span> <span class="n">plot_title</span><span class="p">)</span>
+               <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">barmode</span><span class="o">=</span><span class="n">barmode</span><span class="p">,</span>
+               <span class="n">text_auto</span><span class="o">=</span><span class="n">text_auto</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="n">plot_title</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span> <span class="c1"># In this case, there&#39;s no data to plot,</span>
         <span class="c1"># so an empty figure will be returned instead.</span>
         <span class="n">fig</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="n">plot_title</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">x_var_count</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span> <span class="c1"># In this case, the x axis tick, x axis title, </span>
         <span class="c1"># and legend entry will all be the same, so we can hide two </span>
         <span class="c1"># of those elements.</span>
-        <span class="n">fig</span><span class="o">.</span><span class="n">update_layout</span><span class="p">(</span><span class="n">showlegend</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-                         <span class="n">xaxis_title</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="n">fig</span><span class="o">.</span><span class="n">update_layout</span><span class="p">(</span><span class="n">showlegend</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                         <span class="n">xaxis_title</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">fig</span>
 
 <span class="k">def</span><span class="w"> </span><span class="nf">autotable</span><span class="p">(</span><span class="n">df_pivot</span><span class="p">):</span>
@@ -1666,7 +1648,7 @@ thread that &quot;this is free to use, no license&quot;. --&gt;
         <span class="n">header</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">values</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">df_pivot</span><span class="o">.</span><span class="n">columns</span><span class="p">),</span>
                     <span class="n">fill_color</span><span class="o">=</span><span class="s1">&#39;lightgray&#39;</span><span class="p">,</span>
                     <span class="n">align</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">),</span>
-        <span class="n">cells</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">values</span> <span class="o">=</span> <span class="p">[</span><span class="n">df_pivot</span><span class="p">[</span><span class="n">column</span><span class="p">]</span> 
+        <span class="n">cells</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">values</span><span class="o">=</span><span class="p">[</span><span class="n">df_pivot</span><span class="p">[</span><span class="n">column</span><span class="p">]</span> 
                 <span class="k">for</span> <span class="n">column</span> <span class="ow">in</span> <span class="n">df_pivot</span><span class="o">.</span><span class="n">columns</span><span class="p">],</span>
                    <span class="n">fill_color</span><span class="o">=</span><span class="s1">&#39;white&#39;</span><span class="p">,</span>
                    <span class="n">align</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">))</span>
@@ -1676,34 +1658,35 @@ thread that &quot;this is free to use, no license&quot;. --&gt;
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">autopivot_plus_bar</span><span class="p">(</span>
-    <span class="n">df</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">aggfunc</span><span class="p">,</span> <span class="n">x_vars</span> <span class="o">=</span> <span class="p">[],</span> <span class="n">color</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> 
-    <span class="n">x_vars_to_exclude</span> <span class="o">=</span> <span class="p">[],</span> <span class="n">overall_data_name</span> <span class="o">=</span> <span class="s1">&#39;All Data&#39;</span><span class="p">,</span>
-    <span class="n">weight_col</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">filter_tuple_list</span> <span class="o">=</span> <span class="p">[],</span>
-    <span class="n">custom_aggfunc_name</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">convert_x_vars_to_strings</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
-    <span class="n">create_table</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">text_auto</span> <span class="o">=</span> <span class="s1">&#39;.2f&#39;</span><span class="p">):</span>
+    <span class="n">df</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">aggfunc</span><span class="p">,</span> <span class="n">x_vars</span><span class="o">=</span><span class="p">[],</span> <span class="n">color</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> 
+    <span class="n">x_vars_to_exclude</span><span class="o">=</span><span class="p">[],</span> <span class="n">overall_data_name</span><span class="o">=</span><span class="s1">&#39;All Data&#39;</span><span class="p">,</span>
+    <span class="n">weight_col</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">filter_tuple_list</span><span class="o">=</span><span class="p">[],</span>
+    <span class="n">custom_aggfunc_name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">convert_x_vars_to_strings</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">create_table</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">text_auto</span><span class="o">=</span><span class="s1">&#39;.2f&#39;</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&#39;&#39;&#39;This function calls both autopivot() and autobar(), thus </span>
 <span class="sd">    simplifying the process of using both functions within a script. </span>
-<span class="sd">    See autopivot() and autobar()&#39;s individual function definitions </span>
-<span class="sd">    for more documentation on each.</span>
+<span class="sd">    Almost all of the variables within this function correspond to</span>
+<span class="sd">    autopivot() and autobar() variables with the same name; consult</span>
+<span class="sd">    those functions&#39; definitions for explanations of them.</span>
 <span class="sd">    </span>
 <span class="sd">    create_table: set to True to return a table along with the bar </span>
 <span class="sd">    graph.&#39;&#39;&#39;</span>
         
     <span class="n">df_pivot</span><span class="p">,</span> <span class="n">x_val_name</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">color</span><span class="p">,</span> <span class="n">barmode</span><span class="p">,</span> <span class="n">x_var_count</span><span class="p">,</span> \
-    <span class="n">index</span><span class="p">,</span> <span class="n">aggfunc</span> <span class="o">=</span> <span class="n">autopivot</span><span class="p">(</span>
-        <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">y</span><span class="p">,</span> <span class="n">aggfunc</span> <span class="o">=</span> <span class="n">aggfunc</span><span class="p">,</span> 
-        <span class="n">x_vars</span> <span class="o">=</span> <span class="n">x_vars</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="n">color</span><span class="p">,</span> 
-        <span class="n">x_vars_to_exclude</span> <span class="o">=</span> <span class="n">x_vars_to_exclude</span><span class="p">,</span>
-        <span class="n">overall_data_name</span> <span class="o">=</span> <span class="n">overall_data_name</span><span class="p">,</span> <span class="n">weight_col</span> <span class="o">=</span> <span class="n">weight_col</span><span class="p">,</span>
-    <span class="n">filter_tuple_list</span> <span class="o">=</span> <span class="n">filter_tuple_list</span><span class="p">,</span>
+    <span class="n">index</span><span class="p">,</span> <span class="n">aggfunc</span><span class="o">=</span><span class="n">autopivot</span><span class="p">(</span>
+        <span class="n">df</span><span class="o">=</span><span class="n">df</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">aggfunc</span><span class="o">=</span><span class="n">aggfunc</span><span class="p">,</span> 
+        <span class="n">x_vars</span><span class="o">=</span><span class="n">x_vars</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> 
+        <span class="n">x_vars_to_exclude</span><span class="o">=</span><span class="n">x_vars_to_exclude</span><span class="p">,</span>
+        <span class="n">overall_data_name</span><span class="o">=</span><span class="n">overall_data_name</span><span class="p">,</span> <span class="n">weight_col</span><span class="o">=</span><span class="n">weight_col</span><span class="p">,</span>
+    <span class="n">filter_tuple_list</span><span class="o">=</span><span class="n">filter_tuple_list</span><span class="p">,</span>
     <span class="n">convert_x_vars_to_strings</span><span class="o">=</span><span class="n">convert_x_vars_to_strings</span><span class="p">)</span>
 
     <span class="n">fig_bar</span> <span class="o">=</span> <span class="n">autobar</span><span class="p">(</span>
-        <span class="n">df_pivot</span> <span class="o">=</span> <span class="n">df_pivot</span><span class="p">,</span> <span class="n">x_val_name</span> <span class="o">=</span> <span class="n">x_val_name</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">y</span><span class="p">,</span> 
-        <span class="n">color</span> <span class="o">=</span> <span class="n">color</span><span class="p">,</span> <span class="n">barmode</span> <span class="o">=</span> <span class="n">barmode</span><span class="p">,</span> <span class="n">x_var_count</span> <span class="o">=</span> <span class="n">x_var_count</span><span class="p">,</span> 
-        <span class="n">index</span> <span class="o">=</span> <span class="n">index</span><span class="p">,</span> <span class="n">aggfunc</span> <span class="o">=</span> <span class="n">aggfunc</span><span class="p">,</span> 
+        <span class="n">df_pivot</span><span class="o">=</span><span class="n">df_pivot</span><span class="p">,</span> <span class="n">x_val_name</span><span class="o">=</span><span class="n">x_val_name</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> 
+        <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">barmode</span><span class="o">=</span><span class="n">barmode</span><span class="p">,</span> <span class="n">x_var_count</span><span class="o">=</span><span class="n">x_var_count</span><span class="p">,</span> 
+        <span class="n">index</span><span class="o">=</span><span class="n">index</span><span class="p">,</span> <span class="n">aggfunc</span><span class="o">=</span><span class="n">aggfunc</span><span class="p">,</span> 
         <span class="n">custom_aggfunc_name</span><span class="o">=</span><span class="n">custom_aggfunc_name</span><span class="p">,</span>
-    <span class="n">text_auto</span> <span class="o">=</span> <span class="n">text_auto</span><span class="p">)</span>
+    <span class="n">text_auto</span><span class="o">=</span><span class="n">text_auto</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">create_table</span> <span class="o">==</span> <span class="kc">False</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">fig_bar</span>
@@ -1714,11 +1697,6 @@ thread that &quot;this is free to use, no license&quot;. --&gt;
         <span class="n">table</span> <span class="o">=</span> <span class="n">autotable</span><span class="p">(</span><span class="n">df_pivot</span><span class="p">)</span>
         
         <span class="k">return</span> <span class="n">fig_bar</span><span class="p">,</span> <span class="n">table</span>
-
-    
-
-
-
 </pre></div>
 </div>
 </section>
@@ -1726,13 +1704,12 @@ thread that &quot;this is free to use, no license&quot;. --&gt;
 <h2>data_import.py<a class="headerlink" href="#data-import-py" title="Link to this heading">#</a></h2>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Data import script:</span>
 <span class="c1"># This script will import datasets that will be used by multiple pages.</span>
-<span class="c1"># Taking care of these imports here should make the site more efficient by</span>
-<span class="c1"># reducing the number of times each dataset needs to be imported.</span>
+<span class="c1"># Taking care of these imports here *may* make the site more efficient </span>
+<span class="c1"># by reducing the number of times each dataset needs to be imported.</span>
 
 <span class="n">offline_import</span> <span class="o">=</span> <span class="kc">False</span> <span class="c1"># Allows for source data to get read in locally,</span>
-<span class="c1"># which may improve performance. (This should be set to False prior to</span>
-<span class="c1"># deploying this app online, however.)</span>
-
+<span class="c1"># which may improve performance when debugging or editing the code. </span>
+<span class="c1"># (This should be set to False prior to deploying this app online.)</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 
@@ -1742,8 +1719,8 @@ thread that &quot;this is free to use, no license&quot;. --&gt;
 <span class="sd">    appearance within chart titles. </span>
 <span class="sd">    Since some values (e.g. &#39;ID&#39;) are best capitalized rather than</span>
 <span class="sd">    converted to title case, the function also includes a </span>
-<span class="sd">    df.rename() col. This can be expanded as needed to address any</span>
-<span class="sd">    issues caused by the title case conversion.</span>
+<span class="sd">    df.rename() call. This can be expanded as needed to address any other</span>
+<span class="sd">    issues caused by the blanket title case conversion that precedes it.</span>
 <span class="sd">    &#39;&#39;&#39;</span>
     <span class="n">df</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="n">column</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="p">)</span><span class="o">.</span><span class="n">title</span><span class="p">()</span> 
                   <span class="k">for</span> <span class="n">column</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">]</span>
@@ -1765,17 +1742,14 @@ thread that &quot;this is free to use, no license&quot;. --&gt;
     <span class="n">df_survey_results</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;https://raw.githubusercontent.com/</span><span class="se">\</span>
 <span class="s1">kburchfiel/pfn/main/Appendix/survey_results.csv&#39;</span><span class="p">)</span>
 
-
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Imported current enrollment data.&quot;</span><span class="p">)</span> <span class="c1"># ALlows us to check how many</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Imported current enrollment data.&quot;</span><span class="p">)</span> <span class="c1"># Allows us to check how many</span>
 <span class="c1"># times this data will get imported during the web app&#39;s operation</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Imported survey results.&quot;</span><span class="p">)</span>
-
 
 <span class="c1"># Adding an &#39;Enrollment&#39; column (which will be useful for pivot tables)</span>
 <span class="c1"># and chart titles:</span>
 <span class="n">improve_col_display</span><span class="p">(</span><span class="n">df_curr_enrollment</span><span class="p">)</span>
 <span class="n">df_curr_enrollment</span><span class="p">[</span><span class="s1">&#39;Enrollment&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
-
 
 <span class="n">improve_col_display</span><span class="p">(</span><span class="n">df_survey_results</span><span class="p">)</span>
 <span class="n">df_survey_results</span><span class="p">[</span><span class="s1">&#39;Count&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
@@ -1786,7 +1760,7 @@ thread that &quot;this is free to use, no license&quot;. --&gt;
     <span class="n">df_curr_enrollment</span><span class="p">,</span> <span class="n">on</span> <span class="o">=</span> <span class="s1">&#39;Student ID&#39;</span><span class="p">,</span> <span class="n">how</span> <span class="o">=</span> <span class="s1">&#39;left&#39;</span><span class="p">)[</span>
 <span class="p">[</span><span class="s1">&#39;Starting Year&#39;</span><span class="p">,</span> <span class="s1">&#39;Season&#39;</span><span class="p">,</span> <span class="s1">&#39;Score&#39;</span><span class="p">,</span> <span class="s1">&#39;Gender&#39;</span><span class="p">,</span> <span class="s1">&#39;Matriculation Year&#39;</span><span class="p">,</span>
  <span class="s1">&#39;College&#39;</span><span class="p">,</span> <span class="s1">&#39;Class Of&#39;</span><span class="p">,</span> <span class="s1">&#39;Level&#39;</span><span class="p">,</span> <span class="s1">&#39;Level For Sorting&#39;</span><span class="p">]]</span>
-<span class="n">df_survey_results_extra_data</span>
+
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Merged enrollment and survey data together to create </span><span class="se">\</span>
 <span class="s2">df_survey_results_extra_data.&quot;</span><span class="p">)</span>
 </pre></div>
@@ -1822,7 +1796,7 @@ thread that &quot;this is free to use, no license&quot;. --&gt;
 <span class="sd">    &#39;&#39;&#39;</span>
 
     <span class="n">df_layout</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span> <span class="c1"># This step ensures that this function</span>
-    <span class="c1"># will not make any changes to df.</span>
+    <span class="c1"># will not make any changes to the original DataFrame.</span>
 
     <span class="c1"># Initializing the layout that will be returned to</span>
     <span class="c1"># the Dash app code:</span>
@@ -1853,7 +1827,6 @@ thread that &quot;this is free to use, no license&quot;. --&gt;
 
     <span class="c1"># print(&quot;Layout:&quot;,layout) # May be useful for debugging</span>
 
-    
     <span class="k">return</span> <span class="n">layout</span>
 </pre></div>
 </div>
@@ -1877,6 +1850,10 @@ thread that &quot;this is free to use, no license&quot;. --&gt;
 <span class="n">Werkzeug</span><span class="o">==</span><span class="mf">3.0.6</span>
 </pre></div>
 </div>
+</section>
+<section id="conclusion">
+<h2>Conclusion<a class="headerlink" href="#conclusion" title="Link to this heading">#</a></h2>
+<p>As this code demonstrates, it’s more complicated to set up a Dash app than it is to simply send a static copy of a chart or a local .csv file to a colleague. However, as you gain more experience with Dash, I believe you’ll find that the extra work involved in creating these websites is well worth it.</p>
 </section>
 </section>
 
@@ -1920,11 +1897,11 @@ thread that &quot;this is free to use, no license&quot;. --&gt;
       </div>
     </a>
     <a class="right-next"
-       href="../Appendix/nvcu_db_gen.html"
+       href="conclusion_to_book.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">NVCU Database Generator</p>
+        <p class="prev-next-title">Conclusion: Now the fun begins!</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -1959,6 +1936,7 @@ thread that &quot;this is free to use, no license&quot;. --&gt;
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#import-layout-py">import_layout.py</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#procfile">Procfile</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#requirements-txt">requirements.txt</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion">Conclusion</a></li>
 </ul>
   </nav></div>
 

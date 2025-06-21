@@ -214,6 +214,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../../Book_Specific_Materials/PFN_Dash_App_Demo_py_nb.html">Source code for PFN Dash App Demo</a></li>
 </ul>
 </details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Book_Specific_Materials/conclusion_to_book.html">Conclusion: Now the fun begins!</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendix</span></p>
 <ul class="nav bd-sidenav">
@@ -365,6 +366,7 @@
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#readme">Readme</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dashboards">Dashboards</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#development-notes">Development notes:</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#project-structure">Project structure</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#development-and-setup-notes">Development and setup notes</a><ul class="nav section-nav flex-column">
@@ -388,11 +390,14 @@
 <h1>PFN Dash App Demo<a class="headerlink" href="#pfn-dash-app-demo" title="Link to this heading">#</a></h1>
 <section id="readme">
 <h2>Readme<a class="headerlink" href="#readme" title="Link to this heading">#</a></h2>
-<p><strong>Note:</strong> For more background information on this section of Python for Nonprofits, Dash Apps, and Google Cloud deployment steps, visit the corresponding readme within Online_Visualizations/Simple_App_Without_Login. (Items explained within that readme often won’t be discussed here.)</p>
-<p><strong>Visit <a class="reference external" href="https://pfndashappdemo-ymc7cs3r5q-uc.a.run.app/">https://pfndashappdemo-ymc7cs3r5q-uc.a.run.app/</a> to view the Google Cloud Run-hosted version of this app.</strong> <em>(If no one has accessed the app recently, it will take several seconds to load, as the app is set to run on demand in order to save costs.)</em></p>
-<p>This project demonstrates how to use Dash to create various types of interactive online visualizations; these range from simple charts to more complex interactive setups. Both the Flask-Login and Dash-Pivottable libraries are featured within this project.</p>
-<p>The <strong>Fixed Dashboard</strong> (<a class="reference external" href="https://pfndashappdemo-ymc7cs3r5q-uc.a.run.app/fixed_dashboard">https://pfndashappdemo-ymc7cs3r5q-uc.a.run.app/fixed_dashboard</a>) page shows a very simple
-dashboard setup that lacks user-defined filter and comparison settings.</p>
+<p><strong>Note:</strong> Visit the corresponding readme within Online_Visualizations/Simple_App_Without_Login for more background information on this section of Python for Nonprofits; Dash apps; and Google Cloud deployment steps. (Items explained within that readme often won’t be discussed here.)</p>
+<p>In addition, to view the Google Cloud Run-hosted version of this app, visit <a class="reference external" href="https://pfndashappdemo-ymc7cs3r5q-uc.a.run.app/">https://pfndashappdemo-ymc7cs3r5q-uc.a.run.app/</a> .</p>
+<p>The Simple_App_Without_Login project was meant to provide a basic overview of Dash’s functionality; this project, on the other hand, is meant to provide a more detailed overview of Dash’s capabilities. The interactive online visualizations featured within this app range from simple charts to more complex setups. The app also makes use of both the Flask-Login and Dash-Pivottable libraries.</p>
+<section id="dashboards">
+<h3>Dashboards<a class="headerlink" href="#dashboards" title="Link to this heading">#</a></h3>
+<p>Unlike the Simple_App_Without_Login project, this app features multiple dashboards, each of which occupies its own page.</p>
+<p>The <strong>Fixed Dashboard</strong> (<a class="reference external" href="https://pfndashappdemo-ymc7cs3r5q-uc.a.run.app/fixed_dashboard">https://pfndashappdemo-ymc7cs3r5q-uc.a.run.app/fixed_dashboard</a>) page
+shows a very simple dashboard setup that lacks user-defined filter and comparison settings.</p>
 <p><img alt="" src="../../_images/fixed_dashboard.png" /></p>
 <p>The <strong>Simple Interactive Dashboard</strong> (<a class="reference external" href="https://pfndashappdemo-ymc7cs3r5q-uc.a.run.app/simple_interactive_dashboard">https://pfndashappdemo-ymc7cs3r5q-uc.a.run.app/simple_interactive_dashboard</a>) page
 displays a relatively straightforward interactive enrollment dashboard.
@@ -402,53 +407,57 @@ is rather limited.</p>
 <p>The <strong>Flexible Survey Results</strong> (<a class="reference external" href="https://pfndashappdemo-ymc7cs3r5q-uc.a.run.app/flexible_survey_results_dashboard">https://pfndashappdemo-ymc7cs3r5q-uc.a.run.app/flexible_survey_results_dashboard</a>) and
 <strong>Flexible Enrollment</strong> (<a class="reference external" href="https://pfndashappdemo-ymc7cs3r5q-uc.a.run.app/flexible_enrollment_dashboard">https://pfndashappdemo-ymc7cs3r5q-uc.a.run.app/flexible_enrollment_dashboard</a>) dashboard pages
 allow for a wide range of comparison and color options. These options are
-made possible by the autopivot() and autobar() functions found within
-<code class="docutils literal notranslate"><span class="pre">auto_pivot_and_graph.py</span></code> (<a class="github reference external" href="https://github.com/kburchfiel/pfn/blob/main/Online_Visualizations/PFN_Dash_App_Demo/auto_pivot_and_graph.py">kburchfiel/pfn</a>). (You may also find these functions useful for
-developing standlone Plotly charts.)</p>
+made possible by the <code class="docutils literal notranslate"><span class="pre">autopivot()</span></code> and ``autobar()` functions found within
+‘auto_pivot_and_graph.py’ (<a class="github reference external" href="https://github.com/kburchfiel/pfn/blob/main/Online_Visualizations/PFN_Dash_App_Demo/auto_pivot_and_graph.py">kburchfiel/pfn</a>).
+(You may also find these functions useful for developing standlone Plotly charts.)</p>
 <p>The Flexible Enrollment Dashboard also makes use of an import_layout()
-function (stored within <code class="docutils literal notranslate"><span class="pre">import_layout.py</span></code> (<a class="github reference external" href="https://github.com/kburchfiel/pfn/blob/main/Online_Visualizations/PFN_Dash_App_Demo/import_layout.py">kburchfiel/pfn</a>))
+function (stored within ‘import_layout.py’ (<a class="github reference external" href="https://github.com/kburchfiel/pfn/blob/main/Online_Visualizations/PFN_Dash_App_Demo/import_layout.py">kburchfiel/pfn</a>))
 in order to reduce the amount of code needed to define
 the page’s structure and menu options. In addition, this dashboard
-applies the autotable() function in <code class="docutils literal notranslate"><span class="pre">auto_pivot_and_graph.py</span></code> to display
+applies the <code class="docutils literal notranslate"><span class="pre">autotable()</span></code> function in ‘auto_pivot_and_graph.py’ to display
 a tabular view of the data featured in the graph.</p>
 <p><img alt="" src="../../_images/flexible_enrollment_dashboard.png" /></p>
 <p>The dash-pivottable library makes it very easy to
 create interactive dashboards. Examples of this library in use can
 be found within the <strong>Dash Pivottable (Enrollment)</strong> (<a class="reference external" href="https://pfndashappdemo-ymc7cs3r5q-uc.a.run.app/dash_pivottable_enrollment">https://pfndashappdemo-ymc7cs3r5q-uc.a.run.app/dash_pivottable_enrollment</a>) and <strong>Dash Pivottable (Survey Results)</strong> (<a class="reference external" href="https://pfndashappdemo-ymc7cs3r5q-uc.a.run.app/dash_pivottable_survey_results">https://pfndashappdemo-ymc7cs3r5q-uc.a.run.app/dash_pivottable_survey_results</a>) pages.</p>
 <p><img alt="" src="../../_images/dash_pivottable_enrollment.png" /></p>
+</section>
 <section id="development-notes">
 <h3>Development notes:<a class="headerlink" href="#development-notes" title="Link to this heading">#</a></h3>
 <ol class="arabic simple">
 <li><p>I made use of a standalone Jupyter notebook (notebook_for_testing.ipynb, available at <a class="github reference external" href="https://github.com/kburchfiel/pfn/blob/main/Online_Visualizations/PFN_Dash_App_Demo/notebook_for_testing.ipynb">kburchfiel/pfn</a>) to test out code before integrating it into my Dash app files.</p></li>
-<li><p>The source data is imported from GitHub. A more realistic approach would retrieve data from an online database; however, that would cause this project to incur a monthly database hosting expense.</p></li>
+<li><p>The source data is imported from GitHub. A more realistic approach would retrieve data from an online database; however, the GitHub-based approach is simpler and cheaper.</p></li>
 </ol>
 </section>
 <section id="project-structure">
 <h3>Project structure<a class="headerlink" href="#project-structure" title="Link to this heading">#</a></h3>
 <p>The files and folders in this app are arranged as follows:</p>
 <p>(Folders have ‘/’ suffixes.)</p>
-<p>pages/</p>
-<p>—-home_page.py</p>
-<p>—-fixed_dashboard.py</p>
-<p>—-simple_interactive_dashboard.py</p>
-<p>—-flexible_survey_results_dashboard.py</p>
-<p>—-flexible_enrollment_dashboard.py</p>
-<p>—-dash_pivottable_enrollment.py</p>
-<p>—-dash_pivottable_survey_results.py</p>
-<p>templates/</p>
-<p>—-login.html</p>
-<p><a class="reference external" href="http://app.py">app.py</a></p>
-<p>auto_pivot_and_graph.py</p>
-<p>data_import.py</p>
-<p>import_layout.py</p>
-<p>Procfile</p>
-<p><a class="reference external" href="http://readme.md">readme.md</a> [this file]</p>
-<p>requirements.txt</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>PFN_Dash_App_Demo/
+----pages/
+--------home_page.py
+--------fixed_dashboard.py
+--------simple_interactive_dashboard.py
+--------flexible_survey_results_dashboard.py
+--------flexible_enrollment_dashboard.py
+--------dash_pivottable_enrollment.py
+--------dash_pivottable_survey_results.py
+----templates/
+--------login.html
+----app.py
+----auto_pivot_and_graph.py
+----data_import.py
+----import_layout.py
+----Procfile
+----readme.md [this file]
+----requirements.txt
+</pre></div>
+</div>
 </section>
 <section id="development-and-setup-notes">
 <h3>Development and setup notes<a class="headerlink" href="#development-and-setup-notes" title="Link to this heading">#</a></h3>
 <p>Some of the code in this folder was derived from jinnyzor’s post at <a class="reference external" href="https://community.plotly.com/t/dash-app-pages-with-flask-login-flow-using-flask/69507/38">https://community.plotly.com/t/dash-app-pages-with-flask-login-flow-using-flask/69507/38</a> . Jinnyzor wrote regarding that post at (<a class="reference external" href="https://community.plotly.com/t/dash-app-pages-with-flask-login-flow-using-flask/69507/55">https://community.plotly.com/t/dash-app-pages-with-flask-login-flow-using-flask/69507/55</a>) that “this is free to use, no license.” I am very grateful to jinnyzor (and to Nader Elshehabi (<a class="github reference external" href="https://github.com/naderelshehabi/dash-flask-login">naderelshehabi/dash-flask-login</a>)) for allowing us to use their code!</p>
-<p>Some code also derives from that found in the Dash Pages documentation (<a class="reference external" href="https://dash.plotly.com/urls">https://dash.plotly.com/urls</a>).</p>
+<p>Some code also derives from that found in the Dash Pages documentation (<a class="reference external" href="https://dash.plotly.com/urls">https://dash.plotly.com/urls</a>). Dash Pages allows for multiple pages to get shown within a single Dash app.</p>
 <section id="steps-for-hosting-this-dash-app-with-flask-login-functionality-on-google-cloud-run">
 <h4>Steps for hosting this Dash app (with Flask-Login functionality) on Google Cloud Run<a class="headerlink" href="#steps-for-hosting-this-dash-app-with-flask-login-functionality-on-google-cloud-run" title="Link to this heading">#</a></h4>
 <p>Most of the deployment steps written within the Simple_App_Without_Login readme apply here as well, with the following exceptions:</p>
@@ -473,8 +482,8 @@ be found within the <strong>Dash Pivottable (Enrollment)</strong> (<a class="ref
 <li><p>Confirmed that the local app was working correctly</p></li>
 <li><p>Copied the version numbers for each locally-hosted library into my requirements.txt file</p></li>
 <li><p>Redeployed the app–which, thankfully, now worked fine</p></li>
-<li><p>It’s worth highlighting that, whereas the app within the Simple_App_Without_Login folder contained the line <code class="docutils literal notranslate"><span class="pre">server</span> <span class="pre">=</span> <span class="pre">app.server</span></code> (as indicated by the deployment guide at <a class="reference external" href="https://dash.plotly.com/deployment">https://dash.plotly.com/deployment</a>), this app will instead use <code class="docutils literal notranslate"><span class="pre">server</span> <span class="pre">=</span> <span class="pre">Flask(__name__)</span></code> due to the incorporation of Flask-Login.</p></li>
 </ol>
+<p>It’s worth highlighting that, whereas the app within the Simple_App_Without_Login folder contained the line <code class="docutils literal notranslate"><span class="pre">server</span> <span class="pre">=</span> <span class="pre">app.server</span></code> (as indicated by the deployment guide at <a class="reference external" href="https://dash.plotly.com/deployment">https://dash.plotly.com/deployment</a>), this app will instead use <code class="docutils literal notranslate"><span class="pre">server</span> <span class="pre">=</span> <span class="pre">Flask(__name__)</span></code> due to the incorporation of Flask-Login.</p>
 </section>
 </section>
 </section>
@@ -548,6 +557,7 @@ be found within the <strong>Dash Pivottable (Enrollment)</strong> (<a class="ref
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#readme">Readme</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dashboards">Dashboards</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#development-notes">Development notes:</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#project-structure">Project structure</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#development-and-setup-notes">Development and setup notes</a><ul class="nav section-nav flex-column">

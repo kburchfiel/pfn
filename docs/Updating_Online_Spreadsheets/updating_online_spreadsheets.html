@@ -214,6 +214,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../Book_Specific_Materials/PFN_Dash_App_Demo_py_nb.html">Source code for PFN Dash App Demo</a></li>
 </ul>
 </details></li>
+<li class="toctree-l1"><a class="reference internal" href="../Book_Specific_Materials/conclusion_to_book.html">Conclusion: Now the fun begins!</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendix</span></p>
 <ul class="nav bd-sidenav">
@@ -364,21 +365,26 @@
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prerequisites">Prerequisites</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#importing-weather-data">Importing weather data</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#importing-weather-data-for-charlottesville">Importing weather data for Charlottesville</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#importing-weather-data-for-dulles-international-airport">Importing weather data for Dulles International Airport</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#importing-weather-data-for-winchester">Importing weather data for Winchester</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prerequisites">Prerequisites</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ensuring-that-this-script-when-running-on-my-own-laptop-will-have-access-to-a-comprehensive-set-of-weather-data">Ensuring that this script (when running on my own laptop) will have access to a comprehensive set of weather data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#importing-relevant-libraries">Importing relevant libraries</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#initializing-gspread">Initializing gspread:</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#importing-weather-data">Importing weather data</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reading-these-datasets-into-dataframes">Reading these datasets into DataFrames</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#importing-these-dataframes-into-a-google-sheets-workbook">Importing these DataFrames into a Google Sheets workbook</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#performing-the-same-data-export-steps-for-kiad-and-kokv-data">Performing the same data export steps for KIAD and KOKV data</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion">Conclusion</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#appendix">Appendix</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#a-shell-script-and-crontab-entry-for-running-this-notebook-automatically">A shell script and crontab entry for running this notebook automatically</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#updating-my-laptop-s-copy-of-the-files-in-weather-data-with-my-server-s-copy">Updating my laptop’s copy of the files in weather_data with my server’s copy</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#a-shell-script-and-crontab-entry-for-running-this-notebook-automatically">A shell script and crontab entry for running this notebook automatically</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#step-1-creating-your-shell-script">Step 1: Creating your shell script</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2-adding-a-corresponding-crontab-entry">Step 2: Adding a corresponding crontab entry</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#updating-my-laptop-s-copy-of-the-files-in-the-weather-data-folder-with-my-server-s-copy">Updating my laptop’s copy of the files in the weather_data/ folder with my server’s copy</a></li>
 </ul>
 </li>
 </ul>
@@ -396,15 +402,20 @@
 <h1>Updating Online Spreadsheets<a class="headerlink" href="#updating-online-spreadsheets" title="Link to this heading">#</a></h1>
 <p>This script will demonstrate how to upload the contents of a DataFrame into a Google Sheets file using Python’s <code class="docutils literal notranslate"><span class="pre">gspread</span></code> and <code class="docutils literal notranslate"><span class="pre">gspread-dataframe</span></code> libraries. This is a convenient option for sharing your output with others, especially if you need to update that output on a regular basis.</p>
 <p>The Google Sheets worksheet that this script will update can be found at <a class="reference external" href="https://docs.google.com/spreadsheets/d/17aDJ3mg49-n0IEnDgN7ZB85pO87fiUpkZPULYDB8dmo/edit?usp=sharing">https://docs.google.com/spreadsheets/d/17aDJ3mg49-n0IEnDgN7ZB85pO87fiUpkZPULYDB8dmo/edit?usp=sharing</a> .</p>
-<p>Since the NWS weather data accessed by this script generally gets updated on an hourly basis, it makes sense to have this script run automatically every hour. That way, your Google Sheets data, along with your local .csv copies of historical weather data, will always be relatively up to date. To automate this script, I recommend saving it as a .py file (which is easy to do within JupyterLab Desktop); setting up a script that will run this file; and then having your computer run this script on an hourly basis. (More information on accomplishing these steps within Linux can be found at the end of this notebook.)</p>
+<p>Since the National Weather Service (NWS) weather data accessed by this script generally gets updated on an hourly basis, it makes sense to have this script run automatically every hour. That way, your Google Sheets data, along with your local .csv copies of historical weather data, will always be relatively up to date.</p>
+<p>If you’d like to try automating this script, I recommend saving it as a .py file (which is easy to do within JupyterLab Desktop); setting up a script that will run this file; and then having your computer run this script on an hourly basis. (More information on accomplishing these steps within Linux can be found at the end of this notebook.)</p>
 <section id="prerequisites">
 <h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Link to this heading">#</a></h2>
-<ol class="arabic simple">
-<li><p>Python’s gspread library provides a very helpful overview of connecting to Google Sheets workbooks via a service account at <a class="reference external" href="https://docs.gspread.org/en/latest/oauth2.html#for-bots-using-service-account">https://docs.gspread.org/en/latest/oauth2.html#for-bots-using-service-account</a> . (There are multiple ways to connect to workbooks, but I find the service account approach to be pretty straightforward.) Go ahead and complete these steps if you haven’t already. (Note: I chose to save my service account key to a custom path rather than the default one specified in the documentation; that way, I could more easily work with multiple account keys on my computer.) Also make sure that, prior to enabling the Google Sheets and Google Drive APIs, the Google Cloud project that you want to use for this script has been selected.</p></li>
+<ol class="arabic">
+<li><p>Python’s gspread library provides a very helpful overview of connecting to Google Sheets workbooks via a service account at <a class="reference external" href="https://docs.gspread.org/en/latest/oauth2.html#for-bots-using-service-account">https://docs.gspread.org/en/latest/oauth2.html#for-bots-using-service-account</a> . (There are multiple ways to connect to workbooks, but I find the service account approach to be pretty straightforward.) Go ahead and complete the steps described in this link if you haven’t already.</p>
+<p>(Note: I chose to save my service account key to a custom path rather than the default one specified in the documentation; that way, I could more easily work with multiple account keys on my computer.) Also make sure that, prior to enabling the Google Sheets and Google Drive APIs, the Google Cloud project that you want to use for this script has been selected.</p>
+</li>
 <li><p>If you also specified a custom path, you’ll need to create a file called ‘service_key_path.txt’ within this folder that points to it. That way, the following cell will be able to read in its location for use within gspread functions. (Alternatively, you could simply replace the following cell’s code with <code class="docutils literal notranslate"><span class="pre">service_key_path</span> <span class="pre">=</span> <span class="pre">(path_to_your_key)</span></code>. Or, if you’re using the default key location, you can comment out this cell altogether.)</p></li>
 <li><p>As noted in the gspread service account documentation, you’ll need to give the email associated with your service account editor access to the Google Sheets workbook that you’d like your script to update. (This email is <em>not</em> the same as your regular Google Email; it will likely look something like <a class="reference external" href="mailto:accountname&#37;&#52;&#48;cloudprojectname&#46;iam&#46;gserviceaccount&#46;com">accountname<span>&#64;</span>cloudprojectname<span>&#46;</span>iam<span>&#46;</span>gserviceaccount<span>&#46;</span>com</a>. You can find it within your service account file.</p></li>
 </ol>
-<p>The following cell checks whether this script is running on my own laptop. (If yours happens to have the name ‘kjb3-lm’, which seems very unlikely, it will run on that machine also!) If so, it copies a new set of weather data from a Google Drive folder; if not, this task will be skipped.</p>
+<section id="ensuring-that-this-script-when-running-on-my-own-laptop-will-have-access-to-a-comprehensive-set-of-weather-data">
+<h3>Ensuring that this script (when running on my own laptop) will have access to a comprehensive set of weather data<a class="headerlink" href="#ensuring-that-this-script-when-running-on-my-own-laptop-will-have-access-to-a-comprehensive-set-of-weather-data" title="Link to this heading">#</a></h3>
+<p>The following cell checks whether this script is running on my own laptop. (If yours happens to have the name ‘kjb3-lm’, which seems very unlikely, it will run on that machine also.) If so, it copies a new set of weather data from a Google Drive folder; if not, this task will be skipped.</p>
 <p>For an explanation of why I added in this cell, reference the ‘Updating my laptop’s copy of the files in weather_data with my server’s copy’ section of this notebook’s appendix.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -435,6 +446,9 @@
 </div>
 </div>
 </div>
+</section>
+<section id="importing-relevant-libraries">
+<h3>Importing relevant libraries<a class="headerlink" href="#importing-relevant-libraries" title="Link to this heading">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
@@ -447,23 +461,27 @@
 
 <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;service_key_path.txt&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
     <span class="n">service_key_path</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">gspread</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">gspread</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">gspread_dataframe</span><span class="w"> </span><span class="kn">import</span> <span class="n">set_with_dataframe</span><span class="p">,</span> <span class="n">get_as_dataframe</span>
 <span class="c1"># From https://pypi.org/project/gspread-dataframe/</span>
 <span class="c1"># gspread_dataframe isn&#39;t available within conda-forge as of 2025-02-20;</span>
 <span class="c1"># therefore, you&#39;ll need to install it via the following pip command:</span>
 <span class="c1"># pip install gspread-dataframe</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+
+<span class="c1"># The following weather_import() function will be used to retrieve</span>
+<span class="c1"># recent weather data from the National Weather Service website.</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">weather_import</span><span class="w"> </span><span class="kn">import</span> <span class="n">weather_import</span>
 </pre></div>
 </div>
 </div>
 </div>
-<p>(If you’re using gspread’s default path, you can comment out the first line and then uncomment the following one.)</p>
+</section>
+<section id="initializing-gspread">
+<h3>Initializing gspread:<a class="headerlink" href="#initializing-gspread" title="Link to this heading">#</a></h3>
+<p>(If you’re using gspread’s default path, you can comment out the first line in the following cell, then uncomment the following one.)</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">gc</span> <span class="o">=</span> <span class="n">gspread</span><span class="o">.</span><span class="n">service_account</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="n">service_key_path</span><span class="p">)</span>
@@ -476,37 +494,14 @@
 </div>
 </div>
 </div>
-<p>Importing additional libraries:</p>
-<p>(Note: the weather_import.py file imported below derives from recent_weather_data.ipynb within the Automated_Notebooks section of Python for Nonprofits.)</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">weather_import</span><span class="w"> </span><span class="kn">import</span> <span class="n">weather_import</span>
-</pre></div>
-</div>
-</div>
-</div>
+</section>
 </section>
 <section id="importing-weather-data">
 <h2>Importing weather data<a class="headerlink" href="#importing-weather-data" title="Link to this heading">#</a></h2>
-<p>The following cells will import weather data for three Virginia weather stations; combine it with pre-existing data; and then save a revised copy of this table to a .csv file.</p>
+<p>The following cells will import weather data for three Virginia airport weather stations: KCHO (Charlottesville-Albemarle airport); KIAD (Dulles International Airport); and KOKV (Winchester Regional Airport). Once these imports are complete, the script will combine each dataset with pre-existing data, then save updated copies of these tables to .csv files. The code that manages this import process can be found within ‘weather_import.py’ (located within the same folder as this notebook).</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data_folder</span> <span class="o">=</span> <span class="s1">&#39;weather_data&#39;</span>
-</pre></div>
-</div>
-</div>
-</div>
-<section id="importing-weather-data-for-charlottesville">
-<h3>Importing weather data for Charlottesville<a class="headerlink" href="#importing-weather-data-for-charlottesville" title="Link to this heading">#</a></h3>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Downloading KCHO data.&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Downloading KCHO data.
 </pre></div>
 </div>
 </div>
@@ -520,23 +515,8 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Original length of historical data file: 3629
-New length of historical data file: 3630
-</pre></div>
-</div>
-</div>
-</div>
-</section>
-<section id="importing-weather-data-for-dulles-international-airport">
-<h3>Importing weather data for Dulles International Airport<a class="headerlink" href="#importing-weather-data-for-dulles-international-airport" title="Link to this heading">#</a></h3>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Downloading KIAD data.&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Downloading KIAD data.
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Original length of historical data file: 4644
+New length of historical data file: 4712
 </pre></div>
 </div>
 </div>
@@ -550,48 +530,34 @@ New length of historical data file: 3630
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Original length of historical data file: 3216
-New length of historical data file: 3216
-</pre></div>
-</div>
-</div>
-</div>
-</section>
-<section id="importing-weather-data-for-winchester">
-<h3>Importing weather data for Winchester<a class="headerlink" href="#importing-weather-data-for-winchester" title="Link to this heading">#</a></h3>
-<p>(This data appears to be recorded at 20-minute intervals rather than hourly ones.)</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Downloading KOKV data.&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Downloading KOKV data.
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Original length of historical data file: 4243
+New length of historical data file: 4314
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">test_df</span> <span class="o">=</span> <span class="n">weather_import</span><span class="p">(</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Note: KOKV&#39;s data appears to be recorded at </span>
+<span class="c1"># 20-minute intervals rather than hourly ones.)</span>
+
+<span class="n">weather_import</span><span class="p">(</span>
     <span class="n">station_code</span> <span class="o">=</span> <span class="s1">&#39;KOKV&#39;</span><span class="p">,</span>
     <span class="n">data_folder</span> <span class="o">=</span> <span class="n">data_folder</span><span class="p">)</span>
-<span class="n">test_df</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Original length of historical data file: 3173
-New length of historical data file: 3174
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Original length of historical data file: 4207
+New length of historical data file: 4280
 </pre></div>
 </div>
 </div>
 </div>
-</section>
 </section>
 <section id="reading-these-datasets-into-dataframes">
 <h2>Reading these datasets into DataFrames<a class="headerlink" href="#reading-these-datasets-into-dataframes" title="Link to this heading">#</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">weather_import()</span></code> function called in the preceding cells saves its output to local .csv files. The following cells import those .csv files into DataFrames so that their data can get uploaded into a public Google Sheets workbook.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_weather_kcho</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span>
@@ -629,44 +595,44 @@ New length of historical data file: 3174
   </thead>
   <tbody>
     <tr>
-      <th>3625</th>
+      <th>4707</th>
       <td>KCHO</td>
-      <td>2025-04-03 18:53</td>
+      <td>2025-06-20 17:53</td>
+      <td>82.0</td>
+      <td>0.0</td>
+      <td>0.04</td>
+    </tr>
+    <tr>
+      <th>4708</th>
+      <td>KCHO</td>
+      <td>2025-06-20 18:53</td>
+      <td>82.0</td>
+      <td>0.0</td>
+      <td>0.04</td>
+    </tr>
+    <tr>
+      <th>4709</th>
+      <td>KCHO</td>
+      <td>2025-06-20 19:53</td>
+      <td>79.0</td>
+      <td>0.0</td>
+      <td>0.04</td>
+    </tr>
+    <tr>
+      <th>4710</th>
+      <td>KCHO</td>
+      <td>2025-06-20 20:53</td>
       <td>75.0</td>
       <td>0.0</td>
-      <td>0.01</td>
+      <td>0.04</td>
     </tr>
     <tr>
-      <th>3626</th>
+      <th>4711</th>
       <td>KCHO</td>
-      <td>2025-04-03 19:53</td>
-      <td>73.9</td>
+      <td>2025-06-20 21:53</td>
+      <td>72.0</td>
       <td>0.0</td>
-      <td>0.01</td>
-    </tr>
-    <tr>
-      <th>3627</th>
-      <td>KCHO</td>
-      <td>2025-04-03 20:53</td>
-      <td>73.0</td>
-      <td>0.0</td>
-      <td>0.01</td>
-    </tr>
-    <tr>
-      <th>3628</th>
-      <td>KCHO</td>
-      <td>2025-04-03 21:53</td>
-      <td>73.0</td>
-      <td>0.0</td>
-      <td>0.01</td>
-    </tr>
-    <tr>
-      <th>3629</th>
-      <td>KCHO</td>
-      <td>2025-04-03 22:53</td>
-      <td>73.9</td>
-      <td>0.0</td>
-      <td>0.01</td>
+      <td>0.00</td>
     </tr>
   </tbody>
 </table>
@@ -709,44 +675,44 @@ New length of historical data file: 3174
   </thead>
   <tbody>
     <tr>
-      <th>3211</th>
+      <th>4309</th>
       <td>KIAD</td>
-      <td>2025-04-03 18:52</td>
+      <td>2025-06-20 17:52</td>
+      <td>84.9</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>4310</th>
+      <td>KIAD</td>
+      <td>2025-06-20 18:52</td>
+      <td>82.9</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>4311</th>
+      <td>KIAD</td>
+      <td>2025-06-20 19:52</td>
+      <td>79.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>4312</th>
+      <td>KIAD</td>
+      <td>2025-06-20 20:52</td>
+      <td>77.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>4313</th>
+      <td>KIAD</td>
+      <td>2025-06-20 21:52</td>
       <td>75.0</td>
       <td>0.0</td>
-      <td>0.03</td>
-    </tr>
-    <tr>
-      <th>3212</th>
-      <td>KIAD</td>
-      <td>2025-04-03 19:52</td>
-      <td>75.0</td>
       <td>0.0</td>
-      <td>0.03</td>
-    </tr>
-    <tr>
-      <th>3213</th>
-      <td>KIAD</td>
-      <td>2025-04-03 20:52</td>
-      <td>73.9</td>
-      <td>0.0</td>
-      <td>0.03</td>
-    </tr>
-    <tr>
-      <th>3214</th>
-      <td>KIAD</td>
-      <td>2025-04-03 21:52</td>
-      <td>73.9</td>
-      <td>0.0</td>
-      <td>0.03</td>
-    </tr>
-    <tr>
-      <th>3215</th>
-      <td>KIAD</td>
-      <td>2025-04-03 22:52</td>
-      <td>73.0</td>
-      <td>0.0</td>
-      <td>0.03</td>
     </tr>
   </tbody>
 </table>
@@ -789,42 +755,42 @@ New length of historical data file: 3174
   </thead>
   <tbody>
     <tr>
-      <th>3169</th>
+      <th>4275</th>
       <td>KOKV</td>
-      <td>2025-04-03 19:55</td>
-      <td>73.4</td>
+      <td>2025-06-20 18:55</td>
+      <td>78.8</td>
       <td>0.0</td>
       <td>0.0</td>
     </tr>
     <tr>
-      <th>3170</th>
+      <th>4276</th>
       <td>KOKV</td>
-      <td>2025-04-03 20:55</td>
+      <td>2025-06-20 19:55</td>
+      <td>78.8</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>4277</th>
+      <td>KOKV</td>
+      <td>2025-06-20 20:55</td>
       <td>71.6</td>
       <td>0.0</td>
       <td>0.0</td>
     </tr>
     <tr>
-      <th>3171</th>
+      <th>4278</th>
       <td>KOKV</td>
-      <td>2025-04-03 21:55</td>
+      <td>2025-06-20 21:55</td>
       <td>69.8</td>
       <td>0.0</td>
       <td>0.0</td>
     </tr>
     <tr>
-      <th>3172</th>
+      <th>4279</th>
       <td>KOKV</td>
-      <td>2025-04-03 22:35</td>
+      <td>2025-06-20 22:35</td>
       <td>69.8</td>
-      <td>0.0</td>
-      <td>0.0</td>
-    </tr>
-    <tr>
-      <th>3173</th>
-      <td>KOKV</td>
-      <td>2025-04-03 23:35</td>
-      <td>66.2</td>
       <td>0.0</td>
       <td>0.0</td>
     </tr>
@@ -835,8 +801,8 @@ New length of historical data file: 3174
 </section>
 <section id="importing-these-dataframes-into-a-google-sheets-workbook">
 <h2>Importing these DataFrames into a Google Sheets workbook<a class="headerlink" href="#importing-these-dataframes-into-a-google-sheets-workbook" title="Link to this heading">#</a></h2>
-<p>In order to export these datasets to a Google Sheets workbook, we’ll first need to open that workbook with gspread. There are a few ways to do this (see <a class="reference external" href="https://docs.gspread.org/en/latest/user-guide.html#opening-a-spreadsheet">https://docs.gspread.org/en/latest/user-guide.html#opening-a-spreadsheet</a> for reference), but I like the <code class="docutils literal notranslate"><span class="pre">open_by_key()</span></code> option, which allows you–as the function’s name suggests–to open a workbook using its key.</p>
-<p>These keys are located within the center of each workbook URL. For instance, the full URL of the workbook I’ll be updating is <code class="docutils literal notranslate"><span class="pre">https://docs.google.com/spreadsheets/d/17aDJ3mg49-n0IEnDgN7ZB85pO87fiUpkZPULYDB8dmo/edit?usp=sharing</span></code>, so the key–located in between the <code class="docutils literal notranslate"><span class="pre">/d/</span></code> component of that URL and the following <code class="docutils literal notranslate"><span class="pre">/</span></code>–is <code class="docutils literal notranslate"><span class="pre">17aDJ3mg49-n0IEnDgN7ZB85pO87fiUpkZPULYDB8dmo</span></code>.</p>
+<p>In order to export these datasets to a Google Sheets workbook, we’ll first need to open that workbook with gspread. There are a few ways to do this (see <a class="reference external" href="https://docs.gspread.org/en/latest/user-guide.html#opening-a-spreadsheet">https://docs.gspread.org/en/latest/user-guide.html#opening-a-spreadsheet</a> for reference), but I like the <code class="docutils literal notranslate"><span class="pre">open_by_key()</span></code> option, which–as the function’s name suggests–allows you to open a workbook using its key.</p>
+<p>These keys are located within the center of each workbook URL. For instance, the full URL of the workbook I’ll be updating is <a class="reference external" href="https://docs.google.com/spreadsheets/d/17aDJ3mg49-n0IEnDgN7ZB85pO87fiUpkZPULYDB8dmo/edit?usp=sharing">https://docs.google.com/spreadsheets/d/17aDJ3mg49-n0IEnDgN7ZB85pO87fiUpkZPULYDB8dmo/edit?usp=sharing</a>, so the key–located in between the <code class="docutils literal notranslate"><span class="pre">/d/</span></code> component of that URL and the following <code class="docutils literal notranslate"><span class="pre">/</span></code>–is <code class="docutils literal notranslate"><span class="pre">17aDJ3mg49-n0IEnDgN7ZB85pO87fiUpkZPULYDB8dmo</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wb</span> <span class="o">=</span> <span class="n">gc</span><span class="o">.</span><span class="n">open_by_key</span><span class="p">(</span><span class="s1">&#39;17aDJ3mg49-n0IEnDgN7ZB85pO87fiUpkZPULYDB8dmo&#39;</span><span class="p">)</span>
@@ -852,38 +818,28 @@ New length of historical data file: 3174
 </div>
 </div>
 </div>
-<p>Next, I’ll select the ‘KCHO’ worksheet within this workbook, as that’s the first one I’d like to update. I’ll also clear out the current contents using <code class="docutils literal notranslate"><span class="pre">ws.clear()</span></code>; that way, only the latest DataFrame contents will appear within the spreadsheet after I call <code class="docutils literal notranslate"><span class="pre">set_with_dataframe</span></code> below. (If the most recent DataFrame is smaller than the previous version, parts of the previous one would still appear unless <code class="docutils literal notranslate"><span class="pre">ws.clear()</span></code> is called.</p>
+<p>Next, I’ll select the ‘KCHO’ worksheet within this workbook, as that’s the first one I’d like to update. I’ll also clear out the current contents using <code class="docutils literal notranslate"><span class="pre">ws.clear()</span></code>; that way, only the latest DataFrame contents will appear within the spreadsheet after I call <code class="docutils literal notranslate"><span class="pre">set_with_dataframe</span></code> below. (If the most recent DataFrame is smaller than the previous copy, parts of the earlier version might still appear unless it’s first removed using <code class="docutils literal notranslate"><span class="pre">ws.clear()</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ws</span> <span class="o">=</span> <span class="n">wb</span><span class="o">.</span><span class="n">worksheet</span><span class="p">(</span><span class="s1">&#39;KCHO&#39;</span><span class="p">)</span>
 <span class="c1"># https://docs.gspread.org/en/latest/user-guide.html#opening-a-spreadsheet</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ws</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span> 
-<span class="n">ws</span>
+<span class="n">ws</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span> 
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Worksheet &#39;KCHO&#39; id:0&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;spreadsheetId&#39;: &#39;17aDJ3mg49-n0IEnDgN7ZB85pO87fiUpkZPULYDB8dmo&#39;,
+ &#39;clearedRange&#39;: &#39;KCHO!A1:AC1672&#39;}
 </pre></div>
 </div>
 </div>
 </div>
-<p>Finally, I’ll call <code class="docutils literal notranslate"><span class="pre">set_with_dataframe</span></code> to export this DataFrame to df_weather.</p>
+<p>Finally, I’ll call <code class="docutils literal notranslate"><span class="pre">set_with_dataframe</span></code> to export <code class="docutils literal notranslate"><span class="pre">df_weather_kcho</span></code> to the KCHO Google Sheets worksheet.</p>
+<p>Only the most recent 960 rows (representing 40 days’ worth of data if no entries were missing) will get exported to Google Sheets. This will limit the time (and potentially money) needed to import this data into a Dash app (<a class="github reference external" href="https://github.com/kburchfiel/pfn/tree/main/Online_Visualizations/Simple_App_Without_Login">kburchfiel/pfn</a>) that utilizes it.</p>
+<p>More extensive sets of weather data, however, can be found within the <code class="docutils literal notranslate"><span class="pre">weather_data/</span></code> subfolder of the Updating_Online_Spreadsheets folder that contains this notebook. You can also access this data online at <a class="reference external" href="https://drive.google.com/drive/folders/1s9sUHa9HoYwpFrb_BsUN42CWXusp-7bD?usp=sharing">https://drive.google.com/drive/folders/1s9sUHa9HoYwpFrb_BsUN42CWXusp-7bD?usp=sharing</a> .</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Only the most recent 960 rows (representing 40 days&#39; worth of data if</span>
-<span class="c1"># no entries were missing) will get exported to Google Sheets. This will</span>
-<span class="c1"># limit the time (and potentially money) needed to import this data</span>
-<span class="c1"># into a Dash app (https://github.com/kburchfiel/pfn/tree/</span>
-<span class="c1"># main/Online_Visualizations/Simple_App_Without_Login)</span>
-<span class="c1"># that utilizes it.</span>
-<span class="n">set_with_dataframe</span><span class="p">(</span><span class="n">ws</span><span class="p">,</span> <span class="n">df_weather_kcho</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="o">-</span><span class="mi">960</span><span class="p">:])</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">set_with_dataframe</span><span class="p">(</span><span class="n">ws</span><span class="p">,</span> <span class="n">df_weather_kcho</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="o">-</span><span class="mi">960</span><span class="p">:])</span>
 <span class="c1"># Source: https://pypi.org/project/gspread-dataframe/</span>
 </pre></div>
 </div>
@@ -927,42 +883,42 @@ New length of historical data file: 3174
     <tr>
       <th>955</th>
       <td>KCHO</td>
-      <td>2025-04-03 18:53</td>
-      <td>75.0</td>
+      <td>2025-06-20 17:53</td>
+      <td>82.0</td>
       <td>0.0</td>
-      <td>0.01</td>
+      <td>0.04</td>
     </tr>
     <tr>
       <th>956</th>
       <td>KCHO</td>
-      <td>2025-04-03 19:53</td>
-      <td>73.9</td>
+      <td>2025-06-20 18:53</td>
+      <td>82.0</td>
       <td>0.0</td>
-      <td>0.01</td>
+      <td>0.04</td>
     </tr>
     <tr>
       <th>957</th>
       <td>KCHO</td>
-      <td>2025-04-03 20:53</td>
-      <td>73.0</td>
+      <td>2025-06-20 19:53</td>
+      <td>79.0</td>
       <td>0.0</td>
-      <td>0.01</td>
+      <td>0.04</td>
     </tr>
     <tr>
       <th>958</th>
       <td>KCHO</td>
-      <td>2025-04-03 21:53</td>
-      <td>73.0</td>
+      <td>2025-06-20 20:53</td>
+      <td>75.0</td>
       <td>0.0</td>
-      <td>0.01</td>
+      <td>0.04</td>
     </tr>
     <tr>
       <th>959</th>
       <td>KCHO</td>
-      <td>2025-04-03 22:53</td>
-      <td>73.9</td>
+      <td>2025-06-20 21:53</td>
+      <td>72.0</td>
       <td>0.0</td>
-      <td>0.01</td>
+      <td>0.00</td>
     </tr>
   </tbody>
 </table>
@@ -985,15 +941,23 @@ New length of historical data file: 3174
 </div>
 </section>
 </section>
+<section id="conclusion">
+<h2>Conclusion<a class="headerlink" href="#conclusion" title="Link to this heading">#</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">gpsread</span></code> and <code class="docutils literal notranslate"><span class="pre">gspread-dataframe</span></code> libraries make it easy to regularly update Google Sheets files with new figures, thus allowing coworkers and/or the general public to access the latest versions of your data. (For guidance on automating this update process, make sure to consult the first part of this notebook’s Appendix.) In addition, Google Sheets workbooks can serve as data sources for interactive Dash apps–which the next section of Python for Nonprofits will introduce.</p>
+</section>
 <section id="appendix">
 <h2>Appendix<a class="headerlink" href="#appendix" title="Link to this heading">#</a></h2>
 <section id="a-shell-script-and-crontab-entry-for-running-this-notebook-automatically">
 <h3>A shell script and crontab entry for running this notebook automatically<a class="headerlink" href="#a-shell-script-and-crontab-entry-for-running-this-notebook-automatically" title="Link to this heading">#</a></h3>
-<p>(These steps were written for Linux environments, but Windows also supports automated script operation; you’d just need to write a batch script rather than a shell script and use Windows Task Scheduler instead of your cron editor.)</p>
-<p>Your computer is more than happy to run a .py equivalent of this script, rain or shine, every hour of the day (as long as it’s powered on, of course). How can you tell it to do so? First, you’ll need to create a shell script that activates your Python environment; navigates to the folder containing the .py version of this notebook*; and then runs that file.</p>
-<p>The following cell shows what this script looks like on my ‘server,’ which is really just an old laptop that I keep powered on 24/7 in order to run these hourly weather imports. (I gave the script the imaginative name <em>online_spreadsheet_update.sh.</em>)</p>
-<p>This script also copies the weather_data files that it creates to a Google Drive folder; this makes it easier to transfer them to my main laptop and also keeps the files backed up. (Since this server, like my main laptop, runs Linux, I needed to mount the drive via RClone so that it could be accessed via my local file system; otherwise, the <code class="docutils literal notranslate"><span class="pre">cp</span></code> command would not have worked.)</p>
-<p>Steps for configuring RClone to connect to a Google Drive account are avaialble at <a class="reference external" href="https://rclone.org/drive/">https://rclone.org/drive/</a>  . Also, in case it helps, my shell script for mounting my server’s Google Drive account to my main laptop is as follows:</p>
+<p>(These steps were written for Linux environments, but similar steps can be performed on Windows; you’d just need to write a batch script rather than a shell script and use Windows Task Scheduler instead of your cron editor. I’m quite sure that it’s possible to automate this script on Macs as well, but I’ll leave that as an exercise for the reader.)</p>
+<p>Your computer is more than happy to run a .py equivalent of this script, rain or shine, every hour of the day (as long as it’s kept powered on, of course). This section will teach you how to do so!</p>
+<section id="step-1-creating-your-shell-script">
+<h4>Step 1: Creating your shell script<a class="headerlink" href="#step-1-creating-your-shell-script" title="Link to this heading">#</a></h4>
+<p>First, you’ll need to create a shell script that activates your Python environment; navigates to the folder containing the .py version of this notebook*; and then runs that file.</p>
+<p>The following cell shows what this shell script looks like on my ‘server,’ which is really just an old laptop that I keep powered on 24/7 in order to run these hourly weather imports. (I gave the script the imaginative name <em>online_spreadsheet_update.sh.</em>)</p>
+<p>This shell script <em>also</em> copies the weather_data files that it creates to a Google Drive folder; this makes it easier to transfer them to my main laptop and also keeps the files backed up.</p>
+<p>Since this server, like my main laptop, runs Linux, I needed to mount the drive via RClone so that it could be accessed via my local file system; otherwise, the <code class="docutils literal notranslate"><span class="pre">cp</span></code> command would not have worked.
+Steps for configuring RClone to connect to a Google Drive account are avaialble at <a class="reference external" href="https://rclone.org/drive/">https://rclone.org/drive/</a>  . Also, in case it helps, my shell script for mounting my server’s Google Drive account to my main laptop is as follows:</p>
 <p><code class="docutils literal notranslate"><span class="pre">rclone</span> <span class="pre">mount</span> <span class="pre">kjb3server:</span> <span class="pre">~/kjb3server_drive/</span> <span class="pre">--vfs-cache-mode</span> <span class="pre">full</span></code> (This code was based on <a class="reference external" href="https://ostechnix.com/install-rclone-in-linux/">https://ostechnix.com/install-rclone-in-linux/</a> and Andre’s comment on it. <code class="docutils literal notranslate"><span class="pre">--vfs-cache-mode</span> <span class="pre">full</span> <span class="pre">allows</span> <span class="pre">RClone</span> <span class="pre">to</span> <span class="pre">access</span> <span class="pre">files</span> <span class="pre">more</span> <span class="pre">quickly.</span></code>)</p>
 <p>*<em>(To create a .py version of this notebook, open it within JupyterLab Desktop; navigate to File –&gt; Save and Export Notebook As –&gt; Executable Script; and then save it (preferably within the same folder as updating_online_spreadsheets.ipynb) as updating_online_spreadsheets.py. You could also just run the .ipynb file directly if you’d prefer; see the comments within the following script for more details.)</em></p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
@@ -1010,7 +974,6 @@ New length of historical data file: 3174
 <span class="c1"># to execute the notebook within your base environment.)</span>
 <span class="c1"># These lines are based on Lamma&#39;s post at:</span>
 <span class="c1"># https://stackoverflow.com/a/60523131/13097194</span>
-
 
 <span class="n">source</span> <span class="o">~/</span><span class="n">miniforge3</span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">profile</span><span class="o">.</span><span class="n">d</span><span class="o">/</span><span class="n">conda</span><span class="o">.</span><span class="n">sh</span>
 <span class="n">conda</span> <span class="n">activate</span> <span class="n">kjb3server</span>
@@ -1031,17 +994,21 @@ New length of historical data file: 3174
 <span class="n">sleep</span> <span class="mi">2</span>
 </pre></div>
 </div>
-<p>In order to instruct your computer to run this script 10 minutes after each hour, you can then run <code class="docutils literal notranslate"><span class="pre">crontab</span> <span class="pre">-e</span></code> within your terminal and paste the following line at the bottom of the page: (You’ll of course need to replace my path with your own path to this file.)</p>
-<p><em>(If you’re new to crontabs, make sure to review the documentation that appears at the top of your crontab file. Also, if you’re working within the Nano editor, make sure to hit Ctrl + X to exit out of the editor after your updates have been saved; if you instead close the window, your changes won’t be saved.)</em></p>
+</section>
+<section id="step-2-adding-a-corresponding-crontab-entry">
+<h4>Step 2: Adding a corresponding crontab entry<a class="headerlink" href="#step-2-adding-a-corresponding-crontab-entry" title="Link to this heading">#</a></h4>
+<p>In order to instruct your computer to run this script 10 minutes after each hour, you can then run <code class="docutils literal notranslate"><span class="pre">crontab</span> <span class="pre">-e</span></code> within your terminal and paste the following line at the bottom of the page. (You’ll of course need to replace my path with your own path to this file.)</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">10</span> <span class="o">*</span> <span class="o">*</span> <span class="o">*</span> <span class="o">*</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">kjb3lxms</span><span class="o">/</span><span class="n">kjb3python</span><span class="o">/</span><span class="n">Updating_Online_Spreadsheets</span><span class="o">/</span><span class="n">online_spreadsheet_update</span><span class="o">.</span><span class="n">sh</span>
 </pre></div>
 </div>
+<p><em>(If you’re new to crontabs, make sure to review the documentation that appears at the top of your crontab file. Also, if you’re working within the Nano editor, make sure to hit Ctrl + X to exit out of the editor after your updates have been saved; if you instead close the window, your changes will be lost.)</em></p>
 </section>
-<section id="updating-my-laptop-s-copy-of-the-files-in-weather-data-with-my-server-s-copy">
-<h3>Updating my laptop’s copy of the files in weather_data with my server’s copy<a class="headerlink" href="#updating-my-laptop-s-copy-of-the-files-in-weather-data-with-my-server-s-copy" title="Link to this heading">#</a></h3>
-<p>As noted earlier in the appendix, my server runs a Python version of this script each hour, thus keeping my Google Sheets copy of recent weather data up to date. However, when I run this notebook on my main laptop, this comprehensive Google Sheets copy will get overwritten by a more spotty copy of weather data on my local computer. (Since the script can only receive the most recent 3 days of weather data from the NWS, my local recent_weather folder will likely be missing quite a few hours of data unless I run this script once every 72 hours.)</p>
-<p>In order to prevent this issue, I added code at the start of this notebook that would copy the latest contents of the weather_data folder within my server to the weather_data folder within Python for Nonprofits. That way, this script would have access to the same comprehensive weather data file that the server does–and, as a result, would load a more comprehensive set of data to Google Sheets.</p>
-<p>In order for this code to work successfully, I also needed to run a shell script via Linux Mint’s Startup Applications program that would mount my server’s Google Drive folder to my main laptop. Having this folder accessible both on my server and my main laptop made the process of copying weather data from the former to the latter much easier.</p>
+</section>
+<section id="updating-my-laptop-s-copy-of-the-files-in-the-weather-data-folder-with-my-server-s-copy">
+<h3>Updating my laptop’s copy of the files in the weather_data/ folder with my server’s copy<a class="headerlink" href="#updating-my-laptop-s-copy-of-the-files-in-the-weather-data-folder-with-my-server-s-copy" title="Link to this heading">#</a></h3>
+<p>As noted earlier in the appendix, my ‘server’ runs a Python version of this script each hour, thus keeping my Google Sheets copy of recent weather data up to date. However, when I run this notebook on my main laptop, this comprehensive Google Sheets copy will get overwritten by a more spotty copy of weather data on my local computer. (Since the script can only receive the most recent 3 days of weather data from the NWS, and I only run this script on my main laptop occassionally, my local recent_weather/ folder will likely be missing quite a few hours of data.)</p>
+<p>In order to prevent this issue, I added code at the start of this notebook that copies the latest contents of the weather_data/ folder within my server to the weather_data/ folder within my main laptop. That way, this script will have access to the same comprehensive weather data file that the server does–and, as a result, will load a more comprehensive set of data to Google Sheets.</p>
+<p>In order for this code to work successfully, I needed to use RClone to mount my server’s Google Drive folder to my main laptop. (A simple shell script that accomplishes this mount can be found earlier within this appendix. I’ve added this script to my Startup Applications list within Linux Mint on both my main laptop and my server, thus ensuring that both computers will always be connected to it.) Having this Google Drive folder available on both computers makes the process of copying weather data from my server to my main laptop much easier.</p>
 </section>
 </section>
 <div class="toctree-wrapper compound">
@@ -1113,21 +1080,26 @@ New length of historical data file: 3174
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prerequisites">Prerequisites</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#importing-weather-data">Importing weather data</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#importing-weather-data-for-charlottesville">Importing weather data for Charlottesville</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#importing-weather-data-for-dulles-international-airport">Importing weather data for Dulles International Airport</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#importing-weather-data-for-winchester">Importing weather data for Winchester</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prerequisites">Prerequisites</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ensuring-that-this-script-when-running-on-my-own-laptop-will-have-access-to-a-comprehensive-set-of-weather-data">Ensuring that this script (when running on my own laptop) will have access to a comprehensive set of weather data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#importing-relevant-libraries">Importing relevant libraries</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#initializing-gspread">Initializing gspread:</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#importing-weather-data">Importing weather data</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reading-these-datasets-into-dataframes">Reading these datasets into DataFrames</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#importing-these-dataframes-into-a-google-sheets-workbook">Importing these DataFrames into a Google Sheets workbook</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#performing-the-same-data-export-steps-for-kiad-and-kokv-data">Performing the same data export steps for KIAD and KOKV data</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion">Conclusion</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#appendix">Appendix</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#a-shell-script-and-crontab-entry-for-running-this-notebook-automatically">A shell script and crontab entry for running this notebook automatically</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#updating-my-laptop-s-copy-of-the-files-in-weather-data-with-my-server-s-copy">Updating my laptop’s copy of the files in weather_data with my server’s copy</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#a-shell-script-and-crontab-entry-for-running-this-notebook-automatically">A shell script and crontab entry for running this notebook automatically</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#step-1-creating-your-shell-script">Step 1: Creating your shell script</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2-adding-a-corresponding-crontab-entry">Step 2: Adding a corresponding crontab entry</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#updating-my-laptop-s-copy-of-the-files-in-the-weather-data-folder-with-my-server-s-copy">Updating my laptop’s copy of the files in the weather_data/ folder with my server’s copy</a></li>
 </ul>
 </li>
 </ul>

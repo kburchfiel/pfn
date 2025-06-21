@@ -214,6 +214,7 @@
 <li class="toctree-l2"><a class="reference internal" href="PFN_Dash_App_Demo_py_nb.html">Source code for PFN Dash App Demo</a></li>
 </ul>
 </details></li>
+<li class="toctree-l1"><a class="reference internal" href="conclusion_to_book.html">Conclusion: Now the fun begins!</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendix</span></p>
 <ul class="nav bd-sidenav">
@@ -387,15 +388,22 @@
 <span class="c1"># By Kenneth Burchfiel</span>
 <span class="c1"># Released under the MIT License</span>
 
+<span class="c1"># This app features a graph of recent weather data,</span>
+<span class="c1"># along with a menu that allows users to specify the metric being</span>
+<span class="c1"># displayed; the weather stations for which to display it; and </span>
+<span class="c1"># the number of days to plot within the graph. When viewers change</span>
+<span class="c1"># the selections within the menu, the weather graph will update</span>
+<span class="c1"># automatically. </span>
+
 <span class="c1"># Note: the Cloud Run-hosted copy of this app can be found </span>
 <span class="c1"># at https://simpleappwithoutlogin-470317599391.us-central1.run.app/ .</span>
 
-<span class="c1"># (See readme for more information on the code used to connect</span>
+<span class="c1"># (Seethe  readme for more information on the code used to connect</span>
 <span class="c1"># to a Google Sheets workbook with recent weather data)</span>
 
 <span class="c1"># Parts of the following code were based on the Dash app tutorial</span>
 <span class="c1"># at https://dash.plotly.com/tutorial ; the Dash callbacks documentation at</span>
-<span class="c1"># https://dash.plotly.com/basic-callbacks; the online Dash deployment</span>
+<span class="c1"># https://dash.plotly.com/basic-callbacks ; the online Dash deployment</span>
 <span class="c1"># guide at https://dash.plotly.com/deployment ; the Dash Bootstrap intro at</span>
 <span class="c1"># https://dash-bootstrap-components.opensource.faculty.ai/docs/quickstart/ </span>
 <span class="c1"># ; and the Dash Bootstrap Layout documentation at</span>
@@ -403,14 +411,16 @@
 <span class="c1"># .faculty.ai/docs/components/layout/ .</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">gspread</span>
+
+<span class="c1"># From https://pypi.org/project/gspread-dataframe/</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">gspread_dataframe</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_as_dataframe</span>
+
 <span class="kn">from</span><span class="w"> </span><span class="nn">dash</span><span class="w"> </span><span class="kn">import</span> <span class="n">Dash</span><span class="p">,</span> <span class="n">html</span><span class="p">,</span> <span class="n">dcc</span><span class="p">,</span> <span class="n">dash_table</span><span class="p">,</span> <span class="n">callback</span><span class="p">,</span> <span class="n">Input</span><span class="p">,</span> <span class="n">Output</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">plotly.express</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">px</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">dash_bootstrap_components</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">dbc</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timedelta</span>
 
-<span class="c1"># From https://pypi.org/project/gspread-dataframe/</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Initializing gspread using service account key stored within </span><span class="se">\</span>
 <span class="s2">Cloud Run secrets volume:&quot;</span><span class="p">)</span>
 
@@ -425,7 +435,7 @@
 <span class="c1"># was helpful in drafting the following line. </span>
 
     <span class="n">gc</span> <span class="o">=</span> <span class="n">gspread</span><span class="o">.</span><span class="n">service_account</span><span class="p">(</span>
-    <span class="n">filename</span><span class="o">=</span><span class="s1">&#39;/svcacctsecret/kjb3server_service_account&#39;</span><span class="p">)</span>
+    <span class="n">filename</span> <span class="o">=</span> <span class="s1">&#39;/svcacctsecret/kjb3server_service_account&#39;</span><span class="p">)</span>
     <span class="n">wb</span> <span class="o">=</span> <span class="n">gc</span><span class="o">.</span><span class="n">open_by_key</span><span class="p">(</span><span class="s1">&#39;17aDJ3mg49-n0IEnDgN7ZB85pO87fiUpkZPULYDB8dmo&#39;</span><span class="p">)</span>
 
 <span class="c1"># Note: the code above will only run successfully when the app is</span>
@@ -446,7 +456,9 @@
         <span class="n">ws</span> <span class="o">=</span> <span class="n">wb</span><span class="o">.</span><span class="n">worksheet</span><span class="p">(</span><span class="n">station</span><span class="p">)</span>
         <span class="n">wx_df_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">get_as_dataframe</span><span class="p">(</span><span class="n">ws</span><span class="p">)[</span><span class="o">-</span><span class="mi">960</span><span class="p">:])</span> <span class="c1"># Importing up to</span>
         <span class="c1"># 40 days of data for each station (in order to keep the charts</span>
-        <span class="c1"># readable)</span>
+        <span class="c1"># readable) . The sheets may already only show 40 days&#39; worth</span>
+        <span class="c1"># of data, but it won&#39;t hurt to keep the [-960:] filter in place</span>
+        <span class="c1"># in case their format changes in the future.</span>
 
 <span class="c1"># Combining these station-specific tables into a single DataFrame:</span>
 
@@ -455,18 +467,19 @@
 <span class="n">df_wx</span><span class="p">[</span><span class="s1">&#39;Date/Time&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">df_wx</span><span class="p">[</span><span class="s1">&#39;Date/Time&#39;</span><span class="p">])</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">df_wx</span><span class="o">.</span><span class="n">tail</span><span class="p">())</span>
 
-<span class="c1"># Creating a condensed copy of df_wx for </span>
-<span class="c1"># incorporation in a DataTable:</span>
-<span class="c1"># (This table will also be sorted in descending chronological order</span>
-<span class="c1"># in order to display the most recent metrics first.)</span>
 
 <span class="n">current_date</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">today</span><span class="p">()</span>
 
-<span class="n">app</span> <span class="o">=</span> <span class="n">Dash</span><span class="p">(</span><span class="n">external_stylesheets</span><span class="o">=</span><span class="p">[</span><span class="n">dbc</span><span class="o">.</span><span class="n">themes</span><span class="o">.</span><span class="n">BOOTSTRAP</span><span class="p">])</span>
+<span class="n">app</span><span class="o">=</span><span class="n">Dash</span><span class="p">(</span><span class="n">external_stylesheets</span> <span class="o">=</span> <span class="p">[</span><span class="n">dbc</span><span class="o">.</span><span class="n">themes</span><span class="o">.</span><span class="n">BOOTSTRAP</span><span class="p">])</span>
 <span class="n">server</span> <span class="o">=</span> <span class="n">app</span><span class="o">.</span><span class="n">server</span>
 
+<span class="c1"># Specifying the layout of our webpage:</span>
+<span class="c1"># This layout will include various row and column elements within</span>
+<span class="c1"># an overarching dbc.Container element. It also features a </span>
+<span class="c1"># viewer-customizable graph that will get created later within this script.</span>
+
 <span class="c1"># The dcc.Markdown() code below was based on</span>
-<span class="c1"># https://dash.plotly.com/dash-core-components/markdown</span>
+<span class="c1"># https://dash.plotly.com/dash-core-components/markdown .</span>
 
 <span class="n">app</span><span class="o">.</span><span class="n">layout</span> <span class="o">=</span> <span class="n">dbc</span><span class="o">.</span><span class="n">Container</span><span class="p">(</span>
     <span class="p">[</span><span class="n">dbc</span><span class="o">.</span><span class="n">Row</span><span class="p">(</span><span class="n">dcc</span><span class="o">.</span><span class="n">Markdown</span><span class="p">(</span><span class="s1">&#39;&#39;&#39;</span>
@@ -479,7 +492,7 @@
 
 <span class="s1">The NWS data displayed within this notebook was accessed via</span>
 <span class="s1">[this Google Sheets file](https://docs.google.com/spreadsheets/d/</span><span class="se">\</span>
-<span class="s1">17aDJ3mg49-n0IEnDgN7ZB85pO87fiUpkZPULYDB8dmo/edit?gid=0#gid=0). </span>
+<span class="s1">17aDJ3mg49-n0IEnDgN7ZB85pO87fiUpkZPULYDB8dmo). </span>
 <span class="s1">This file gets updated with new NWS data</span>
 <span class="s1">on an hourly basis via [this script](https://github.com/kburchfiel/</span><span class="se">\</span>
 <span class="s1">pfn/blob/main/Updating_Online_Spreadsheets/</span><span class="se">\</span>
@@ -490,38 +503,47 @@
 <span class="s1">A more complex </span><span class="se">\</span>
 <span class="s1">Dash app can be found within [this part of PFN]</span><span class="se">\</span>
 <span class="s1">(https://github.com/kburchfiel/pfn/tree/main/</span><span class="se">\</span>
-<span class="s1">Online_Visualizations/PFN_Dash_App_Demo).</span>
+<span class="s1">Online_Visualizations/PFN_Dash_App_Demo).&#39;&#39;&#39;</span><span class="p">)),</span>
 
-<span class="s1">    </span>
-<span class="s1">    &#39;&#39;&#39;</span><span class="p">)),</span>
+<span class="c1"># Note that many of the following dbc.Row() objects contain multiple</span>
+<span class="c1"># dbc.Col() objects. This allows for a more concise set of headers</span>
+<span class="c1"># and options. The &#39;md=&#39; elements specify how wide certain elements </span>
+<span class="c1"># should be within larger screens; when the app is accessed via smaller</span>
+<span class="c1"># screens (such as cell phones), these elements will get rearranged</span>
+<span class="c1"># for easier viewing.</span>
+     
 <span class="n">dbc</span><span class="o">.</span><span class="n">Row</span><span class="p">([</span>
     <span class="n">dbc</span><span class="o">.</span><span class="n">Col</span><span class="p">(</span>
-        <span class="n">dcc</span><span class="o">.</span><span class="n">Markdown</span><span class="p">(</span><span class="s1">&#39;**Metric**:&#39;</span><span class="p">),</span> <span class="n">md</span> <span class="o">=</span> <span class="mi">2</span><span class="p">),</span>
+        <span class="n">dcc</span><span class="o">.</span><span class="n">Markdown</span><span class="p">(</span><span class="s1">&#39;**Metric**:&#39;</span><span class="p">),</span> <span class="n">md</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span>
     <span class="n">dbc</span><span class="o">.</span><span class="n">Col</span><span class="p">(</span>
         <span class="n">dcc</span><span class="o">.</span><span class="n">Dropdown</span><span class="p">(</span>
-    <span class="n">options</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Temp&#39;</span><span class="p">,</span> <span class="s1">&#39;Dew Point&#39;</span><span class="p">,</span> 
+    <span class="n">options</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Temp&#39;</span><span class="p">,</span> <span class="s1">&#39;Dew Point&#39;</span><span class="p">,</span> 
 <span class="s1">&#39;1-Hour Precip&#39;</span><span class="p">,</span> <span class="s1">&#39;Rolling 3-Hour Precip&#39;</span><span class="p">,</span> <span class="s1">&#39;Rolling 6-Hour Precip&#39;</span><span class="p">,</span>
 <span class="s1">&#39;Rolling 12-Hour Precip&#39;</span><span class="p">,</span> <span class="s1">&#39;Rolling 24-Hour Precip&#39;</span><span class="p">,</span>
-<span class="s1">&#39;Altimeter (in.)&#39;</span><span class="p">,</span> <span class="s1">&#39;Windspeed&#39;</span><span class="p">],</span> <span class="n">value</span> <span class="o">=</span> <span class="s1">&#39;Temp&#39;</span><span class="p">,</span> <span class="nb">id</span> <span class="o">=</span> <span class="s1">&#39;metric&#39;</span><span class="p">),</span> 
-        <span class="n">md</span> <span class="o">=</span> <span class="mi">3</span><span class="p">)]),</span>
+<span class="s1">&#39;Altimeter (in.)&#39;</span><span class="p">,</span> <span class="s1">&#39;Windspeed&#39;</span><span class="p">],</span> <span class="n">value</span><span class="o">=</span><span class="s1">&#39;Temp&#39;</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="s1">&#39;metric&#39;</span><span class="p">),</span> 
+        <span class="n">md</span><span class="o">=</span><span class="mi">3</span><span class="p">)]),</span>
  <span class="n">dbc</span><span class="o">.</span><span class="n">Row</span><span class="p">([</span>
-     <span class="n">dbc</span><span class="o">.</span><span class="n">Col</span><span class="p">(</span><span class="n">dcc</span><span class="o">.</span><span class="n">Markdown</span><span class="p">(</span><span class="s1">&#39;**Stations:**&#39;</span><span class="p">),</span> <span class="n">md</span> <span class="o">=</span> <span class="mi">2</span><span class="p">),</span>
+     <span class="n">dbc</span><span class="o">.</span><span class="n">Col</span><span class="p">(</span><span class="n">dcc</span><span class="o">.</span><span class="n">Markdown</span><span class="p">(</span><span class="s1">&#39;**Stations:**&#39;</span><span class="p">),</span> <span class="n">md</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span>
      <span class="n">dbc</span><span class="o">.</span><span class="n">Col</span><span class="p">(</span><span class="n">dcc</span><span class="o">.</span><span class="n">Dropdown</span><span class="p">([</span><span class="s1">&#39;KCHO&#39;</span><span class="p">,</span> <span class="s1">&#39;KIAD&#39;</span><span class="p">,</span> <span class="s1">&#39;KOKV&#39;</span><span class="p">],</span> 
                       <span class="p">[</span><span class="s1">&#39;KCHO&#39;</span><span class="p">,</span> <span class="s1">&#39;KIAD&#39;</span><span class="p">,</span> <span class="s1">&#39;KOKV&#39;</span><span class="p">],</span> 
                           <span class="n">multi</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-                     <span class="nb">id</span> <span class="o">=</span> <span class="s1">&#39;station_list&#39;</span><span class="p">),</span>  <span class="n">md</span> <span class="o">=</span> <span class="mi">4</span><span class="p">)]),</span>
+                     <span class="nb">id</span><span class="o">=</span><span class="s1">&#39;station_list&#39;</span><span class="p">),</span>  <span class="n">md</span><span class="o">=</span><span class="mi">4</span><span class="p">)]),</span>
 <span class="n">dbc</span><span class="o">.</span><span class="n">Row</span><span class="p">([</span><span class="n">dbc</span><span class="o">.</span><span class="n">Col</span><span class="p">(</span><span class="n">dcc</span><span class="o">.</span><span class="n">Markdown</span><span class="p">(</span><span class="s1">&#39;**Days to Include:**&#39;</span><span class="p">),</span> 
-                <span class="n">md</span> <span class="o">=</span> <span class="mi">2</span><span class="p">),</span>
-        <span class="n">dbc</span><span class="o">.</span><span class="n">Col</span><span class="p">(</span><span class="n">dcc</span><span class="o">.</span><span class="n">Slider</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">value</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span> 
+                <span class="n">md</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span>
+        <span class="n">dbc</span><span class="o">.</span><span class="n">Col</span><span class="p">(</span><span class="n">dcc</span><span class="o">.</span><span class="n">Slider</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> 
         <span class="c1"># I had originally used one-day increments for the slider,</span>
        <span class="c1"># but this resulted in overlapping text on mobile displays.</span>
-                   <span class="nb">id</span> <span class="o">=</span> <span class="s1">&#39;days_to_include&#39;</span><span class="p">))]),</span>
-<span class="n">dbc</span><span class="o">.</span><span class="n">Row</span><span class="p">(</span><span class="n">dcc</span><span class="o">.</span><span class="n">Graph</span><span class="p">(</span><span class="nb">id</span> <span class="o">=</span> <span class="s1">&#39;fig&#39;</span><span class="p">)),</span>                                   
- <span class="n">dbc</span><span class="o">.</span><span class="n">Row</span><span class="p">(</span><span class="n">dcc</span><span class="o">.</span><span class="n">Markdown</span><span class="p">(</span><span class="s2">&quot;By Kenneth Burchfiel&quot;</span><span class="p">))])</span>
+                   <span class="nb">id</span><span class="o">=</span><span class="s1">&#39;days_to_include&#39;</span><span class="p">))]),</span>
+<span class="c1"># The following Graph object will get created via the plot_graph()</span>
+     <span class="c1"># function shown below. This function allows users&#39; choices</span>
+     <span class="c1"># within the menu defined above to shape the appearance of the </span>
+     <span class="c1"># chart.</span>
+<span class="n">dbc</span><span class="o">.</span><span class="n">Row</span><span class="p">(</span><span class="n">dcc</span><span class="o">.</span><span class="n">Graph</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s1">&#39;fig&#39;</span><span class="p">)),</span>                                   
+<span class="n">dbc</span><span class="o">.</span><span class="n">Row</span><span class="p">(</span><span class="n">dcc</span><span class="o">.</span><span class="n">Markdown</span><span class="p">(</span><span class="s2">&quot;By Kenneth Burchfiel&quot;</span><span class="p">))])</span>
 
 
 <span class="c1"># Defining a callback function that, given the inputs specified</span>
-<span class="c1"># above, can plot and return a graph of weather data:</span>
+<span class="c1"># above, plots and returns a graph of weather data:</span>
 <span class="nd">@callback</span><span class="p">(</span>
     <span class="n">Output</span><span class="p">(</span><span class="s1">&#39;fig&#39;</span><span class="p">,</span> <span class="s1">&#39;figure&#39;</span><span class="p">),</span>
     <span class="n">Input</span><span class="p">(</span><span class="s1">&#39;metric&#39;</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">),</span>
@@ -531,9 +553,9 @@
 <span class="k">def</span><span class="w"> </span><span class="nf">plot_graph</span><span class="p">(</span><span class="n">metric</span><span class="p">,</span> <span class="n">station_list</span><span class="p">,</span> <span class="n">days_to_include</span><span class="p">):</span>
     <span class="c1"># Determining the earliest point at which data should be displayed:</span>
     <span class="n">data_cutoff</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">current_date</span> <span class="o">-</span> <span class="n">timedelta</span><span class="p">(</span>
-        <span class="n">days</span> <span class="o">=</span> <span class="n">days_to_include</span><span class="p">))</span>
+        <span class="n">days</span><span class="o">=</span><span class="n">days_to_include</span><span class="p">))</span>
 
-    <span class="c1"># Modifying the title so that it&#39;s gramatically correct when</span>
+    <span class="c1"># Modifying the title so that it&#39;s grammatically correct when</span>
     <span class="c1"># only one day of data is being displayed:</span>
     <span class="k">if</span> <span class="n">days_to_include</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
         <span class="n">day_title_component</span> <span class="o">=</span> <span class="s1">&#39;Past Day&#39;</span>
@@ -543,18 +565,18 @@
     <span class="n">fig</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">line</span><span class="p">(</span>
         <span class="n">df_wx</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;(Station in @station_list) </span><span class="se">\</span>
 <span class="s2">    &amp; (`Date/Time` &gt;= @data_cutoff)&quot;</span><span class="p">),</span> 
-        <span class="n">x</span> <span class="o">=</span> <span class="s1">&#39;Date/Time&#39;</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">metric</span><span class="p">,</span>
-        <span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;Station&#39;</span><span class="p">,</span>
-        <span class="n">title</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">metric</span><span class="si">}</span><span class="s2"> Over </span><span class="si">{</span><span class="n">day_title_component</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">x</span><span class="o">=</span><span class="s1">&#39;Date/Time&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">metric</span><span class="p">,</span>
+        <span class="n">color</span><span class="o">=</span><span class="s1">&#39;Station&#39;</span><span class="p">,</span>
+        <span class="n">title</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">metric</span><span class="si">}</span><span class="s2"> Over </span><span class="si">{</span><span class="n">day_title_component</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
     
     <span class="c1"># Updating y axis title based on the selected metric:</span>
-    <span class="n">fig</span><span class="o">.</span><span class="n">update_layout</span><span class="p">(</span><span class="n">xaxis_title</span> <span class="o">=</span> <span class="s1">&#39;Date&#39;</span><span class="p">)</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">update_layout</span><span class="p">(</span><span class="n">xaxis_title</span><span class="o">=</span><span class="s1">&#39;Date&#39;</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">metric</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;Temp&#39;</span><span class="p">,</span> <span class="s1">&#39;Dew Point&#39;</span><span class="p">]:</span>
-        <span class="n">fig</span><span class="o">.</span><span class="n">update_layout</span><span class="p">(</span><span class="n">yaxis_title</span> <span class="o">=</span> <span class="s1">&#39;Degrees (F)&#39;</span><span class="p">)</span>
+        <span class="n">fig</span><span class="o">.</span><span class="n">update_layout</span><span class="p">(</span><span class="n">yaxis_title</span><span class="o">=</span><span class="s1">&#39;Degrees (F)&#39;</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">metric</span> <span class="o">==</span> <span class="s1">&#39;Windspeed&#39;</span><span class="p">:</span>
-        <span class="n">fig</span><span class="o">.</span><span class="n">update_layout</span><span class="p">(</span><span class="n">yaxis_title</span> <span class="o">=</span> <span class="s1">&#39;Windspeed (mph)&#39;</span><span class="p">)</span>
+        <span class="n">fig</span><span class="o">.</span><span class="n">update_layout</span><span class="p">(</span><span class="n">yaxis_title</span><span class="o">=</span><span class="s1">&#39;Windspeed (mph)&#39;</span><span class="p">)</span>
     <span class="k">if</span> <span class="s1">&#39;Precip&#39;</span> <span class="ow">in</span> <span class="n">metric</span><span class="p">:</span>
-        <span class="n">fig</span><span class="o">.</span><span class="n">update_layout</span><span class="p">(</span><span class="n">yaxis_title</span> <span class="o">=</span> <span class="s1">&#39;Precipitation (in.)&#39;</span><span class="p">)</span>
+        <span class="n">fig</span><span class="o">.</span><span class="n">update_layout</span><span class="p">(</span><span class="n">yaxis_title</span><span class="o">=</span><span class="s1">&#39;Precipitation (in.)&#39;</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">fig</span>
 
 

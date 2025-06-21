@@ -214,6 +214,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../Book_Specific_Materials/PFN_Dash_App_Demo_py_nb.html">Source code for PFN Dash App Demo</a></li>
 </ul>
 </details></li>
+<li class="toctree-l1"><a class="reference internal" href="../Book_Specific_Materials/conclusion_to_book.html">Conclusion: Now the fun begins!</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendix</span></p>
 <ul class="nav bd-sidenav">
@@ -395,11 +396,12 @@
 <p>In order to begin analyzing data, we’ll first need to load it into our program. This script will demonstrate how to import a variety of data formats into Python using <strong>pandas</strong>, a fantastic library for loading, reformatting, and analyzing data. Before I dive into the code, I’d like to provide a brief overview of Pandas for those who aren’t yet familiar with this library.</p>
 <section id="a-pandas-primer">
 <h2>A Pandas primer<a class="headerlink" href="#a-pandas-primer" title="Link to this heading">#</a></h2>
-<p>You can think of Pandas as a tool for performing spreadsheet-based tasks within Python programs. One benefit of performing such tasks in Python (rather than Excel, Google Sheets, or another spreadsheet program) is that, once you have them scripted, you can quickly rerun them whenever the original data gets updated.* You could even have your computer run your analysis script on a daily or hourly basis, thus freeing up time you’d need to spend on busywork for more interesting tasks.</p>
+<p>You can think of Pandas as a tool for performing spreadsheet-based tasks* within Python programs. One benefit of performing such tasks in Python (rather than Excel, Google Sheets, or another spreadsheet program) is that, once you have them scripted, you can quickly rerun them whenever the original data gets updated.** You could even have your computer run your analysis script on a daily or hourly basis, thus freeing up time you’d need to spend on busywork for more interesting tasks.</p>
 <p>A central feature of Pandas is the <em>DataFrame</em>, which is essentially a within-Python spreadsheet that you can filter, modify, and extend as needed. You can import data into DataFrames (as this section will demonstrate); perform calculations on specific DataFrame columns; graph DataFrame data using libraries like Plotly; and then export DataFrames to a variety of formats. DataFrames and Jupyter Notebooks work very well together: by executing Pandas code within Jupyter Notebook cells, you can easily see how particular operations will modify your DataFrame.</p>
 <p>If you need more information about a given Pandas function, make sure to consult the library’s documentation (<a class="reference external" href="https://pandas.pydata.org/docs/user_guide/index.html">https://pandas.pydata.org/docs/user_guide/index.html</a>); this is a well-written resource that I’ve relied on heavily in my own work. (In general, I recommend consulting official documentation (including the official Python documentation at <a class="reference external" href="https://docs.python.org/">https://docs.python.org/</a>) whenever possible, though some libraries will have better documentation than others.)</p>
 <p>Pandas will play a key or leading role in many sections of Python for Nonprofits. Although PFN will introduce you to many essential Pandas operations, you’ll likely come across many more in your own Python programming journey.</p>
-<p>* There are certainly ways to automate Excel tasks as well (e.g. using Visual Basic). I don’t have any experience with Visual Basic, so I’m not the best person to compare these two tools; however, I have no doubt that learning it would take some time, and given Python’s versatility and power, I would recommend applying that time to learning Python instead. (You can get an estimate of the world’s interest in Python versus Visual Basic by checking out the <a class="reference external" href="https://www.tiobe.com/tiobe-index/">TIOBE index</a>.)</p>
+<p>* Pandas is <em>not</em> the only Python library that allows you to perform spreadsheet operations. Polars (<a class="reference external" href="https://pola.rs/">https://pola.rs/</a>) is another promising tool that, as of June 2025, has some incredible performance advantages over Pandas. However, these advantages likely won’t become relevant unless you’re working with especially large (e.g. multi-gigabyte) source files. In addition, Pandas 3 should allow for faster data processing (<a class="reference external" href="https://thenewstack.io/python-pandas-ditches-numpy-for-speedier-pyarrow/">https://thenewstack.io/python-pandas-ditches-numpy-for-speedier-pyarrow/</a>), so it’s very possible that, by the time you read this, Pandas will have at least partly closed the performance gap between itself and Polars.</p>
+<p>** There are certainly ways to automate Excel tasks as well (e.g. using Visual Basic). I don’t have any experience with Visual Basic, so I’m not the best person to compare these two tools; however, I have no doubt that learning it would take some time, and given Python’s versatility and power, I would recommend applying that time to learning Python instead. (You can get an estimate of the world’s interest in Python versus Visual Basic by checking out the <a class="reference external" href="https://www.tiobe.com/tiobe-index/">TIOBE index</a>.)</p>
 </section>
 <section id="back-to-data-retrieval">
 <h2>Back to data retrieval<a class="headerlink" href="#back-to-data-retrieval" title="Link to this heading">#</a></h2>
@@ -480,8 +482,8 @@
   <tbody>
     <tr>
       <th>0</th>
-      <td>Julie</td>
-      <td>Armstrong</td>
+      <td>Ashley</td>
+      <td>Jordan</td>
       <td>F</td>
       <td>...</td>
       <td>2024</td>
@@ -490,8 +492,8 @@
     </tr>
     <tr>
       <th>1</th>
-      <td>Sandra</td>
-      <td>Miller</td>
+      <td>Lisa</td>
+      <td>Dunn</td>
       <td>F</td>
       <td>...</td>
       <td>2024</td>
@@ -500,8 +502,8 @@
     </tr>
     <tr>
       <th>2</th>
-      <td>Sara</td>
-      <td>Mayer</td>
+      <td>Alexandra</td>
+      <td>Woods</td>
       <td>F</td>
       <td>...</td>
       <td>2024</td>
@@ -510,8 +512,8 @@
     </tr>
     <tr>
       <th>3</th>
-      <td>Haley</td>
-      <td>Sanchez</td>
+      <td>Kathleen</td>
+      <td>Carter</td>
       <td>F</td>
       <td>...</td>
       <td>2024</td>
@@ -520,8 +522,8 @@
     </tr>
     <tr>
       <th>4</th>
-      <td>Cindy</td>
-      <td>Torres</td>
+      <td>Donna</td>
+      <td>Brewer</td>
       <td>F</td>
       <td>...</td>
       <td>2024</td>
@@ -568,23 +570,23 @@
   <tbody>
     <tr>
       <th>0</th>
-      <td>Julie\tArmstrong\tF\t2020\t1\t2020-1\t2002-12-...</td>
+      <td>Ashley\tJordan\tF\t2020\t1\t2020-1\t2002-12-16...</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>Sandra\tMiller\tF\t2020\t2\t2020-2\t2002-09-26...</td>
+      <td>Lisa\tDunn\tF\t2020\t2\t2020-2\t2002-09-26\tST...</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>Sara\tMayer\tF\t2020\t3\t2020-3\t2002-05-18\tS...</td>
+      <td>Alexandra\tWoods\tF\t2020\t3\t2020-3\t2002-05-...</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>Haley\tSanchez\tF\t2020\t4\t2020-4\t2002-11-15...</td>
+      <td>Kathleen\tCarter\tF\t2020\t4\t2020-4\t2002-11-...</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>Cindy\tTorres\tF\t2020\t5\t2020-5\t2002-06-21\...</td>
+      <td>Donna\tBrewer\tF\t2020\t5\t2020-5\t2002-06-21\...</td>
     </tr>
   </tbody>
 </table>
@@ -630,8 +632,8 @@
   <tbody>
     <tr>
       <th>0</th>
-      <td>Julie</td>
-      <td>Armstrong</td>
+      <td>Ashley</td>
+      <td>Jordan</td>
       <td>F</td>
       <td>...</td>
       <td>2024</td>
@@ -640,8 +642,8 @@
     </tr>
     <tr>
       <th>1</th>
-      <td>Sandra</td>
-      <td>Miller</td>
+      <td>Lisa</td>
+      <td>Dunn</td>
       <td>F</td>
       <td>...</td>
       <td>2024</td>
@@ -650,8 +652,8 @@
     </tr>
     <tr>
       <th>2</th>
-      <td>Sara</td>
-      <td>Mayer</td>
+      <td>Alexandra</td>
+      <td>Woods</td>
       <td>F</td>
       <td>...</td>
       <td>2024</td>
@@ -660,8 +662,8 @@
     </tr>
     <tr>
       <th>3</th>
-      <td>Haley</td>
-      <td>Sanchez</td>
+      <td>Kathleen</td>
+      <td>Carter</td>
       <td>F</td>
       <td>...</td>
       <td>2024</td>
@@ -670,8 +672,8 @@
     </tr>
     <tr>
       <th>4</th>
-      <td>Cindy</td>
-      <td>Torres</td>
+      <td>Donna</td>
+      <td>Brewer</td>
       <td>F</td>
       <td>...</td>
       <td>2024</td>
@@ -723,15 +725,15 @@
   <tbody>
     <tr>
       <th>0</th>
-      <td>3626</td>
+      <td>2885</td>
       <td>W</td>
-      <td>68.0%</td>
+      <td>60.0%</td>
       <td>23</td>
       <td>22</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>3151</td>
+      <td>1875</td>
       <td>W</td>
       <td>67.0%</td>
       <td>23</td>
@@ -746,24 +748,24 @@
       <td>...</td>
     </tr>
     <tr>
-      <th>969</th>
-      <td>3927</td>
+      <th>974</th>
+      <td>410</td>
       <td>W</td>
-      <td>53.0%</td>
+      <td>73.0%</td>
       <td>23</td>
       <td>22</td>
     </tr>
     <tr>
-      <th>970</th>
-      <td>652</td>
+      <th>975</th>
+      <td>1581</td>
       <td>W</td>
-      <td>84.0%</td>
+      <td>61.0%</td>
       <td>23</td>
       <td>22</td>
     </tr>
   </tbody>
 </table>
-<p>971 rows × 5 columns</p>
+<p>976 rows × 5 columns</p>
 </div></div></div>
 </div>
 <p>While this is a handy feature to have, if you’re dealing with a large and unchanging dataset, you may want to consider downloading it to your computer beforehand–as reading in the file from your local hard drive will likely be faster than retrieving it via your internet connection.</p>
@@ -810,8 +812,8 @@
   <tbody>
     <tr>
       <th>0</th>
-      <td>Julie</td>
-      <td>Armstrong</td>
+      <td>Ashley</td>
+      <td>Jordan</td>
       <td>F</td>
       <td>...</td>
       <td>2024</td>
@@ -820,8 +822,8 @@
     </tr>
     <tr>
       <th>1</th>
-      <td>Sandra</td>
-      <td>Miller</td>
+      <td>Lisa</td>
+      <td>Dunn</td>
       <td>F</td>
       <td>...</td>
       <td>2024</td>
@@ -830,8 +832,8 @@
     </tr>
     <tr>
       <th>2</th>
-      <td>Sara</td>
-      <td>Mayer</td>
+      <td>Alexandra</td>
+      <td>Woods</td>
       <td>F</td>
       <td>...</td>
       <td>2024</td>
@@ -840,8 +842,8 @@
     </tr>
     <tr>
       <th>3</th>
-      <td>Haley</td>
-      <td>Sanchez</td>
+      <td>Kathleen</td>
+      <td>Carter</td>
       <td>F</td>
       <td>...</td>
       <td>2024</td>
@@ -850,8 +852,8 @@
     </tr>
     <tr>
       <th>4</th>
-      <td>Cindy</td>
-      <td>Torres</td>
+      <td>Donna</td>
+      <td>Brewer</td>
       <td>F</td>
       <td>...</td>
       <td>2024</td>
@@ -920,8 +922,8 @@
   <tbody>
     <tr>
       <th>0</th>
-      <td>Julie</td>
-      <td>Armstrong</td>
+      <td>Ashley</td>
+      <td>Jordan</td>
       <td>F</td>
       <td>...</td>
       <td>2024</td>
@@ -930,8 +932,8 @@
     </tr>
     <tr>
       <th>1</th>
-      <td>Sandra</td>
-      <td>Miller</td>
+      <td>Lisa</td>
+      <td>Dunn</td>
       <td>F</td>
       <td>...</td>
       <td>2024</td>
@@ -940,8 +942,8 @@
     </tr>
     <tr>
       <th>2</th>
-      <td>Sara</td>
-      <td>Mayer</td>
+      <td>Alexandra</td>
+      <td>Woods</td>
       <td>F</td>
       <td>...</td>
       <td>2024</td>
@@ -950,8 +952,8 @@
     </tr>
     <tr>
       <th>3</th>
-      <td>Haley</td>
-      <td>Sanchez</td>
+      <td>Kathleen</td>
+      <td>Carter</td>
       <td>F</td>
       <td>...</td>
       <td>2024</td>
@@ -960,8 +962,8 @@
     </tr>
     <tr>
       <th>4</th>
-      <td>Cindy</td>
-      <td>Torres</td>
+      <td>Donna</td>
+      <td>Brewer</td>
       <td>F</td>
       <td>...</td>
       <td>2024</td>
@@ -1114,8 +1116,8 @@
     <tr>
       <th>0</th>
       <td>0</td>
-      <td>Julie</td>
-      <td>Armstrong</td>
+      <td>Ashley</td>
+      <td>Jordan</td>
       <td>...</td>
       <td>2024</td>
       <td>Se</td>
@@ -1124,8 +1126,8 @@
     <tr>
       <th>1</th>
       <td>1</td>
-      <td>Sandra</td>
-      <td>Miller</td>
+      <td>Lisa</td>
+      <td>Dunn</td>
       <td>...</td>
       <td>2024</td>
       <td>Se</td>
@@ -1134,8 +1136,8 @@
     <tr>
       <th>2</th>
       <td>2</td>
-      <td>Sara</td>
-      <td>Mayer</td>
+      <td>Alexandra</td>
+      <td>Woods</td>
       <td>...</td>
       <td>2024</td>
       <td>Se</td>
@@ -1144,8 +1146,8 @@
     <tr>
       <th>3</th>
       <td>3</td>
-      <td>Haley</td>
-      <td>Sanchez</td>
+      <td>Kathleen</td>
+      <td>Carter</td>
       <td>...</td>
       <td>2024</td>
       <td>Se</td>
@@ -1154,8 +1156,8 @@
     <tr>
       <th>4</th>
       <td>4</td>
-      <td>Cindy</td>
-      <td>Torres</td>
+      <td>Donna</td>
+      <td>Brewer</td>
       <td>...</td>
       <td>2024</td>
       <td>Se</td>
